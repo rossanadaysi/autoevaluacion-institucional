@@ -1,0 +1,77 @@
+body { background:white; padding:10px; text-align:left; font-size:12px; font-family:verdana; color:black; line-height:20px; }
+
+h2 { font-size:20px; margin-bottom:10px; }
+
+.red { color:red; }
+
+ul.menu { margin-top:40px; list-style-type:none; border-bottom:1px solid black; height:41px; }
+ul.menu li { display: block; float:left; width:100px; height:20px; border:1px solid black; margin-right:10px; padding:10px; text-align:center; text-decoration:underline; cursor:pointer; }
+ul.menu li.active { height:24px; position:relative; margin-top:-3px; background:white; border-bottom:none; }
+
+.b { font-weight:bold; }
+
+u { text-decoration:none; color:green; font-weight:bold; }
+
+i { color:gray; }
+
+textarea { width:100%; height:30px; margin-top:20px; /*display:none; */}
+
+.mt { margin-top:50px; }
+
+a { color:green; }
+tr.menu td { cursor: pointer}
+.h3 { font-size:18px; font-weight:bold; color:green;}
+.cb { clear:both; }
+
+/* jjmenu styles */
+.ItemRed { color: red; }
+.ItemBlue { color:blue; }
+div.jjmenu {
+
+
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 3px 3px 3px 3px;
+    max-height: 325px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 9999;
+    
+}
+
+div.jj_menu_item {
+    color: #444444;
+    cursor: pointer;
+    max-width: 250px;
+    min-width: 165px;
+    padding: 6px 7px;
+    position: relative;
+    }
+
+div.jj_menu_item span {
+    float: none !important;
+    font-size: 11px;
+    line-height: 14px;
+    margin: 0 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: auto;
+}
+
+div.jj_menu_item_more span {
+    background:url(more.gif)  right no-repeat;	
+}
+div.jj_menu_item_more span {
+    padding-right:20px;
+}
+
+div.jj_menu_item_hover {
+    background: none repeat scroll 0 0 #D8EBF8;
+    border-bottom: 1px solid #98CBEE;
+    border-top: 1px solid #98CBEE;
+    color: #276086;
+    padding: 5px 7px;
+
+}
+

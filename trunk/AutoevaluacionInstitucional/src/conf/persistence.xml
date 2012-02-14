@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="AutoevaluacionInstitucionalPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>entity.Facultad</class>
+    <class>entity.Representante</class>
+    <class>entity.Programa</class>
+    <class>entity.Sedes</class>
+    <class>entity.Persona</class>
+    <class>entity.Solicitudponderacion</class>
+    <class>entity.Ponderacionpropuestacaracteristicas</class>
+    <class>entity.Proceso</class>
+    <class>entity.Muestra</class>
+    <class>entity.Muestraadministrativos</class>
+    <class>entity.Pregunta</class>
+    <class>entity.Muestraprofesores</class>
+    <class>entity.EncuestaPregunta</class>
+    <class>entity.Muestraempleadores</class>
+    <class>entity.Ponderacionpropuestafactores</class>
+    <class>entity.Muestraegresados</class>
+    <class>entity.AgenciasGubernamentales</class>
+    <class>entity.Muestraagencias</class>
+    <class>entity.Asignacionencuesta</class>
+    <class>entity.Administrativos</class>
+    <class>entity.RepresentanteHasPrivilegios</class>
+    <class>entity.Muestradirector</class>
+    <class>entity.Indicador</class>
+    <class>entity.SectoresEmpresariales</class>
+    <class>entity.Empleadores</class>
+    <class>entity.Muestraestudiantes</class>
+    <class>entity.Ponderacionfactores</class>
+    <class>entity.DirectorDePrograma</class>
+    <class>entity.Profesores</class>
+    <class>entity.Estudiante</class>
+    <class>entity.Privilegios</class>
+    <class>entity.Egresados</class>
+    <class>entity.Ponderacioncaracteristicas</class>
+    <class>entity.Encuesta</class>
+    <class>entity.Fuente</class>
+    <class>entity.Factor</class>
+    <class>entity.Caracteristica</class>
+    <class>entity.RepresentantePrivilegios</class>
+    <class>entity.Sede</class>
+    <class>entity.Privilegio</class>
+    <class>entity.Representantehasprivilegio</class>
+    <class>entity.Encuestahaspregunta</class>
+    <class>entity.Administrativo</class>
+    <class>entity.Egresado</class>
+    <class>entity.Directorprograma</class>
+    <class>entity.Agenciagubernamental</class>
+    <class>entity.Empleador</class>
+    <class>entity.Sectorempresarial</class>
+    <class>entity.Docente</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/autoevaluacion"/>
+      <property name="javax.persistence.jdbc.password" value="123456"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,39 @@
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dd, dl, dt, li, ol, ul, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;font-weight: inherit;font-style: inherit;font-size: 100%;font-family: inherit;text-align: left;vertical-align: baseline;}
+  ol,ul {list-style:none}
+  body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {margin:0; padding:0}
+    a {color: #f77f00; outline:none; text-decoration:none; cursor: pointer;}
+  .fondoHeader{background: url(images/mainBackground.png) repeat-x;}
+  #header {width: 100%; margin: 0 auto; height: 38px; background-position: top left; position: relative; background-color: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; color: #52697E;}
+  #header h1 {margin: 0; display:inline; position: absolute; width: 140px; height: 38px;}
+  #logo {background: url(images/logo.png) no-repeat; display: block; position:absolute; width: 140px; height: 38px; background-position: 0 0; left: 0;}
+  #Navigation {height: 38px; position: absolute; top: 0; left: 150px;}
+  #Navigation a{display:block; float: left; position:relative; line-height: 38px; margin-right: 10px; color: #999; text-shadow: 0 0 1px #000; font-weight: bold; padding: 0 5px;}
+  #Navigation a:hover{background-color:#4c4c4c;color: #fff; text-shadow: 0 1px 1px #000;}
+  #Navigation a.active, #Navigation a:active{color: #fff; text-shadow: 0 1px 1px #000;}
+  #Navigation a:disabled {filter:alpha(opacity=50); -moz-opacity:0.50; -khtml-opacity: 0.50; opacity: 0.50;}
+
+  
+  
+  
+  .right {float: right !important;}
+  #header_Options {height: 38px; position: absolute; top: 0; right: 10px; width: 50%;}
+  #header_Options a span.header{
+	  display: inline; 
+	  font-size: 12px;
+	  margin-left: 10px; 
+	  padding: 0 5px;
+	  line-height: 38px; 
+	  font-size: 12px; 
+	  color: #999; 
+	  font-weight: bold;
+	  position:relative; 
+	  text-shadow: 0 0 1px #141414;}
+  
+  #header_Options a span.header:hover, #header_Options a span.hover {color: #fff; text-shadow: 0 1px 1px #000;}
+  #header_Options a.span.header:active{color: #fff; text-shadow: 0 1px 1px #000;}
+  
+  .header_Option {float: right; position:relative;}
+  
+  .header_user_button:hover span.label{color: #fff; text-shadow: 0 0 1px #141414;}
+  
+  * {outline: none; }	
