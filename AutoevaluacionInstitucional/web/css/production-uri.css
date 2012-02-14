@@ -1,0 +1,10 @@
+fieldset,img {border:0}
+h1,h2,h3,h4,h5,h6 {font-size:100%; font-weight:normal}
+a img, :link img, :visited img {border: 0;}
+a {color: #f77f00;; outline:none; text-decoration:none; cursor: pointer;}
+.dropdownOptions{display:block !important; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;}
+.dropdownOptions .option{margin: 0 !important; padding: 0 !important; float:none !important}
+.dropdownOptions .option.hide{display:none;}
+.dropdownOptions .option a{width: auto; color: #333; text-align: left; font-weight: bold; display:block; clear: both; line-height: 18px; padding:5px 10px; margin:0; float:none !important; cursor: pointer; font-size: 11px; white-space:nowrap;}
+.dropdownOptions .option a:hover {background-color: #447099; color: #fff; margin: 0px -1px 0px -1px; border-left:solid 1px #447099; border-right: solid 1px #447099;}
+.dropdownOptions .option a span{display:block; line-height: 22px; width:100%; height:100%;}
