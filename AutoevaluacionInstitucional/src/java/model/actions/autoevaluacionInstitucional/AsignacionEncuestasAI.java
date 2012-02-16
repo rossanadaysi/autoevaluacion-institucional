@@ -17,7 +17,7 @@ import model.Action;
  *
  * @author Arturo González
  */
-public class asignarEncuestaAI implements Action {
+public class AsignacionEncuestasAI implements Action {
 
     public String procesar(HttpServletRequest request)
             throws IOException, ServletException {
@@ -40,43 +40,35 @@ public class asignarEncuestaAI implements Action {
 
             if (rs.getRowCount() != 0) {
                 session.setAttribute("aux", 0);
-                session.setAttribute("asignacionEncuestas", rs);
-
-
+                System.out.println("si hay asignacion de encuestas");
             } else {
+                System.out.println("no hay asignacion de encuestas");
                 session.setAttribute("aux", 1);
 
-            }
+                Result rs2 = null;
+                String sql2 = "Select* from encuesta";
+                rs2 = conSql.CargarSql2(sql2, bd);
 
 
-        } catch (Error ex) {
-            //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                if (rs2 != null) {
+                    session.setAttribute("encuestas", rs2);
+                }
 
-
-        try {
-
-            Result rs = null;
-            String sql = "Select* from encuesta";
-            rs = conSql.CargarSql2(sql, bd);
-
-
-            if (rs != null) {
-                session.setAttribute("encuestas", rs);
+                sql2 = "Select* from fuente";
+                rs2 = conSql.CargarSql2(sql2, bd);
+                if (rs2.getRowCount() != 0) {
+                    session.setAttribute("fuentes", rs2);
                
+                }
+
             }
-
-            sql = "Select* from fuente";
-            rs = conSql.CargarSql2(sql, bd);
-            if (rs.getRowCount() != 0) {
-                session.setAttribute("fuentes", rs);
-            }
-
-
 
         } catch (Error ex) {
             //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
+
 
 
 

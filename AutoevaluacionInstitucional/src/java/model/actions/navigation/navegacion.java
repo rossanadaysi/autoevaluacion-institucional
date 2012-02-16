@@ -35,7 +35,7 @@ public class navegacion implements Action {
 
         String path = request.getParameter("action");
 
-        if (path.equals("crearProcesoAI")) {
+        if (path.equals("CrearProcesoAI")) {
             path = "autoevaluacionInstitucional/proceso/crear";
         } else if (path.equals("detalleProcesoAI")) {
             path = "autoevaluacionInstitucional/proceso/detalle";
@@ -50,7 +50,7 @@ public class navegacion implements Action {
             path = "comiteCentral/representante/crear";
         } else if (path.equals("indexAI")) {
             path = "autoevaluacionInstitucional/index2";
-        } else if (path.equals("cerrarProcesoAI")) {
+        } else if (path.equals("CerrarProcesoAI")) {
             Proceso p = (Proceso) session.getAttribute("proceso");
             ProcesoJpaController pc = new ProcesoJpaController();
             Date d = new Date();
@@ -65,7 +65,7 @@ public class navegacion implements Action {
             }
             session.setAttribute("aux_index2", 0);
             path = "autoevaluacionInstitucional/index2";
-        } else if (path.equals("iniciarProcesoAI")) {
+        } else if (path.equals("IniciarProcesoAI")) {
             Proceso p = (Proceso) session.getAttribute("proceso");
             ProcesoJpaController pc = new ProcesoJpaController();
             Date d = new Date();
@@ -81,7 +81,13 @@ public class navegacion implements Action {
             session.setAttribute("aux2_index2", 0);
             path = "autoevaluacionInstitucional/index2";
         }
-        String url = "/WEB-INF/vista/" + path + ".jsp";
+        String url;
+        if (path.equals("IniciarProcesoAI") || (path.equals("CerrarProcesoAI"))) {
+            url = "/";
+        } else {
+            url = "/WEB-INF/vista/" + path + ".jsp";
+        }
+
 
         return url;
     }

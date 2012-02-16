@@ -53,7 +53,6 @@ public class PonderacionCaracteristicaAI implements Action {
                 session.setAttribute("caracteristicas", rs2);
                 conSql.cerrarConexion();
                 System.out.println("no hay ponderacion de caracteristicas");
-
             }
 
 
