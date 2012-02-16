@@ -397,7 +397,7 @@ $.fn.layout = function (opts) {
 	,	north: {
 			paneSelector:			".ui-layout-north"
 		,	size:					"auto"		// eg: "auto", "30%", 200
-		,	resizerCursor:			"col-resize"	// custom = url(myCursor.cur)
+		,	resizerCursor:			"n-resize"	// custom = url(myCursor.cur)
 		,	customHotkey:			""			// EITHER a charCode OR a character
 		}
 	,	south: {
@@ -415,7 +415,7 @@ $.fn.layout = function (opts) {
 	,	west: {
 			paneSelector:			".ui-layout-west"
 		,	size:					200
-		,	resizerCursor:			"w-resize"
+		,	resizerCursor:			"col-resize"// ojo modificado x mi 
 		,	customHotkey:			""
 		}
 	,	center: {
@@ -4353,5 +4353,3 @@ debugData( test, pane );
 
 }
 })( jQuery );
-
-
