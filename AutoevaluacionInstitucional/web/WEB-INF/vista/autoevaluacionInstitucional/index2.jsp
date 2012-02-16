@@ -7,23 +7,38 @@
         <meta name="language" content="en" />
         <title>Autoevaluacion Institucional</title>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/layout2.css" />
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/header.css" />
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/footer.css" />
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/menu.css" />
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" />
+        
+        
 
 
-        <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/jquery.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.pager.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui-1.8.5.custom.css" type="text/css" media="screen" charset="utf-8" />
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/examples.css" type="text/css" media="screen" charset="utf-8" />
+        <!--<link rel="stylesheet" href="<%=request.getContextPath()%>/css/examples.css" type="text/css" media="screen" charset="utf-8" />-->
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.columnpicker.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick-default-theme.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/styl.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css" type="text/css" media="screen" charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/production-uri.css" />
+       
+        
+       <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/bootstrap/css/docs.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon" href="<%=request.getContextPath()%>/bootstrap/ico/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%=request.getContextPath()%>/bootstrap/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%=request.getContextPath()%>/bootstrap/ico/apple-touch-icon-114x114.png">
 
 
         <script language="JavaScript" src="<%=request.getContextPath()%>/script/slick.model.js"></script>
@@ -38,9 +53,13 @@
         <script language="JavaScript" src="<%=request.getContextPath()%>/script/jjmenu.js"></script>
         <script language="JavaScript" src="<%=request.getContextPath()%>/script/pubsub.js"></script>
         <script language="JavaScript" src="<%=request.getContextPath()%>/script/jquery.ba-hashchange.js"></script>
+        <script language="JavaScript" src="<%=request.getContextPath()%>/script/jquery-ui.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.jstree.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.hotkeys.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-dropdown.js"></script>
         <style type="text/css">
 
             .slick-cell .options a {
@@ -184,13 +203,15 @@
 
             /* remove padding and scrolling from elements that contain an Accordion OR a content-div */
 
-
             .ui-layout-center ,	/* has content-div */
             .ui-layout-west ,	/* has Accordion */
             .ui-layout-east ,	/* has content-div ... */
             .ui-layout-east .ui-layout-content { /* content-div has Accordion */
-                padding: 0px;
+                padding: 40px 0 0 0;
                 overflow: hidden;
+                background-image: url(bootstrap/img/grid-18px-masked.png);
+                background-repeat: repeat-x;
+                background-position: 0 40px;
             }
             .ui-layout-center P.ui-layout-content {
                 line-height:	1.4em;
@@ -263,60 +284,15 @@
             
             $(document).ready(function() {
                
-                var activeClass = 'dropdown-active';
-                var showingDropdown, showingMenu, showingParent;
-                var dropdown = $('#iniciarSesion');
-                var menu = $(".main_login");
-                var parent = $("#main_login2");
-						
-                var hideMenu = function() {
-							
-                    if(showingDropdown) {
-								
-                        showingDropdown.removeClass(activeClass);
-                        showingMenu.fadeOut("slow");
-                        $("#iniciarSesion span").addClass("hoverInactive");					
-                              
-                    }
-                };
-                var showMenu = function() {
-                               
-                    showingDropdown = dropdown.addClass(activeClass);
-                    showingMenu = menu.fadeIn("slow");
-                    showingParent = parent;
-                    $("#iniciarSesion span").removeClass("hoverInactive");					
-								
-                };
-						
-						
-						
-                dropdown.click(function(e) {
-                    if ( !dropdown.hasClass(activeClass) ){
-                        if(e) e.stopPropagation();
-                        if(e) e.preventDefault();
-                        showMenu(); 	
-                    }
-                });
-                $("#loginReplace").click(function(e) {
-                    if(e) e.stopPropagation();
-                    if(e) e.preventDefault();
-                    hideMenu(); 
-						 
-                });
-								     
-                              
-                /* hide when clicked outside */
-                
-                $(document.body).click(function(e) {
-							
-                    if(showingParent) {
-                        var parentElement = showingParent[0];
-                        if(!$.contains(parentElement,e.target) || !parentElement == e.target) {
-                            hideMenu();
-									
-                        }
-                    }
-                });
+        $("ul.nav-list li a").click(function(event){
+            $(this).parent().siblings().removeClass("active");
+            $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
+            
+            
+            $(this).parent().addClass("active");
+            $(this).children("i").addClass("icon-white");
+            
+        })
             });
                 
         </script>
@@ -326,32 +302,28 @@
             $(document).ready( function() {
                                     
                 myLayout = $('body').layout({
-                    
-                       
-                    west__size:			197
+                   //	enable showOverflow on west-pane so CSS popups will overlap north pane
+			west__size:			250
                     ,   center__paneSelector:  ".ui-layout-center"
                     ,   north__paneClass:    "ui-layout-pane2"
                     ,   closable:				true	// pane can open & close
-                    ,	resizable:				true	// when open, pane can be resized 
-                    ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-
-                    ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
-                    ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
-                    ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
-                    ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
-                    ,   south__paneClass: "ui-layout-pane"
-                    
 
 
-                    //	some resizing/toggling settings
-                    ,	west__minSize:			100
-                    ,	west__maxSize:			300
-                   
-                    
-		
-                    
-	
-                
+		//	reference only - these options are NOT required because 'true' is the default
+		,	closable:				true	// pane can open & close
+		,	resizable:				true	// when open, pane can be resized 
+		,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+                        
+                ,       north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
+                ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
+                ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
+                ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
+                ,       south__paneClass: "ui-layout-pane"
+                  	
+		,	west__minSize:			100
+		,	west__maxSize:			400
+			
+                     
                 });
                 
                 myLayout.allowOverflow('north'); 
@@ -368,105 +340,6 @@
             
             $(function()
             {
-                $("#nodo1").click(function () { 
-                    $("#tree").jstree("toggle_node","#nodo1");
-                
-                });
-                $("#nodo2").click(function () { 
-                    $("#tree").jstree("toggle_node","#nodo2");
-                });
-                $("#nodo3").click(function () { 
-                    $("#tree").jstree("toggle_node","#nodo3");
-                });
-        
-                
-                $("#tree").jstree({ 
-            
-                    "types" : {
-                        "valid_children" : [ "root","create","edit","delete","show"],
-                        "types" : {
-                            "root" : {
-                                "icon" : { 
-                                    "image" : "css/images/iconos2.png",
-                                    "position": "0 -32px"
-                                },
-                                "valid_children" : [ "default" ],
-                                "hover_node" : true,
-                                "select_node" : function () {return false;}
-                            },
-                            "default" : {
-                                "valid_children" : [ "default" ]
-                            },
-                                
-                            "create" : {
-                                    
-                                "icon" : { 
-                                    "image" : "css/images/iconos2.png",
-                                    "position": "0 -48px"
-                                    
-                                },
-                                "valid_children" : [ "default" ]
-                            },
-                            "edit" : {
-                                    
-                                "icon" : { 
-                                    "image" : "css/images/iconos2.png",
-                                    "position": "0 -64px"
-                                },
-                                "valid_children" : [ "default" ]
-                            }
-                            ,
-                            "delete" : {
-                                    
-                                "icon" : { 
-                                    "image" : "css/images/iconos2.png",
-                                    "position": "0 -80px"
-                                },
-                                "valid_children" : [ "default" ]
-                            }
-                            ,
-                            "show" : {
-                                    
-                                "icon" : { 
-                                    "image" : "css/images/iconos2.png",
-                                    "position": "0 -112px"
-                                },
-                                "valid_children" : [ "default" ]
-                            }
-                                
-                        }
-                        
-                        
-                        
-                        
-                    },
-            
-            
-                    "ui" : {
-                        "select_limit" : 1,
-                        "selected_parent_close" : "select_parent",
-                        "selected_parent_open": true
-			
-                    }
-                    , "themes" : {
-                        "theme" : "default",
-                        "dots" : false,
-                        "icons" : true,
-                        "url": "/AutoevaluacionInstitucional/css/style.css"
-                    },
-                    "core" : { "initially_open" : [ "nodo1", "nodo2","nodo3" ] }
-                    , "plugins" : [ "themes", "html_data","ui","hotkeys","types"]
-              
-                })
-                
-             
-
-                .delegate("a", "click", function (event, data2) { event.preventDefault(); 
-                   
-                    location = $(this).attr("href");
-                
-                })
-                
                 $(window).hashchange(function(){
                       
                     var hash = location.hash;
@@ -691,25 +564,29 @@
                                 success: function(json) 
                                 {
                                     $(".ui-layout-center").append("<div class='middle-north'>"
-                                        +"<div id='page_header'>"
-                                        +"<div class='meta'>"
-                                        +"<h3><span>"
-                                        +"${msjLogIn1}"
-                                        +"</span>"
-                                        +"<span class='gridCount' id='gridNumItems'>"
-                                        +"(${msjLogIn2})"
-                                        +"</span></h3>"
-                                        +"</div> <div class='page_options'><form class='searchbar right' id='page_search'>"
-                                        +"<input type='text' value='' id='txtSearch' class='search'><a class='remove'></a></form>"
-                                        +"</div></div></div>"    
+                                        +"<div class='row wellMio'>"
+                                        +"<div class='span5'>"
+                                        +"<h3>${msjLogIn1}</h3>"
+                                        +"<h4>${msjLogIn2}</h4>"
+                                        +"</div>"
+                                        +"<div class='pull-right'>"
+                                        +"<form class='form-search'>"
+                                        +"<input type='text' class='input-medium search-query'>"
+                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                        +"</form>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"   
                                         +"<div class='middle-center'>"
                                         +"<div class='inner-center' style='width:100%;float:left;'>"
                                         +"<div id='myGrid'></div></div></div>");
             
                                     middleLayout = $('div.ui-layout-center').layout({ 
-                                        north__paneSelector:    ".middle-north"
-                                        ,   north__paneClass:    "ui-layout-pane2"
-                                        ,   center__paneSelector:    ".middle-center"
+                                                north__paneSelector:    ".middle-north"
+                                        ,       north__paneClass:    "ui-layout-pane2"
+                                        ,       north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
+                                        ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
+                                        ,       center__paneSelector:    ".middle-center"
                                         ,	spacing_open:			8  // ALL panes
                                         ,	spacing_closed:			8  // ALL panes
                    
@@ -1083,17 +960,19 @@
                                 success: function(json) 
                                 {
                                     $(".ui-layout-center").append("<div class='middle-north'>"
-                                        +"<div id='page_header'>"
-                                        +"<div class='meta'>"
-                                        +"<h3><span>"
-                                        +"Procesos Realizados"
-                                        +"</span>"
-                                        +"<span class='gridCount' id='gridNumItems'>"
-                                        +"(Detalle de Procesos.)"
-                                        +"</span></h3>"
-                                        +"</div> <div class='page_options'><form class='searchbar right' id='page_search'>"
-                                        +"<input type='text' value='' id='txtSearch' class='search'><a class='remove'></a></form>"
-                                        +"</div></div></div>"    
+                                        +"<div class='row wellMio'>"
+                                        +"<div class='span5'>"
+                                        +"<h3>${msjLogIn1}</h3>"
+                                        +"<h4>${msjLogIn2}</h4>"
+                                        +"</div>"
+                                        +"<div class='pull-right'>"
+                                        +"<form class='form-search'>"
+                                        +"<input type='text' class='input-medium search-query'>"
+                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                        +"</form>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"   
                                         +"<div class='middle-center'>"
                                         +"<div class='inner-center' style='width:100%;float:left;'>"
                                         +"<div id='myGrid'></div></div></div>");
@@ -1474,17 +1353,19 @@
                                 success: function(json) 
                                 {
                                     $(".ui-layout-center").append("<div class='middle-north'>"
-                                        +"<div id='page_header'>"
-                                        +"<div class='meta'>"
-                                        +"<h3><span>"
-                                        +"Lista de Factores"
-                                        +"</span>"
-                                        +"<span class='gridCount' id='gridNumItems'>"
-                                        +"(detalle)"
-                                        +"</span></h3>"
-                                        +"</div> <div class='page_options'><form class='searchbar right' id='page_search'>"
-                                        +"<input type='text' value='' id='txtSearch' class='search'><a class='remove'></a></form>"
-                                        +"</div></div></div>"    
+                                        +"<div class='row wellMio'>"
+                                        +"<div class='span5'>"
+                                        +"<h3>${msjLogIn1}</h3>"
+                                        +"<h4>${msjLogIn2}</h4>"
+                                        +"</div>"
+                                        +"<div class='pull-right'>"
+                                        +"<form class='form-search'>"
+                                        +"<input type='text' class='input-medium search-query'>"
+                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                        +"</form>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"   
                                         +"<div class='middle-center'>"
                                         +"<div class='inner-center' style='width:100%;float:left;'>"
                                         +"<div id='myGrid'></div></div></div>");
@@ -1865,17 +1746,19 @@
                                 success: function(json) 
                                 {
                                     $(".ui-layout-center").append("<div class='middle-north'>"
-                                        +"<div id='page_header'>"
-                                        +"<div class='meta'>"
-                                        +"<h3><span>"
-                                        +"Lista de Caracteristicas"
-                                        +"</span>"
-                                        +"<span class='gridCount' id='gridNumItems'>"
-                                        +"(detalle)"
-                                        +"</span></h3>"
-                                        +"</div> <div class='page_options'><form class='searchbar right' id='page_search'>"
-                                        +"<input type='text' value='' id='txtSearch' class='search'><a class='remove'></a></form>"
-                                        +"</div></div></div>"    
+                                        +"<div class='row wellMio'>"
+                                        +"<div class='span5'>"
+                                        +"<h3>${msjLogIn1}</h3>"
+                                        +"<h4>${msjLogIn2}</h4>"
+                                        +"</div>"
+                                        +"<div class='pull-right'>"
+                                        +"<form class='form-search'>"
+                                        +"<input type='text' class='input-medium search-query'>"
+                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                        +"</form>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"   
                                         +"<div class='middle-center'>"
                                         +"<div class='inner-center' style='width:100%;float:left;'>"
                                         +"<div id='myGrid'></div></div></div>");
@@ -2185,62 +2068,40 @@
         </script> 
     </head>
     <body>
-        <div class="ui-layout-north ui-widget-content" style="display: none;">
-            <div class="fondoHeader" id="header">
-                <h1>
-                    <a id="logo" href="/#/">
-                    </a>
-                </h1>
-                <div id="Navigation">
-                    <a class="active" >
-                        ${mensaje}
-                    </a>
-                    <a  href="#/">
-                        Inicio
-                    </a>
-                    <a href="#">
-                        Contacto
-                    </a>
-                </div>
-                <!--ojo-->
-                <div class="right" id="header_Options">
-                    <%--   <div class="header_Option">
-                           <a href="#">
-                               <span class="header hoverInactive">Idioma</span>
-                           </a>
-                       </div>--%>
-                    <div class="header_Option">
-                        <a href="#" id="iniciarSesion">
-                            <span class="hoverInactive header">${representante.personaId.nombre}</span>
+        <div class="ui-layout-north ui-widget-content">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid" style="width: auto;">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </a>
-                        <div class="main_login" name="main_login" id="main_login2">
-                            <a id="loginReplace" href="#">
-                                <span class="label">Iniciar Sesion</span>
-                                <span class="arrow icon_arrow"></span>
-                            </a>
-                            <ul class="dropdownOptions">
-                                <li class="option"><a class="profile" href="#/user/pepe+cortez/7037960"><span data-translate-text="PROFILE">Profile</span></a></li>
-                                <li class="option"><a class="settings" href="#/settings"><span data-translate-text="SETTINGS">Settings</span></a></li>
-                                <li class="option"><a class="extras" href="#/features"><span data-translate-text="FEATURES_TITLE">Features</span></a></li>
-                                <li class="option"><a class="invite"><span data-translate-text="INVITE_FRIENDS">Invitar Amigos</span></a></li>
-
-                                <li class="option"><a href="#/settings/subscriptions"><span data-translate-text="UPGRADE">Upgrade</span></a></li>
-
-
-                                <li class="option">
-                                    <a href="#/surveys">
-                                        <span data-translate-text="SURVEYS" class="label">Encuestas</span>
-                                    </a>
+                        <a class="brand" href="#">Autoevaluacion</a>
+                        <div class="nav-collapse">
+                            <ul class="nav">
+                                <li class="active"><a href="#">Inicio</a></li>
+                                <li><a href="#">Contacto</a></li>
+                          </ul>
+                            
+                            <ul class="nav pull-right">
+                                <li class="divider-vertical"></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown">${representante.personaId.nombre}<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Cerrar Sesion</a></li>
+                                    </ul>
                                 </li>
-
-                                <li class="option"><a class="help" target="_blank" href="http://help.grooveshark.com"><span data-translate-text="HELP">Help</span></a></li>
-                                <li class="last option"><a class="logout" href="<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion"><span data-translate-text="LOGOUT">Cerrar Sesión</span></a></li>
                             </ul>
-                        </div>
+                        </div><!-- /.nav-collapse -->
                     </div>
-                </div>
-                <!--ojo-->
-            </div>
+                </div><!-- /navbar-inner -->
+            </div><!-- /navbar -->
+
         </div>
         <div class="ui-layout-south ui-widget-content"> 
             <div class="contenedor_footer fondo_footer" id="footer">
@@ -2254,78 +2115,52 @@
             </div>
         </div>
         <div class="ui-layout-center"> 
-
+              
         </div>
-        <div class="ui-layout-west" style="display: none;">
+        
+        
+        <div class="ui-layout-west">
             <div class="ui-layout-content">
-                <div id="tree">
-                    <ul>
-                        <c:choose>
+                <div style="padding: 8px 0pt;" class="well">
+                <ul class="nav nav-list">  
+                <c:choose>
 
                             <c:when test="${aux_index2 == 1}">
-                                <li rel="root">
-                                    <a id="nodo1" >Proceso en Ejecución</a>
-                                    <ul> 
-                                        <li id="detalle" rel="create">
-                                            <a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso">Detalle Proceso</a>
-                                        </li>
-                                        <li rel="edit">  
-                                            <a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor">Ponderación Factores</a>
-                                        </li>
-                                        <li rel="edit">
-                                            <a  id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica">Ponderación Características</a>
-                                        </li>    
-                                        <li id="unid" rel="edit">
-                                            <a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra">Asignar Muestra</a>
-                                        </li>
-                                        <li rel="edit">
-                                            <a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#asignarEncuesta">Asignar Encuestas</a>
-                                        </li>
+                                    <li class="nav-header">Proceso en Ejecución</li>
+                                    <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
+                                    <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
+                                    <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
+                                    <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                                    <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#asignarEncuesta"><i class="icon-question-sign"></i> Asignar Encuestas</a></li>
                                         <c:choose>
                                             <c:when test="${aux2_index2 == 1}">
-                                                <li rel="edit">
-                                                    <a href="<%=request.getContextPath()%>/ControllerAI?action=iniciarProcesoAI">Iniciar Proceso</a>
-                                                </li>   
+                                                <li><a href="<%=request.getContextPath()%>/ControllerAI?action=iniciarProcesoAI"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                                             </c:when>
                                             <c:otherwise>
-                                                <li rel="edit">
-                                                    <a href="<%=request.getContextPath()%>/ControllerAI?action=cerrarProcesoAI">Finalizar Proceso</a>
-                                                </li>
+                                                <li><a href="<%=request.getContextPath()%>/ControllerAI?action=cerrarProcesoAI"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                                             </c:otherwise>
                                         </c:choose>
-                                    </ul>
-                                </li>
-                                <li rel="root">   
-                                    <a id="nodo2" >Procesos Antiguos</a>
-                                    <ul> 
-                                        <li rel="create">
-                                            <a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos">Listar Procesos</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                <li class="nav-header">Procesos Anteriores</li>
+                                <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
+                            
+                            
+                               
+                                
                             </c:when>
                             <c:otherwise>
-                                <li rel="root">
-                                    <a id="nodo1" >Proceso Nuevo</a>
-                                    <ul> 
-                                        <li rel="create">
-                                            <a href="<%=request.getContextPath()%>/ControllerAI?action=crearProcesoAI">Crear Proceso Nuevo</a>
-                                        </li>
-                                    </ul>
-                                    <li>
-                                        <li rel="root">   
-                                            <a id="nodo2" >Procesos Antiguos</a>
-                                            <ul> 
-                                                <li rel="create">
-                                                    <a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos">Listar Procesos</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
-                                </ul>
-                                </div>
-                                </div>
-                                </div>
+                                <li class="nav-header">Procesos</li>
+                                <li><a href="<%=request.getContextPath()%>/ControllerAI?action=crearProcesoAI"><i class="icon-plus"></i> Proceso Nuevo</a></li>
+                                <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
+                             </c:otherwise>
+                    </c:choose>
+                
+                
+                
+                
+                </ul>
+                </div>
+      
+        </div>
+      </div>
                                 </body>
                                 </html> 

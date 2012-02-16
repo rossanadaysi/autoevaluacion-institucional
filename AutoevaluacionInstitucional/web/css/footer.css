@@ -1,10 +1,3 @@
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {margin:0; padding:0}
-html, body {background-color: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; color: #52697E}
-body {text-align: center; overflow: auto}
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dd, dl, dt, li, ol, ul, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;font-weight: inherit;font-style: inherit;font-size: 100%;font-family: inherit;text-align: left;vertical-align: baseline;}
-html {overflow: hidden;}
-body {font-family: Helvetica, Arial, sans-serif; margin: 0 auto; text-align: center; background: #090909; color: #FFF; font-size: 12px; overflow: hidden; position: relative; min-width:400px;}
-a {color: #f77f00;; outline:none; text-decoration:none; cursor: pointer;}
 #footer {height: 24px; width: 100%; position: absolute; bottom: 0; left: 0; color: #666; z-index: 5; font-family: Helvetica,Arial,sans-serif; }
 #footer a{float: left; display:block; line-height: 24px; margin: 2px 0 0 15px; color: #666; font-size: 11px; font-weight: bold;}
 #footer a:hover{text-decoration: underline;}
@@ -12,4 +5,3 @@ a {color: #f77f00;; outline:none; text-decoration:none; cursor: pointer;}
 .links{float: left; padding: 0 4px;}
 .fondo_footer{background: url(images/footer.png) repeat-x;}
 .contenedor_footer {height: 24px; width: 100%; position: absolute; bottom: 0; left: 0; right:0; background-position: left -90px;}
-* {outline: none; }
