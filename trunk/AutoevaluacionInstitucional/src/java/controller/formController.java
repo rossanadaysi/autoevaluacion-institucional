@@ -4,10 +4,16 @@
  */
 package controller;
 
+import entity.Asignacionencuesta;
 import entity.Proceso;
+import entity.Programa;
+import entity.controller.ProcesoJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -86,6 +92,80 @@ public class formController extends HttpServlet {
                     conSql.UpdateSql("INSERT INTO `ponderacioncaracteristica` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES (NULL, '" + ponderacion + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
 
                 }
+            } else if (request.getParameter("action").equals("asignarEncuestasAIp")) {
+
+                HttpSession session = request.getSession();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                Asignacionencuesta ae = new Asignacionencuesta();
+
+                sqlController conSql = new sqlController();
+
+
+                String idFuente = request.getParameter("fuente");
+
+                int id = Integer.valueOf(idFuente);
+
+                String bd = (String) session.getAttribute("bd");
+
+                /*
+                 * String sql = "Select* from fuente where id = " + id;
+                 *
+                 * ResultSet rs2 = conSql.CargarSql(sql, bd);
+                 *
+                 *
+                 * Fuente fuente = (Fuente) rs2.getArray(0);
+                 */
+
+                ResultSet rs = null;
+                String sql = "Select* from encuesta";
+
+                rs = conSql.CargarSql(sql, bd);
+                try {
+                    while (rs.next()) {
+                        if (request.getParameter(rs.getString(2)).equals("1")) {
+                            String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
+                            conSql.UpdateSql(sql2, bd);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (request.getParameter("action").equals("crearProcesoAIp")) {
+
+                HttpSession session = request.getSession();
+
+                sqlController conSql = new sqlController();
+                Programa programa = new Programa();
+                Proceso proceso = new Proceso();
+                ProcesoJpaController conProceso = new ProcesoJpaController();
+
+                proceso.setFechainicio("Proceso en Configuración.");
+                proceso.setDescripcion(request.getParameter("descripcion"));
+
+                programa = (Programa) session.getAttribute("programa");
+                proceso.setProgramaId(programa);
+
+                conProceso.create(proceso);
+
+                session.setAttribute("proceso", proceso);
+                session.setAttribute("aux_index2", 1);
+                session.setAttribute("aux2_index2", 1);
+
+                try {
+                    conSql.newDb(proceso);
+                } catch (SQLException ex) {
+                    // Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+                String nombreBd = programa.getNombre() + proceso.getId();
+
+                session.setAttribute("proceso", proceso);
+                session.setAttribute("bd", nombreBd);
+
+
+
             }
         } finally {
             out.close();

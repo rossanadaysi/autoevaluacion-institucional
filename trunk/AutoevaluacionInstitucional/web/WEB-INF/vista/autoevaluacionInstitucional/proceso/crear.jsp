@@ -18,7 +18,7 @@
     </head>
     <body>
         <h2>Nuevo Proceso de Autoevaluaci&oacute;n</h2>
-        <form  id="formulario" action="<%=request.getContextPath()%>/ControllerAI?action=crearProcesoAIp" method="post">
+        <form  id="formCrearProc" method="post">
             <table>
                 <tr>
                     <td>Programa: </td>
