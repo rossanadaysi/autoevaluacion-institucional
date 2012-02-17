@@ -200,77 +200,23 @@
                                         }
                                     </style>
                                     <style type="text/css">
-
-                                        /* remove padding and scrolling from elements that contain an Accordion OR a content-div */
-
-                                        .ui-layout-center ,	/* has content-div */
-                                        .ui-layout-west ,	/* has Accordion */
-                                        .ui-layout-east ,	/* has content-div ... */
-                                        .ui-layout-east .ui-layout-content { /* content-div has Accordion */
-                                            padding: 40px 0 0 0;
-                                            overflow: hidden;
-                                            background-image: url(bootstrap/img/grid-18px-masked.png);
-                                            background-repeat: repeat-x;
-                                            background-position: 0 40px;
-                                        }
-                                        .ui-layout-center P.ui-layout-content {
-                                            line-height:	1.4em;
-                                            margin:			0; /* remove top/bottom margins from <P> used as content-div */
-                                        }
-                                        /*h3, h4 { /* Headers & Footer in Center & East panes 
-                                            font-size:		1.1em;
-                                            background:		#EEF;
-                                            border:			1px solid #BBB;
-                                            border-width:	0 0 1px;
-                                            padding:		7px 10px;
-                                            margin:			0;
-                                        }*/
-                                        .ui-layout-west h4 { /* Footer in East-pane */
-                                            font-size:		0.9em;
-                                            font-weight:	normal;
-                                            border-width:	1px 0 0;
-                                            overflow: hidden;
-                                        }
-
-                                        .ui-layout-north {
+                                       .ui-layout-north {
                                             /* Drop-Down */
                                             bottom:		auto;
                                             margin:		0;
-                                            margin-top:	1.45em;
+                                            padding-bottom: 30px;
+                                        }
+                                        
+                                        .ui-layout-center{
+                                            overflow: auto;
                                         }
 
                                         .inner-layout-north {
                                             /* Drop-Down */
                                             bottom:		auto;
                                             margin:		0;
-                                            margin-top:	1.45em;
+                                           
                                         }
-                                        .ui-layout-pane2 { /* solo header */
-                                            background:	#FFF; 
-                                            /* <<<< ojo comentado por mi >>>>> */
-                                            /*border: 1px solid #BBB; */
-
-
-                                            /* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
-                                               otherwise you may get double-scrollbars - on the pane AND on the content-div
-                                            */
-
-                                            padding: 0;
-                                            overflow:	auto;
-                                        }
-
-                                        .ui-layout-pane3 { /* all 'panes' */
-                                            background:	#FFF; 
-                                            /*border:		1px solid #BBB;*/
-                                            /* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
-                                               otherwise you may get double-scrollbars - on the pane AND on the content-div
-                                            */
-                                            padding:	10px; 
-                                            overflow:	hidden; /* modificado x mi */
-                                        }
-
-
-
                                         .middle-center, .inner-center{
                                             padding: 0px;   
 
@@ -303,9 +249,9 @@
                                     
                                             myLayout = $('body').layout({
                                                 //	enable showOverflow on west-pane so CSS popups will overlap north pane
-                                                west__size:			250
+                                                    west__size:			250
                                                 ,   center__paneSelector:  ".ui-layout-center"
-                                                ,   north__paneClass:    "ui-layout-pane2"
+                                                ,   north__paneClass:    "ui-layout-pane"
                                                 ,   closable:				true	// pane can open & close
 
 
@@ -318,10 +264,15 @@
                                                 ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
                                                 ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
                                                 ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
-                                                ,       south__paneClass: "ui-layout-pane"
+                                                ,       south__paneClass:               "ui-layout-pane"
                   	
-                                                ,	west__minSize:			100
-                                                ,	west__maxSize:			400
+                                                ,	west__minSize:			200
+                                                ,	west__maxSize:			350
+                                                
+                                                ,       center__onresize: function (name, el, state, opts, Layout) { 
+                                                                        $.publish("set_grid_height", [state.innerHeight]);
+                                                                        $.publish("set_grid_width", [state.innerWidth]);
+                                                                    }
 			
                      
                                             });
@@ -350,20 +301,22 @@
                                                     grid.destroy(); 
                         
                                                 }
-                    
+                                               
            
                                                 if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos")
                                                 {
                         
                                                     $.unsubscribe("set_grid_width");
-                        
+                                                    $.unsubscribe("set_grid_height");    
                                                     if(middleLayout){
+                                                      
                                                         middleLayout.destroy();
-                            
+                                                        window[ "middleLayout" ] = null;
+        
                                                     } 
                                                     if(innerLayout){
                                                         innerLayout.destroy();
-                            
+                                                        window[ "innerLayout" ] = null;    
                                                     }
                         
                         
@@ -378,7 +331,6 @@
                                                         url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                                        var jaja34 = function(){
                                                             $("div.ui-layout-center").empty();
                                                             $.ajax({ 
                                                                 type: "POST", 
@@ -411,8 +363,7 @@
                                                                 } //fin success
                                                             }); //fin del $.ajax
                          
-                                                        } //fin jaja34  
-                                                        jaja34(); 
+                                                       
                        
                                                     }
                                                     else if(hash == "#PonderacionCaracteristica"){
@@ -499,7 +450,7 @@
                                                         url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                                        var jaja34 = function(){
+                                                       
                                                             $("div.ui-layout-center").empty();
                                                             $.ajax({ 
                                                                 type: "POST", 
@@ -529,8 +480,8 @@
                                                                 } //fin success
                                                             }); //fin del $.ajax
                          
-                                                        } //fin jaja34  
-                                                        jaja34(); 
+                                                         
+                                                      
                        
                                                     }
                                                     else {
@@ -593,7 +544,7 @@
                                                             {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
                                                             {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
                                                             {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
-                                                            {id:"descripcion", name:"Descripción", field:"descripcion", width:150, sortable:true}
+                                                            {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
                 
                                                         ];
 
@@ -608,7 +559,7 @@
                         
                                                         };
 
-                                                        var sortcol = "Fecha de Inicio";
+                                                        var sortcol = "Nombre";
                                                         var sortdir = 1;
                                                         //var percentCompleteThreshold = 0;
                                                         var searchString = "";
@@ -648,7 +599,7 @@
                                                                     +"</div>"
                                                                     +"<div class='pull-right'>"
                                                                     +"<form class='form-search'>"
-                                                                    +"<input type='text' class='input-medium search-query'>"
+                                                                    +"<input type='text' id='txtSearch' class='input-medium search-query'>"
                                                                     +"<button class='btn' type='submit'>Buscar</button>"
                                                                     +"</form>"
                                                                     +"</div>"
@@ -657,42 +608,6 @@
                                                                     +"<div class='middle-center'>"
                                                                     +"<div class='inner-center' style='width:100%;float:left;'>"
                                                                     +"<div id='myGrid'></div></div></div>");
-            
-                                                                middleLayout = $('div.ui-layout-center').layout({ 
-                                                                    north__paneSelector:    ".middle-north"
-                                                                    ,       north__paneClass:    "ui-layout-pane2"
-                                                                    ,       north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
-                                                                    ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
-                                                                    ,       center__paneSelector:    ".middle-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
-                   
-                                                                });
-                
-                                                                innerLayout = $('div.middle-center').layout({ 
-                       
-                                                                    center__paneSelector:    ".inner-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
-                    
-                                                                    ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                                        $.publish("set_grid_height", [state.innerHeight]);
-                                                                        $.publish("set_grid_width", [state.innerWidth]);
-                                                                    }
-                 
-                                                                });
-                
-                        
-                
-                    
-                
-                                                                $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                                                $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
-		
-		
-                                                                setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
-         
-                            
                                                                 if(json.length > 0) 
                                                                 { for (var i = 0; i < json.length; i++) 
                                                                     {
@@ -727,7 +642,7 @@
                                                                         grid.autosizeColumns();
                                                                         //grid.resizeCanvas();
                                                                     });
-
+                                                                    
 
             
 
@@ -869,7 +784,7 @@
                                                                             $(".slick-cell .options a").jjmenu("click", 
                                                                             // menu items:
                                                                             [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderación ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
                                                                                             {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
                                                                                             {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
                                                                                             {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
@@ -947,7 +862,7 @@
                                                     if(hash == "#listarProcesos")
                                                     {
                                                  
-                                                        $.unsubscribe("set_grid_width");
+                                                      //  $.unsubscribe("set_grid_width");
                         
                                                         if(middleLayout){
                                                             middleLayout.destroy();
@@ -989,7 +904,7 @@
                                                             {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
                                                             {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
                                                             {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
-                                                            {id:"descripcion", name:"Descripción", field:"descripcion", width:150, sortable:true}
+                                                            {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
                 
                                                         ];
 
@@ -1054,38 +969,7 @@
                                                                     +"<div class='inner-center' style='width:100%;float:left;'>"
                                                                     +"<div id='myGrid'></div></div></div>");
             
-                                                                middleLayout = $('div.ui-layout-center').layout({ 
-                                                                    north__paneSelector:    ".middle-north"
-                                                                    ,   north__paneClass:    "ui-layout-pane2"
-                                                                    ,   center__paneSelector:    ".middle-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
-                   
-                                                                });
-                
-                                                                innerLayout = $('div.middle-center').layout({ 
-                       
-                                                                    center__paneSelector:    ".inner-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
-                    
-                                                                    ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                                        $.publish("set_grid_height", [state.innerHeight]);
-                                                                        $.publish("set_grid_width", [state.innerWidth]);
-                                                                    }
-                 
-                                                                });
-                
-                        
-                
-                    
-                
-                                                                $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                                                $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
-		
-		
-                                                                setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
-         
+                                                               
                             
                                                                 if(json.length > 0) 
                                                                 { for (var i = 0; i < json.length; i++) 
@@ -1112,16 +996,15 @@
                                                                         grid_opts.height = new_height;
                                                                         $("#myGrid").css('height', grid_opts.height);
                                                                         grid.resizeCanvas();
-                                        
+                                                                 
                                                                     });
-            
+
                                                                     $.subscribe("set_grid_width", function (new_width) {
                                                                         grid_opts.width = new_width;
                                                                         $("#myGrid").css('width', grid_opts.width );
                                                                         grid.autosizeColumns();
                                                                         //grid.resizeCanvas();
                                                                     });
-
 
             
 
@@ -1263,7 +1146,7 @@
                                                                             $(".slick-cell .options a").jjmenu("click", 
                                                                             // menu items:
                                                                             [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderación ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
                                                                                             {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
                                                                                             {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
                                                                                             {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
@@ -1382,7 +1265,7 @@
                                                         var columns = [
                                                             {id:"factor", name:"Factor", field:"factor", minWidth:100,  sortable:true },	
                                                             {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                                            {id:"justificacion", name:"Justificación", field:"justificacion", width:150, sortable:true}
+                                                            {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
                 
                                                         ];
 
@@ -1449,7 +1332,7 @@
             
                                                                 middleLayout = $('div.ui-layout-center').layout({ 
                                                                     north__paneSelector:    ".middle-north"
-                                                                    ,   north__paneClass:    "ui-layout-pane2"
+                                                                    ,   north__paneClass:    "ui-layout-pane"
                                                                     ,   center__paneSelector:    ".middle-center"
                                                                     ,	spacing_open:			8  // ALL panes
                                                                     ,	spacing_closed:			8  // ALL panes
@@ -1656,7 +1539,7 @@
                                                                             $(".slick-cell .options a").jjmenu("click", 
                                                                             // menu items:
                                                                             [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderación ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
                                                                                             {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
                                                                                             {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
                                                                                             {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
@@ -1775,7 +1658,7 @@
                                                         var columns = [
                                                             {id:"caracteristica", name:"Caracteristica", field:"caracteristica", minWidth:100,  sortable:true },	
                                                             {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                                            {id:"justificacion", name:"Justificación", field:"justificacion", width:150, sortable:true}
+                                                            {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
                 
                                                         ];
 
@@ -1842,7 +1725,7 @@
             
                                                                 middleLayout = $('div.ui-layout-center').layout({ 
                                                                     north__paneSelector:    ".middle-north"
-                                                                    ,   north__paneClass:    "ui-layout-pane2"
+                                                                    ,   north__paneClass:    "ui-layout-pane"
                                                                     ,   center__paneSelector:    ".middle-center"
                                                                     ,	spacing_open:			8  // ALL panes
                                                                     ,	spacing_closed:			8  // ALL panes
@@ -2049,7 +1932,7 @@
                                                                             $(".slick-cell .options a").jjmenu("click", 
                                                                             // menu items:
                                                                             [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderación ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
                                                                                             {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
                                                                                             {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
                                                                                             {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
@@ -2203,12 +2086,12 @@
                                                         <c:choose>
 
                                                             <c:when test="${aux_index2 == 1}">
-                                                                <li class="nav-header">Proceso en Ejecución</li>
+                                                                <li class="nav-header">Proceso en Ejecucin</li>
                                                                 <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
                                                                 <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                                                                 <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
                                                                 <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
-                                                                <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignación Encuestas</a></li>
+                                                                <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                                                                 <c:choose>
                                                                     <c:when test="${aux2_index2 == 1}">
                                                                         <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 

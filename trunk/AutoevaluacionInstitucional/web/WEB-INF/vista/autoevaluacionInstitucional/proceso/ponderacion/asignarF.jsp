@@ -1,16 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:if test="${auxAsignarF == 1}">
-       <h1>Ponderación de Factores</h1>
-    <form method="post" id="formPondeFa">
-        <table border="1" cellspacing="2">
-            <%-- for every row in the Result ...--%>
+    <br>
+        <div class="hero-unit">
+        <div class="row">
+        <div class="span9">
+    <form id="formPondeFa" class="form-horizontal" method="post">
+        <fieldset>
+          <legend>Ponderación de Factores</legend>
+        <table class="table table-striped">
             <thead>
                 <tr>
-                    <td></td>
-                    <td>Factor</td>
-                    <td>Ponderación</td>
-                    <td>Justificaciòn</td>
+                    <th>#</th>
+                    <th>Factor</th>
+                    <th>Ponderacion</th>
+                    <th>Justificacion</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +27,7 @@
                             <c:out value="${row[1]}"/>
                         </td>
                         <td>
-                            <select name="ponderacion${row[0]}">
+                            <select class="span2" name="ponderacion${row[0]}">
                                 <option value="NULL">--</option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -37,10 +41,10 @@
                                 <option value="9">9</option>
                                 <option value="10">10</option>
                             </select>
-                            <input type="hidden"  value="${row[0]}" name="id${row[0]}"></input><br>
+                            <input type="hidden"  value="${row[0]}" name="id${row[0]}"></input>
                         </td>
                         <td>
-                            <textarea name="justificacion${row[0]}" rows="2" cols="20"></textarea>
+                            <textarea name="justificacion${row[0]}" rows="3" class="span4"></textarea>
                         </td>
                     </tr>
                     <c:set var="iterador" value="${iter.index + 1}" />
@@ -48,8 +52,16 @@
             </tbody>
             <input type="hidden" name="count" id="count" value="${iterador}"></input>
         </table>
-        <input type="submit" value="Asignar Ponderación"></input>
-    </form>
+        
+            <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Asignar Ponderación</button>
+            <button class="btn" type="reset">Cancelar</button>
+            </div>
+        </fieldset>
+        </form>
+        </div><!--/span-->        
+        </div><!--/row-->    
+        </div><!--/hero-unit--> 
 </c:if>
 <c:if test="${auxAsignarF == 0}">
     la ponderacion ya fue asignada
