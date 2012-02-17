@@ -17,25 +17,41 @@
         <title>Nuevo Proceso</title>
     </head>
     <body>
-        <h2>Nuevo Proceso de Autoevaluaci&oacute;n</h2>
-        <form  id="formCrearProc" method="post">
-            <table>
-                <tr>
-                    <td>Programa: </td>
-                    <td>${programa.nombre}</td>
-                </tr>
-                <tr>
-                    <td>Fecha Inicio: </td>
-                    <td>Proceso en Configuraci&oacute;n.</td>
-                </tr>
-                <tr>
-                    <td>Descripci&oacute;n: </td>
-                    <td><textarea name="descripcion" rows="2" cols="20"></textarea></td>
-                </tr>
-                <tr>    
-                    <td><input type="submit" value="Crear Proceso"></input></td>
-                </tr>
-            </table>
+        <br>
+        <div class="hero-unit">
+        <div class="row">
+        <div class="span8">
+            
+        <form id="formCrearProc" class="form-horizontal" method="post">
+        <fieldset>
+          <legend>Nuevo Proceso de Autoevaluación</legend>
+          <div class="control-group">
+            <label for="programa"  class="control-label">Programa</label>
+            <div class="controls">
+              <span type="text" id="programa"  class="input-xlarge uneditable-input">${programa.nombre}</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="fechaI" class="control-label">fecha de Inicio</label>
+            <div class="controls">
+                <span id="fechaI" class="input-xlarge uneditable-input">Proceso en Configuraci&oacute;n</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="descripcion" class="control-label">Descripcion</label>
+            <div class="controls">
+              <textarea rows="3" id="descripcion" name="descripcion" class="input-xlarge"></textarea>
+            </div>
+          </div>
+            <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Crear Proceso</button>
+            <button class="btn" type="reset">Cancelar</button>
+            </div>
+         </fieldset>
         </form>
-    </body>
+        </div><!--/span-->        
+        </div><!--/row-->    
+        </div><!--/hero-unit-->    
+        
+      </body>
 </html>
