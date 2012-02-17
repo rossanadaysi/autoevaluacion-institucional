@@ -4,6 +4,7 @@
  */
 package controller;
 
+import connection.exceptions.NonexistentEntityException;
 import entity.Asignacionencuesta;
 import entity.Proceso;
 import entity.Programa;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.actions.navigation.navegacion;
 
 /**
  *
@@ -166,7 +169,44 @@ public class formController extends HttpServlet {
 
 
 
+            } else if (request.getParameter("action").equals("CerrarProcesoAI")) {
+
+                HttpSession session = request.getSession();
+                Proceso p = (Proceso) session.getAttribute("proceso");
+                ProcesoJpaController pc = new ProcesoJpaController();
+                Date d = new Date();
+                String date = String.valueOf(d);
+                p.setFechacierre(date);
+                try {
+                    pc.edit(p);
+                } catch (entity.controller.exceptions.NonexistentEntityException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                session.setAttribute("aux_index2", 0);
+
+
+            } else if (request.getParameter("action").equals("IniciarProcesoAI")) {
+
+                HttpSession session = request.getSession();
+                Proceso p = (Proceso) session.getAttribute("proceso");
+                ProcesoJpaController pc = new ProcesoJpaController();
+                Date d = new Date();
+                String date = String.valueOf(d);
+                p.setFechainicio(date);
+                try {
+                    pc.edit(p);
+                } catch (entity.controller.exceptions.NonexistentEntityException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                session.setAttribute("aux2_index2", 0);
             }
+
         } finally {
             out.close();
         }
