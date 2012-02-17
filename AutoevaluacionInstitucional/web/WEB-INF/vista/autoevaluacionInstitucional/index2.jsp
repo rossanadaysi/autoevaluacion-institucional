@@ -60,6 +60,7 @@
                                     <script src="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.js"></script>
                                     <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
                                     <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-dropdown.js"></script>
+                                    <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-scrollspy.js"></script>
                                     <style type="text/css">
 
                                         .slick-cell .options a {
@@ -239,7 +240,24 @@
                                                 $(this).children("i").addClass("icon-white");
             
                                             })
-                                        });
+                                        
+                                            $(".ui-layout-center").scroll(function(){
+                                                   // If has not activated (has no attribute "data-top"
+                                                if (!$('.subnav').attr('data-top')) {
+                                                    // If already fixed, then do nothing
+                                                    if ($('.subnav').hasClass('subnav-fixed')) return;
+                                                    // Remember top position
+                                                    var offset = $('.subnav').offset()
+                                                    $('.subnav').attr('data-top', offset.top);
+                                                }
+
+                                                if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
+                                                    $('.subnav').addClass('subnav-fixed');
+                                                else
+                                                    $('.subnav').removeClass('subnav-fixed');
+                                            });
+            
+                                          });
                 
                                     </script>
                                     <script type="text/javascript">
@@ -295,9 +313,11 @@
                       
                                                 var hash = location.hash;
                     
-                                     
-                    
-                                                if(grid){
+                                                
+                                                if(hash=="#cara0"){
+                                                    console.log("ok")
+                                                }else{
+                                                    if(grid){
                                                     grid.destroy(); 
                         
                                                 }
@@ -370,7 +390,7 @@
                                                         url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                                        var jaja34 = function(){
+                                                        
                                                             $("div.ui-layout-center").empty();
                                                             $.ajax({ 
                                                                 type: "POST", 
@@ -379,6 +399,7 @@
                                                                 {
                                        
                                                                     $("div.ui-layout-center").append(data);
+                                                                    setTimeout($("div.ui-layout-center").scrollspy(), 500);
                                     
                                                                     $("#formPondeCara").submit(function(event){
                                                                         event.preventDefault();
@@ -403,9 +424,7 @@
                                                                 } //fin success
                                                             }); //fin del $.ajax
                          
-                                                        } //fin jaja34  
-                                                        jaja34(); 
-                       
+                                                        
                                                     }
                                                     else if(hash == "#AsignacionEncuestas"){
                                                         url3 = url3.replace('#', "ControllerAI?action=")+"AI";
@@ -469,7 +488,7 @@
                                                                             
                                                                             location = "<%=request.getContextPath()%>/#detalleProceso";                                
                                                                         } //fin success
-                                            
+
                                                                     }); //fin $.ajax
                                                                 }); //fin submit
                                         
@@ -2027,12 +2046,15 @@
                       
                       
                       
-                                            });
+                                           
                 
+                                                }
+                                                
+                                                
                 
                      
                     
-                    
+                                            });        
                                         });  //fin del function   
                     
                                         //setTimeout(function () { $.jstree._focused().select_node("#detalle"); }, 1000);
@@ -2086,7 +2108,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="ui-layout-center"> 
+                                        <div class="ui-layout-center">
+                                            
+                                            
 
                                         </div>
 

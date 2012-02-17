@@ -41,7 +41,7 @@
                                 <option value="9">9</option>
                                 <option value="10">10</option>
                             </select>
-                            <input type="hidden"  value="${row[0]}" name="id${row[0]}"></input>
+                            <input type="hidden"  value="${row[0]}" name="id${row[0]}">
                         </td>
                         <td>
                             <textarea name="justificacion${row[0]}" rows="3" class="span5"></textarea>
@@ -50,9 +50,8 @@
                     <c:set var="iterador" value="${iter.index + 1}" />
                 </c:forEach>
             </tbody>
-            <input type="hidden" name="count" id="count" value="${iterador}"></input>
-        </table>
-        
+            </table>
+            <input type="hidden" name="count" id="count" value="${iterador}">
             <div class="form-actions">
             <button class="btn btn-primary" type="submit">Asignar Ponderación</button>
             <button class="btn" type="reset">Cancelar</button>
