@@ -39,6 +39,8 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/crear";
         } else if (path.equals("detalleProcesoAI")) {
             path = "autoevaluacionInstitucional/proceso/detalle";
+        } else if (path.equals("menuAI")) {
+            path = "autoevaluacionInstitucional/menu";
         } else if (path.equals("indexCC")) {
             path = "comiteCentral/index";
         } else if (path.equals("listarRepresentante")) {
@@ -50,43 +52,11 @@ public class navegacion implements Action {
             path = "comiteCentral/representante/crear";
         } else if (path.equals("indexAI")) {
             path = "autoevaluacionInstitucional/index2";
-        } else if (path.equals("CerrarProcesoAI")) {
-            Proceso p = (Proceso) session.getAttribute("proceso");
-            ProcesoJpaController pc = new ProcesoJpaController();
-            Date d = new Date();
-            String date = String.valueOf(d);
-            p.setFechacierre(date);
-            try {
-                pc.edit(p);
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(navegacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(navegacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            session.setAttribute("aux_index2", 0);
-            path = "autoevaluacionInstitucional/index2";
-        } else if (path.equals("IniciarProcesoAI")) {
-            Proceso p = (Proceso) session.getAttribute("proceso");
-            ProcesoJpaController pc = new ProcesoJpaController();
-            Date d = new Date();
-            String date = String.valueOf(d);
-            p.setFechainicio(date);
-            try {
-                pc.edit(p);
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(navegacion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(navegacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            session.setAttribute("aux2_index2", 0);
-            path = "autoevaluacionInstitucional/index2";
         }
-        String url;
-        if (path.equals("IniciarProcesoAI") || (path.equals("CerrarProcesoAI"))) {
-            url = "/";
-        } else {
-            url = "/WEB-INF/vista/" + path + ".jsp";
-        }
+
+
+        String url = "/WEB-INF/vista/" + path + ".jsp";
+
 
 
         return url;

@@ -4,7 +4,7 @@
     <br>
         <div class="hero-unit">
         <div class="row">
-        <div class="span9">
+        <div class="span10">
     <form id="formPondeFa" class="form-horizontal" method="post">
         <fieldset>
           <legend>Ponderación de Factores</legend>
@@ -27,7 +27,7 @@
                             <c:out value="${row[1]}"/>
                         </td>
                         <td>
-                            <select class="span2" name="ponderacion${row[0]}">
+                            <select class="span1" name="ponderacion${row[0]}">
                                 <option value="NULL">--</option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -44,7 +44,7 @@
                             <input type="hidden"  value="${row[0]}" name="id${row[0]}"></input>
                         </td>
                         <td>
-                            <textarea name="justificacion${row[0]}" rows="3" class="span4"></textarea>
+                            <textarea name="justificacion${row[0]}" rows="3" class="span5"></textarea>
                         </td>
                     </tr>
                     <c:set var="iterador" value="${iter.index + 1}" />

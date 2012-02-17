@@ -200,13 +200,13 @@
                                         }
                                     </style>
                                     <style type="text/css">
-                                       .ui-layout-north {
+                                        .ui-layout-north {
                                             /* Drop-Down */
                                             bottom:		auto;
                                             margin:		0;
                                             padding-bottom: 30px;
                                         }
-                                        
+
                                         .ui-layout-center{
                                             overflow: auto;
                                         }
@@ -215,7 +215,7 @@
                                             /* Drop-Down */
                                             bottom:		auto;
                                             margin:		0;
-                                           
+
                                         }
                                         .middle-center, .inner-center{
                                             padding: 0px;   
@@ -249,7 +249,7 @@
                                     
                                             myLayout = $('body').layout({
                                                 //	enable showOverflow on west-pane so CSS popups will overlap north pane
-                                                    west__size:			250
+                                                west__size:			250
                                                 ,   center__paneSelector:  ".ui-layout-center"
                                                 ,   north__paneClass:    "ui-layout-pane"
                                                 ,   closable:				true	// pane can open & close
@@ -270,9 +270,9 @@
                                                 ,	west__maxSize:			350
                                                 
                                                 ,       center__onresize: function (name, el, state, opts, Layout) { 
-                                                                        $.publish("set_grid_height", [state.innerHeight]);
-                                                                        $.publish("set_grid_width", [state.innerWidth]);
-                                                                    }
+                                                    $.publish("set_grid_height", [state.innerHeight]);
+                                                    $.publish("set_grid_width", [state.innerWidth]);
+                                                }
 			
                      
                                             });
@@ -331,37 +331,37 @@
                                                         url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                                            $("div.ui-layout-center").empty();
-                                                            $.ajax({ 
-                                                                type: "POST", 
-                                                                url: url3, 
-                                                                success: function(data) 
-                                                                {
+                                                        $("div.ui-layout-center").empty();
+                                                        $.ajax({ 
+                                                            type: "POST", 
+                                                            url: url3, 
+                                                            success: function(data) 
+                                                            {
                                        
-                                                                    $("div.ui-layout-center").append(data);
+                                                                $("div.ui-layout-center").append(data);
                                     
-                                                                    $("#formPondeFa").submit(function(event){
-                                                                        event.preventDefault();
+                                                                $("#formPondeFa").submit(function(event){
+                                                                    event.preventDefault();
                                              
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
-                                                                            data: $("#formPondeFa").serialize(),
-                                                                            success: function(){
-                                                                                $("#ponderacionFact").attr("href", "<%=request.getContextPath()%>/#listarPonderacionFactor");  
-                                                                                location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
+                                                                        data: $("#formPondeFa").serialize(),
+                                                                        success: function(){
+                                                                            $("#ponderacionFact").attr("href", "<%=request.getContextPath()%>/#listarPonderacionFactor");  
+                                                                            location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
                                                     
                                                    
                                              
-                                                                            } //fin success
+                                                                        } //fin success
                                             
-                                                                        }); //fin $.ajax
-                                                                    }); //fin submit
+                                                                    }); //fin $.ajax
+                                                                }); //fin submit
                                         
                                      
                              
-                                                                } //fin success
-                                                            }); //fin del $.ajax
+                                                            } //fin success
+                                                        }); //fin del $.ajax
                          
                                                        
                        
@@ -429,9 +429,9 @@
                                                                             url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
                                                                             data: $("#formAsigEnc").serialize(),
                                                                             success: function(){
-                                                                                $("#asignarEncuesta").attr("href", "<%=request.getContextPath()%>/#listarAsignacionEncuestas");  
-                                                                                location = "<%=request.getContextPath()%>/#listarAsignacionEncuestas";  
-                                                                              
+                                                                                // $("#asignarEncuesta").attr("href", "<%=request.getContextPath()%>/#listarAsignacionEncuestas");  
+                                                                                //location = "<%=request.getContextPath()%>/#listarAsignacionEncuestas";  
+                                                                                alert("encuestas asignada con exito!")
                                                                             } //fin success
                                             
                                                                         }); //fin $.ajax
@@ -448,39 +448,51 @@
                                                     }
                                                     else if(hash == "#CrearProceso"){
                                                         url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                          
-                      
-                                                       
-                                                            $("div.ui-layout-center").empty();
-                                                            $.ajax({ 
-                                                                type: "POST", 
-                                                                url: url3, 
-                                                                success: function(data) 
-                                                                {
+                                                        $("div.ui-layout-center").empty();
+                                                        $.ajax({ 
+                                                            type: "POST", 
+                                                            url: url3, 
+                                                            success: function(data) 
+                                                            {
                                        
-                                                                    $("div.ui-layout-center").append(data);
+                                                                $("div.ui-layout-center").append(data);
                                     
-                                                                    $("#formCrearProc").submit(function(event){
-                                                                        event.preventDefault();
+                                                                $("#formCrearProc").submit(function(event){
+                                                                    event.preventDefault();
                                              
-                                                                        $.ajax({
-                                                                            type: 'POST',
-                                                                            url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
-                                                                            data: $("#formCrearProc").serialize(),
-                                                                            success: function(){
-                                                                                $("#CrearProceso").attr("href", "<%=request.getContextPath()%>/#detalleProceso");  
-                                                                                location = "<%=request.getContextPath()%>/#detalleProceso";  
-                                                                            } //fin success
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                                        data: $("#formCrearProc").serialize(),
+                                                                        success: function(){
+                                                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                            
+                                                                            location = "<%=request.getContextPath()%>/#detalleProceso";                                
+                                                                        } //fin success
                                             
-                                                                        }); //fin $.ajax
-                                                                    }); //fin submit
+                                                                    }); //fin $.ajax
+                                                                }); //fin submit
                                         
                                      
                              
-                                                                } //fin success
-                                                            }); //fin del $.ajax
-                         
-                                                         
+                                                            } //fin success
+                                                        }); //fin del $.ajax
+                                                    }
+                                                    else if(hash == "#IniciarProceso" || hash == "#CerrarProceso"){
+                                                        url3 = url3.replace('#', "formController?action=")+"AI";
+                                                        $("div.ui-layout-center").empty();
+                                                        $.ajax({ 
+                                                            type: "POST", 
+                                                            url: url3, 
+                                                            success: function(data) 
+                                                            {
+                                                                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                            
+                                                                location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                                                             
+                                                            } //fin success
+                                                        }); //fin del $.ajax
+                          
                                                       
                        
                                                     }
@@ -862,7 +874,7 @@
                                                     if(hash == "#listarProcesos")
                                                     {
                                                  
-                                                      //  $.unsubscribe("set_grid_width");
+                                                        //  $.unsubscribe("set_grid_width");
                         
                                                         if(middleLayout){
                                                             middleLayout.destroy();
@@ -2081,10 +2093,9 @@
 
                                         <div class="ui-layout-west">
                                             <div class="ui-layout-content">
-                                                <div style="padding: 8px 0pt;" class="well">
+                                                <div id="menu" style="padding: 8px 0pt;" class="well">
                                                     <ul class="nav nav-list">  
                                                         <c:choose>
-
                                                             <c:when test="${aux_index2 == 1}">
                                                                 <li class="nav-header">Proceso en Ejecucin</li>
                                                                 <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
@@ -2102,10 +2113,6 @@
                                                                 </c:choose>
                                                                 <li class="nav-header">Procesos Anteriores</li>
                                                                 <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
-
-
-
-
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <li class="nav-header">Procesos</li>
@@ -2113,13 +2120,8 @@
                                                                 <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
                                                             </c:otherwise>
                                                         </c:choose>
-
-
-
-
                                                     </ul>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </body>
