@@ -55,7 +55,6 @@
                                     <script language="JavaScript" src="<%=request.getContextPath()%>/script/jquery.ba-hashchange.js"></script>
                                     <script language="JavaScript" src="<%=request.getContextPath()%>/script/jquery-ui.js"></script>
                                     <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
-                                    <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.jstree.js"></script>
                                     <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.hotkeys.js"></script>
                                     <script src="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.js"></script>
                                     <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
@@ -211,7 +210,9 @@
                                         .ui-layout-center{
                                             overflow: auto;
                                         }
-
+                                        .ui-layout-west{
+                                            padding-right: 0;
+                                        }
                                         .inner-layout-north {
                                             /* Drop-Down */
                                             bottom:		auto;
@@ -267,7 +268,7 @@
                                     
                                             myLayout = $('body').layout({
                                                 //	enable showOverflow on west-pane so CSS popups will overlap north pane
-                                                west__size:			250
+                                                west__size:			270
                                                 ,   center__paneSelector:  ".ui-layout-center"
                                                 ,   north__paneClass:    "ui-layout-pane"
                                                 ,   closable:				true	// pane can open & close
@@ -275,13 +276,14 @@
 
                                                 //	reference only - these options are NOT required because 'true' is the default
                                                 ,	closable:				true	// pane can open & close
-                                                ,	resizable:				true	// when open, pane can be resized 
+                                                ,	resizable:				false	// when open, pane can be resized 
                                                 ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
                         
                                                 ,       north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
                                                 ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
                                                 ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
                                                 ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
+                                                ,	west__spacing_open:	1		// no resizer-bar when open (zero height)
                                                 ,       south__paneClass:               "ui-layout-pane"
                   	
                                                 ,	west__minSize:			200
@@ -399,7 +401,9 @@
                                                                 {
                                        
                                                                     $("div.ui-layout-center").append(data);
-                                                                    setTimeout($("div.ui-layout-center").scrollspy(), 500);
+                                                                     setTimeout(function(){
+                                                                     $("div.ui-layout-center").scrollspy();   
+                                                                    }, 500);
                                     
                                                                     $("#formPondeCara").submit(function(event){
                                                                         event.preventDefault();
