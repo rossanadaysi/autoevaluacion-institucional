@@ -4,7 +4,6 @@
  */
 package controller;
 
-import connection.exceptions.NonexistentEntityException;
 import entity.Asignacionencuesta;
 import entity.Proceso;
 import entity.Programa;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.actions.navigation.navegacion;
 
 /**
  *
@@ -60,18 +58,48 @@ public class formController extends HttpServlet {
                 int idProceso = proceso.getId();
 
                 session.setAttribute("idproceso", idproceso);
+                if (session.getAttribute("auxAsignarF").equals(0)) {
+                    for (int i = 1; i <= numRows; i++) {
+                        String id = request.getParameter("id" + i);
+                        String ponderacion = request.getParameter("ponderacion" + i);
+                        String justificacion = request.getParameter("justificacion" + i);
+                        int idPonderacion = 0;
 
-                for (int i = 1; i <= numRows; i++) {
-                    String id = request.getParameter("id" + i);
-                    String ponderacion = request.getParameter("ponderacion" + i);
-                    String justificacion = request.getParameter("justificacion" + i);
 
 
-                    conSql.UpdateSql("INSERT INTO `ponderacionfactor` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `factor_id`) VALUES (NULL, '" + ponderacion + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
+                        conSql.UpdateSql("INSERT INTO `ponderacionfactor` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `factor_id`) VALUES (NULL, '" + ponderacion + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
+
+
+
+                        conSql.UpdateSql("UPDATE `ponderacionfactor` SET `ponderacion` = '" + ponderacion + "',`justificacion` = '" + justificacion + "' WHERE `ponderacionfactor`.`id` ='" + idPonderacion + "'", bd);
+                    }
+                    session.setAttribute("auxAsignarF", 1);
+                } else {
+                    for (int i = 1; i <= numRows; i++) {
+                        String id = request.getParameter("id" + i);
+                        String ponderacion = request.getParameter("ponderacion" + i);
+                        String justificacion = request.getParameter("justificacion" + i);
+                        int idPonderacion = 0;
+
+
+                        rs = conSql.CargarSql("Select id from ponderacionfactor where ponderacionfactor.proceso_id = '" + idProceso + "' and ponderacionfactor.factor_id = '" + id + "'", bd);
+                        try {
+                            while (rs.next()) {
+                                idPonderacion = Integer.parseInt(rs.getString(1));
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+
+                        conSql.UpdateSql("UPDATE `ponderacionfactor` SET `ponderacion` = '" + ponderacion + "',`justificacion` = '" + justificacion + "' WHERE `ponderacionfactor`.`id` ='" + idPonderacion + "'", bd);
+                    }
                 }
 
 
-            } else if (request.getParameter("action").equals("asignarPonderacionCaracteristicaAIp")) {
+
+            } else if (request.getParameter(
+                    "action").equals("asignarPonderacionCaracteristicaAIp")) {
 
                 HttpSession session = request.getSession();
                 sqlController conSql = new sqlController();
@@ -95,7 +123,8 @@ public class formController extends HttpServlet {
                     conSql.UpdateSql("INSERT INTO `ponderacioncaracteristica` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES (NULL, '" + ponderacion + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
 
                 }
-            } else if (request.getParameter("action").equals("asignarEncuestasAIp")) {
+            } else if (request.getParameter(
+                    "action").equals("asignarEncuestasAIp")) {
 
                 HttpSession session = request.getSession();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
@@ -134,42 +163,63 @@ public class formController extends HttpServlet {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } else if (request.getParameter("action").equals("crearProcesoAIp")) {
+            } else if (request.getParameter(
+                    "action").equals("crearProcesoAIp")) {
 
                 HttpSession session = request.getSession();
-
                 sqlController conSql = new sqlController();
                 Programa programa = new Programa();
                 Proceso proceso = new Proceso();
                 ProcesoJpaController conProceso = new ProcesoJpaController();
 
-                proceso.setFechainicio("Proceso en Configuración.");
-                proceso.setDescripcion(request.getParameter("descripcion"));
 
-                programa = (Programa) session.getAttribute("programa");
-                proceso.setProgramaId(programa);
+                if (session.getAttribute("aux_index2").equals(1)) {
+                    System.out.println("aja1");
+                    proceso = (Proceso) session.getAttribute("proceso");
+                    int idProceso = proceso.getId();
+                    String bd = (String) session.getAttribute("bd");
+                    proceso.setDescripcion(request.getParameter("descripcion"));
+                    try {
+                        conProceso.edit(proceso);
+                    } catch (entity.controller.exceptions.NonexistentEntityException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    session.setAttribute("proceso", proceso);
+                } else {
+                    System.out.println("aja");
+                    proceso.setFechainicio("Proceso en Configuración.");
+                    proceso.setDescripcion(request.getParameter("descripcion"));
 
-                conProceso.create(proceso);
+                    programa = (Programa) session.getAttribute("programa");
+                    proceso.setProgramaId(programa);
 
-                session.setAttribute("proceso", proceso);
-                session.setAttribute("aux_index2", 1);
-                session.setAttribute("aux2_index2", 1);
+                    conProceso.create(proceso);
 
-                try {
-                    conSql.newDb(proceso);
-                } catch (SQLException ex) {
-                    // Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                    session.setAttribute("proceso", proceso);
+                    session.setAttribute("aux_index2", 1);
+                    session.setAttribute("aux2_index2", 1);
+                    session.setAttribute("msjLogIn1", "Existe un Proceso en Ejecución!");
+                    session.setAttribute("msjLogIn2", "Detalle del Proceso.");
+
+                    try {
+                        conSql.newDb(proceso);
+                    } catch (SQLException ex) {
+                        // Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+
+                    String nombreBd = programa.getNombre() + proceso.getId();
+
+                    session.setAttribute("proceso", proceso);
+                    session.setAttribute("bd", nombreBd);
                 }
 
 
-                String nombreBd = programa.getNombre() + proceso.getId();
 
-                session.setAttribute("proceso", proceso);
-                session.setAttribute("bd", nombreBd);
-
-
-
-            } else if (request.getParameter("action").equals("CerrarProcesoAI")) {
+            } else if (request.getParameter(
+                    "action").equals("CerrarProcesoAI")) {
 
                 HttpSession session = request.getSession();
                 Proceso p = (Proceso) session.getAttribute("proceso");
@@ -188,7 +238,8 @@ public class formController extends HttpServlet {
                 session.setAttribute("aux_index2", 0);
 
 
-            } else if (request.getParameter("action").equals("IniciarProcesoAI")) {
+            } else if (request.getParameter(
+                    "action").equals("IniciarProcesoAI")) {
 
                 HttpSession session = request.getSession();
                 Proceso p = (Proceso) session.getAttribute("proceso");
@@ -206,7 +257,6 @@ public class formController extends HttpServlet {
 
                 session.setAttribute("aux2_index2", 0);
             }
-
         } finally {
             out.close();
         }

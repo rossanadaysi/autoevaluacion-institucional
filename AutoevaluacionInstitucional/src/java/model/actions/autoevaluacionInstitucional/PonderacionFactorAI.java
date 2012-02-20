@@ -32,30 +32,28 @@ public class PonderacionFactorAI implements Action {
         String bd = (String) session.getAttribute("bd");
         String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/ponderacion/asignarF.jsp";
 
-        try {
-            ResultSet rs2 = null;
-            String sql = "Select* from ponderacionfactor where proceso_id = " + idProceso + "";
-            rs2 = conSql.CargarSql(sql, bd);
+
+        Result rs2 = null;
+        String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
+        rs2 = conSql.CargarSql2(sql, bd);
 
 
-            if (rs2.next()) {
-                session.setAttribute("auxAsignarF", 0);
-                System.out.println("si hay ponderacion de factores");
-            } else {
-                session.setAttribute("auxAsignarF", 1);
+        if (rs2.getRowCount() > 0) {
+            session.setAttribute("auxAsignarF", 1);
+            System.out.println("si hay ponderacion de factores");
+            session.setAttribute("pondeFactores", rs2);
+        } else {
+            session.setAttribute("auxAsignarF", 0);
 
-                Result rs = null;
-                rs = conSql.CargarSql2("Select* from factor", bd);
+            Result rs = null;
+            rs = conSql.CargarSql2("Select* from factor", bd);
 
-                session.setAttribute("factores", rs);
-                conSql.cerrarConexion();
-                System.out.println("no hay ponderacion de factores");
+            session.setAttribute("factores", rs);
+            conSql.cerrarConexion();
+            System.out.println("no hay ponderacion de factores");
 
-            }
-        } catch (SQLException ex) {
-            //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
-          
         }
+
         conSql.cerrarConexion();
 
 
