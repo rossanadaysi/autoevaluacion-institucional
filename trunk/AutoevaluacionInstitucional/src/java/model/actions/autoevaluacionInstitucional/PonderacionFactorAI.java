@@ -7,8 +7,6 @@ package model.actions.autoevaluacionInstitucional;
 import controller.sqlController;
 import entity.Proceso;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

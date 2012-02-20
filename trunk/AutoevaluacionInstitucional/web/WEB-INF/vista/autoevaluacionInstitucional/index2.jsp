@@ -406,10 +406,15 @@
                                                                 url: url3, 
                                                                 success: function(data) 
                                                                 {
+                                                                    if(${auxAsignarC} == 1){
+                                                                        alert("La Ponderación de Caracteristicas ya ha sido Asignada.");
+                                                                    }
+                                       
+                                       
                                        
                                                                     $("div.ui-layout-center").append(data);
-                                                                     setTimeout(function(){
-                                                                     $("div.ui-layout-center").scrollspy();   
+                                                                    setTimeout(function(){
+                                                                        $("div.ui-layout-center").scrollspy();   
                                                                     }, 500);
                                     
                                                                     $("#formPondeCara").submit(function(event){
@@ -420,10 +425,13 @@
                                                                             url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
                                                                             data: $("#formPondeCara").serialize(),
                                                                             success: function(){
-                                                                                $("#ponderacionCara").attr("href", "<%=request.getContextPath()%>/#listarPonderacionCaracteristica");  
-                                                                                location = "<%=request.getContextPath()%>/#listarPonderacionCaracteristica";
-                                                    
-                                                   
+                                                                                if(${auxAsignarC} == 1){
+                                                                                    alert("Ponderación de Caracteristicas Actualizada con Exito!");
+                                                                                    location = "<%=request.getContextPath()%>/#PonderacionCaracteristica";      
+                                                                                }else{
+                                                                                    alert("Ponderación de Caracteristicas Asignada con Exito!");
+                                                                                    location = "<%=request.getContextPath()%>/#PonderacionCaracteristica";       
+                                                                                }
                                              
                                                                             } //fin success
                                             
