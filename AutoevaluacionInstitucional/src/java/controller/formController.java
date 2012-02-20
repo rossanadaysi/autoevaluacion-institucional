@@ -114,14 +114,37 @@ public class formController extends HttpServlet {
 
                 session.setAttribute("idproceso", idproceso);
 
-                for (int i = 1; i <= numRows; i++) {
-                    String id = request.getParameter("id" + i);
-                    String ponderacion = request.getParameter("ponderacion" + i);
-                    String justificacion = request.getParameter("justificacion" + i);
+                if (session.getAttribute("auxAsignarC").equals(0)) {
+                    for (int i = 1; i <= numRows; i++) {
+                        String id = request.getParameter("id" + i);
+                        String ponderacion = request.getParameter("ponderacion" + i);
+                        String justificacion = request.getParameter("justificacion" + i);
 
 
-                    conSql.UpdateSql("INSERT INTO `ponderacioncaracteristica` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES (NULL, '" + ponderacion + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
+                        conSql.UpdateSql("INSERT INTO `ponderacioncaracteristica` (`id`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES (NULL, '" + ponderacion + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
 
+                    }
+                } else {
+                    System.out.println("hola");
+                    for (int i = 1; i <= numRows; i++) {
+                        String id = request.getParameter("id" + i);
+                        String ponderacion = request.getParameter("ponderacion" + i);
+                        String justificacion = request.getParameter("justificacion" + i);
+                        int idPonderacion = 0;
+
+
+                        rs = conSql.CargarSql("Select id from ponderacioncaracteristica where ponderacioncaracteristica.proceso_id = '" + idProceso + "' and ponderacioncaracteristica.caracteristica_id = '" + id + "'", bd);
+                        try {
+                            while (rs.next()) {
+                                idPonderacion = Integer.parseInt(rs.getString(1));
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+
+                        conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + ponderacion + "',`justificacion` = '" + justificacion + "' WHERE `ponderacioncaracteristica`.`id` ='" + idPonderacion + "'", bd);
+                    }
                 }
             } else if (request.getParameter(
                     "action").equals("asignarEncuestasAIp")) {

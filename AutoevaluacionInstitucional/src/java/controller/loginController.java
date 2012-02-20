@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.sql.Result;
 
 /**
  *
@@ -129,6 +130,7 @@ public class loginController extends HttpServlet {
                                     session.setAttribute("tipoLogin", "autoevaluacionInstitucional");
                                     System.out.println("Usuario de autoevaluacion institucional autorizado");
                                     session.setAttribute("auxAsignarF", 0);
+                                    session.setAttribute("auxAsignarC", 0);
                                     // menu = 1;
                                     //session.setAttribute("auxIndex2", menu);
                                     session.setAttribute("mensaje", "Autoevaluación Institucional");
@@ -156,6 +158,30 @@ public class loginController extends HttpServlet {
                                             String nombreBd = programa.getNombre() + proceso.getId();
                                             session.setAttribute("bd", nombreBd);
                                             int aux1;
+
+
+
+                                            int idProceso = proceso.getId();
+
+                                            Result rs2 = null;
+                                            String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
+                                            rs2 = conSql.CargarSql2(sql, nombreBd);
+
+
+                                            if (rs2.getRowCount() > 0) {
+                                                session.setAttribute("auxAsignarF", 1);
+                                            }
+
+                                            rs2 = null;
+                                            sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + "";
+                                            rs2 = conSql.CargarSql2(sql, nombreBd);
+
+
+                                            if (rs2.getRowCount() > 0) {
+                                                session.setAttribute("auxAsignarC", 1);
+                                            }
+
+
                                             if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
                                                 aux1 = 1;
                                                 session.setAttribute("aux2_index2", aux1);
