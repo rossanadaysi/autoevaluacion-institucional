@@ -243,7 +243,7 @@
                                             })
                                         
                                             $(".ui-layout-center").scroll(function(){
-                                                   // If has not activated (has no attribute "data-top"
+                                                // If has not activated (has no attribute "data-top"
                                                 if (!$('.subnav').attr('data-top')) {
                                                     // If already fixed, then do nothing
                                                     if ($('.subnav').hasClass('subnav-fixed')) return;
@@ -258,7 +258,7 @@
                                                     $('.subnav').removeClass('subnav-fixed');
                                             });
             
-                                          });
+                                        });
                 
                                     </script>
                                     <script type="text/javascript">
@@ -320,76 +320,83 @@
                                                     console.log("ok")
                                                 }else{
                                                     if(grid){
-                                                    grid.destroy(); 
+                                                        grid.destroy(); 
                         
-                                                }
+                                                    }
                                                
            
-                                                if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos")
-                                                {
+                                                    if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos")
+                                                    {
                         
-                                                    $.unsubscribe("set_grid_width");
-                                                    $.unsubscribe("set_grid_height");    
-                                                    if(middleLayout){
+                                                        $.unsubscribe("set_grid_width");
+                                                        $.unsubscribe("set_grid_height");    
+                                                        if(middleLayout){
                                                       
-                                                        middleLayout.destroy();
-                                                        window[ "middleLayout" ] = null;
+                                                            middleLayout.destroy();
+                                                            window[ "middleLayout" ] = null;
         
-                                                    } 
-                                                    if(innerLayout){
-                                                        innerLayout.destroy();
-                                                        window[ "innerLayout" ] = null;    
-                                                    }
+                                                        } 
+                                                        if(innerLayout){
+                                                            innerLayout.destroy();
+                                                            window[ "innerLayout" ] = null;    
+                                                        }
                         
                         
                         
-                                                    selectedRowIds = [];
+                                                        selectedRowIds = [];
                         
                 
-                                                    $("div.ui-layout-center").empty();
-                                                    var url3 = "<%=request.getContextPath()%>/"+hash;
+                                                        $("div.ui-layout-center").empty();
+                                                        var url3 = "<%=request.getContextPath()%>/"+hash;
                         
-                                                    if(hash == "#PonderacionFactor"){
-                                                        url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                                        if(hash == "#PonderacionFactor"){
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                                        $("div.ui-layout-center").empty();
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: url3, 
-                                                            success: function(data) 
-                                                            {
+                                                            $("div.ui-layout-center").empty();
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: url3, 
+                                                                success: function(data) 
+                                                                {
+                                                                    if(${auxAsignarF} == 1){
+                                                                        alert("La Ponderación de Factores ya ha sido Asignada.");
+                                                                    }
                                        
-                                                                $("div.ui-layout-center").append(data);
+                                                                    $("div.ui-layout-center").append(data);
                                     
-                                                                $("#formPondeFa").submit(function(event){
-                                                                    event.preventDefault();
+                                                                    $("#formPondeFa").submit(function(event){
+                                                                        event.preventDefault();
                                              
-                                                                    $.ajax({
-                                                                        type: 'POST',
-                                                                        url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
-                                                                        data: $("#formPondeFa").serialize(),
-                                                                        success: function(){
-                                                                            $("#ponderacionFact").attr("href", "<%=request.getContextPath()%>/#listarPonderacionFactor");  
-                                                                            location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
-                                                    
-                                                   
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
+                                                                            data: $("#formPondeFa").serialize(),
+                                                                            success: function(){
+                                                                          
+                                                                                if(${auxAsignarF} == 1){
+                                                                                    alert("Ponderación de Factores Actualizada con Exito!");
+                                                                                    location = "<%=request.getContextPath()%>/#PonderacionFactor";      
+                                                                                }else{
+                                                                                    alert("Ponderación de Factores Asignada con Exito!");
+                                                                                    location = "<%=request.getContextPath()%>/#PonderacionFactor";       
+                                                                                }
                                              
-                                                                        } //fin success
+                                                                            } //fin success
                                             
-                                                                    }); //fin $.ajax
-                                                                }); //fin submit
+                                                                        }); //fin $.ajax
+                                                                    }); //fin submit
                                         
                                      
                              
-                                                            } //fin success
-                                                        }); //fin del $.ajax
+                                                                } //fin success
+                                                            }); //fin del $.ajax
                          
                                                        
                        
-                                                    }
-                                                    else if(hash == "#PonderacionCaracteristica"){
-                                                        url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                                        }
+                                                        else if(hash == "#PonderacionCaracteristica"){
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
                                                         
@@ -429,100 +436,120 @@
                                                             }); //fin del $.ajax
                          
                                                         
-                                                    }
-                                                    else if(hash == "#AsignacionEncuestas"){
-                                                        url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                                        }
+                                                        else if(hash == "#AsignacionEncuestas"){
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                                        var jaja34 = function(){
+                                                            var jaja34 = function(){
+                                                                $("div.ui-layout-center").empty();
+                                                                $.ajax({ 
+                                                                    type: "POST", 
+                                                                    url: url3, 
+                                                                    success: function(data) 
+                                                                    {
+                                       
+                                                                        $("div.ui-layout-center").append(data);
+                                    
+                                                                        $("#formAsigEnc").submit(function(event){
+                                                                            event.preventDefault();
+                                             
+                                                                            $.ajax({
+                                                                                type: 'POST',
+                                                                                url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
+                                                                                data: $("#formAsigEnc").serialize(),
+                                                                                success: function(){
+                                                                                    // $("#asignarEncuesta").attr("href", "<%=request.getContextPath()%>/#listarAsignacionEncuestas");  
+                                                                                    //location = "<%=request.getContextPath()%>/#listarAsignacionEncuestas";  
+                                                                                    alert("encuestas asignada con exito!")
+                                                                                } //fin success
+                                            
+                                                                            }); //fin $.ajax
+                                                                        }); //fin submit
+                                        
+                                     
+                             
+                                                                    } //fin success
+                                                                }); //fin del $.ajax
+                         
+                                                            } //fin jaja34  
+                                                            jaja34(); 
+                       
+                                                        }
+                                                        else if(hash == "#CrearProceso"){
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                                                             $("div.ui-layout-center").empty();
                                                             $.ajax({ 
                                                                 type: "POST", 
                                                                 url: url3, 
                                                                 success: function(data) 
                                                                 {
-                                       
+                                                                    if(${aux_index2} == 1){
+                                                                        alert("El Proceso ya Fue Creado.");
+                                                                    }
                                                                     $("div.ui-layout-center").append(data);
-                                    
-                                                                    $("#formAsigEnc").submit(function(event){
+                                                                    $("#formCrearProc").submit(function(event){
                                                                         event.preventDefault();
-                                             
                                                                         $.ajax({
                                                                             type: 'POST',
-                                                                            url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
-                                                                            data: $("#formAsigEnc").serialize(),
+                                                                            url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                                            data: $("#formCrearProc").serialize(),
                                                                             success: function(){
-                                                                                // $("#asignarEncuesta").attr("href", "<%=request.getContextPath()%>/#listarAsignacionEncuestas");  
-                                                                                //location = "<%=request.getContextPath()%>/#listarAsignacionEncuestas";  
-                                                                                alert("encuestas asignada con exito!")
+                                                                                if(${aux_index2} == 1){
+                                                                                    alert("Proceso Actualizado con Exito!");
+                                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                                    location = "<%=request.getContextPath()%>/#CrearProceso";      
+                                                                                }else{
+                                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                                    location = '/AutoevaluacionInstitucional/';      
+                                                                                }
+                                                                                                         
                                                                             } //fin success
-                                            
                                                                         }); //fin $.ajax
                                                                     }); //fin submit
-                                        
-                                     
-                             
                                                                 } //fin success
                                                             }); //fin del $.ajax
-                         
-                                                        } //fin jaja34  
-                                                        jaja34(); 
-                       
-                                                    }
-                                                    else if(hash == "#CrearProceso"){
-                                                        url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                                        $("div.ui-layout-center").empty();
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: url3, 
-                                                            success: function(data) 
-                                                            {
-                                       
-                                                                $("div.ui-layout-center").append(data);
-                                    
-                                                                $("#formCrearProc").submit(function(event){
-                                                                    event.preventDefault();
-                                             
-                                                                    $.ajax({
-                                                                        type: 'POST',
-                                                                        url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
-                                                                        data: $("#formCrearProc").serialize(),
-                                                                        success: function(){
-                                                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                        }
+                                                        else if(hash == "#IniciarProceso"){
+                                                            url3 = url3.replace('#', "formController?action=")+"AI";
+                                                            $("div.ui-layout-center").empty();
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: url3, 
+                                                                success: function(data) 
+                                                                {
+                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                             
-                                                                            location = "<%=request.getContextPath()%>/#detalleProceso";                                
-                                                                        } //fin success
-
-                                                                    }); //fin $.ajax
-                                                                }); //fin submit
-                                        
-                                     
-                             
-                                                            } //fin success
-                                                        }); //fin del $.ajax
-                                                    }
-                                                    else if(hash == "#IniciarProceso" || hash == "#CerrarProceso"){
-                                                        url3 = url3.replace('#', "formController?action=")+"AI";
-                                                        $("div.ui-layout-center").empty();
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: url3, 
-                                                            success: function(data) 
-                                                            {
-                                                                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                            
-                                                                location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                                                                    location = "<%=request.getContextPath()%>/#listarProcesos";                                
                                                              
-                                                            } //fin success
-                                                        }); //fin del $.ajax
+                                                                } //fin success
+                                                            }); //fin del $.ajax
                           
                                                       
                        
-                                                    }
-                                                    else {
-                                                        url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                                        $("div.ui-layout-center").load(url3);
-                                                    }
+                                                        }
+                                                        else if(hash == "#CerrarProceso"){
+                                                            url3 = url3.replace('#', "formController?action=")+"AI";
+                                                            $("div.ui-layout-center").empty();
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: url3, 
+                                                                success: function(data) 
+                                                                {
+                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                            
+                                                                    location = "<%=request.getContextPath()%>/#detalleProceso";                                
+                                                             
+                                                                } //fin success
+                                                            }); //fin del $.ajax
+                          
+                                                      
+                       
+                                                        }
+                                                        else {
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                                            $("div.ui-layout-center").load(url3);
+                                                        }
                             
                             
                         
@@ -531,1521 +558,1521 @@
                       
                        
                        
-                                                }else{
+                                                    }else{
                         
-                                                    if(hash == "#detalleProceso")
-                                                    {
+                                                        if(hash == "#detalleProceso")
+                                                        {
                         
                          
-                                                        $.unsubscribe("set_grid_width");
+                                                            $.unsubscribe("set_grid_width");
                         
-                                                        if(middleLayout){
-                                                            middleLayout.destroy();
+                                                            if(middleLayout){
+                                                                middleLayout.destroy();
                             
-                                                        } 
-                                                        if(innerLayout){
-                                                            innerLayout.destroy();
+                                                            } 
+                                                            if(innerLayout){
+                                                                innerLayout.destroy();
                             
-                                                        }
+                                                            }
                         
                         
                         
-                                                        selectedRowIds = [];
+                                                            selectedRowIds = [];
                         
                 
-                                                        $("div.ui-layout-center").empty();
+                                                            $("div.ui-layout-center").empty();
                         
-                                                        var dataView;
-                                                        var grid;
-                                                        //  var pager;
-                                                        //var columnpicker;
-                                                        var grid_opts={};
-                                                        var data = [];
-                                                        var selectedRowIds = [];
+                                                            var dataView;
+                                                            var grid;
+                                                            //  var pager;
+                                                            //var columnpicker;
+                                                            var grid_opts={};
+                                                            var data = [];
+                                                            var selectedRowIds = [];
 
 
 
 
 
-                                                        var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                                            return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                                                ""+dataContext["programa"]+"";
+                                                            var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                                                return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                                                    ""+dataContext["programa"]+"";
 
 
-                                                        };
+                                                            };
             
             
-                                                        var columns = [
-                                                            {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
-                                                            {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
-                                                            {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
-                                                            {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
+                                                            var columns = [
+                                                                {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
+                                                                {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
+                                                                {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
+                                                                {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
                 
-                                                        ];
+                                                            ];
 
-                                                        var options = {
-                                                            editable: false,
-                                                            autoEdit: false,
-                                                            enableAddRow: false,
-                                                            enableCellNavigation: true,
-                                                            asyncEditorLoading: false,
-                                                            enableColumnReorder: false,
-                                                            forceFitColumns: true
+                                                            var options = {
+                                                                editable: false,
+                                                                autoEdit: false,
+                                                                enableAddRow: false,
+                                                                enableCellNavigation: true,
+                                                                asyncEditorLoading: false,
+                                                                enableColumnReorder: false,
+                                                                forceFitColumns: true
                         
-                                                        };
+                                                            };
 
-                                                        var sortcol = "Nombre";
-                                                        var sortdir = 1;
-                                                        //var percentCompleteThreshold = 0;
-                                                        var searchString = "";
+                                                            var sortcol = "Nombre";
+                                                            var sortdir = 1;
+                                                            //var percentCompleteThreshold = 0;
+                                                            var searchString = "";
 
-                                                        function myFilter(item) {
+                                                            function myFilter(item) {
                
-                                                            if (searchString != "" && item["programa"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                                                return false;
+                                                                if (searchString != "" && item["programa"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                                                    return false;
 
-                                                            return true;
-                                                        }
+                                                                return true;
+                                                            }
 
                
-                                                        $(".grid-header .ui-icon")
-                                                        .addClass("ui-state-default ui-corner-all")
-                                                        .mouseover(function(e) {
-                                                            $(e.target).addClass("ui-state-hover")
-                                                        })
-                                                        .mouseout(function(e) {
-                                                            $(e.target).removeClass("ui-state-hover")
-                                                        });
+                                                            $(".grid-header .ui-icon")
+                                                            .addClass("ui-state-default ui-corner-all")
+                                                            .mouseover(function(e) {
+                                                                $(e.target).addClass("ui-state-hover")
+                                                            })
+                                                            .mouseout(function(e) {
+                                                                $(e.target).removeClass("ui-state-hover")
+                                                            });
 
 
                     
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: "/AutoevaluacionInstitucional/jsonController?ejecucion=indexAI", 
-                                                            dataType: 'json', 
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: "/AutoevaluacionInstitucional/jsonController?ejecucion=indexAI", 
+                                                                dataType: 'json', 
                             
-                                                            success: function(json) 
-                                                            {
-                                                                $(".ui-layout-center").append("<div class='middle-north'>"
-                                                                    +"<div class='row wellMio'>"
-                                                                    +"<div class='span5'>"
-                                                                    +"<h3>${msjLogIn1}</h3>"
-                                                                    +"<h4>${msjLogIn2}</h4>"
-                                                                    +"</div>"
-                                                                    +"<div class='pull-right'>"
-                                                                    +"<form class='form-search'>"
-                                                                    +"<input type='text' id='txtSearch' class='input-medium search-query'>"
-                                                                    +"<button class='btn' type='submit'>Buscar</button>"
-                                                                    +"</form>"
-                                                                    +"</div>"
-                                                                    +"</div>"
-                                                                    +"</div>"   
-                                                                    +"<div class='middle-center'>"
-                                                                    +"<div class='inner-center' style='width:100%;float:left;'>"
-                                                                    +"<div id='myGrid'></div></div></div>");
-                                                                if(json.length > 0) 
-                                                                { for (var i = 0; i < json.length; i++) 
-                                                                    {
-                                                                        data[i] = { 
-                                                                            id: json[i].id, 
-                                                                            fechaInicio: json[i].fechaInicio, 
-                                                                            fechaCierre: json[i].fechaCierre, 
-                                                                            descripcion: json[i].descripcion,
-                                                                            programa: json[i].programa
-                                                                        }; 
-                                                                    } 
-                                                                    dataView = new Slick.Data.DataView();
+                                                                success: function(json) 
+                                                                {
+                                                                    $(".ui-layout-center").append("<div class='middle-north'>"
+                                                                        +"<div class='row wellMio'>"
+                                                                        +"<div class='span5'>"
+                                                                        +"<h3>${msjLogIn1}</h3>"
+                                                                        +"<h4>${msjLogIn2}</h4>"
+                                                                        +"</div>"
+                                                                        +"<div class='pull-right'>"
+                                                                        +"<form class='form-search'>"
+                                                                        +"<input type='text' id='txtSearch' class='input-medium search-query'>"
+                                                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                                                        +"</form>"
+                                                                        +"</div>"
+                                                                        +"</div>"
+                                                                        +"</div>"   
+                                                                        +"<div class='middle-center'>"
+                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div id='myGrid'></div></div></div>");
+                                                                    if(json.length > 0) 
+                                                                    { for (var i = 0; i < json.length; i++) 
+                                                                        {
+                                                                            data[i] = { 
+                                                                                id: json[i].id, 
+                                                                                fechaInicio: json[i].fechaInicio, 
+                                                                                fechaCierre: json[i].fechaCierre, 
+                                                                                descripcion: json[i].descripcion,
+                                                                                programa: json[i].programa
+                                                                            }; 
+                                                                        } 
+                                                                        dataView = new Slick.Data.DataView();
                           
-                                                                    grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                                    var fil=[];
-                                                                    grid.setSelectedRows(fil); 
-                                                                    // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                                    //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                                                        grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                                                        var fil=[];
+                                                                        grid.setSelectedRows(fil); 
+                                                                        // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                                                        //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                                    $.subscribe("set_grid_height", function (new_height) {
-                                                                        grid_opts.height = new_height;
-                                                                        $("#myGrid").css('height', grid_opts.height);
-                                                                        grid.resizeCanvas();
+                                                                        $.subscribe("set_grid_height", function (new_height) {
+                                                                            grid_opts.height = new_height;
+                                                                            $("#myGrid").css('height', grid_opts.height);
+                                                                            grid.resizeCanvas();
                                         
-                                                                    });
+                                                                        });
             
-                                                                    $.subscribe("set_grid_width", function (new_width) {
-                                                                        grid_opts.width = new_width;
-                                                                        $("#myGrid").css('width', grid_opts.width );
-                                                                        grid.autosizeColumns();
-                                                                        //grid.resizeCanvas();
-                                                                    });
+                                                                        $.subscribe("set_grid_width", function (new_width) {
+                                                                            grid_opts.width = new_width;
+                                                                            $("#myGrid").css('width', grid_opts.width );
+                                                                            grid.autosizeColumns();
+                                                                            //grid.resizeCanvas();
+                                                                        });
                                                                     
 
             
 
-                                                                    /*   al cambiar el contenido de una celda
-                                                                     *   grid.onCellChange = function(row,col,item) {
+                                                                        /*   al cambiar el contenido de una celda
+                                                                         *   grid.onCellChange = function(row,col,item) {
                                          dataView.updateItem(item.id,item);    
                                      };
 
                                                  grid.onAddNewRow = addItem;
-                                                                     */  //al presionar teclas
-                                                                    grid.onKeyDown = function(e) {
+                                                                         */  //al presionar teclas
+                                                                        grid.onKeyDown = function(e) {
                                     
-                                                                        var rows = [];
-                                                                        selectedRowIds = [];
+                                                                            var rows = [];
+                                                                            selectedRowIds = [];
                                     
-                                                                        // select all rows on ctrl-a
-                                                                        if (e.which == 65 && e.ctrlKey)
-                                                                        {
-                                                                            for (var i = 0; i < dataView.rows.length; i++) {
-                                                                                rows.push(i);
-                                                                                selectedRowIds.push(dataView.rows[i].id);
+                                                                            // select all rows on ctrl-a
+                                                                            if (e.which == 65 && e.ctrlKey)
+                                                                            {
+                                                                                for (var i = 0; i < dataView.rows.length; i++) {
+                                                                                    rows.push(i);
+                                                                                    selectedRowIds.push(dataView.rows[i].id);
+                                                                                }
+
+                                                                                grid.setSelectedRows(rows);
+
+                                                                                return true;
+                                                                            }  
+                                                                            if(e.which == 27){
+                                                                                grid.setSelectedRows(rows);
+                                                                                return true;
                                                                             }
-
-                                                                            grid.setSelectedRows(rows);
-
-                                                                            return true;
-                                                                        }  
-                                                                        if(e.which == 27){
-                                                                            grid.setSelectedRows(rows);
-                                                                            return true;
-                                                                        }
-                                                                        return false;
+                                                                            return false;
                                     
 
                                    
-                                                                    };
+                                                                        };
 
-                                                                    grid.onSelectedRowsChanged = function() {
-                                                                        selectedRowIds = [];
-                                                                        var rows = grid.getSelectedRows();
-                                                                        for (var i = 0, l = rows.length; i < l; i++) {
-                                                                            var item = dataView.rows[rows[i]];
-                                                                            if (item) selectedRowIds.push(item.id);
-                                                                        }
-                                                                    };
+                                                                        grid.onSelectedRowsChanged = function() {
+                                                                            selectedRowIds = [];
+                                                                            var rows = grid.getSelectedRows();
+                                                                            for (var i = 0, l = rows.length; i < l; i++) {
+                                                                                var item = dataView.rows[rows[i]];
+                                                                                if (item) selectedRowIds.push(item.id);
+                                                                            }
+                                                                        };
 
                 
                 
-                                                                    grid.onSort = function(sortCol, sortAsc) {
-                                                                        sortdir = sortAsc ? 1 : -1;
-                                                                        sortcol = sortCol.field;
+                                                                        grid.onSort = function(sortCol, sortAsc) {
+                                                                            sortdir = sortAsc ? 1 : -1;
+                                                                            sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                                    };
+                                                                        };
 
-                                                                    // wire up model events to drive the grid
-                                                                    dataView.onRowCountChanged.subscribe(function(args) {
-                                                                        grid.updateRowCount();
-                                                                        grid.render();
-                                                                    });
+                                                                        // wire up model events to drive the grid
+                                                                        dataView.onRowCountChanged.subscribe(function(args) {
+                                                                            grid.updateRowCount();
+                                                                            grid.render();
+                                                                        });
 
-                                                                    dataView.onRowsChanged.subscribe(function(rows) {
-                                                                        grid.removeRows(rows);
-                                                                        grid.render();
+                                                                        dataView.onRowsChanged.subscribe(function(rows) {
+                                                                            grid.removeRows(rows);
+                                                                            grid.render();
 
-                                                                        if (selectedRowIds.length > 0)
-                                                                        {
-                                                                            // since how the original data maps onto rows has changed,
-                                                                            // the selected rows in the grid need to be updated
-                                                                            var selRows = [];
-                                                                            for (var i = 0; i < selectedRowIds.length; i++)
+                                                                            if (selectedRowIds.length > 0)
                                                                             {
-                                                                                var idx = dataView.getRowById(selectedRowIds[i]);
-                                                                                if (idx != undefined)
-                                                                                    selRows.push(idx);
+                                                                                // since how the original data maps onto rows has changed,
+                                                                                // the selected rows in the grid need to be updated
+                                                                                var selRows = [];
+                                                                                for (var i = 0; i < selectedRowIds.length; i++)
+                                                                                {
+                                                                                    var idx = dataView.getRowById(selectedRowIds[i]);
+                                                                                    if (idx != undefined)
+                                                                                        selRows.push(idx);
+                                                                                }
+
+                                                                                grid.setSelectedRows(selRows);
                                                                             }
+                                                                        });
 
-                                                                            grid.setSelectedRows(selRows);
-                                                                        }
-                                                                    });
-
-                                                                    dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                                        dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                                        grid.setOptions({enableAddRow:options.enableAddRow});
-                                                                    });
+                                                                            grid.setOptions({enableAddRow:options.enableAddRow});
+                                                                        });
                 
                 
-                                                                    $("#txtSearch").keyup(function(e) {
-                                                                        Slick.GlobalEditorLock.cancelCurrentEdit();
+                                                                        $("#txtSearch").keyup(function(e) {
+                                                                            Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                                        // clear on Esc
-                                                                        if (e.which == 27)
-                                                                            this.value = "";
+                                                                            // clear on Esc
+                                                                            if (e.which == 27)
+                                                                                this.value = "";
 
-                                                                        searchString = this.value;
-                                                                        dataView.refresh();
-                                                                    });
+                                                                            searchString = this.value;
+                                                                            dataView.refresh();
+                                                                        });
 
 
-                                                                    dataView.beginUpdate();
-                                                                    dataView.setItems(data);
-                                                                    dataView.setFilter(myFilter);
-                                                                    dataView.endUpdate();
+                                                                        dataView.beginUpdate();
+                                                                        dataView.setItems(data);
+                                                                        dataView.setFilter(myFilter);
+                                                                        dataView.endUpdate();
                         
 
-                                                                    grid.onContextMenu = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onContextMenu = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        return true;
-                                                                    }; 
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            return true;
+                                                                        }; 
                                 
-                                                                    grid.onClick = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onClick = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        var ancla = $(".rowOption");
-                                                                        if(e.target == ancla[0]){
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            var ancla = $(".rowOption");
+                                                                            if(e.target == ancla[0]){
                                                               
-                                                                            $(".slick-cell .options a").jjmenu("click", 
-                                                                            // menu items:
-                                                                            [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                                            {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                                            {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                                            {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                                        ];
-                                                                                    }
-                                                                                } 
-                                                                            ], 
-                                                                            // myReplaces / userData:
-                                                                            {   "tbRow":function(){
+                                                                                $(".slick-cell .options a").jjmenu("click", 
+                                                                                // menu items:
+                                                                                [ {getByFunction:function(myData) {
+                                                                                            return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                                {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                                                {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                                                {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                                            ];
+                                                                                        }
+                                                                                    } 
+                                                                                ], 
+                                                                                // myReplaces / userData:
+                                                                                {   "tbRow":function(){
                        
                         
-                                                                                    var fila = jQuery(triggerElement);
-                                                                                    var celdas = [];
-                                                                                    jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                                        celdas[celdas.length] = jQuery(this).html();
+                                                                                        var fila = jQuery(triggerElement);
+                                                                                        var celdas = [];
+                                                                                        jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                                            celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                                    });
-                                                                                    if(selectedRowIds.length > 1){
-                                                                                        celdas[0] ="seleccionados"; 
+                                                                                        });
+                                                                                        if(selectedRowIds.length > 1){
+                                                                                            celdas[0] ="seleccionados"; 
+                                                                                        }
+                                                                                        return celdas;    
                                                                                     }
-                                                                                    return celdas;    
-                                                                                }
                     
                                           
-                                                                            }, 
-                                                                            // effects:
-                                                                            {show:"default", xposition:"left", yposition:"auto"
+                                                                                }, 
+                                                                                // effects:
+                                                                                {show:"default", xposition:"left", yposition:"auto"
                 
-                                                                            });
+                                                                                });
                                                
-                                                                            setTimeout(function () { 
-                                                                                $(".slick-cell .options a").addClass("hover");
-                                                                                $(".slick-cell .options a").parents("div").addClass("hover");
-                                                                                $(".slick-cell .options a").trigger("click");
-                                                                            }, 200);
-                                                                            setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                                                setTimeout(function () { 
+                                                                                    $(".slick-cell .options a").addClass("hover");
+                                                                                    $(".slick-cell .options a").parents("div").addClass("hover");
+                                                                                    $(".slick-cell .options a").trigger("click");
+                                                                                }, 200);
+                                                                                setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                                        }else{
-                                                                            var filadelaTabla =  $(".slick-row");
-                                                                            var rowsx =[];
-                                                                            if(!$.contains(filadelaTabla[0],e.target)){
-                                                                                grid.setSelectedRows(rowsx);
+                                                                            }else{
+                                                                                var filadelaTabla =  $(".slick-row");
+                                                                                var rowsx =[];
+                                                                                if(!$.contains(filadelaTabla[0],e.target)){
+                                                                                    grid.setSelectedRows(rowsx);
                                                 
+                                                                                }
                                                                             }
-                                                                        }
                                         
-                                                                    }; 
+                                                                        }; 
                                 
                                 
                                 
-                                                                    $("#myGrid").bind("draginit", function(e,dd) {
-                                                                        var cell = grid.getCellFromEvent(e);
-                                                                        if (!cell)
-                                                                            return false;
+                                                                        $("#myGrid").bind("draginit", function(e,dd) {
+                                                                            var cell = grid.getCellFromEvent(e);
+                                                                            if (!cell)
+                                                                                return false;
 
-                                                                        dd.row = cell.row;
-                                                                        if (!data[dd.row])
-                                                                            return false;
+                                                                            dd.row = cell.row;
+                                                                            if (!data[dd.row])
+                                                                                return false;
 
-                                                                        if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                                            return false;
-                                                                    });
+                                                                            if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                                                return false;
+                                                                        });
 
                             
-                                                                    // jjmen(); 
+                                                                        // jjmen(); 
                   
-                                                                } //fin del if
+                                                                    } //fin del if
                        
-                                                            }//fin del success
-                                                        }); //fin del .ajax
+                                                                }//fin del success
+                                                            }); //fin del .ajax
                 
                     
                     
-                                                    }
-                                                    if(hash == "#listarProcesos")
-                                                    {
+                                                        }
+                                                        if(hash == "#listarProcesos")
+                                                        {
                                                  
-                                                        //  $.unsubscribe("set_grid_width");
+                                                            //  $.unsubscribe("set_grid_width");
                         
-                                                        if(middleLayout){
-                                                            middleLayout.destroy();
+                                                            if(middleLayout){
+                                                                middleLayout.destroy();
                             
-                                                        } 
-                                                        if(innerLayout){
-                                                            innerLayout.destroy();
+                                                            } 
+                                                            if(innerLayout){
+                                                                innerLayout.destroy();
                             
-                                                        }
+                                                            }
                         
                         
                         
-                                                        selectedRowIds = [];
+                                                            selectedRowIds = [];
                         
                 
-                                                        $("div.ui-layout-center").empty();
+                                                            $("div.ui-layout-center").empty();
                         
-                                                        var dataView;
-                                                        var grid;
-                                                        //  var pager;
-                                                        //var columnpicker;
-                                                        var grid_opts={};
-                                                        var data = [];
-                                                        var selectedRowIds = [];
+                                                            var dataView;
+                                                            var grid;
+                                                            //  var pager;
+                                                            //var columnpicker;
+                                                            var grid_opts={};
+                                                            var data = [];
+                                                            var selectedRowIds = [];
 
 
 
 
 
-                                                        var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                                            return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                                                ""+dataContext["programa"]+"";
+                                                            var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                                                return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                                                    ""+dataContext["programa"]+"";
 
 
-                                                        };
+                                                            };
             
             
-                                                        var columns = [
-                                                            {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
-                                                            {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
-                                                            {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
-                                                            {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
+                                                            var columns = [
+                                                                {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
+                                                                {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
+                                                                {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
+                                                                {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
                 
-                                                        ];
+                                                            ];
 
-                                                        var options = {
-                                                            editable: false,
-                                                            autoEdit: false,
-                                                            enableAddRow: false,
-                                                            enableCellNavigation: true,
-                                                            asyncEditorLoading: false,
-                                                            enableColumnReorder: false,
-                                                            forceFitColumns: true
+                                                            var options = {
+                                                                editable: false,
+                                                                autoEdit: false,
+                                                                enableAddRow: false,
+                                                                enableCellNavigation: true,
+                                                                asyncEditorLoading: false,
+                                                                enableColumnReorder: false,
+                                                                forceFitColumns: true
                         
-                                                        };
+                                                            };
 
-                                                        var sortcol = "Fecha de Inicio";
-                                                        var sortdir = 1;
-                                                        //var percentCompleteThreshold = 0;
-                                                        var searchString = "";
+                                                            var sortcol = "Fecha de Inicio";
+                                                            var sortdir = 1;
+                                                            //var percentCompleteThreshold = 0;
+                                                            var searchString = "";
 
-                                                        function myFilter(item) {
+                                                            function myFilter(item) {
                
-                                                            if (searchString != "" && item["Fecha de Inicio"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                                                return false;
+                                                                if (searchString != "" && item["Fecha de Inicio"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                                                    return false;
 
-                                                            return true;
-                                                        }
+                                                                return true;
+                                                            }
 
                
-                                                        $(".grid-header .ui-icon")
-                                                        .addClass("ui-state-default ui-corner-all")
-                                                        .mouseover(function(e) {
-                                                            $(e.target).addClass("ui-state-hover")
-                                                        })
-                                                        .mouseout(function(e) {
-                                                            $(e.target).removeClass("ui-state-hover")
-                                                        });
+                                                            $(".grid-header .ui-icon")
+                                                            .addClass("ui-state-default ui-corner-all")
+                                                            .mouseover(function(e) {
+                                                                $(e.target).addClass("ui-state-hover")
+                                                            })
+                                                            .mouseout(function(e) {
+                                                                $(e.target).removeClass("ui-state-hover")
+                                                            });
 
 
                     
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarProcesos", 
-                                                            dataType: 'json', 
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarProcesos", 
+                                                                dataType: 'json', 
                             
-                                                            success: function(json) 
-                                                            {
-                                                                $(".ui-layout-center").append("<div class='middle-north'>"
-                                                                    +"<div class='row wellMio'>"
-                                                                    +"<div class='span5'>"
-                                                                    +"<h3>${msjLogIn1}</h3>"
-                                                                    +"<h4>${msjLogIn2}</h4>"
-                                                                    +"</div>"
-                                                                    +"<div class='pull-right'>"
-                                                                    +"<form class='form-search'>"
-                                                                    +"<input type='text' class='input-medium search-query'>"
-                                                                    +"<button class='btn' type='submit'>Buscar</button>"
-                                                                    +"</form>"
-                                                                    +"</div>"
-                                                                    +"</div>"
-                                                                    +"</div>"   
-                                                                    +"<div class='middle-center'>"
-                                                                    +"<div class='inner-center' style='width:100%;float:left;'>"
-                                                                    +"<div id='myGrid'></div></div></div>");
+                                                                success: function(json) 
+                                                                {
+                                                                    $(".ui-layout-center").append("<div class='middle-north'>"
+                                                                        +"<div class='row wellMio'>"
+                                                                        +"<div class='span5'>"
+                                                                        +"<h3>Procesos Realizados</h3>"
+                                                                        +"<h4>Detalle de Procesos Ejecutados.</h4>"
+                                                                        +"</div>"
+                                                                        +"<div class='pull-right'>"
+                                                                        +"<form class='form-search'>"
+                                                                        +"<input type='text' class='input-medium search-query'>"
+                                                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                                                        +"</form>"
+                                                                        +"</div>"
+                                                                        +"</div>"
+                                                                        +"</div>"   
+                                                                        +"<div class='middle-center'>"
+                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div id='myGrid'></div></div></div>");
             
                                                                
                             
-                                                                if(json.length > 0) 
-                                                                { for (var i = 0; i < json.length; i++) 
-                                                                    {
-                                                                        data[i] = { 
-                                                                            id: json[i].id, 
-                                                                            fechaInicio: json[i].fechaInicio, 
-                                                                            fechaCierre: json[i].fechaCierre, 
-                                                                            descripcion: json[i].descripcion,
-                                                                            programa: json[i].programa
-                                                                        }; 
-                                                                    } 
-                                                                    dataView = new Slick.Data.DataView();
+                                                                    if(json.length > 0) 
+                                                                    { for (var i = 0; i < json.length; i++) 
+                                                                        {
+                                                                            data[i] = { 
+                                                                                id: json[i].id, 
+                                                                                fechaInicio: json[i].fechaInicio, 
+                                                                                fechaCierre: json[i].fechaCierre, 
+                                                                                descripcion: json[i].descripcion,
+                                                                                programa: json[i].programa
+                                                                            }; 
+                                                                        } 
+                                                                        dataView = new Slick.Data.DataView();
                           
-                                                                    grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                                    var fil=[];
-                                                                    grid.setSelectedRows(fil); 
-                                                                    // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                                    //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                                                        grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                                                        var fil=[];
+                                                                        grid.setSelectedRows(fil); 
+                                                                        // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                                                        //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                                    $.subscribe("set_grid_height", function (new_height) {
-                                                                        grid_opts.height = new_height;
-                                                                        $("#myGrid").css('height', grid_opts.height);
-                                                                        grid.resizeCanvas();
+                                                                        $.subscribe("set_grid_height", function (new_height) {
+                                                                            grid_opts.height = new_height;
+                                                                            $("#myGrid").css('height', grid_opts.height);
+                                                                            grid.resizeCanvas();
                                                                  
-                                                                    });
+                                                                        });
 
-                                                                    $.subscribe("set_grid_width", function (new_width) {
-                                                                        grid_opts.width = new_width;
-                                                                        $("#myGrid").css('width', grid_opts.width );
-                                                                        grid.autosizeColumns();
-                                                                        //grid.resizeCanvas();
-                                                                    });
+                                                                        $.subscribe("set_grid_width", function (new_width) {
+                                                                            grid_opts.width = new_width;
+                                                                            $("#myGrid").css('width', grid_opts.width );
+                                                                            grid.autosizeColumns();
+                                                                            //grid.resizeCanvas();
+                                                                        });
 
             
 
-                                                                    /*   al cambiar el contenido de una celda
-                                                                     *   grid.onCellChange = function(row,col,item) {
+                                                                        /*   al cambiar el contenido de una celda
+                                                                         *   grid.onCellChange = function(row,col,item) {
                                          dataView.updateItem(item.id,item);    
                                      };
 
                                                  grid.onAddNewRow = addItem;
-                                                                     */  //al presionar teclas
-                                                                    grid.onKeyDown = function(e) {
+                                                                         */  //al presionar teclas
+                                                                        grid.onKeyDown = function(e) {
                                     
-                                                                        var rows = [];
-                                                                        selectedRowIds = [];
+                                                                            var rows = [];
+                                                                            selectedRowIds = [];
                                     
-                                                                        // select all rows on ctrl-a
-                                                                        if (e.which == 65 && e.ctrlKey)
-                                                                        {
-                                                                            for (var i = 0; i < dataView.rows.length; i++) {
-                                                                                rows.push(i);
-                                                                                selectedRowIds.push(dataView.rows[i].id);
+                                                                            // select all rows on ctrl-a
+                                                                            if (e.which == 65 && e.ctrlKey)
+                                                                            {
+                                                                                for (var i = 0; i < dataView.rows.length; i++) {
+                                                                                    rows.push(i);
+                                                                                    selectedRowIds.push(dataView.rows[i].id);
+                                                                                }
+
+                                                                                grid.setSelectedRows(rows);
+
+                                                                                return true;
+                                                                            }  
+                                                                            if(e.which == 27){
+                                                                                grid.setSelectedRows(rows);
+                                                                                return true;
                                                                             }
-
-                                                                            grid.setSelectedRows(rows);
-
-                                                                            return true;
-                                                                        }  
-                                                                        if(e.which == 27){
-                                                                            grid.setSelectedRows(rows);
-                                                                            return true;
-                                                                        }
-                                                                        return false;
+                                                                            return false;
                                     
 
                                    
-                                                                    };
+                                                                        };
 
-                                                                    grid.onSelectedRowsChanged = function() {
-                                                                        selectedRowIds = [];
-                                                                        var rows = grid.getSelectedRows();
-                                                                        for (var i = 0, l = rows.length; i < l; i++) {
-                                                                            var item = dataView.rows[rows[i]];
-                                                                            if (item) selectedRowIds.push(item.id);
-                                                                        }
-                                                                    };
+                                                                        grid.onSelectedRowsChanged = function() {
+                                                                            selectedRowIds = [];
+                                                                            var rows = grid.getSelectedRows();
+                                                                            for (var i = 0, l = rows.length; i < l; i++) {
+                                                                                var item = dataView.rows[rows[i]];
+                                                                                if (item) selectedRowIds.push(item.id);
+                                                                            }
+                                                                        };
 
                 
                 
-                                                                    grid.onSort = function(sortCol, sortAsc) {
-                                                                        sortdir = sortAsc ? 1 : -1;
-                                                                        sortcol = sortCol.field;
+                                                                        grid.onSort = function(sortCol, sortAsc) {
+                                                                            sortdir = sortAsc ? 1 : -1;
+                                                                            sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                                    };
+                                                                        };
 
-                                                                    // wire up model events to drive the grid
-                                                                    dataView.onRowCountChanged.subscribe(function(args) {
-                                                                        grid.updateRowCount();
-                                                                        grid.render();
-                                                                    });
+                                                                        // wire up model events to drive the grid
+                                                                        dataView.onRowCountChanged.subscribe(function(args) {
+                                                                            grid.updateRowCount();
+                                                                            grid.render();
+                                                                        });
 
-                                                                    dataView.onRowsChanged.subscribe(function(rows) {
-                                                                        grid.removeRows(rows);
-                                                                        grid.render();
+                                                                        dataView.onRowsChanged.subscribe(function(rows) {
+                                                                            grid.removeRows(rows);
+                                                                            grid.render();
 
-                                                                        if (selectedRowIds.length > 0)
-                                                                        {
-                                                                            // since how the original data maps onto rows has changed,
-                                                                            // the selected rows in the grid need to be updated
-                                                                            var selRows = [];
-                                                                            for (var i = 0; i < selectedRowIds.length; i++)
+                                                                            if (selectedRowIds.length > 0)
                                                                             {
-                                                                                var idx = dataView.getRowById(selectedRowIds[i]);
-                                                                                if (idx != undefined)
-                                                                                    selRows.push(idx);
+                                                                                // since how the original data maps onto rows has changed,
+                                                                                // the selected rows in the grid need to be updated
+                                                                                var selRows = [];
+                                                                                for (var i = 0; i < selectedRowIds.length; i++)
+                                                                                {
+                                                                                    var idx = dataView.getRowById(selectedRowIds[i]);
+                                                                                    if (idx != undefined)
+                                                                                        selRows.push(idx);
+                                                                                }
+
+                                                                                grid.setSelectedRows(selRows);
                                                                             }
+                                                                        });
 
-                                                                            grid.setSelectedRows(selRows);
-                                                                        }
-                                                                    });
-
-                                                                    dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                                        dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                                        grid.setOptions({enableAddRow:options.enableAddRow});
-                                                                    });
+                                                                            grid.setOptions({enableAddRow:options.enableAddRow});
+                                                                        });
                 
                 
-                                                                    $("#txtSearch").keyup(function(e) {
-                                                                        Slick.GlobalEditorLock.cancelCurrentEdit();
+                                                                        $("#txtSearch").keyup(function(e) {
+                                                                            Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                                        // clear on Esc
-                                                                        if (e.which == 27)
-                                                                            this.value = "";
+                                                                            // clear on Esc
+                                                                            if (e.which == 27)
+                                                                                this.value = "";
 
-                                                                        searchString = this.value;
-                                                                        dataView.refresh();
-                                                                    });
+                                                                            searchString = this.value;
+                                                                            dataView.refresh();
+                                                                        });
 
 
-                                                                    dataView.beginUpdate();
-                                                                    dataView.setItems(data);
-                                                                    dataView.setFilter(myFilter);
-                                                                    dataView.endUpdate();
+                                                                        dataView.beginUpdate();
+                                                                        dataView.setItems(data);
+                                                                        dataView.setFilter(myFilter);
+                                                                        dataView.endUpdate();
                         
 
-                                                                    grid.onContextMenu = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onContextMenu = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        return true;
-                                                                    }; 
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            return true;
+                                                                        }; 
                                 
-                                                                    grid.onClick = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onClick = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        var ancla = $(".rowOption");
-                                                                        if(e.target == ancla[0]){
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            var ancla = $(".rowOption");
+                                                                            if(e.target == ancla[0]){
                                                               
-                                                                            $(".slick-cell .options a").jjmenu("click", 
-                                                                            // menu items:
-                                                                            [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                                            {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                                            {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                                            {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                                        ];
-                                                                                    }
-                                                                                } 
-                                                                            ], 
-                                                                            // myReplaces / userData:
-                                                                            {   "tbRow":function(){
+                                                                                $(".slick-cell .options a").jjmenu("click", 
+                                                                                // menu items:
+                                                                                [ {getByFunction:function(myData) {
+                                                                                            return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                                {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                                                {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                                                {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                                            ];
+                                                                                        }
+                                                                                    } 
+                                                                                ], 
+                                                                                // myReplaces / userData:
+                                                                                {   "tbRow":function(){
                        
                         
-                                                                                    var fila = jQuery(triggerElement);
-                                                                                    var celdas = [];
-                                                                                    jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                                        celdas[celdas.length] = jQuery(this).html();
+                                                                                        var fila = jQuery(triggerElement);
+                                                                                        var celdas = [];
+                                                                                        jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                                            celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                                    });
-                                                                                    if(selectedRowIds.length > 1){
-                                                                                        celdas[0] ="seleccionados"; 
+                                                                                        });
+                                                                                        if(selectedRowIds.length > 1){
+                                                                                            celdas[0] ="seleccionados"; 
+                                                                                        }
+                                                                                        return celdas;    
                                                                                     }
-                                                                                    return celdas;    
-                                                                                }
                     
                                           
-                                                                            }, 
-                                                                            // effects:
-                                                                            {show:"default", xposition:"left", yposition:"auto"
+                                                                                }, 
+                                                                                // effects:
+                                                                                {show:"default", xposition:"left", yposition:"auto"
                 
-                                                                            });
+                                                                                });
                                                
-                                                                            setTimeout(function () { 
-                                                                                $(".slick-cell .options a").addClass("hover");
-                                                                                $(".slick-cell .options a").parents("div").addClass("hover");
-                                                                                $(".slick-cell .options a").trigger("click");
-                                                                            }, 200);
-                                                                            setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                                                setTimeout(function () { 
+                                                                                    $(".slick-cell .options a").addClass("hover");
+                                                                                    $(".slick-cell .options a").parents("div").addClass("hover");
+                                                                                    $(".slick-cell .options a").trigger("click");
+                                                                                }, 200);
+                                                                                setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                                        }else{
-                                                                            var filadelaTabla =  $(".slick-row");
-                                                                            var rowsx =[];
-                                                                            if(!$.contains(filadelaTabla[0],e.target)){
-                                                                                grid.setSelectedRows(rowsx);
+                                                                            }else{
+                                                                                var filadelaTabla =  $(".slick-row");
+                                                                                var rowsx =[];
+                                                                                if(!$.contains(filadelaTabla[0],e.target)){
+                                                                                    grid.setSelectedRows(rowsx);
                                                 
+                                                                                }
                                                                             }
-                                                                        }
                                         
-                                                                    }; 
+                                                                        }; 
                                 
                                 
                                 
-                                                                    $("#myGrid").bind("draginit", function(e,dd) {
-                                                                        var cell = grid.getCellFromEvent(e);
-                                                                        if (!cell)
-                                                                            return false;
+                                                                        $("#myGrid").bind("draginit", function(e,dd) {
+                                                                            var cell = grid.getCellFromEvent(e);
+                                                                            if (!cell)
+                                                                                return false;
 
-                                                                        dd.row = cell.row;
-                                                                        if (!data[dd.row])
-                                                                            return false;
+                                                                            dd.row = cell.row;
+                                                                            if (!data[dd.row])
+                                                                                return false;
 
-                                                                        if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                                            return false;
-                                                                    });
+                                                                            if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                                                return false;
+                                                                        });
 
                             
-                                                                    // jjmen(); 
+                                                                        // jjmen(); 
                   
-                                                                } //fin del if
+                                                                    } //fin del if
                        
-                                                            }//fin del success
-                                                        }); //fin del .ajax
+                                                                }//fin del success
+                                                            }); //fin del .ajax
                 
                     
                     
-                                                    }
+                                                        }
                         
-                                                    if(hash == "#listarPonderacionFactor"){
+                                                        if(hash == "#listarPonderacionFactor"){
                  
-                                                        $.unsubscribe("set_grid_width");
+                                                            $.unsubscribe("set_grid_width");
                         
-                                                        if(middleLayout){
-                                                            middleLayout.destroy();
+                                                            if(middleLayout){
+                                                                middleLayout.destroy();
                             
-                                                        } 
-                                                        if(innerLayout){
-                                                            innerLayout.destroy();
+                                                            } 
+                                                            if(innerLayout){
+                                                                innerLayout.destroy();
                             
-                                                        }
+                                                            }
                         
                         
                         
-                                                        selectedRowIds = [];
+                                                            selectedRowIds = [];
                         
                 
-                                                        $("div.ui-layout-center").empty();
+                                                            $("div.ui-layout-center").empty();
                         
-                                                        var dataView;
-                                                        var grid;
-                                                        //  var pager;
-                                                        //var columnpicker;
-                                                        var grid_opts={};
-                                                        var data = [];
-                                                        var selectedRowIds = [];
+                                                            var dataView;
+                                                            var grid;
+                                                            //  var pager;
+                                                            //var columnpicker;
+                                                            var grid_opts={};
+                                                            var data = [];
+                                                            var selectedRowIds = [];
 
 
 
 
 
-                                                        var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                                            return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                                                ""+dataContext["programa"]+"";
+                                                            var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                                                return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                                                    ""+dataContext["programa"]+"";
 
 
-                                                        };
+                                                            };
             
             
-                                                        var columns = [
-                                                            {id:"factor", name:"Factor", field:"factor", minWidth:100,  sortable:true },	
-                                                            {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                                            {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
+                                                            var columns = [
+                                                                {id:"factor", name:"Factor", field:"factor", minWidth:100,  sortable:true },	
+                                                                {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
+                                                                {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
                 
-                                                        ];
+                                                            ];
 
-                                                        var options = {
-                                                            editable: false,
-                                                            autoEdit: false,
-                                                            enableAddRow: false,
-                                                            enableCellNavigation: true,
-                                                            asyncEditorLoading: false,
-                                                            enableColumnReorder: false,
-                                                            forceFitColumns: true
+                                                            var options = {
+                                                                editable: false,
+                                                                autoEdit: false,
+                                                                enableAddRow: false,
+                                                                enableCellNavigation: true,
+                                                                asyncEditorLoading: false,
+                                                                enableColumnReorder: false,
+                                                                forceFitColumns: true
                         
-                                                        };
+                                                            };
 
-                                                        var sortcol = "factor";
-                                                        var sortdir = 1;
-                                                        //var percentCompleteThreshold = 0;
-                                                        var searchString = "";
+                                                            var sortcol = "factor";
+                                                            var sortdir = 1;
+                                                            //var percentCompleteThreshold = 0;
+                                                            var searchString = "";
 
-                                                        function myFilter(item) {
+                                                            function myFilter(item) {
                
-                                                            if (searchString != "" && item["factor"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                                                return false;
+                                                                if (searchString != "" && item["factor"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                                                    return false;
 
-                                                            return true;
-                                                        }
+                                                                return true;
+                                                            }
 
                
-                                                        $(".grid-header .ui-icon")
-                                                        .addClass("ui-state-default ui-corner-all")
-                                                        .mouseover(function(e) {
-                                                            $(e.target).addClass("ui-state-hover")
-                                                        })
-                                                        .mouseout(function(e) {
-                                                            $(e.target).removeClass("ui-state-hover")
-                                                        });
+                                                            $(".grid-header .ui-icon")
+                                                            .addClass("ui-state-default ui-corner-all")
+                                                            .mouseover(function(e) {
+                                                                $(e.target).addClass("ui-state-hover")
+                                                            })
+                                                            .mouseout(function(e) {
+                                                                $(e.target).removeClass("ui-state-hover")
+                                                            });
 
 
                     
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionFactor", 
-                                                            dataType: 'json', 
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionFactor", 
+                                                                dataType: 'json', 
                             
-                                                            success: function(json) 
-                                                            {
-                                                                $(".ui-layout-center").append("<div class='middle-north'>"
-                                                                    +"<div class='row wellMio'>"
-                                                                    +"<div class='span5'>"
-                                                                    +"<h3>${msjLogIn1}</h3>"
-                                                                    +"<h4>${msjLogIn2}</h4>"
-                                                                    +"</div>"
-                                                                    +"<div class='pull-right'>"
-                                                                    +"<form class='form-search'>"
-                                                                    +"<input type='text' class='input-medium search-query'>"
-                                                                    +"<button class='btn' type='submit'>Buscar</button>"
-                                                                    +"</form>"
-                                                                    +"</div>"
-                                                                    +"</div>"
-                                                                    +"</div>"   
-                                                                    +"<div class='middle-center'>"
-                                                                    +"<div class='inner-center' style='width:100%;float:left;'>"
-                                                                    +"<div id='myGrid'></div></div></div>");
+                                                                success: function(json) 
+                                                                {
+                                                                    $(".ui-layout-center").append("<div class='middle-north'>"
+                                                                        +"<div class='row wellMio'>"
+                                                                        +"<div class='span5'>"
+                                                                        +"<h3>Ponderación de Factores</h3>"
+                                                                        +"<h4>Detalle de Ponderación.</h4>"
+                                                                        +"</div>"
+                                                                        +"<div class='pull-right'>"
+                                                                        +"<form class='form-search'>"
+                                                                        +"<input type='text' class='input-medium search-query'>"
+                                                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                                                        +"</form>"
+                                                                        +"</div>"
+                                                                        +"</div>"
+                                                                        +"</div>"   
+                                                                        +"<div class='middle-center'>"
+                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div id='myGrid'></div></div></div>");
             
-                                                                middleLayout = $('div.ui-layout-center').layout({ 
-                                                                    north__paneSelector:    ".middle-north"
-                                                                    ,   north__paneClass:    "ui-layout-pane"
-                                                                    ,   center__paneSelector:    ".middle-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
+                                                                    middleLayout = $('div.ui-layout-center').layout({ 
+                                                                        north__paneSelector:    ".middle-north"
+                                                                        ,   north__paneClass:    "ui-layout-pane"
+                                                                        ,   center__paneSelector:    ".middle-center"
+                                                                        ,	spacing_open:			8  // ALL panes
+                                                                        ,	spacing_closed:			8  // ALL panes
                    
-                                                                });
+                                                                    });
                 
-                                                                innerLayout = $('div.middle-center').layout({ 
+                                                                    innerLayout = $('div.middle-center').layout({ 
                        
-                                                                    center__paneSelector:    ".inner-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
+                                                                        center__paneSelector:    ".inner-center"
+                                                                        ,	spacing_open:			8  // ALL panes
+                                                                        ,	spacing_closed:			8  // ALL panes
                     
-                                                                    ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                                        $.publish("set_grid_height", [state.innerHeight]);
-                                                                        $.publish("set_grid_width", [state.innerWidth]);
-                                                                    }
+                                                                        ,   center__onresize: function (name, el, state, opts, Layout) { 
+                                                                            $.publish("set_grid_height", [state.innerHeight]);
+                                                                            $.publish("set_grid_width", [state.innerWidth]);
+                                                                        }
                  
-                                                                });
+                                                                    });
                 
                         
                 
                     
                 
-                                                                $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                                                $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
+                                                                    $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
+                                                                    $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
 		
 		
-                                                                setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
+                                                                    setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
          
                             
-                                                                if(json.length > 0) 
-                                                                { for (var i = 0; i < json.length; i++) 
-                                                                    {
-                                                                        data[i] = { 
-                                                                            id: json[i].id, 
-                                                                            factor: json[i].factor, 
-                                                                            ponderacion: json[i].ponderacion, 
-                                                                            justificacion: json[i].justificacion
+                                                                    if(json.length > 0) 
+                                                                    { for (var i = 0; i < json.length; i++) 
+                                                                        {
+                                                                            data[i] = { 
+                                                                                id: json[i].id, 
+                                                                                factor: json[i].factor, 
+                                                                                ponderacion: json[i].ponderacion, 
+                                                                                justificacion: json[i].justificacion
                                             
-                                                                        }; 
-                                                                    } 
-                                                                    dataView = new Slick.Data.DataView();
+                                                                            }; 
+                                                                        } 
+                                                                        dataView = new Slick.Data.DataView();
                           
-                                                                    grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                                    var fil=[];
-                                                                    grid.setSelectedRows(fil); 
-                                                                    // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                                    //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                                                        grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                                                        var fil=[];
+                                                                        grid.setSelectedRows(fil); 
+                                                                        // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                                                        //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                                    $.subscribe("set_grid_height", function (new_height) {
-                                                                        grid_opts.height = new_height;
-                                                                        $("#myGrid").css('height', grid_opts.height);
-                                                                        grid.resizeCanvas();
+                                                                        $.subscribe("set_grid_height", function (new_height) {
+                                                                            grid_opts.height = new_height;
+                                                                            $("#myGrid").css('height', grid_opts.height);
+                                                                            grid.resizeCanvas();
                                         
-                                                                    });
+                                                                        });
             
-                                                                    $.subscribe("set_grid_width", function (new_width) {
-                                                                        grid_opts.width = new_width;
-                                                                        $("#myGrid").css('width', grid_opts.width );
-                                                                        grid.autosizeColumns();
-                                                                        //grid.resizeCanvas();
-                                                                    });
+                                                                        $.subscribe("set_grid_width", function (new_width) {
+                                                                            grid_opts.width = new_width;
+                                                                            $("#myGrid").css('width', grid_opts.width );
+                                                                            grid.autosizeColumns();
+                                                                            //grid.resizeCanvas();
+                                                                        });
 
 
             
 
-                                                                    /*   al cambiar el contenido de una celda
-                                                                     *   grid.onCellChange = function(row,col,item) {
+                                                                        /*   al cambiar el contenido de una celda
+                                                                         *   grid.onCellChange = function(row,col,item) {
                                          dataView.updateItem(item.id,item);    
                                      };
 
                                                  grid.onAddNewRow = addItem;
-                                                                     */  //al presionar teclas
-                                                                    grid.onKeyDown = function(e) {
+                                                                         */  //al presionar teclas
+                                                                        grid.onKeyDown = function(e) {
                                     
-                                                                        var rows = [];
-                                                                        selectedRowIds = [];
+                                                                            var rows = [];
+                                                                            selectedRowIds = [];
                                     
-                                                                        // select all rows on ctrl-a
-                                                                        if (e.which == 65 && e.ctrlKey)
-                                                                        {
-                                                                            for (var i = 0; i < dataView.rows.length; i++) {
-                                                                                rows.push(i);
-                                                                                selectedRowIds.push(dataView.rows[i].id);
+                                                                            // select all rows on ctrl-a
+                                                                            if (e.which == 65 && e.ctrlKey)
+                                                                            {
+                                                                                for (var i = 0; i < dataView.rows.length; i++) {
+                                                                                    rows.push(i);
+                                                                                    selectedRowIds.push(dataView.rows[i].id);
+                                                                                }
+
+                                                                                grid.setSelectedRows(rows);
+
+                                                                                return true;
+                                                                            }  
+                                                                            if(e.which == 27){
+                                                                                grid.setSelectedRows(rows);
+                                                                                return true;
                                                                             }
-
-                                                                            grid.setSelectedRows(rows);
-
-                                                                            return true;
-                                                                        }  
-                                                                        if(e.which == 27){
-                                                                            grid.setSelectedRows(rows);
-                                                                            return true;
-                                                                        }
-                                                                        return false;
+                                                                            return false;
                                     
 
                                    
-                                                                    };
+                                                                        };
 
-                                                                    grid.onSelectedRowsChanged = function() {
-                                                                        selectedRowIds = [];
-                                                                        var rows = grid.getSelectedRows();
-                                                                        for (var i = 0, l = rows.length; i < l; i++) {
-                                                                            var item = dataView.rows[rows[i]];
-                                                                            if (item) selectedRowIds.push(item.id);
-                                                                        }
-                                                                    };
+                                                                        grid.onSelectedRowsChanged = function() {
+                                                                            selectedRowIds = [];
+                                                                            var rows = grid.getSelectedRows();
+                                                                            for (var i = 0, l = rows.length; i < l; i++) {
+                                                                                var item = dataView.rows[rows[i]];
+                                                                                if (item) selectedRowIds.push(item.id);
+                                                                            }
+                                                                        };
 
                 
                 
-                                                                    grid.onSort = function(sortCol, sortAsc) {
-                                                                        sortdir = sortAsc ? 1 : -1;
-                                                                        sortcol = sortCol.field;
+                                                                        grid.onSort = function(sortCol, sortAsc) {
+                                                                            sortdir = sortAsc ? 1 : -1;
+                                                                            sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                                    };
+                                                                        };
 
-                                                                    // wire up model events to drive the grid
-                                                                    dataView.onRowCountChanged.subscribe(function(args) {
-                                                                        grid.updateRowCount();
-                                                                        grid.render();
-                                                                    });
+                                                                        // wire up model events to drive the grid
+                                                                        dataView.onRowCountChanged.subscribe(function(args) {
+                                                                            grid.updateRowCount();
+                                                                            grid.render();
+                                                                        });
 
-                                                                    dataView.onRowsChanged.subscribe(function(rows) {
-                                                                        grid.removeRows(rows);
-                                                                        grid.render();
+                                                                        dataView.onRowsChanged.subscribe(function(rows) {
+                                                                            grid.removeRows(rows);
+                                                                            grid.render();
 
-                                                                        if (selectedRowIds.length > 0)
-                                                                        {
-                                                                            // since how the original data maps onto rows has changed,
-                                                                            // the selected rows in the grid need to be updated
-                                                                            var selRows = [];
-                                                                            for (var i = 0; i < selectedRowIds.length; i++)
+                                                                            if (selectedRowIds.length > 0)
                                                                             {
-                                                                                var idx = dataView.getRowById(selectedRowIds[i]);
-                                                                                if (idx != undefined)
-                                                                                    selRows.push(idx);
+                                                                                // since how the original data maps onto rows has changed,
+                                                                                // the selected rows in the grid need to be updated
+                                                                                var selRows = [];
+                                                                                for (var i = 0; i < selectedRowIds.length; i++)
+                                                                                {
+                                                                                    var idx = dataView.getRowById(selectedRowIds[i]);
+                                                                                    if (idx != undefined)
+                                                                                        selRows.push(idx);
+                                                                                }
+
+                                                                                grid.setSelectedRows(selRows);
                                                                             }
+                                                                        });
 
-                                                                            grid.setSelectedRows(selRows);
-                                                                        }
-                                                                    });
-
-                                                                    dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                                        dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                                        grid.setOptions({enableAddRow:options.enableAddRow});
-                                                                    });
+                                                                            grid.setOptions({enableAddRow:options.enableAddRow});
+                                                                        });
                 
                 
-                                                                    $("#txtSearch").keyup(function(e) {
-                                                                        Slick.GlobalEditorLock.cancelCurrentEdit();
+                                                                        $("#txtSearch").keyup(function(e) {
+                                                                            Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                                        // clear on Esc
-                                                                        if (e.which == 27)
-                                                                            this.value = "";
+                                                                            // clear on Esc
+                                                                            if (e.which == 27)
+                                                                                this.value = "";
 
-                                                                        searchString = this.value;
-                                                                        dataView.refresh();
-                                                                    });
+                                                                            searchString = this.value;
+                                                                            dataView.refresh();
+                                                                        });
 
 
-                                                                    dataView.beginUpdate();
-                                                                    dataView.setItems(data);
-                                                                    dataView.setFilter(myFilter);
-                                                                    dataView.endUpdate();
+                                                                        dataView.beginUpdate();
+                                                                        dataView.setItems(data);
+                                                                        dataView.setFilter(myFilter);
+                                                                        dataView.endUpdate();
                         
 
-                                                                    grid.onContextMenu = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onContextMenu = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        return true;
-                                                                    }; 
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            return true;
+                                                                        }; 
                                 
-                                                                    grid.onClick = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onClick = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        var ancla = $(".rowOption");
-                                                                        if(e.target == ancla[0]){
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            var ancla = $(".rowOption");
+                                                                            if(e.target == ancla[0]){
                                                               
-                                                                            $(".slick-cell .options a").jjmenu("click", 
-                                                                            // menu items:
-                                                                            [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                                            {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                                            {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                                            {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                                        ];
-                                                                                    }
-                                                                                } 
-                                                                            ], 
-                                                                            // myReplaces / userData:
-                                                                            {   "tbRow":function(){
+                                                                                $(".slick-cell .options a").jjmenu("click", 
+                                                                                // menu items:
+                                                                                [ {getByFunction:function(myData) {
+                                                                                            return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                                {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                                                {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                                                {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                                            ];
+                                                                                        }
+                                                                                    } 
+                                                                                ], 
+                                                                                // myReplaces / userData:
+                                                                                {   "tbRow":function(){
                        
                         
-                                                                                    var fila = jQuery(triggerElement);
-                                                                                    var celdas = [];
-                                                                                    jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                                        celdas[celdas.length] = jQuery(this).html();
+                                                                                        var fila = jQuery(triggerElement);
+                                                                                        var celdas = [];
+                                                                                        jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                                            celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                                    });
-                                                                                    if(selectedRowIds.length > 1){
-                                                                                        celdas[0] ="seleccionados"; 
+                                                                                        });
+                                                                                        if(selectedRowIds.length > 1){
+                                                                                            celdas[0] ="seleccionados"; 
+                                                                                        }
+                                                                                        return celdas;    
                                                                                     }
-                                                                                    return celdas;    
-                                                                                }
                     
                                           
-                                                                            }, 
-                                                                            // effects:
-                                                                            {show:"default", xposition:"left", yposition:"auto"
+                                                                                }, 
+                                                                                // effects:
+                                                                                {show:"default", xposition:"left", yposition:"auto"
                 
-                                                                            });
+                                                                                });
                                                
-                                                                            setTimeout(function () { 
-                                                                                $(".slick-cell .options a").addClass("hover");
-                                                                                $(".slick-cell .options a").parents("div").addClass("hover");
-                                                                                $(".slick-cell .options a").trigger("click");
-                                                                            }, 200);
-                                                                            setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                                                setTimeout(function () { 
+                                                                                    $(".slick-cell .options a").addClass("hover");
+                                                                                    $(".slick-cell .options a").parents("div").addClass("hover");
+                                                                                    $(".slick-cell .options a").trigger("click");
+                                                                                }, 200);
+                                                                                setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                                        }else{
-                                                                            var filadelaTabla =  $(".slick-row");
-                                                                            var rowsx =[];
-                                                                            if(!$.contains(filadelaTabla[0],e.target)){
-                                                                                grid.setSelectedRows(rowsx);
+                                                                            }else{
+                                                                                var filadelaTabla =  $(".slick-row");
+                                                                                var rowsx =[];
+                                                                                if(!$.contains(filadelaTabla[0],e.target)){
+                                                                                    grid.setSelectedRows(rowsx);
                                                 
+                                                                                }
                                                                             }
-                                                                        }
                                         
-                                                                    }; 
+                                                                        }; 
                                 
                                 
                                 
-                                                                    $("#myGrid").bind("draginit", function(e,dd) {
-                                                                        var cell = grid.getCellFromEvent(e);
-                                                                        if (!cell)
-                                                                            return false;
+                                                                        $("#myGrid").bind("draginit", function(e,dd) {
+                                                                            var cell = grid.getCellFromEvent(e);
+                                                                            if (!cell)
+                                                                                return false;
 
-                                                                        dd.row = cell.row;
-                                                                        if (!data[dd.row])
-                                                                            return false;
+                                                                            dd.row = cell.row;
+                                                                            if (!data[dd.row])
+                                                                                return false;
 
-                                                                        if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                                            return false;
-                                                                    });
+                                                                            if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                                                return false;
+                                                                        });
 
                             
-                                                                    // jjmen(); 
+                                                                        // jjmen(); 
                   
-                                                                } //fin del if
+                                                                    } //fin del if
                        
-                                                            }//fin del success
-                                                        }); //fin del .ajax
+                                                                }//fin del success
+                                                            }); //fin del .ajax
                         
                         
                         
                         
-                                                    }
-                                                    if(hash == "#listarPonderacionCaracteristica"){
+                                                        }
+                                                        if(hash == "#listarPonderacionCaracteristica"){
                  
-                                                        $.unsubscribe("set_grid_width");
+                                                            $.unsubscribe("set_grid_width");
                         
-                                                        if(middleLayout){
-                                                            middleLayout.destroy();
+                                                            if(middleLayout){
+                                                                middleLayout.destroy();
                             
-                                                        } 
-                                                        if(innerLayout){
-                                                            innerLayout.destroy();
+                                                            } 
+                                                            if(innerLayout){
+                                                                innerLayout.destroy();
                             
-                                                        }
+                                                            }
                         
                         
                         
-                                                        selectedRowIds = [];
+                                                            selectedRowIds = [];
                         
                 
-                                                        $("div.ui-layout-center").empty();
+                                                            $("div.ui-layout-center").empty();
                         
-                                                        var dataView;
-                                                        var grid;
-                                                        //  var pager;
-                                                        //var columnpicker;
-                                                        var grid_opts={};
-                                                        var data = [];
-                                                        var selectedRowIds = [];
+                                                            var dataView;
+                                                            var grid;
+                                                            //  var pager;
+                                                            //var columnpicker;
+                                                            var grid_opts={};
+                                                            var data = [];
+                                                            var selectedRowIds = [];
 
 
 
 
 
-                                                        var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                                            return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                                                ""+dataContext["programa"]+"";
+                                                            var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                                                return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                                                    ""+dataContext["programa"]+"";
 
 
-                                                        };
+                                                            };
             
             
-                                                        var columns = [
-                                                            {id:"caracteristica", name:"Caracteristica", field:"caracteristica", minWidth:100,  sortable:true },	
-                                                            {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                                            {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
+                                                            var columns = [
+                                                                {id:"caracteristica", name:"Caracteristica", field:"caracteristica", minWidth:100,  sortable:true },	
+                                                                {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
+                                                                {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
                 
-                                                        ];
+                                                            ];
 
-                                                        var options = {
-                                                            editable: false,
-                                                            autoEdit: false,
-                                                            enableAddRow: false,
-                                                            enableCellNavigation: true,
-                                                            asyncEditorLoading: false,
-                                                            enableColumnReorder: false,
-                                                            forceFitColumns: true
+                                                            var options = {
+                                                                editable: false,
+                                                                autoEdit: false,
+                                                                enableAddRow: false,
+                                                                enableCellNavigation: true,
+                                                                asyncEditorLoading: false,
+                                                                enableColumnReorder: false,
+                                                                forceFitColumns: true
                         
-                                                        };
+                                                            };
 
-                                                        var sortcol = "caracteristica";
-                                                        var sortdir = 1;
-                                                        //var percentCompleteThreshold = 0;
-                                                        var searchString = "";
+                                                            var sortcol = "caracteristica";
+                                                            var sortdir = 1;
+                                                            //var percentCompleteThreshold = 0;
+                                                            var searchString = "";
 
-                                                        function myFilter(item) {
+                                                            function myFilter(item) {
                
-                                                            if (searchString != "" && item["caracteristica"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                                                return false;
+                                                                if (searchString != "" && item["caracteristica"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                                                    return false;
 
-                                                            return true;
-                                                        }
+                                                                return true;
+                                                            }
 
                
-                                                        $(".grid-header .ui-icon")
-                                                        .addClass("ui-state-default ui-corner-all")
-                                                        .mouseover(function(e) {
-                                                            $(e.target).addClass("ui-state-hover")
-                                                        })
-                                                        .mouseout(function(e) {
-                                                            $(e.target).removeClass("ui-state-hover")
-                                                        });
+                                                            $(".grid-header .ui-icon")
+                                                            .addClass("ui-state-default ui-corner-all")
+                                                            .mouseover(function(e) {
+                                                                $(e.target).addClass("ui-state-hover")
+                                                            })
+                                                            .mouseout(function(e) {
+                                                                $(e.target).removeClass("ui-state-hover")
+                                                            });
 
 
                     
-                                                        $.ajax({ 
-                                                            type: "POST", 
-                                                            url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionCaracteristica", 
-                                                            dataType: 'json', 
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionCaracteristica", 
+                                                                dataType: 'json', 
                             
-                                                            success: function(json) 
-                                                            {
-                                                                $(".ui-layout-center").append("<div class='middle-north'>"
-                                                                    +"<div class='row wellMio'>"
-                                                                    +"<div class='span5'>"
-                                                                    +"<h3>${msjLogIn1}</h3>"
-                                                                    +"<h4>${msjLogIn2}</h4>"
-                                                                    +"</div>"
-                                                                    +"<div class='pull-right'>"
-                                                                    +"<form class='form-search'>"
-                                                                    +"<input type='text' class='input-medium search-query'>"
-                                                                    +"<button class='btn' type='submit'>Buscar</button>"
-                                                                    +"</form>"
-                                                                    +"</div>"
-                                                                    +"</div>"
-                                                                    +"</div>"   
-                                                                    +"<div class='middle-center'>"
-                                                                    +"<div class='inner-center' style='width:100%;float:left;'>"
-                                                                    +"<div id='myGrid'></div></div></div>");
+                                                                success: function(json) 
+                                                                {
+                                                                    $(".ui-layout-center").append("<div class='middle-north'>"
+                                                                        +"<div class='row wellMio'>"
+                                                                        +"<div class='span5'>"
+                                                                        +"<h3>${msjLogIn1}</h3>"
+                                                                        +"<h4>${msjLogIn2}</h4>"
+                                                                        +"</div>"
+                                                                        +"<div class='pull-right'>"
+                                                                        +"<form class='form-search'>"
+                                                                        +"<input type='text' class='input-medium search-query'>"
+                                                                        +"<button class='btn' type='submit'>Buscar</button>"
+                                                                        +"</form>"
+                                                                        +"</div>"
+                                                                        +"</div>"
+                                                                        +"</div>"   
+                                                                        +"<div class='middle-center'>"
+                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div id='myGrid'></div></div></div>");
             
-                                                                middleLayout = $('div.ui-layout-center').layout({ 
-                                                                    north__paneSelector:    ".middle-north"
-                                                                    ,   north__paneClass:    "ui-layout-pane"
-                                                                    ,   center__paneSelector:    ".middle-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
+                                                                    middleLayout = $('div.ui-layout-center').layout({ 
+                                                                        north__paneSelector:    ".middle-north"
+                                                                        ,   north__paneClass:    "ui-layout-pane"
+                                                                        ,   center__paneSelector:    ".middle-center"
+                                                                        ,	spacing_open:			8  // ALL panes
+                                                                        ,	spacing_closed:			8  // ALL panes
                    
-                                                                });
+                                                                    });
                 
-                                                                innerLayout = $('div.middle-center').layout({ 
+                                                                    innerLayout = $('div.middle-center').layout({ 
                        
-                                                                    center__paneSelector:    ".inner-center"
-                                                                    ,	spacing_open:			8  // ALL panes
-                                                                    ,	spacing_closed:			8  // ALL panes
+                                                                        center__paneSelector:    ".inner-center"
+                                                                        ,	spacing_open:			8  // ALL panes
+                                                                        ,	spacing_closed:			8  // ALL panes
                     
-                                                                    ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                                        $.publish("set_grid_height", [state.innerHeight]);
-                                                                        $.publish("set_grid_width", [state.innerWidth]);
-                                                                    }
+                                                                        ,   center__onresize: function (name, el, state, opts, Layout) { 
+                                                                            $.publish("set_grid_height", [state.innerHeight]);
+                                                                            $.publish("set_grid_width", [state.innerWidth]);
+                                                                        }
                  
-                                                                });
+                                                                    });
                 
                         
                 
                     
                 
-                                                                $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                                                $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
+                                                                    $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
+                                                                    $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
 		
 		
-                                                                setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
+                                                                    setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
          
                             
-                                                                if(json.length > 0) 
-                                                                { for (var i = 0; i < json.length; i++) 
-                                                                    {
-                                                                        data[i] = { 
-                                                                            id: json[i].id, 
-                                                                            caracteristica: json[i].caracteristica, 
-                                                                            ponderacion: json[i].ponderacion, 
-                                                                            justificacion: json[i].justificacion
+                                                                    if(json.length > 0) 
+                                                                    { for (var i = 0; i < json.length; i++) 
+                                                                        {
+                                                                            data[i] = { 
+                                                                                id: json[i].id, 
+                                                                                caracteristica: json[i].caracteristica, 
+                                                                                ponderacion: json[i].ponderacion, 
+                                                                                justificacion: json[i].justificacion
                                             
-                                                                        }; 
-                                                                    } 
-                                                                    dataView = new Slick.Data.DataView();
+                                                                            }; 
+                                                                        } 
+                                                                        dataView = new Slick.Data.DataView();
                           
-                                                                    grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                                    var fil=[];
-                                                                    grid.setSelectedRows(fil); 
-                                                                    // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                                    //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                                                        grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                                                        var fil=[];
+                                                                        grid.setSelectedRows(fil); 
+                                                                        // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                                                        //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                                    $.subscribe("set_grid_height", function (new_height) {
-                                                                        grid_opts.height = new_height;
-                                                                        $("#myGrid").css('height', grid_opts.height);
-                                                                        grid.resizeCanvas();
+                                                                        $.subscribe("set_grid_height", function (new_height) {
+                                                                            grid_opts.height = new_height;
+                                                                            $("#myGrid").css('height', grid_opts.height);
+                                                                            grid.resizeCanvas();
                                         
-                                                                    });
+                                                                        });
             
-                                                                    $.subscribe("set_grid_width", function (new_width) {
-                                                                        grid_opts.width = new_width;
-                                                                        $("#myGrid").css('width', grid_opts.width );
-                                                                        grid.autosizeColumns();
-                                                                        //grid.resizeCanvas();
-                                                                    });
+                                                                        $.subscribe("set_grid_width", function (new_width) {
+                                                                            grid_opts.width = new_width;
+                                                                            $("#myGrid").css('width', grid_opts.width );
+                                                                            grid.autosizeColumns();
+                                                                            //grid.resizeCanvas();
+                                                                        });
 
 
             
 
-                                                                    /*   al cambiar el contenido de una celda
-                                                                     *   grid.onCellChange = function(row,col,item) {
+                                                                        /*   al cambiar el contenido de una celda
+                                                                         *   grid.onCellChange = function(row,col,item) {
                                          dataView.updateItem(item.id,item);    
                                      };
 
                                                  grid.onAddNewRow = addItem;
-                                                                     */  //al presionar teclas
-                                                                    grid.onKeyDown = function(e) {
+                                                                         */  //al presionar teclas
+                                                                        grid.onKeyDown = function(e) {
                                     
-                                                                        var rows = [];
-                                                                        selectedRowIds = [];
+                                                                            var rows = [];
+                                                                            selectedRowIds = [];
                                     
-                                                                        // select all rows on ctrl-a
-                                                                        if (e.which == 65 && e.ctrlKey)
-                                                                        {
-                                                                            for (var i = 0; i < dataView.rows.length; i++) {
-                                                                                rows.push(i);
-                                                                                selectedRowIds.push(dataView.rows[i].id);
+                                                                            // select all rows on ctrl-a
+                                                                            if (e.which == 65 && e.ctrlKey)
+                                                                            {
+                                                                                for (var i = 0; i < dataView.rows.length; i++) {
+                                                                                    rows.push(i);
+                                                                                    selectedRowIds.push(dataView.rows[i].id);
+                                                                                }
+
+                                                                                grid.setSelectedRows(rows);
+
+                                                                                return true;
+                                                                            }  
+                                                                            if(e.which == 27){
+                                                                                grid.setSelectedRows(rows);
+                                                                                return true;
                                                                             }
-
-                                                                            grid.setSelectedRows(rows);
-
-                                                                            return true;
-                                                                        }  
-                                                                        if(e.which == 27){
-                                                                            grid.setSelectedRows(rows);
-                                                                            return true;
-                                                                        }
-                                                                        return false;
+                                                                            return false;
                                     
 
                                    
-                                                                    };
+                                                                        };
 
-                                                                    grid.onSelectedRowsChanged = function() {
-                                                                        selectedRowIds = [];
-                                                                        var rows = grid.getSelectedRows();
-                                                                        for (var i = 0, l = rows.length; i < l; i++) {
-                                                                            var item = dataView.rows[rows[i]];
-                                                                            if (item) selectedRowIds.push(item.id);
-                                                                        }
-                                                                    };
+                                                                        grid.onSelectedRowsChanged = function() {
+                                                                            selectedRowIds = [];
+                                                                            var rows = grid.getSelectedRows();
+                                                                            for (var i = 0, l = rows.length; i < l; i++) {
+                                                                                var item = dataView.rows[rows[i]];
+                                                                                if (item) selectedRowIds.push(item.id);
+                                                                            }
+                                                                        };
 
                 
                 
-                                                                    grid.onSort = function(sortCol, sortAsc) {
-                                                                        sortdir = sortAsc ? 1 : -1;
-                                                                        sortcol = sortCol.field;
+                                                                        grid.onSort = function(sortCol, sortAsc) {
+                                                                            sortdir = sortAsc ? 1 : -1;
+                                                                            sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                                    };
+                                                                        };
 
-                                                                    // wire up model events to drive the grid
-                                                                    dataView.onRowCountChanged.subscribe(function(args) {
-                                                                        grid.updateRowCount();
-                                                                        grid.render();
-                                                                    });
+                                                                        // wire up model events to drive the grid
+                                                                        dataView.onRowCountChanged.subscribe(function(args) {
+                                                                            grid.updateRowCount();
+                                                                            grid.render();
+                                                                        });
 
-                                                                    dataView.onRowsChanged.subscribe(function(rows) {
-                                                                        grid.removeRows(rows);
-                                                                        grid.render();
+                                                                        dataView.onRowsChanged.subscribe(function(rows) {
+                                                                            grid.removeRows(rows);
+                                                                            grid.render();
 
-                                                                        if (selectedRowIds.length > 0)
-                                                                        {
-                                                                            // since how the original data maps onto rows has changed,
-                                                                            // the selected rows in the grid need to be updated
-                                                                            var selRows = [];
-                                                                            for (var i = 0; i < selectedRowIds.length; i++)
+                                                                            if (selectedRowIds.length > 0)
                                                                             {
-                                                                                var idx = dataView.getRowById(selectedRowIds[i]);
-                                                                                if (idx != undefined)
-                                                                                    selRows.push(idx);
+                                                                                // since how the original data maps onto rows has changed,
+                                                                                // the selected rows in the grid need to be updated
+                                                                                var selRows = [];
+                                                                                for (var i = 0; i < selectedRowIds.length; i++)
+                                                                                {
+                                                                                    var idx = dataView.getRowById(selectedRowIds[i]);
+                                                                                    if (idx != undefined)
+                                                                                        selRows.push(idx);
+                                                                                }
+
+                                                                                grid.setSelectedRows(selRows);
                                                                             }
+                                                                        });
 
-                                                                            grid.setSelectedRows(selRows);
-                                                                        }
-                                                                    });
-
-                                                                    dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                                        dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                                        grid.setOptions({enableAddRow:options.enableAddRow});
-                                                                    });
+                                                                            grid.setOptions({enableAddRow:options.enableAddRow});
+                                                                        });
                 
                 
-                                                                    $("#txtSearch").keyup(function(e) {
-                                                                        Slick.GlobalEditorLock.cancelCurrentEdit();
+                                                                        $("#txtSearch").keyup(function(e) {
+                                                                            Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                                        // clear on Esc
-                                                                        if (e.which == 27)
-                                                                            this.value = "";
+                                                                            // clear on Esc
+                                                                            if (e.which == 27)
+                                                                                this.value = "";
 
-                                                                        searchString = this.value;
-                                                                        dataView.refresh();
-                                                                    });
+                                                                            searchString = this.value;
+                                                                            dataView.refresh();
+                                                                        });
 
 
-                                                                    dataView.beginUpdate();
-                                                                    dataView.setItems(data);
-                                                                    dataView.setFilter(myFilter);
-                                                                    dataView.endUpdate();
+                                                                        dataView.beginUpdate();
+                                                                        dataView.setItems(data);
+                                                                        dataView.setFilter(myFilter);
+                                                                        dataView.endUpdate();
                         
 
-                                                                    grid.onContextMenu = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onContextMenu = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        return true;
-                                                                    }; 
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            return true;
+                                                                        }; 
                                 
-                                                                    grid.onClick = function (e, row, cell)
-                                                                    {
-                                                                        //al dar click derecho sobre el la tabla
-                                                                        if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                                                        grid.onClick = function (e, row, cell)
+                                                                        {
+                                                                            //al dar click derecho sobre el la tabla
+                                                                            if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                                        if(selectedRowIds.length <= 1){
-                                                                            var rows = [];
-                                                                            selectedRowIds = [];
-                                                                            rows.push(row);
-                                                                            selectedRowIds.push(""+rows[0]);
-                                                                            grid.setSelectedRows(rows);
-                                                                        }
-                                                                        var ancla = $(".rowOption");
-                                                                        if(e.target == ancla[0]){
+                                                                            if(selectedRowIds.length <= 1){
+                                                                                var rows = [];
+                                                                                selectedRowIds = [];
+                                                                                rows.push(row);
+                                                                                selectedRowIds.push(""+rows[0]);
+                                                                                grid.setSelectedRows(rows);
+                                                                            }
+                                                                            var ancla = $(".rowOption");
+                                                                            if(e.target == ancla[0]){
                                                               
-                                                                            $(".slick-cell .options a").jjmenu("click", 
-                                                                            // menu items:
-                                                                            [ {getByFunction:function(myData) {
-                                                                                        return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                                            {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                                            {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                                            {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                                        ];
-                                                                                    }
-                                                                                } 
-                                                                            ], 
-                                                                            // myReplaces / userData:
-                                                                            {   "tbRow":function(){
+                                                                                $(".slick-cell .options a").jjmenu("click", 
+                                                                                // menu items:
+                                                                                [ {getByFunction:function(myData) {
+                                                                                            return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                                                {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                                                {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                                                {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                                            ];
+                                                                                        }
+                                                                                    } 
+                                                                                ], 
+                                                                                // myReplaces / userData:
+                                                                                {   "tbRow":function(){
                        
                         
-                                                                                    var fila = jQuery(triggerElement);
-                                                                                    var celdas = [];
-                                                                                    jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                                        celdas[celdas.length] = jQuery(this).html();
+                                                                                        var fila = jQuery(triggerElement);
+                                                                                        var celdas = [];
+                                                                                        jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                                            celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                                    });
-                                                                                    if(selectedRowIds.length > 1){
-                                                                                        celdas[0] ="seleccionados"; 
+                                                                                        });
+                                                                                        if(selectedRowIds.length > 1){
+                                                                                            celdas[0] ="seleccionados"; 
+                                                                                        }
+                                                                                        return celdas;    
                                                                                     }
-                                                                                    return celdas;    
-                                                                                }
                     
                                           
-                                                                            }, 
-                                                                            // effects:
-                                                                            {show:"default", xposition:"left", yposition:"auto"
+                                                                                }, 
+                                                                                // effects:
+                                                                                {show:"default", xposition:"left", yposition:"auto"
                 
-                                                                            });
+                                                                                });
                                                
-                                                                            setTimeout(function () { 
-                                                                                $(".slick-cell .options a").addClass("hover");
-                                                                                $(".slick-cell .options a").parents("div").addClass("hover");
-                                                                                $(".slick-cell .options a").trigger("click");
-                                                                            }, 200);
-                                                                            setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                                                setTimeout(function () { 
+                                                                                    $(".slick-cell .options a").addClass("hover");
+                                                                                    $(".slick-cell .options a").parents("div").addClass("hover");
+                                                                                    $(".slick-cell .options a").trigger("click");
+                                                                                }, 200);
+                                                                                setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                                        }else{
-                                                                            var filadelaTabla =  $(".slick-row");
-                                                                            var rowsx =[];
-                                                                            if(!$.contains(filadelaTabla[0],e.target)){
-                                                                                grid.setSelectedRows(rowsx);
+                                                                            }else{
+                                                                                var filadelaTabla =  $(".slick-row");
+                                                                                var rowsx =[];
+                                                                                if(!$.contains(filadelaTabla[0],e.target)){
+                                                                                    grid.setSelectedRows(rowsx);
                                                 
+                                                                                }
                                                                             }
-                                                                        }
                                         
-                                                                    }; 
+                                                                        }; 
                                 
                                 
                                 
-                                                                    $("#myGrid").bind("draginit", function(e,dd) {
-                                                                        var cell = grid.getCellFromEvent(e);
-                                                                        if (!cell)
-                                                                            return false;
+                                                                        $("#myGrid").bind("draginit", function(e,dd) {
+                                                                            var cell = grid.getCellFromEvent(e);
+                                                                            if (!cell)
+                                                                                return false;
 
-                                                                        dd.row = cell.row;
-                                                                        if (!data[dd.row])
-                                                                            return false;
+                                                                            dd.row = cell.row;
+                                                                            if (!data[dd.row])
+                                                                                return false;
 
-                                                                        if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                                            return false;
-                                                                    });
+                                                                            if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                                                return false;
+                                                                        });
 
                             
-                                                                    // jjmen(); 
+                                                                        // jjmen(); 
                   
-                                                                } //fin del if
+                                                                    } //fin del if
                        
-                                                            }//fin del success
-                                                        }); //fin del .ajax
+                                                                }//fin del success
+                                                            }); //fin del .ajax
                         
                         
                         
                         
-                                                    }
+                                                        }
                     
                     
-                                                } //fin del else
+                                                    } //fin del else
                 
                       
                       
@@ -2113,29 +2140,34 @@
                                             </div>
                                         </div>
                                         <div class="ui-layout-center">
-                                            
-                                            
+
+
 
                                         </div>
 
 
-                                        <div class="ui-layout-west">
+                                        <div id="ui-layout-west" class="ui-layout-west">
                                             <div class="ui-layout-content">
                                                 <div id="menu" style="padding: 8px 0pt;" class="well">
                                                     <ul class="nav nav-list">  
                                                         <c:choose>
                                                             <c:when test="${aux_index2 == 1}">
-                                                                <li class="nav-header">Proceso en Ejecucin</li>
-                                                                <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
-                                                                <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
-                                                                <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
-                                                                <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
-                                                                <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
+                                                                <li class="nav-header">Proceso en Ejecución</li>
                                                                 <c:choose>
                                                                     <c:when test="${aux2_index2 == 1}">
+                                                                        <li class="active"><a href="<%=request.getContextPath()%>/#CrearProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
+                                                                        <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
+                                                                        <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
+                                                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                                                                        <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                                                                         <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                                                                     </c:when>
                                                                     <c:otherwise>
+                                                                        <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
+                                                                        <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
+                                                                        <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
+                                                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                                                                        <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                                                                         <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                                                                     </c:otherwise>
                                                                 </c:choose>
