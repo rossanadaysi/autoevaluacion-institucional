@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link type="text/css" rel="stylesheet" href="jQuery/jquery.js" />
 <link type="text/css" rel="stylesheet" href="jQuery/dragDrop/fcbklistselection.css" />
 <script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
 <script type="text/javascript" language="JavaScript">

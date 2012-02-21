@@ -336,9 +336,20 @@
                                                 var hash = location.hash;
                     
                                                 
-                                                if(hash.indexOf("PonderacionCaracteristicas")!=-1){
+                                                if(hash.indexOf("PonderacionCaracteristicas")!=-1 ){
                                                     console.log("ok")
                                                 }else{
+                                                    
+                                                    if(hash=="#CerrarSesion"){
+                                                        $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
+                                                        function(data) {
+                                                        location = "<%=request.getContextPath()%>/";
+                                                     
+                                                    });
+                                                    
+                                                        
+                                                    }
+                                                    
                                                     if(grid){
                                                         grid.destroy(); 
                         
@@ -2136,7 +2147,7 @@
                                                                         <li><a href="#">Another action</a></li>
                                                                         <li><a href="#">Something else here</a></li>
                                                                         <li class="divider"></li>
-                                                                        <li><a href="#">Cerrar Sesion</a></li>
+                                                                        <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
                                                                     </ul>
                                                                 </li>
                                                             </ul>
@@ -2250,5 +2261,33 @@
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
                                             </div>
                                         </div>
+                                            
+                                            <div class="modal hide fade" id="myModalP">
+                                                <div class="modal-header">
+                                                    <a data-dismiss="modal" class="close">×</a>
+                                                    <h3>Información</h3>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4>Nuevo Proceso.</h4>
+                                                    <p>Se ha creado un nuevo proceso de autevaluación</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                                </div>
+                                            </div>
+                                            <div class="modal hide fade" id="myModalP1">
+                                                <div class="modal-header">
+                                                    <a data-dismiss="modal" class="close">×</a>
+                                                    <h3>Información</h3>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4>Nuevo Proceso.</h4>
+                                                    <p>Proceso de autevaluación actualizado con éxito!</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                                </div>
+                                            </div>
+                                            
                                     </body>
                                     </html> 

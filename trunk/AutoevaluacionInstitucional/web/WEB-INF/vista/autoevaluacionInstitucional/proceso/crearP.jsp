@@ -1,32 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <br>
-<div class="modal hide fade" id="myModalP">
-    <div class="modal-header">
-        <a data-dismiss="modal" class="close">×</a>
-        <h3>Información</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Nuevo Proceso.</h4>
-        <p>Se ha creado un nuevo proceso de autevaluación</p>
-    </div>
-    <div class="modal-footer">
-        <a class="btn btn-primary" href="#">Cerrar</a>
-    </div>
-</div>
-<div class="modal hide fade" id="myModalP1">
-    <div class="modal-header">
-        <a data-dismiss="modal" class="close">×</a>
-        <h3>Información</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Nuevo Proceso.</h4>
-        <p>Proceso de autevaluación actualizado con éxito!</p>
-    </div>
-    <div class="modal-footer">
-        <a class="btn btn-primary" href="#">Cerrar</a>
-    </div>
-</div>
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
