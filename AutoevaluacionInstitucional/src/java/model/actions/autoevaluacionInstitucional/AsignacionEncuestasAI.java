@@ -23,7 +23,7 @@ public class AsignacionEncuestasAI implements Action {
             throws IOException, ServletException {
 
 
-        String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/encuesta/asignar.jsp";
+        String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/encuesta/asignarE.jsp";
         HttpSession session = request.getSession();
 
         sqlController conSql = new sqlController();
@@ -31,50 +31,22 @@ public class AsignacionEncuestasAI implements Action {
         int idProceso = proceso.getId();
         String bd = (String) session.getAttribute("bd");
 
-        try {
-
-            Result rs = null;
-            String sql = "Select* from asignacionencuesta where proceso_id = " + idProceso + "";
-            rs = conSql.CargarSql2(sql, bd);
 
 
-            if (rs.getRowCount() != 0) {
-                session.setAttribute("aux", 0);
-                System.out.println("si hay asignacion de encuestas");
-            } else {
-                System.out.println("no hay asignacion de encuestas");
-                session.setAttribute("aux", 1);
 
-                Result rs2 = null;
-                String sql2 = "Select* from encuesta";
-                rs2 = conSql.CargarSql2(sql2, bd);
+        Result rs2 = null;
+        String sql2 = "Select* from fuente";
+        rs2 = conSql.CargarSql2(sql2, bd);
 
 
-                if (rs2 != null) {
-                    session.setAttribute("encuestas", rs2);
-                }
+        if (rs2.getRowCount() != 0) {
+            session.setAttribute("fuentes", rs2);
 
-                sql2 = "Select* from fuente";
-                rs2 = conSql.CargarSql2(sql2, bd);
-                if (rs2.getRowCount() != 0) {
-                    session.setAttribute("fuentes", rs2);
-               
-                }
-
-            }
-
-        } catch (Error ex) {
-            //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
 
-
-
-
         conSql.cerrarConexion();
-
-
         return url;
     }
 }

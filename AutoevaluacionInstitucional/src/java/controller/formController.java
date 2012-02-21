@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.sql.Result;
 
 /**
  *
@@ -162,15 +163,6 @@ public class formController extends HttpServlet {
 
                 String bd = (String) session.getAttribute("bd");
 
-                /*
-                 * String sql = "Select* from fuente where id = " + id;
-                 *
-                 * ResultSet rs2 = conSql.CargarSql(sql, bd);
-                 *
-                 *
-                 * Fuente fuente = (Fuente) rs2.getArray(0);
-                 */
-
                 ResultSet rs = null;
                 String sql = "Select* from encuesta";
 
@@ -186,6 +178,40 @@ public class formController extends HttpServlet {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+            } else if (request.getParameter(
+                    "action").equals("selectorAsignarEncuestasAI")) {
+                HttpSession session = request.getSession();
+
+                sqlController conSql = new sqlController();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                int idProceso = proceso.getId();
+                String bd = (String) session.getAttribute("bd");
+
+                try {
+                    String idFuente = request.getParameter("fuente");
+                    int id = Integer.valueOf(idFuente);
+                    Result rs = null;
+                    String sql = "Select* from asignacionencuesta where proceso_id = " + idProceso + " and fuente_id = " + id;
+                    System.out.println("id: " + id);
+                    rs = conSql.CargarSql2(sql, bd);
+                    if (rs.getRowCount() != 0) {
+                        System.out.println("si hay asignacion de encuestas");
+                        session.setAttribute("encuestasSeleccionadas", rs);
+                        session.setAttribute("aux_asignarE", 1);
+                    } else {
+                        System.out.println("no hay asignacion de encuestas!!!!!");
+                        Result rs2 = null;
+                        String sql2 = "Select* from encuesta";
+                        rs2 = conSql.CargarSql2(sql2, bd);
+                        if (rs2 != null) {
+                            session.setAttribute("encuestas", rs2);
+                        }
+                        session.setAttribute("aux_asignarE", 0);
+                    }
+                } catch (Error ex) {
+                    //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
             } else if (request.getParameter(
                     "action").equals("crearProcesoAIp")) {
 

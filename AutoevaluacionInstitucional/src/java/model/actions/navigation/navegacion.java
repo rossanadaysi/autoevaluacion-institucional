@@ -41,6 +41,8 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/detalle";
         } else if (path.equals("menuAI")) {
             path = "autoevaluacionInstitucional/menu";
+        } else if (path.equals("selectorAsignarEncuestasAI")) {
+            path = "autoevaluacionInstitucional/proceso/encuesta/selectorAsignarE";
         } else if (path.equals("indexCC")) {
             path = "comiteCentral/index";
         } else if (path.equals("listarRepresentante")) {

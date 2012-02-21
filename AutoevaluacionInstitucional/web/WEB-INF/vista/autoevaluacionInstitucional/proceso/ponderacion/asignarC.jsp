@@ -1,5 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<div class="modal hide fade" id="myModalC">
+    <div class="modal-header">
+        <a data-dismiss="modal" class="close">×</a>
+        <h3>Información</h3>
+    </div>
+    <div class="modal-body">
+        <h4>Ponderación de características.</h4>
+        <p>La ponderación de características ha sido satisfactoriamente asignada</p>
+
+        <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-primary" href="#">Cerrar</a>
+    </div>
+</div>
 <c:if test="${auxAsignarC == 0}">
     <br>
     <div class="subnav">
@@ -109,6 +124,13 @@
                 <form id="formPondeCara" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Ponderación de Características</legend>
+                        <div id="alert">
+                            <div class="alert alert-info">
+                                <a data-dismiss="alert" class="close">×</a>
+                                <strong>Información!</strong>
+                                La ponderación de caracteristicas ya ha sido actualizada.
+                            </div>
+                        </div>
 
                         <a href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica">Detalle de Ponderación de Características Asignada.</a>
                         <br>
