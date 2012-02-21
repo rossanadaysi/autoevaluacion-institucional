@@ -126,7 +126,6 @@ public class formController extends HttpServlet {
 
                     }
                 } else {
-                    System.out.println("hola");
                     for (int i = 1; i <= numRows; i++) {
                         String id = request.getParameter("id" + i);
                         String ponderacion = request.getParameter("ponderacion" + i);
@@ -161,21 +160,25 @@ public class formController extends HttpServlet {
 
                 int id = Integer.valueOf(idFuente);
 
+
                 String bd = (String) session.getAttribute("bd");
 
-                ResultSet rs = null;
-                String sql = "Select* from encuesta";
+                if (session.getAttribute("aux_asignarE").equals(0)) {
+                    ResultSet rs = null;
+                    String sql = "Select* from encuesta";
 
-                rs = conSql.CargarSql(sql, bd);
-                try {
-                    while (rs.next()) {
-                        if (request.getParameter(rs.getString(2)).equals("1")) {
-                            String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
-                            conSql.UpdateSql(sql2, bd);
+                    rs = conSql.CargarSql(sql, bd);
+                    try {
+                        while (rs.next()) {
+                            if (request.getParameter(rs.getString(2)).equals("1")) {
+                                String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
+                                conSql.UpdateSql(sql2, bd);
+                            }
                         }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } catch (SQLException ex) {
-                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
                 }
 
             } else if (request.getParameter(
@@ -211,7 +214,7 @@ public class formController extends HttpServlet {
                 } catch (Error ex) {
                     //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            
+
             } else if (request.getParameter(
                     "action").equals("crearProcesoAIp")) {
 
