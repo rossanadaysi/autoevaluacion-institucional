@@ -86,14 +86,14 @@ public class sqlController {
         Statement stmt = con.createStatement();
         stmt.executeUpdate("create database " + name1);
 
-        String script = "C:\\Users\\Arturo González\\Desktop\\AutoevaluacionInstitucional\\web\\scriptsSql\\script.sql";
+        String script = "C:\\Users\\Usuario\\Desktop\\21 febrero\\AutoevaluacionInstitucional\\web\\scriptsSql\\script.sql";
 
         String nameBd = nombre + id;
 
         this.cargarScript(nameBd, script);
 
 
-        script = "C:\\Users\\Arturo González\\Desktop\\AutoevaluacionInstitucional\\web\\scriptsSql\\script2.sql";
+        script = "C:\\Users\\Usuario\\Desktop\\21 febrero\\AutoevaluacionInstitucional\\web\\scriptsSql\\script2.sql";
 
         this.cargarScript(nameBd, script);
         //  this.resetDB_gtbio(stmt);
