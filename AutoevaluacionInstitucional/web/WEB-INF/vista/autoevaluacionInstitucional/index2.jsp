@@ -245,6 +245,17 @@
                                         
                                             $(".ui-layout-center").scroll(function(){
                                                 // If has not activated (has no attribute "data-top"
+
+                                                if($(".subnav").length > 0){
+                                               
+                                                    if (!$('.subnav').attr('data-top')) {
+                                                        // If already fixed, then do nothing
+                                                        if ($('.subnav').hasClass('subnav-fixed')) return;
+                                                        // Remember top position
+                                                        var offset = $('.subnav').offset()
+                                                        $('.subnav').attr('data-top', offset.top);
+                                                    }
+
                                                 
                                                 
                                                 if (!$('.subnav').attr('data-top')) {
@@ -255,10 +266,14 @@
                                                     $('.subnav').attr('data-top', offset.top);
                                                 }
 
-                                                if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
-                                                    $('.subnav').addClass('subnav-fixed');
-                                                else
-                                                    $('.subnav').removeClass('subnav-fixed');
+
+                                                    if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
+                                                        $('.subnav').addClass('subnav-fixed');
+                                                    else
+                                                        $('.subnav').removeClass('subnav-fixed');
+                                               
+                                                }
+                                               
                                             
                                             });
             
@@ -311,7 +326,8 @@
                                         }); //fin de document.ready
                 
            
-
+</script>
+                                    <script type="text/javascript">
             
                                         $(function()
                                         {
@@ -474,6 +490,7 @@
                                                             } //fin jaja34  
                                                             jaja34(); 
                        
+
                                                         }
                                                         else if(hash == "#CrearProceso"){
                                                             url3 = url3.replace('#', "ControllerAI?action=")+"AI";
@@ -503,6 +520,7 @@
                                                                                     
                                                                                          
                                                                                 }
+
                                                                                                          
                                                                             } //fin success
                                                                         }); //fin $.ajax
@@ -2182,6 +2200,54 @@
                                                         </c:choose>
                                                     </ul>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal hide fade" id="myModalF">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Información</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Ponderación de factores.</h4>
+                                                <p>La ponderación de factores ha sido satisfactoriamente asignada</p>
+
+                                                <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionFactor" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal hide fade" id="myModalC">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Información</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Ponderación de características.</h4>
+                                                <p>La ponderación de características ha sido satisfactoriamente asignada</p>
+
+                                                <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="modal hide fade" id="myModalE">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Información</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Asignación de encuestas.</h4>
+                                                <p>Las encuestas han sido asignadas para la fuente seleccionada.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
                                             </div>
                                         </div>
                                     </body>
