@@ -8,6 +8,13 @@
                 <fieldset>
                     <legend>Nuevo Proceso de Autoevaluación</legend>
                     <c:if test="${aux_index2 == 1}">
+                        <div id="alert">
+                            <div class="alert alert-info">
+                                <a data-dismiss="alert" class="close">×</a>
+                                <strong>Información!</strong>
+                                El proceso ya fue creado.
+                            </div>
+                        </div>
                         <a href="<%=request.getContextPath()%>/#detalleProceso">Detalle del Proceso Creado</a>
                         <br>
                     </c:if>
