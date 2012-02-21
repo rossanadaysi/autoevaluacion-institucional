@@ -1,20 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="modal hide fade" id="myModalC">
-    <div class="modal-header">
-        <a data-dismiss="modal" class="close">×</a>
-        <h3>Información</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Ponderación de características.</h4>
-        <p>La ponderación de características ha sido satisfactoriamente asignada</p>
 
-        <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
-    </div>
-    <div class="modal-footer">
-        <a class="btn btn-primary" href="#">Cerrar</a>
-    </div>
-</div>
 <c:if test="${auxAsignarC == 0}">
     <br>
     <div class="subnav">
@@ -107,10 +93,10 @@
                     <c:when test="${((iter.index + 1) % 5 == 0) || (iter.index == 0)}">
                         <c:choose>
                             <c:when test="${(iter.index == 0)}">
-                                <li class="active"><a href="#cara${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                                <li class="active"><a href="#PonderacionCaracteristicas${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="#cara${iter.index}">${iter.index + 2} - ${iter.index + 6}</a></li>
+                                <li><a href="#PonderacionCaracteristicas${iter.index}">${iter.index + 2} - ${iter.index + 6}</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
@@ -146,7 +132,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach items="${pondeCaracteristicas.rowsByIndex}" var="row2" varStatus="iter">
-                                    <tr id="cara${iter.index}">    
+                                    <tr id="PonderacionCaracteristicas${iter.index}">    
                                         <td>   
                                             <c:out value="${row2[4]}"/>
                                         </td>
