@@ -34,19 +34,7 @@
     </select>
     <br>
     <br>
-     <div class="modal hide fade" id="myModalE">
-            <div class="modal-header">
-                <a data-dismiss="modal" class="close">×</a>
-                <h3>Información</h3>
-            </div>
-            <div class="modal-body">
-                <h4>Asignación de encuestas.</h4>
-                <p>Las encuestas han sido asignadas para la fuente seleccionada.</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="#">Cerrar</a>
-            </div>
-        </div>
+     
     <div  id="resultados"></div>
 </form>  
 
