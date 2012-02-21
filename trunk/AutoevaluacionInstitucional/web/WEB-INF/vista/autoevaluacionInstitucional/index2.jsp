@@ -62,7 +62,7 @@
                                     <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-scrollspy.js"></script>
                                     <style type="text/css">
 
-                                        .slick-cell .options a {
+                                         .slick-cell .options a {
                                             cursor: pointer;
                                             display: block;
                                             float: left;
@@ -2110,7 +2110,7 @@
                                                             <span class="icon-bar"></span>
                                                             <span class="icon-bar"></span>
                                                         </a>
-                                                        <a class="brand" href="#">Autoevaluacion</a>
+                                                        <a class="brand" href="#">Autoevaluacion Institucional</a>
                                                         <div class="nav-collapse">
                                                             <ul class="nav">
                                                                 <li class="active"><a href="#">Inicio</a></li>
