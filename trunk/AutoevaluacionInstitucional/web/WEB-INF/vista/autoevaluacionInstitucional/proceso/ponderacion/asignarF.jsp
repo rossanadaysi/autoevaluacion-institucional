@@ -1,20 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="modal hide fade" id="myModalF">
-    <div class="modal-header">
-        <a data-dismiss="modal" class="close">×</a>
-        <h3>Información</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Ponderación de factores.</h4>
-        <p>La ponderación de factores ha sido satisfactoriamente asignada</p>
 
-        <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionFactor" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
-    </div>
-    <div class="modal-footer">
-        <a class="btn btn-primary" href="#">Cerrar</a>
-    </div>
-</div>
 <c:if test="${auxAsignarF == 0}">
     <br>
     <div class="hero-unit">
