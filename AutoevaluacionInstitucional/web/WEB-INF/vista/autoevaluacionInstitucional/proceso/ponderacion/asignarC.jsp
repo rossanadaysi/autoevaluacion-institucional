@@ -8,13 +8,13 @@
             <li><a>Ponderación de Características</a></li>
             <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
-                    <c:when test="${((iter.index + 1) % 5 == 0) || (iter.index == 0)}">
+                    <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
                         <c:choose>
                             <c:when test="${(iter.index == 0)}">
-                                <li class="active"><a href="#PonderacionCaracteristicas${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                                <li class="active"><a href="#PonderacionCaracteristicas${iter.index+1}">${iter.index + 1} - ${iter.index + 5}</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="#PonderacionCaracteristicas${iter.index}">${iter.index + 2} - ${iter.index + 6}</a></li>
+                                <li><a href="#PonderacionCaracteristicas${iter.index+1}">${iter.index + 1} - ${iter.index + 5}</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
@@ -40,7 +40,7 @@
                             <tbody>
                                 <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
 
-                                    <tr id="PonderacionCaracteristicas${iter.index}">   
+                                    <tr id="PonderacionCaracteristicas${iter.index+1}">   
                                         <td>
                                             <c:out value="${row[0]}"/>
                                         </td>
@@ -90,13 +90,13 @@
             <li><a>Ponderación de Características</a></li>
             <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
-                    <c:when test="${((iter.index + 1) % 5 == 0) || (iter.index == 0)}">
+                    <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
                         <c:choose>
                             <c:when test="${(iter.index == 0)}">
-                                <li class="active"><a href="#PonderacionCaracteristicas${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                                <li class="active"><a href="#PonderacionCaracteristicas${iter.index+1}">${iter.index + 1} - ${iter.index + 5}</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="#PonderacionCaracteristicas${iter.index}">${iter.index + 2} - ${iter.index + 6}</a></li>
+                                <li><a href="#PonderacionCaracteristicas${iter.index+1}">${iter.index + 1} - ${iter.index + 5}</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
@@ -132,7 +132,7 @@
                             </thead><!--thead-->
                             <tbody>
                                 <c:forEach items="${pondeCaracteristicas.rowsByIndex}" var="row2" varStatus="iter">
-                                    <tr id="PonderacionCaracteristicas${iter.index}">    
+                                    <tr id="PonderacionCaracteristicas${iter.index+1}">    
                                         <td>   
                                             <c:out value="${row2[4]}"/>
                                         </td>
