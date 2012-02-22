@@ -384,7 +384,7 @@
                                                                         $("div.ui-layout-center").scrollspy();   
                                                                     }, 500);
                                                                     
-                                                                        $("div.ui-layout-center").scrollspy('refresh');
+                                                                    $("div.ui-layout-center").scrollspy('refresh');
                                                                     
 
                                                                     $("#formPondeFa").submit(function(event){
@@ -430,7 +430,7 @@
                                                                     setTimeout(function(){
                                                                         $("div.ui-layout-center").scrollspy();   
                                                                     }, 500);
-                                                                   $("div.ui-layout-center").scrollspy('refresh');
+                                                                    $("div.ui-layout-center").scrollspy('refresh');
     
                                     
                                                                     $("#formPondeCara").submit(function(event){
@@ -483,6 +483,49 @@
                                                                                     $("#resultados").hide();
                                                                                     $("#select option:eq(0)").attr("selected","selected");
                                                                                     $('#myModalE').modal();  
+                                                                                    
+                                                                                   
+                                                                                } //fin success
+                                            
+                                                                            }); //fin $.ajax
+                                                                        }); //fin submit
+                                        
+                                     
+                             
+                                                                    } //fin success
+                                                                }); //fin del $.ajax
+                         
+                                                            } //fin jaja34  
+                                                            jaja34(); 
+                       
+
+                                                        }
+                                                        else if(hash == "#AsignacionMuestra"){
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                          
+                      
+                                                            var jaja34 = function(){
+                                                                $("div.ui-layout-center").empty();
+                                                                $.ajax({ 
+                                                                    type: "POST", 
+                                                                    url: url3, 
+                                                                    success: function(data) 
+                                                                    {
+                                       
+                                                                        $("div.ui-layout-center").append(data);
+                                    
+                                                                        $("#formAsigMue").submit(function(event){
+                                                                            event.preventDefault();
+                                             
+                                                                            $.ajax({
+                                                                                type: 'POST',
+                                                                                url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
+                                                                                data: $("#formAsigMue").serialize(),
+                                                                                success: function(){
+                                                                                    
+                                                                                    $("#resultados2").hide();
+                                                                                    $("#select option:eq(0)").attr("selected","selected");
+                                                                                    $('#myModalM').modal();  
                                                                                     
                                                                                    
                                                                                 } //fin success
@@ -2184,7 +2227,7 @@
                                                                         <li class="active"><a href="<%=request.getContextPath()%>/#CrearProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
                                                                         <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                                                                         <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
-                                                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                                                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                                                         <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                                                                         <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                                                                     </c:when>
@@ -2192,7 +2235,7 @@
                                                                         <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
                                                                         <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                                                                         <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
-                                                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                                                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                                                         <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                                                                         <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                                                                     </c:otherwise>
@@ -2253,7 +2296,7 @@
                                             <div class="modal-body">
                                                 <h4>Asignación de Encuestas.</h4>
                                                 <br>
-                                                <p>Las encuestas han sido asignadas para la fuente seleccionada.</p>
+                                                    <p>Las encuestas han sido asignadas para la fuente seleccionada.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2286,6 +2329,19 @@
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
                                             </div>
                                         </div>
-
+                                        <div class="modal hide fade" id="myModalM">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Información</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Asignación de Muestra.</h4>
+                                                <br>
+                                                <p>La muestra ha sido asignada para la fuente seleccionada!</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
                                     </body>
                                     </html> 

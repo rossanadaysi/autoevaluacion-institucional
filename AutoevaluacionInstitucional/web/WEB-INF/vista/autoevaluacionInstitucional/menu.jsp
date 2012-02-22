@@ -8,7 +8,7 @@
                     <li class="active"><a href="<%=request.getContextPath()%>/#CrearProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
                     <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                     <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
-                    <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                    <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                     <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                     <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                 </c:when>
@@ -16,7 +16,7 @@
                     <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
                     <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                     <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
-                    <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#asignarMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                    <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                     <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                     <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                 </c:otherwise>

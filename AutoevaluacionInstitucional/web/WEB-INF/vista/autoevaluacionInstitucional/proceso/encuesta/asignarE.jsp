@@ -31,7 +31,7 @@
         <div class="span10">
             <form  id="formAsigEnc" method="post">
                 <fieldset>
-                    <legend>Ponderación  de Características</legend>
+                    <legend>Asignación de Encuestas</legend>
 
                     <select id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
