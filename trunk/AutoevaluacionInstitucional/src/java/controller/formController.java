@@ -224,6 +224,146 @@ public class formController extends HttpServlet {
                 }
 
             } else if (request.getParameter(
+                    "action").equals("asignarMuestraAIp")) {
+
+                HttpSession session = request.getSession();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                Asignacionencuesta ae = new Asignacionencuesta();
+
+                sqlController conSql = new sqlController();
+
+
+                String idFuente = request.getParameter("fuente");
+
+                int id = Integer.valueOf(idFuente);
+
+
+                String bd = (String) session.getAttribute("bd");
+
+                int idMuestra = (Integer) session.getAttribute("idMuestra");
+
+                String tabla = null;
+                String tabla1 = null;
+
+                //Estatico
+                if (id == 1) {
+
+                    tabla = "muestraestudiante";
+                    tabla1 = "estudiante";
+
+                } else if (id == 2) {
+
+                    tabla = "muestradocente";
+                    tabla1 = "docente";
+                }
+
+
+                if (session.getAttribute("aux_asignarM").equals(1)) {
+                    System.out.println("sisasasasasas");
+                    String sql2 = "delete from `" + tabla + "` where `muestra_id` = " + idMuestra;
+                    conSql.UpdateSql(sql2, bd);
+
+                }
+
+                ResultSet rs = null;
+                String sql = "Select* from " + tabla1;
+
+
+                rs = conSql.CargarSql(sql, bd);
+                try {
+                    while (rs.next()) {
+                        if (request.getParameter(rs.getString(1)).equals("1")) {
+                            String sql2 = "INSERT INTO `" + tabla + "` (`id`, `muestra_id`, `" + tabla1 + "_id`) VALUES (NULL, '" + idMuestra + "', '" + rs.getString(1) + "')";
+                            conSql.UpdateSql(sql2, bd);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (request.getParameter(
+                    "action").equals("selectorAsignarMuestraAI")) {
+                HttpSession session = request.getSession();
+                sqlController conSql = new sqlController();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                int idProceso = proceso.getId();
+                String bd = (String) session.getAttribute("bd");
+
+                String idFuente = request.getParameter("fuente");
+                int id = Integer.valueOf(idFuente);
+
+                int idMuestra = (Integer) session.getAttribute("idMuestra");
+
+                String idP = request.getParameter("programas");
+                String idS = request.getParameter("semestres");
+
+
+                Result rs2 = null;
+                String tabla = null;
+                String tabla1 = null;
+                String sql2 = null;
+
+
+                int fil = 0;
+
+                //Estatico
+                if (id == 1) {
+
+                    tabla = "muestraestudiante";
+                    tabla1 = "estudiante";
+                    if (!idP.equals("--") && !idS.equals("--")) {
+
+                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP + " and " + tabla1 + ".semestre = " + idS;
+                        System.out.println(sql2);
+                        fil = 1;
+                    } else if (!idP.equals("--")) {
+
+                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP;
+                        System.out.println(sql2);
+                        fil = 1;
+                    } else if (!idS.equals("--")) {
+
+                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".semestre = " + idS;
+                        System.out.println(sql2);
+                        fil = 1;
+                    }
+
+                } else if (id == 2) {
+
+                    tabla = "muestradocente";
+                    tabla1 = "docente";
+                }
+
+                if (fil == 0) {
+                    System.out.println("nott");
+                    sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id";
+
+                }
+
+                rs2 = conSql.CargarSql2(sql2, bd);
+                if (rs2 != null) {
+                    session.setAttribute("muestras", rs2);
+                }
+
+//*                
+                try {
+
+                    Result rs = null;
+                    String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
+                    rs = conSql.CargarSql2(sql, bd);
+                    if (rs.getRowCount() != 0) {
+                        System.out.println("si hay asignacion de muestras");
+                        session.setAttribute("muestrasSeleccionadas", rs);
+                        session.setAttribute("aux_asignarM", 1);
+                    } else {
+                        System.out.println("no hay asignacion de muestras!!!!!");
+                        session.setAttribute("aux_asignarM", 0);
+                    }
+                } catch (Error ex) {
+                    //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (request.getParameter(
                     "action").equals("crearProcesoAIp")) {
 
                 HttpSession session = request.getSession();
