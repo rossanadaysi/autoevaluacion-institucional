@@ -236,8 +236,6 @@
                                             $("ul.nav-list li a").click(function(event){
                                                 $(this).parent().siblings().removeClass("active");
                                                 $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
-            
-            
                                                 $(this).parent().addClass("active");
                                                 $(this).children("i").addClass("icon-white");
             
@@ -255,19 +253,11 @@
                                                         $('.subnav').attr('data-top', offset.top);
                                                     }
 
-                                                
-                                                
-                                                    if (!$('.subnav').attr('data-top')) {
-                                                        // If already fixed, then do nothing
-                                                        if ($('.subnav').hasClass('subnav-fixed')) return;
-                                                        // Remember top position
-                                                        var offset = $('.subnav').offset()
-                                                        $('.subnav').attr('data-top', offset.top);
-                                                    }
-
-
-                                                    if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
-                                                        $('.subnav').addClass('subnav-fixed');
+                                                 if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
+                                                      {
+                                                          $('.subnav').addClass('subnav-fixed');
+                                                          
+                                                      }  
                                                     else
                                                         $('.subnav').removeClass('subnav-fixed');
                                                
