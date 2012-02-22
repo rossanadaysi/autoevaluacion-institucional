@@ -31,8 +31,7 @@
         <div class="span10">
             <form  id="formAsigEnc" method="post">
                 <fieldset>
-                    <legend>Asignación de Encuestas</legend>
-
+                    <legend>Asignacion de Encuestas</legend>
                     <select id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
                         <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
@@ -43,8 +42,9 @@
                     <br> 
                     <div  id="resultados"></div>
                 </fieldset>
+             </form>     
         </div>
     </div>
 </div>
-</form>  
+
 
