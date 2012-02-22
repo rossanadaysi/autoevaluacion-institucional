@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" href="css/footer.css" />
         <link rel="stylesheet" type="text/css" href="css/menu.css" />
         <link rel="stylesheet" type="text/css" href="css/login.css" />
-        <script type="text/javascript" src="jQuery/jquery.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="script/jquery-layout.js"></script>
         <script type="text/javascript" src="script/jquery.metadata.js"></script>
         <script type="text/javascript"src="script/jquery.validate.js"></script>
