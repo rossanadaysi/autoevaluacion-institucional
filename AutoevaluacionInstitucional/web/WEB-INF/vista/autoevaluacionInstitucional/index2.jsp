@@ -2254,7 +2254,8 @@
                                                 <h3>Información</h3>
                                             </div>
                                             <div class="modal-body">
-                                                <h4>Asignación de encuestas.</h4>
+                                                <h4>Asignación de Encuestas.</h4>
+                                                <br>
                                                 <p>Las encuestas han sido asignadas para la fuente seleccionada.</p>
                                             </div>
                                             <div class="modal-footer">

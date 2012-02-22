@@ -162,23 +162,29 @@ public class formController extends HttpServlet {
 
 
                 String bd = (String) session.getAttribute("bd");
+                int idAsignacion;
+                int aux = 0;
 
-                if (session.getAttribute("aux_asignarE").equals(0)) {
-                    ResultSet rs = null;
-                    String sql = "Select* from encuesta";
+                if (session.getAttribute("aux_asignarE").equals(1)) {
 
-                    rs = conSql.CargarSql(sql, bd);
-                    try {
-                        while (rs.next()) {
-                            if (request.getParameter(rs.getString(2)).equals("1")) {
-                                String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
-                                conSql.UpdateSql(sql2, bd);
-                            }
+                    String sql2 = "delete from `asignacionencuesta` where `proceso_id` = '" + proceso.getId() + "' and  `fuente_id` = '" + id + "'";
+                    conSql.UpdateSql(sql2, bd);
+
+                }
+
+                ResultSet rs = null;
+                String sql = "Select* from encuesta";
+
+                rs = conSql.CargarSql(sql, bd);
+                try {
+                    while (rs.next()) {
+                        if (request.getParameter(rs.getString(2)).equals("1")) {
+                            String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
+                            conSql.UpdateSql(sql2, bd);
                         }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else {
+                } catch (SQLException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else if (request.getParameter(
@@ -189,6 +195,13 @@ public class formController extends HttpServlet {
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 int idProceso = proceso.getId();
                 String bd = (String) session.getAttribute("bd");
+
+                Result rs2 = null;
+                String sql2 = "Select* from encuesta";
+                rs2 = conSql.CargarSql2(sql2, bd);
+                if (rs2 != null) {
+                    session.setAttribute("encuestas", rs2);
+                }
 
                 try {
                     String idFuente = request.getParameter("fuente");
@@ -203,12 +216,7 @@ public class formController extends HttpServlet {
                         session.setAttribute("aux_asignarE", 1);
                     } else {
                         System.out.println("no hay asignacion de encuestas!!!!!");
-                        Result rs2 = null;
-                        String sql2 = "Select* from encuesta";
-                        rs2 = conSql.CargarSql2(sql2, bd);
-                        if (rs2 != null) {
-                            session.setAttribute("encuestas", rs2);
-                        }
+
                         session.setAttribute("aux_asignarE", 0);
                     }
                 } catch (Error ex) {

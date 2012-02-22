@@ -6,18 +6,20 @@
     {
         
         if($("#select option:selected").val() == "--"){
-            
+            $("#resultados").hide();
         }
-        $.ajax({
-            type: 'POST',
-            url: "<%=request.getContextPath()%>/formController?action=selectorAsignarEncuestasAI",
-            data: $("#formAsigEnc").serialize(),
-            success: function(){
-                $("#resultados").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarEncuestasAI");
-                $("#resultados").show();
-            } //fin success
+        else{
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/formController?action=selectorAsignarEncuestasAI",
+                data: $("#formAsigEnc").serialize(),
+                success: function(){
+                    $("#resultados").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarEncuestasAI");
+                    $("#resultados").show();
+                } //fin success
                                             
-        }); //fin $.ajax
+            }); //fin $.ajax
+        }
         return false;
     }
 
@@ -33,8 +35,7 @@
         </c:forEach>
     </select>
     <br>
-    <br>
-     
+    <br> 
     <div  id="resultados"></div>
 </form>  
 
