@@ -3,6 +3,25 @@
 
 <c:if test="${auxAsignarF == 0}">
     <br>
+    <div class="subnav">
+        <ul class="nav nav-pills">
+            <li><a>Ponderación de Factores</a></li>
+            <c:forEach items="${pondeFactores.rowsByIndex}" var="row" varStatus="iter">
+                <c:choose>
+                    <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
+                        <c:choose>
+                            <c:when test="${(iter.index == 0)}">
+                                <li class="active"><a href="#PonderacionFactores${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="#PonderacionFactores${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+        </ul>
+    </div>
     <div class="hero-unit">
         <div class="row">
             <div class="span10">
@@ -20,7 +39,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach items="${factores.rowsByIndex}" var="row" varStatus="iter">
-                                    <tr>    
+                                    <tr id="PonderacionFactores${iter.index}">    
                                         <td>   
                                             <c:out value="${row[0]}"/>
                                         </td>
@@ -65,6 +84,25 @@
 </c:if>
 <c:if test="${auxAsignarF == 1}">
     <br>
+    <div class="subnav">
+        <ul class="nav nav-pills">
+            <li><a>Ponderación de Factores</a></li>
+            <c:forEach items="${pondeFactores.rowsByIndex}" var="row" varStatus="iter">
+                <c:choose>
+                    <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
+                        <c:choose>
+                            <c:when test="${(iter.index == 0)}">
+                                <li class="active"><a href="#PonderacionFactores${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="#PonderacionFactores${iter.index}">${iter.index + 1} - ${iter.index + 5}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+        </ul>
+    </div>
     <div class="hero-unit">
         <div class="row">
             <div class="span10">
@@ -92,7 +130,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach items="${pondeFactores.rowsByIndex}" var="row2" varStatus="iter">
-                                    <tr>    
+                                    <tr id="PonderacionFactores${iter.index}">
                                         <td>   
                                             <c:out value="${row2[4]}"/>
                                         </td>
