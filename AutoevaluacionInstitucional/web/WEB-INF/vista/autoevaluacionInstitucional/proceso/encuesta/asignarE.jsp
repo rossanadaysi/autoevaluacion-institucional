@@ -25,17 +25,26 @@
 
            
 </script>
-<h1>Asignar Encuesta</h1>
 <br>
-<form  id="formAsigEnc" method="post">
-    <select id="select" name="fuente" onchange="presionSubmit(this)">
-        <option value="--">Seleccione una Fuente</option>
-        <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
-            <option value="${item2[0]}">${item2[1]}</option>
-        </c:forEach>
-    </select>
-    <br>
-    <br> 
-    <div  id="resultados"></div>
+<div class="hero-unit">
+    <div class="row">
+        <div class="span10">
+            <form  id="formAsigEnc" method="post">
+                <fieldset>
+                    <legend>Ponderación  de Características</legend>
+
+                    <select id="select" name="fuente" onchange="presionSubmit(this)">
+                        <option value="--">Seleccione una Fuente</option>
+                        <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
+                            <option value="${item2[0]}">${item2[1]}</option>
+                        </c:forEach>
+                    </select>
+                    <br>
+                    <br> 
+                    <div  id="resultados"></div>
+                </fieldset>
+        </div>
+    </div>
+</div>
 </form>  
 
