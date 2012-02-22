@@ -1,11 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link type="text/css" rel="stylesheet" href="jQuery/dragDrop/fcbklistselection.css" />
-<script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
-        $.fcbkListSelection("#fcbklist","800","50","2");       
+        $.fcbkListSelection("#fcbklist","600","50","3");       
     });
             
 </script>
@@ -18,6 +16,9 @@
                 Las encuestas ya han sido asignadas para la fuente seleccionada.
             </div>
         </div>
+        
+        
+        
         <ul id="fcbklist">
             <c:forEach items="${encuestas.rowsByIndex}" var="item" varStatus="iter">
                 <c:set var="auxx" value="1"></c:set>
@@ -46,6 +47,7 @@
         </div>
     </c:if>
     <c:if test="${aux_asignarE == 0}">
+        
         <ul id="fcbklist">
             <c:forEach items="${encuestas.rowsByIndex}" var="item" varStatus="iter">
                 <li>
@@ -55,6 +57,8 @@
                 </li>
             </c:forEach>
         </ul>
+        
+        
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Asignar Encuesta Para Fuente Seleccionada</button>
         </div>
