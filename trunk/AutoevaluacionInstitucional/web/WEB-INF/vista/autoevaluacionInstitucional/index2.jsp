@@ -247,7 +247,6 @@
                                                 // If has not activated (has no attribute "data-top"
 
                                                 if($(".subnav").length > 0){
-                                               
                                                     if (!$('.subnav').attr('data-top')) {
                                                         // If already fixed, then do nothing
                                                         if ($('.subnav').hasClass('subnav-fixed')) return;
@@ -258,13 +257,13 @@
 
                                                 
                                                 
-                                                if (!$('.subnav').attr('data-top')) {
-                                                    // If already fixed, then do nothing
-                                                    if ($('.subnav').hasClass('subnav-fixed')) return;
-                                                    // Remember top position
-                                                    var offset = $('.subnav').offset()
-                                                    $('.subnav').attr('data-top', offset.top);
-                                                }
+                                                    if (!$('.subnav').attr('data-top')) {
+                                                        // If already fixed, then do nothing
+                                                        if ($('.subnav').hasClass('subnav-fixed')) return;
+                                                        // Remember top position
+                                                        var offset = $('.subnav').offset()
+                                                        $('.subnav').attr('data-top', offset.top);
+                                                    }
 
 
                                                     if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
@@ -326,7 +325,7 @@
                                         }); //fin de document.ready
                 
            
-</script>
+                                    </script>
                                     <script type="text/javascript">
             
                                         $(function()
@@ -336,16 +335,16 @@
                                                 var hash = location.hash;
                     
                                                 
-                                                if(hash.indexOf("PonderacionCaracteristicas")!=-1 ){
+                                                if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 ){
                                                     console.log("ok")
                                                 }else{
                                                     
                                                     if(hash=="#CerrarSesion"){
                                                         $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
                                                         function(data) {
-                                                        location = "<%=request.getContextPath()%>/";
+                                                            location = "<%=request.getContextPath()%>/";
                                                      
-                                                    });
+                                                        });
                                                     
                                                         
                                                     }
@@ -391,7 +390,13 @@
                                                                 success: function(data) 
                                                                 {
                                                                     $("div.ui-layout-center").append(data);
-                                    
+                                                                    setTimeout(function(){
+                                                                        $("div.ui-layout-center").scrollspy();   
+                                                                    }, 500);
+                                                                    
+                                                                        $("div.ui-layout-center").scrollspy('refresh');
+                                                                    
+
                                                                     $("#formPondeFa").submit(function(event){
                                                                         event.preventDefault();
                                              
@@ -435,6 +440,8 @@
                                                                     setTimeout(function(){
                                                                         $("div.ui-layout-center").scrollspy();   
                                                                     }, 500);
+                                                                   $("div.ui-layout-center").scrollspy('refresh');
+    
                                     
                                                                     $("#formPondeCara").submit(function(event){
                                                                         event.preventDefault();
@@ -2262,33 +2269,33 @@
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
                                             </div>
                                         </div>
-                                            
-                                            <div class="modal hide fade" id="myModalP">
-                                                <div class="modal-header">
-                                                    <a data-dismiss="modal" class="close">×</a>
-                                                    <h3>Información</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h4>Nuevo Proceso.</h4>
-                                                    <p>Se ha creado un nuevo proceso de autevaluación</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
-                                                </div>
+
+                                        <div class="modal hide fade" id="myModalP">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Información</h3>
                                             </div>
-                                            <div class="modal hide fade" id="myModalP1">
-                                                <div class="modal-header">
-                                                    <a data-dismiss="modal" class="close">×</a>
-                                                    <h3>Información</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h4>Nuevo Proceso.</h4>
-                                                    <p>Proceso de autevaluación actualizado con éxito!</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
-                                                </div>
+                                            <div class="modal-body">
+                                                <h4>Nuevo Proceso.</h4>
+                                                <p>Se ha creado un nuevo proceso de autevaluación</p>
                                             </div>
-                                            
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
+                                        <div class="modal hide fade" id="myModalP1">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Información</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Nuevo Proceso.</h4>
+                                                <p>Proceso de autevaluación actualizado con éxito!</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
+
                                     </body>
                                     </html> 
