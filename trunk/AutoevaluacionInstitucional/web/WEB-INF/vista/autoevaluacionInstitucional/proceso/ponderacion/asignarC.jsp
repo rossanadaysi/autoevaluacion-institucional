@@ -116,7 +116,7 @@
                                 <strong>Información!</strong>
                                 La ponderación de caracteristicas ya ha sido actualizada.
                             </div>
-                        </div>
+                        </div>  <!--alert-->
 
                         <a href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica">Detalle de Ponderación de Características Asignada.</a>
                         <br>
@@ -129,7 +129,7 @@
                                     <th>Ponderacion</th>
                                     <th>Justificacion</th>
                                 </tr>
-                            </thead>
+                            </thead><!--thead-->
                             <tbody>
                                 <c:forEach items="${pondeCaracteristicas.rowsByIndex}" var="row2" varStatus="iter">
                                     <tr id="PonderacionCaracteristicas${iter.index}">    
