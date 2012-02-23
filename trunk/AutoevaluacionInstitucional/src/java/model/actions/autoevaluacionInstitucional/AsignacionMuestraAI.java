@@ -40,16 +40,38 @@ public class AsignacionMuestraAI implements Action {
         ResultSet rs3 = null;
 
         String sql2 = null;
+        int ayu = 0;
 
         sql2 = "Select id from muestra where proceso_id = " + idProceso;
         rs3 = conSql.CargarSql(sql2, bd);
         try {
+
+
             while (rs3.next()) {
+                ayu = 1;
                 idMuestra = Integer.parseInt(rs3.getString(1));
                 session.setAttribute("idMuestra", idMuestra);
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (ayu == 0) {
+            System.out.println("ayuda");
+            conSql.UpdateSql("INSERT INTO `" + bd + "`.`muestra` (`id`, `formula`, `proceso_id`) VALUES (NULL, NULL, '" + idProceso + "')", bd);
+            try {
+
+
+                while (rs3.next()) {
+                    ayu = 1;
+                    idMuestra = Integer.parseInt(rs3.getString(1));
+                    session.setAttribute("idMuestra", idMuestra);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
 

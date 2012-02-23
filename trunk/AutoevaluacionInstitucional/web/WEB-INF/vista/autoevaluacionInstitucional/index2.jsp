@@ -617,9 +617,9 @@
                                                                                 },2000);
                                                                                 
                                                                                 $('#myModalP').on('hidden', function () {
-                                                                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                                        location = '/AutoevaluacionInstitucional/';
-                                                                                    });
+                                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                                    location = '/AutoevaluacionInstitucional/';
+                                                                                });
                                                                                 
                                                                                                                                                                                      
                                                                             } //fin success
@@ -636,9 +636,13 @@
                                                                 url: url3, 
                                                                 success: function(data) 
                                                                 {
-                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                    if(${aux_IniciarP} == 0){
+                                                                        $('#myModalIP').modal(); 
+                                                                    }else{
+                                                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                             
-                                                                    location = "<%=request.getContextPath()%>/#detalleProceso";                                
+                                                                        location = "<%=request.getContextPath()%>/#detalleProceso";    
+                                                                    }                            
                                                              
                                                                 } //fin success
                                                             }); //fin del $.ajax
@@ -2311,8 +2315,6 @@
                                                 <h4>Ponderación de factores.</h4>
                                                 <br>
                                                     <p>La ponderación de factores ha sido satisfactoriamente asignada</p>
-
-                                                    <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionFactor" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2328,8 +2330,6 @@
                                                 <h4>Ponderación de características.</h4>
                                                 <br>
                                                     <p>La ponderación de características ha sido satisfactoriamente asignada</p>
-
-                                                    <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2410,6 +2410,19 @@
                                             </div>
 
                                         </div>
-
+                                        <div class="modal hide fade" id="myModalIP">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Atención!</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
+                                                <br>
+                                                    <p>Debe configurar todo el proceso para continuar.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
                                     </body>
                                     </html> 
