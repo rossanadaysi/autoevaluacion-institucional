@@ -35,16 +35,19 @@ public class PonderacionFactorAI implements Action {
         String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
         rs2 = conSql.CargarSql2(sql, bd);
 
+        Result rs = null;
+        rs = conSql.CargarSql2("Select* from factor", bd);
+
+
 
         if (rs2.getRowCount() > 0) {
             session.setAttribute("auxAsignarF", 1);
             System.out.println("si hay ponderacion de factores");
             session.setAttribute("pondeFactores", rs2);
+            session.setAttribute("factores", rs);
         } else {
             session.setAttribute("auxAsignarF", 0);
 
-            Result rs = null;
-            rs = conSql.CargarSql2("Select* from factor", bd);
 
             session.setAttribute("factores", rs);
             conSql.cerrarConexion();
