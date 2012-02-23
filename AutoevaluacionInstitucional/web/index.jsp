@@ -25,6 +25,12 @@
         <link rel="stylesheet" type="text/css" href="css/footer.css" />
         <link rel="stylesheet" type="text/css" href="css/menu.css" />
         <link rel="stylesheet" type="text/css" href="css/login.css" />
+
+        <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap2.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/bootstrap/css/docs.css" rel="stylesheet"/>
+
+
         <script src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="script/jquery-layout.js"></script>
         <script type="text/javascript" src="script/jquery.metadata.js"></script>
@@ -46,6 +52,7 @@
                 background-position: right -85px;
                 background-repeat: no-repeat;
                 padding-right: 17px;   
+                -moz-text-decoration-line: none;
             }
 
             #iniciarSesion:hover{
@@ -346,9 +353,9 @@
                 });
         
                 $("#iniciarSesion").hover(function(){
-                    $("#header_Options a span.header").addClass("hover");   
+                    $(".header_Option a span.header").addClass("hover");   
                 },function(){
-                    $("#header_Options a span.header").removeClass("hover");
+                    $(".header_Option a span.header").removeClass("hover");
                 });
         
                 var activeClass = 'dropdown-active';
@@ -524,79 +531,80 @@
 
     <body>
         <div class="ui-layout-north ui-widget-content">
-            <div class="fondoHeader" id="header">
-                <h1>
-                    <a id="logo" href="/#/">
-                    </a>
-                </h1>
-                <div id="Navigation">
-                    <a  href="#/">
-                        Inicio
-                    </a>
-                    <a href="#">
-                        Contacto
-                    </a>
-                </div>
-                <!--ojo-->
-                <div class="right" id="header_Options">
-                    <div class="header_Option">
-                    </div>
-                    <div class="header_Option">
-                        <a href="#" id="iniciarSesion" class="icon_arrow">
-                            <span class="hoverInactive header">Iniciar Sesion</span>
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid" style="width: auto;">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </a>
-                        <div class="main_login" name="main_login" id="main_login">
-                            <a id="loginReplace" class="icon_arrow" href="#">
-                                <span class="label">Iniciar Sesion</span>
+                        <a class="brand" href="#">Autoevaluacion Institucional</a>
+                        <div class="nav-collapse">
+                            <ul class="nav">
+                                <li class="active"><a href="#">Inicio</a></li>
+                                <li><a href="#">Contacto</a></li>
+                            </ul>
 
-                            </a>
-                            <div class="tabs">
-                                <div id="login_mediafire" class="current" style="padding-left: 20px; padding-top: 10px; padding-bottom: 20px;">
+                            <ul class="nav pull-right">
+                                <li class="divider-vertical"></li>
+                                <div class="header_Option">
+                                    <a href="#" id="iniciarSesion" class="icon_arrow">
+                                        <span class="hoverInactive header">Iniciar Sesion</span>
+                                    </a>
+                                    <div class="main_login" name="main_login" id="main_login">
+                                        <a id="loginReplace" class="icon_arrow" href="#">
+                                            <span class="label">Iniciar Sesion</span>
 
-                                    <div id="login_spinner" style="margin-left: -19px; padding: 82px 0pt; display: none;">
-                                        <div > 
-                                            <p style="margin:20px; text-align:center">
-                                                <img src="http://cdn.mediafire.com/images/icons/ajax-loader-grey_round.gif"></p> 
-                                            <p style="text-align:center">Iniciando Sesi&oacute;n ...</p> 
-                                        </div> 
-                                    </div>
+                                        </a>
+                                        <div class="tabs">
+                                            <div id="login_mediafire" class="current" style="padding-left: 20px; padding-top: 10px; padding-bottom: 20px;">
 
-                                    <div id="login_form">
-                                        <p id="login_penalty_message" style="display: none; margin: 10px 20px 10px 0pt; padding: 5px;" class="soc_error"></p>
-                                        <form  action="" method="post" id="form_login1" name="form_login1">
-                                            <fieldset>
-                                                <label>C&oacute;digo: </label>
-                                                <input type="text" id="login_email" name="usuario" class="{required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
-                                                <label>Contrase&ntilde;a: </label>
-                                                <input type="password" autocomplete="off" id="login_pass" name="password" class="{required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
-                                                <a class="forgot-pwd" href="#">
-                                                    olvid&oacute; su contrase&ntilde;a?
-                                                </a>
-                                                <label>Tipo: </label>
-                                                <div class="dropdown" id="tipo">
-                                                    <a href="#" id="actual" >Autoevaluacion Institucional<span class="indicator-down" id="indicator-down"></span></a>
-                                                    <ul style="left:auto;right:0;" id="menu2">
-                                                        <li class="option">Autoevaluacion Institucional</li> 
-                                                        <li class="option">Comite Central</li> 
-                                                        <li class="option">Otros</li> 
-                                                    </ul>
+                                                <div id="login_spinner" style="margin-left: -19px; padding: 82px 0pt; display: none;">
+                                                    <div > 
+                                                        <p style="margin:20px; text-align:center">
+                                                            <img src="http://cdn.mediafire.com/images/icons/ajax-loader-grey_round.gif"></p> 
+                                                        <p style="text-align:center">Iniciando Sesi&oacute;n ...</p> 
+                                                    </div> 
                                                 </div>
 
+                                                <div id="login_form">
+                                                    <p id="login_penalty_message" style="display: none; margin: 10px 20px 10px 0pt; padding: 5px;" class="soc_error"></p>
+                                                    <form  action="" method="post" id="form_login1" name="form_login1">
+                                                        <fieldset>
+                                                            <label>C&oacute;digo: </label>
+                                                            <input type="text" id="login_email" name="usuario" class="{required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
+                                                            <label>Contrase&ntilde;a: </label>
+                                                            <input type="password" autocomplete="off" id="login_pass" name="password" class="{required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
+                                                            <a class="forgot-pwd" href="#">
+                                                                olvid&oacute; su contrase&ntilde;a?
+                                                            </a>
+                                                            <label>Tipo: </label>
+                                                            <div class="dropdown" id="tipo">
+                                                                <a href="#" id="actual" >Autoevaluacion Institucional<span class="indicator-down" id="indicator-down"></span></a>
+                                                                <ul style="left:auto;right:0;" id="menu2">
+                                                                    <li class="option">Autoevaluacion Institucional</li> 
+                                                                    <li class="option">Comite Central</li> 
+                                                                    <li class="option">Otros</li> 
+                                                                </ul>
+                                                            </div>
 
-                                                <input type="submit" value="Ingresar" name="submit_login" id="submit_login"/>
-                                                <div id="login_secure_header_link">
+
+                                                            <input type="submit" value="Ingresar" name="submit_login" id="submit_login"/>
+                                                            <div id="login_secure_header_link">
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
                                                 </div>
-                                            </fieldset>
-                                        </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </ul>
+                        </div><!-- /.nav-collapse -->
                     </div>
-                </div>
-                <!--ojo-->
-
-            </div>
+                </div><!-- /navbar-inner -->
+            </div><!-- /navbar -->
 
             <!--div que cierra-->
         </div>

@@ -17,22 +17,20 @@
   
   .right {float: right !important;}
   #header_Options {height: 38px; position: absolute; top: 0; right: 10px; width: 50%;}
-  #header_Options a span.header{
+  .header_Option a span.header{
 	  display: inline; 
 	  font-size: 12px;
-	  margin-left: 10px; 
-	  padding: 0 5px;
-	  line-height: 38px; 
 	  font-size: 12px; 
 	  color: #999; 
 	  font-weight: bold;
 	  position:relative; 
 	  text-shadow: 0 0 1px #141414;}
-  
-  #header_Options a span.header:hover, #header_Options a span.hover {color: #fff; text-shadow: 0 1px 1px #000;}
+    
+  .header_Option a span.header:hover, .header_Option a span.hover {color: #fff; text-shadow: 0 1px 1px #000;}
+ 
   #header_Options a.span.header:active{color: #fff; text-shadow: 0 1px 1px #000;}
   
-  .header_Option {float: right; position:relative;}
+  .header_Option {float: right; position:relative;padding-top: 10px;}
   
   .header_user_button:hover span.label{color: #fff; text-shadow: 0 0 1px #141414;}
   
