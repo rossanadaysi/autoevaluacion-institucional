@@ -46,7 +46,7 @@
             <form  id="formAsigMue" method="post">
                 <fieldset>
                     <legend>Asignación de Muestra</legend>
-
+                    <p>Fuente</p>
                     <select id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
                         <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">

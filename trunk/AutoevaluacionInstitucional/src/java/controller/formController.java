@@ -174,11 +174,13 @@ public class formController extends HttpServlet {
 
                 ResultSet rs = null;
                 String sql = "Select* from encuesta";
-
+                System.out.println("hey");
                 rs = conSql.CargarSql(sql, bd);
                 try {
                     while (rs.next()) {
+                       
                         if (request.getParameter(rs.getString(2)).equals("1")) {
+                             System.out.println("hey2");
                             String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
                             conSql.UpdateSql(sql2, bd);
                         }
@@ -388,7 +390,6 @@ public class formController extends HttpServlet {
                     }
                     session.setAttribute("proceso", proceso);
                 } else {
-                    System.out.println("aja");
                     proceso.setFechainicio("Proceso en Configuración.");
                     proceso.setDescripcion(request.getParameter("descripcion"));
 
@@ -404,7 +405,9 @@ public class formController extends HttpServlet {
                     session.setAttribute("msjLogIn2", "Detalle del Proceso.");
 
                     try {
-                        conSql.newDb(proceso);
+                        String str = request.getSession().getServletContext().getRealPath("/scriptsSql/script.sql");
+                        String str2 = request.getSession().getServletContext().getRealPath("/scriptsSql/script2.sql");
+                        conSql.newDb(proceso, str, str2);
                     } catch (SQLException ex) {
                         // Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
