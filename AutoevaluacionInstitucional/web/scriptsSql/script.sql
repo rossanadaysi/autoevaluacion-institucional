@@ -1,5 +1,3 @@
-create database `sisa`;
-use `sisa`;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `administrativo` (
