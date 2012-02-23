@@ -32,7 +32,7 @@
     this.$scrollElement = $element.on('scroll.scroll.data-api', process)
     this.selector = (this.options.target
       || ((href = $(element).attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
-      || '') + ' .nav li > a'
+      || '') + ' .nav-pills li > a'
     this.$body = $('body').on('click.scroll.data-api', this.selector, process)
     this.refresh()
     this.process()
@@ -79,15 +79,15 @@
           .find(this.selector).parent('.active')
           .removeClass('active')
 
-        active = this.$body
-          .find(this.selector + '[href="' + target + '"]')
-          .parent('li')
-          .addClass('active')
+        active = this.$body 
+        .find(this.selector + '[href="' + target + '"]')
+        .parent('li')
+        .addClass('active')
 
         if ( active.parent('.dropdown-menu') )  {
           active.closest('li.dropdown').addClass('active')
         }
-      }
+     }
 
   }
 
