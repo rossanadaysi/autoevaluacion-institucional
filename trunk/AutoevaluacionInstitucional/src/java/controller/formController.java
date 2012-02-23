@@ -178,9 +178,9 @@ public class formController extends HttpServlet {
                 rs = conSql.CargarSql(sql, bd);
                 try {
                     while (rs.next()) {
-                       
+
                         if (request.getParameter(rs.getString(2)).equals("1")) {
-                             System.out.println("hey2");
+                            System.out.println("hey2");
                             String sql2 = "INSERT INTO `asignacionencuesta` (`id`, `proceso_id`, `fuente_id`, `encuesta_id`) VALUES (NULL, '" + proceso.getId() + "', '" + id + "', '" + rs.getString(1) + "')";
                             conSql.UpdateSql(sql2, bd);
                         }
@@ -403,6 +403,7 @@ public class formController extends HttpServlet {
                     session.setAttribute("aux2_index2", 1);
                     session.setAttribute("msjLogIn1", "Existe un Proceso en Ejecución!");
                     session.setAttribute("msjLogIn2", "Detalle del Proceso.");
+                    session.setAttribute("estadoProceso", 0);
 
                     try {
                         String str = request.getSession().getServletContext().getRealPath("/scriptsSql/script.sql");
@@ -439,6 +440,8 @@ public class formController extends HttpServlet {
                 }
 
                 session.setAttribute("aux_index2", 0);
+                System.out.println("modificado");
+                session.setAttribute("estadoProceso", 2);
 
 
             } else if (request.getParameter(
@@ -459,6 +462,7 @@ public class formController extends HttpServlet {
                 }
 
                 session.setAttribute("aux2_index2", 0);
+                session.setAttribute("estadoProceso", 1);
             }
         } finally {
             out.close();

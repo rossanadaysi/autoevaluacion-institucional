@@ -15,8 +15,8 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.min.js"></script>
-        
-        
+
+
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.pager.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui-1.8.5.custom.css" type="text/css" media="screen" charset="utf-8" />
@@ -257,11 +257,11 @@
                                                         $('.subnav').attr('data-top', offset.top);
                                                     }
 
-                                                 if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
-                                                      {
-                                                          $('.subnav').addClass('subnav-fixed');
+                                                    if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
+                                                    {
+                                                        $('.subnav').addClass('subnav-fixed');
                                                           
-                                                      }  
+                                                    }  
                                                     else
                                                         $('.subnav').removeClass('subnav-fixed');
                                                
@@ -548,6 +548,7 @@
 
                                                         }
                                                         else if(hash == "#CrearProceso"){
+                                                            var a = 0;
                                                             url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                                                             $("div.ui-layout-center").empty();
                                                             $.ajax({ 
@@ -563,20 +564,37 @@
                                                                             url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
                                                                             data: $("#formCrearProc").serialize(),
                                                                             success: function(){
-                                                                                if(${aux_index2} == 1){
-                                                                                    $('#myModalP1').modal(); 
-                                                                                    location = "<%=request.getContextPath()%>/#CrearProceso";      
-                                                                                }else{
-                                                                                    
-                                                                                    $('#myModalP').modal(); 
-                                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                                    location = '/AutoevaluacionInstitucional/';
-                                                                                     
-                                                                                    
-                                                                                         
-                                                                                }
-
+                                                                                $('#myModalP1').modal(); 
+                                                                                location = "<%=request.getContextPath()%>/";      
+                                                                            
                                                                                                          
+                                                                            } //fin success
+                                                                        }); //fin $.ajax
+                                                                    }); //fin submit
+                                                                } //fin success
+                                                            }); //fin del $.ajax
+                                                        }
+                                                        else if(hash == "#CrearProceso1"){
+                                                            var a = 0;
+                                                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                                            $("div.ui-layout-center").empty();
+                                                            $.ajax({ 
+                                                                type: "POST", 
+                                                                url: url3, 
+                                                                success: function(data) 
+                                                                {
+                                                                    $("div.ui-layout-center").append(data);
+                                                                    $("#formCrearProc").submit(function(event){
+                                                                        event.preventDefault();
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                                            data: $("#formCrearProc").serialize(),
+                                                                            success: function(){
+                                                                                $('#myModalP').modal(); 
+                                                                                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                                location = '/AutoevaluacionInstitucional/';
+                                                                                                                                                                                     
                                                                             } //fin success
                                                                         }); //fin $.ajax
                                                                     }); //fin submit
@@ -593,7 +611,7 @@
                                                                 {
                                                                     $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                             
-                                                                    location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                                                                    location = "<%=request.getContextPath()%>/#detalleProceso";                                
                                                              
                                                                 } //fin success
                                                             }); //fin del $.ajax
@@ -611,7 +629,7 @@
                                                                 {
                                                                     $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                             
-                                                                    location = "<%=request.getContextPath()%>/#detalleProceso";                                
+                                                                    location = "<%=request.getContextPath()%>/#listarProcesos";                                
                                                              
                                                                 } //fin success
                                                             }); //fin del $.ajax
@@ -1843,8 +1861,8 @@
                                                                     $(".ui-layout-center").append("<div class='middle-north'>"
                                                                         +"<div class='row wellMio'>"
                                                                         +"<div class='span5'>"
-                                                                        +"<h3>${msjLogIn1}</h3>"
-                                                                        +"<h4>${msjLogIn2}</h4>"
+                                                                        +"<h3>Ponderación de Factores</h3>"
+                                                                        +"<h4>Detalle de Ponderación</h4>"
                                                                         +"</div>"
                                                                         +"<div class='pull-right'>"
                                                                         +"<form class='form-search'>"
@@ -2237,8 +2255,8 @@
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                         <li class="active"><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-white icon-th"></i> Detalle Proceso</a></li>
-                                                                        <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
-                                                                        <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
+                                                                        <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#listarPonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
+                                                                        <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
                                                                         <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                                                         <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
                                                                         <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
@@ -2249,7 +2267,7 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <li class="nav-header">Procesos</li>
-                                                                <li><a href="#CrearProceso"><i class="icon-plus"></i>Proceso Nuevo</a></li>
+                                                                <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
                                                                 <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
                                                             </c:otherwise>
                                                         </c:choose>
@@ -2265,9 +2283,10 @@
                                             </div>
                                             <div class="modal-body">
                                                 <h4>Ponderación de factores.</h4>
-                                                <p>La ponderación de factores ha sido satisfactoriamente asignada</p>
+                                                <br>
+                                                    <p>La ponderación de factores ha sido satisfactoriamente asignada</p>
 
-                                                <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionFactor" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
+                                                    <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionFactor" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2281,9 +2300,10 @@
                                             </div>
                                             <div class="modal-body">
                                                 <h4>Ponderación de características.</h4>
-                                                <p>La ponderación de características ha sido satisfactoriamente asignada</p>
+                                                <br>
+                                                    <p>La ponderación de características ha sido satisfactoriamente asignada</p>
 
-                                                <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
+                                                    <p><a class="tooltip-test" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica" data-original-title="Tooltip">Ver detalle de la poderación asignada.</a></p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2314,7 +2334,8 @@
                                             </div>
                                             <div class="modal-body">
                                                 <h4>Nuevo Proceso.</h4>
-                                                <p>Se ha creado un nuevo proceso de autevaluación</p>
+                                                <br>
+                                                    <p>Se ha creado un nuevo proceso de autevaluación</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2327,7 +2348,8 @@
                                             </div>
                                             <div class="modal-body">
                                                 <h4>Nuevo Proceso.</h4>
-                                                <p>Proceso de autevaluación actualizado con éxito!</p>
+                                                <br>
+                                                    <p>Proceso de autevaluación actualizado con éxito!</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
@@ -2341,7 +2363,7 @@
                                             <div class="modal-body">
                                                 <h4>Asignación de Muestra.</h4>
                                                 <br>
-                                                <p>La muestra ha sido asignada para la fuente seleccionada!</p>
+                                                    <p>La muestra ha sido asignada para la fuente seleccionada!</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
