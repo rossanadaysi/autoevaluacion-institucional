@@ -109,9 +109,9 @@ jQuery.fcbkListSelection = function(elem, width, height, row){
     var createTabs = function(elem, width){
         var html = '<div id="filters" style="width:' + (parseInt(width, 10) + 2) + 'px;">' +
         '<ul class="selections" id="selections"><li id="view_all" class="view_on">' +
-        '<a onclick="return false;" href="#">View All</a></li><li id="view_selected" class="">' +
-        '<a onclick="return false;" href="#">Selected (<strong id="view_selected_count">0</strong>)</a></li>' +
-        '<li id="view_unselected" class=""><a onclick="return false;" href="#">Unselected</a></li></ul>' +
+        '<a onclick="return false;" href="#">Ver Todo</a></li><li id="view_selected" class="">' +
+        '<a onclick="return false;" href="#">Seleccionados (<strong id="view_selected_count">0</strong>)</a></li>' +
+        '<li id="view_unselected" class=""><a onclick="return false;" href="#">No Seleccionados</a></li></ul>' +
         '<div class="clearer"></div></div>';
         elem.before(html);
     }

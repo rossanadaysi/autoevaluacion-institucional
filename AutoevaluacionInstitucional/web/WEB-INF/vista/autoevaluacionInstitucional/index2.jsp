@@ -14,7 +14,7 @@
 
         <script src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.min.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.js"></script>
 
 
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
@@ -236,7 +236,7 @@
             
             
                                         $(document).ready(function() {
-               
+                                                                                       
                                             $("ul.nav-list li a").click(function(event){
                                                 $(this).parent().siblings().removeClass("active");
                                                 $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
@@ -329,8 +329,8 @@
                                                 var hash = location.hash;
                     
                                                 
-                                                if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 ){
-                                                    console.log("ok")
+                                                if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash==""){
+                                                  
                                                 }else{
                                                     
                                                     if(hash=="#CerrarSesion"){
@@ -402,8 +402,12 @@
                                                                           
                                                                               
                                                                                 //alert("Ponderación de Factores Actualizada con Exito!");
-                                                                                $('#myModalF').modal();                                                                             
-                                                                                location = "<%=request.getContextPath()%>/#PonderacionFactor";      
+                                                                                $('#myModalF').modal();
+                                                                                $('#myModalF').on('hidden', function () {
+                                                                                    location = "<%=request.getContextPath()%>/#PonderacionFactores"; 
+                                                                                    $(".nav-pills li").removeClass("active");
+                                                                                })
+                                                                                
                                                                                
                                              
                                                                             } //fin success
@@ -447,7 +451,11 @@
                                                                             success: function(){
                                                                             
                                                                                 $('#myModalC').modal(); 
-                                                                               
+                                                                                $('#myModalC').on('hidden', function () {
+                                                                                    location = "<%=request.getContextPath()%>/#PonderacionCaracteristicas";
+                                                                                    $(".nav-pills li").removeClass("active");
+                                                                                    
+                                                                                })
                                              
                                                                             } //fin success
                                             
@@ -565,8 +573,7 @@
                                                                             data: $("#formCrearProc").serialize(),
                                                                             success: function(){
                                                                                 $('#myModalP1').modal(); 
-                                                                                location = "<%=request.getContextPath()%>/";      
-                                                                            
+                                                                               
                                                                                                          
                                                                             } //fin success
                                                                         }); //fin $.ajax
@@ -590,10 +597,30 @@
                                                                             type: 'POST',
                                                                             url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
                                                                             data: $("#formCrearProc").serialize(),
+                                                                            beforeSend: function(){
+                                                                                $('#myModalLoading').modal();   
+                                                                              
+                                                                            },
+                                                                           
                                                                             success: function(){
-                                                                                $('#myModalP').modal(); 
-                                                                                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                                location = '/AutoevaluacionInstitucional/';
+                                                                                setTimeout(function(){
+                                                                                    $(".bar").css("width","100%");
+                                                                                },1000);  
+                                                                                setTimeout(function(){
+                                                                                    $('#myModalLoading').modal("hide");
+                                                                                
+                                                                                },2000);    
+                                                                                setTimeout(function(){
+                                                                                    $('#myModalP').modal(); 
+                                                                                    
+                                                                                
+                                                                                },2000);
+                                                                                
+                                                                                $('#myModalP').on('hidden', function () {
+                                                                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                                        location = '/AutoevaluacionInstitucional/';
+                                                                                    });
+                                                                                
                                                                                                                                                                                      
                                                                             } //fin success
                                                                         }); //fin $.ajax
@@ -2205,9 +2232,8 @@
                                                                 <li class="dropdown">
                                                                     <a class="dropdown-toggle" data-toggle="dropdown">${representante.personaId.nombre}<b class="caret"></b></a>
                                                                     <ul class="dropdown-menu">
-                                                                        <li><a href="#">Action</a></li>
-                                                                        <li><a href="#">Another action</a></li>
-                                                                        <li><a href="#">Something else here</a></li>
+                                                                        <li><a href="#">Perfil</a></li>
+                                                                        <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
                                                                         <li class="divider"></li>
                                                                         <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
                                                                     </ul>
@@ -2250,7 +2276,7 @@
                                                                         <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                                                                         <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
                                                                         <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
-                                                                        <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
+                                                                        <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacion Encuestas</a></li>
                                                                         <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                                                                     </c:when>
                                                                     <c:otherwise>
@@ -2258,7 +2284,7 @@
                                                                         <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#listarPonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                                                                         <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
                                                                         <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
-                                                                        <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacin Encuestas</a></li>
+                                                                        <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacion Encuestas</a></li>
                                                                         <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                                                                     </c:otherwise>
                                                                 </c:choose>
@@ -2369,5 +2395,21 @@
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
                                             </div>
                                         </div>
+
+                                        <div class="modal hide fade" id="myModalLoading">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Creando Proceso</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="progress progress-info
+                                                     progress-striped active">
+                                                    <div class="bar"
+                                                         style="width: 20%;"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
                                     </body>
                                     </html> 

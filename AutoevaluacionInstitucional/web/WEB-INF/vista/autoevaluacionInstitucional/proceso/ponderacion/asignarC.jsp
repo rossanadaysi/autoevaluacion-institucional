@@ -2,9 +2,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <c:if test="${auxAsignarC == 0}">
-    <br>
+    <br id="PonderacionCaracteristicas">
     <div class="subnav">
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills" >
             <li><a>Ponderación de Características</a></li>
             <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
@@ -84,8 +84,9 @@
     </div><!--/hero-unit-->
 </c:if>
 <c:if test="${auxAsignarC == 1}">
-    <br>
-    <div class="subnav">
+    <br id="PonderacionCaracteristicas">
+
+    <div class="subnav" >
         <ul class="nav nav-pills">
             <li><a>Ponderación de Características</a></li>
             <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
@@ -104,7 +105,7 @@
             </c:forEach>
         </ul>
     </div>
-    <div class="hero-unit">
+    <div class="hero-unit" >
         <div class="row">
             <div class="span10">
                 <form id="formPondeCara" class="form-horizontal" method="post">
