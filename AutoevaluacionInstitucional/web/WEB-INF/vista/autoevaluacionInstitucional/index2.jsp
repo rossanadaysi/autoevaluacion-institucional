@@ -371,6 +371,7 @@
                                                             +"</div>");
                                                         $("ul.nav-list li").removeClass("active");
                                                         $(".nav-collapse .nav >li:eq(0)").addClass("active");
+                                                        $("ul.nav-list li").siblings().children("a").children("i").removeClass("icon-white");
                                                         return false;
                                                     }
                                                     
@@ -821,7 +822,7 @@
                                                                         +"</div>"
                                                                         +"</div>"   
                                                                         +"<div class='middle-center'>"
-                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div class='inner-center' style='float:left;'>"
                                                                         +"<div id='myGrid'></div></div></div>");
                                                                     if(json.length > 0) 
                                                                     { for (var i = 0; i < json.length; i++) 
@@ -845,14 +846,14 @@
                 
                 
                                                                         $.subscribe("set_grid_height", function (new_height) {
-                                                                            grid_opts.height = new_height;
+                                                                            grid_opts.height = new_height-90;
                                                                             $("#myGrid").css('height', grid_opts.height);
                                                                             grid.resizeCanvas();
                                         
                                                                         });
             
                                                                         $.subscribe("set_grid_width", function (new_width) {
-                                                                            grid_opts.width = new_width;
+                                                                            grid_opts.width = new_width+20;
                                                                             $("#myGrid").css('width', grid_opts.width );
                                                                             grid.autosizeColumns();
                                                                             //grid.resizeCanvas();
@@ -1181,7 +1182,7 @@
                                                                         +"</div>"
                                                                         +"</div>"   
                                                                         +"<div class='middle-center'>"
-                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div class='inner-center' style='float:left;'>"
                                                                         +"<div id='myGrid'></div></div></div>");
             
                                                                
@@ -1208,14 +1209,14 @@
                 
                 
                                                                         $.subscribe("set_grid_height", function (new_height) {
-                                                                            grid_opts.height = new_height;
+                                                                            grid_opts.height = new_height-90;
                                                                             $("#myGrid").css('height', grid_opts.height);
                                                                             grid.resizeCanvas();
                                                                  
                                                                         });
 
                                                                         $.subscribe("set_grid_width", function (new_width) {
-                                                                            grid_opts.width = new_width;
+                                                                            grid_opts.width = new_width+20;
                                                                             $("#myGrid").css('width', grid_opts.width );
                                                                             grid.autosizeColumns();
                                                                             //grid.resizeCanvas();
@@ -1542,7 +1543,7 @@
                                                                         +"</div>"
                                                                         +"</div>"   
                                                                         +"<div class='middle-center'>"
-                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div class='inner-center' style='float:left;'>"
                                                                         +"<div id='myGrid'></div></div></div>");
             
                                                                     middleLayout = $('div.ui-layout-center').layout({ 
@@ -1600,14 +1601,14 @@
                 
                 
                                                                         $.subscribe("set_grid_height", function (new_height) {
-                                                                            grid_opts.height = new_height;
+                                                                            grid_opts.height = new_height-90;
                                                                             $("#myGrid").css('height', grid_opts.height);
                                                                             grid.resizeCanvas();
                                         
                                                                         });
             
                                                                         $.subscribe("set_grid_width", function (new_width) {
-                                                                            grid_opts.width = new_width;
+                                                                            grid_opts.width = new_width+20;
                                                                             $("#myGrid").css('width', grid_opts.width );
                                                                             grid.autosizeColumns();
                                                                             //grid.resizeCanvas();
@@ -1935,7 +1936,7 @@
                                                                         +"</div>"
                                                                         +"</div>"   
                                                                         +"<div class='middle-center'>"
-                                                                        +"<div class='inner-center' style='width:100%;float:left;'>"
+                                                                        +"<div class='inner-center' style='float:left;'>"
                                                                         +"<div id='myGrid'></div></div></div>");
             
                                                                     middleLayout = $('div.ui-layout-center').layout({ 
@@ -1993,14 +1994,14 @@
                 
                 
                                                                         $.subscribe("set_grid_height", function (new_height) {
-                                                                            grid_opts.height = new_height;
+                                                                            grid_opts.height = -60;
                                                                             $("#myGrid").css('height', grid_opts.height);
                                                                             grid.resizeCanvas();
                                         
                                                                         });
             
                                                                         $.subscribe("set_grid_width", function (new_width) {
-                                                                            grid_opts.width = new_width;
+                                                                            grid_opts.width = new_width+20;
                                                                             $("#myGrid").css('width', grid_opts.width );
                                                                             grid.autosizeColumns();
                                                                             //grid.resizeCanvas();
