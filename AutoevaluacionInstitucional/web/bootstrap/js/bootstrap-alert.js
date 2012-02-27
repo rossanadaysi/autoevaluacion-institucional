@@ -54,13 +54,15 @@
       $parent.removeClass('in')
 
       function removeElement() {
-        $parent.remove()
+        $parent.hide();
         $parent.trigger('closed')
       }
 
       $.support.transition && $parent.hasClass('fade') ?
         $parent.on($.support.transition.end, removeElement) :
         removeElement()
+        e.stopPropagation();
+        
     }
 
   }

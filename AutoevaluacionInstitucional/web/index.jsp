@@ -21,20 +21,22 @@
         <meta name="language" content="en" />
         <title>Autoevaluacion Institucional</title>
         <link rel="stylesheet" type="text/css" href="css/layout2.css" />
-        <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/footer.css" />
-        <link rel="stylesheet" type="text/css" href="css/menu.css" />
-        <link rel="stylesheet" type="text/css" href="css/login.css" />
-
         <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap2.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/css/docs.css" rel="stylesheet"/>
 
 
         <script src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
-        <script type="text/javascript" src="script/jquery-layout.js"></script>
-        <script type="text/javascript" src="script/jquery.metadata.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-alert.js"></script>
         <script type="text/javascript"src="script/jquery.validate.js"></script>
+        <script type="text/javascript" src="script/jquery.metadata.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-dropdown.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
+
+        <script type="text/javascript" src="script/jquery-layout.js"></script>
+
+
 
 
         <style type="text/css">
@@ -226,36 +228,38 @@
 
         </style>
         <script type="text/javascript">
-          
-                      
-               					     
-                              
-                
-           
-            
-           
-       
-
-
             $().ready(function() {
-    
-       
-    
-                var validador = $("#form_login1").validate({
-                    errorLabelContainer: $("#login_penalty_message"),
-                
-                    submitHandler: function() {
-                        this.timer = setTimeout(function () {
+                $('.dropdown-menu').find('form').click(function (e) {
+                    var target = $(e.target);
+                    if(!target.is("a"))
+                    e.stopPropagation();
+                });
+                var validador = $("#formulario_login").validate({
+                      showErrors: function(errorMap, errorList) {
+                        var errores = " ";
+                        for ( var i = 0; errorList[i]; i++ ) {
+                            var error = errorList[i];
+                            errores+= error.message+"<br/>";
+                        }
                         
-                                
+                        $(".alert-error").html(""
+                            +"<a data-dismiss='alert' class='close'>×</a>"
+                            +"<strong>Error!</strong>"+ errores
+                            +"");
+                       if(errores!=" "){
+                           $(".alert-error").show();
+                       } else{
+                           $(".alert-error").html("").hide();
+                      
+                       }
+                        
+                    },
+                    submitHandler: function() {
+                      this.timer = setTimeout(function () {
                             $.ajax({
                                 url: '/AutoevaluacionInstitucional/loginController',
-                                data: 'un='+ $('#login_email').val() +'&pw=' + $('#login_pass').val() +'&tp=' + $('#actual').text(),
+                                data: 'un='+ $('#codigo').val() +'&pw=' + $('#pass').val() +'&tp=' + $('#tipo :selected').val(),
                                 type: 'post',
-                                beforeSend: function(){
-                                    $("#login_form").hide();
-                                    $("#login_spinner").show();
-                                },
                                 success: function(msg){
                                    
                                     if(msg == 0) // Message Sent, check and redirect
@@ -269,263 +273,96 @@
                                     }
                                     else if(msg == 1)
                                     { 
-                                        setTimeout(function (){
-                                            $("#login_form").show();
-                                            $("#login_spinner").hide();
-                                        },500);  
-                                     
-                                        $("#login_penalty_message").fadeTo(200,0.1,function() //start fading the messagebox
-                                        {
-                                            //add message and change the class of the box and start fading
-                                            $(this).append("<label class='error'>Usuario No Posee Permisos Para Ingresas bajo ese perfil.</label>").fadeTo(900,1).delay(2000).slideUp('fast', function() {
-    
-                                                $(this).html(""); });
-                                        });
-	 
+                                        $(".alert-error").html(""
+                                            +"<a data-dismiss='alert' class='close'>×</a>"
+                                            +"<strong>Error!</strong> Usuario No Posee Permisos Para Ingresas bajo ese perfil."
+                                            +"");
+                                        
                                     }
                                     else if(msg == 2)
-                                    { setTimeout(function (){
-                                            $("#login_form").show();
-                                            $("#login_spinner").hide();
-                                        },500);
-                                        $("#login_penalty_message").fadeTo(200,0.1,function() //start fading the messagebox
-                                        {
-                                            $(this).append("<label class='error'>Contraseña Incorrecta.</label>").fadeTo(900,1).delay(2000).slideUp('fast', function() {
-    
-                                                $(this).html(""); });
-                                        });
-	 
+                                    { 
+                                      $(".alert-error").html(""
+                                            +"<a data-dismiss='alert' class='close'>×</a>"
+                                            +"<strong>Error!</strong> Contraseña Incorrecta."
+                                            +"");
+                                      
+                                      
+                                        
                                     }
                                     else if(msg == 3)
-                                    {setTimeout(function (){
-                                            $("#login_form").show();
-                                            $("#login_spinner").hide();
-                                        },500);
-                                        $("#login_penalty_message").fadeTo(200,0.1,function() //start fading the messagebox
-                                        {
-                                            //add message and change the class of the box and start fading
+                                    {
                                         
-                                        
-                                            $(this).append("<label class='error'>Usuario No Existe.</label>").fadeTo(900,1).delay(2000).slideUp('fast', function() {
-    
-                                                $(this).html(""); });
-                                        });
-                                        
-                                    
-                                    
-                                    
-	 
+                                        $(".alert-error").html(""
+                                            +"<a data-dismiss='alert' class='close'>×</a>"
+                                            +"<strong>Error!</strong> Usuario No Existe."
+                                            +"");
+                                                                                  
                                     }
                                     else if(msg == 4)
-                                    { setTimeout(function (){
-                                            $("#login_form").show();
-                                            $("#login_spinner").hide();
-                                        },500);
-                                        $("#login_penalty_message").fadeTo(200,0.1,function() //start fading the messagebox
-                                        {
-                                            //add message and change the class of the box and start fading
-                                            $(this).append("<label class='error'>Formato de Código Incorrecto.</label>").fadeTo(900,1).delay(2000).slideUp('fast', function() {
-    
-                                                $(this).html(""); });
-                                        });
-	 
+                                    { 
+                                        
+                                        $(".alert-error").html(""
+                                            +"<a data-dismiss='alert' class='close'>×</a>"
+                                            +"<strong>Error!</strong> Formato de Código Incorrecto."
+                                            +"");
+                                        
                                     }
                                 }
                               
                             });
                         
                            
-                            
-                         
-                                
-                        
-                          
 
-                        }, 200);
-                        return false;
-                    }
-               
+                        }, 400);
+                            
+                    }               
                 });
 		
-	
-                $(".cancel").click(function() {
-                    validador.resetForm();
-                });
+                
+                
+                
+                
         
-                $("#iniciarSesion").hover(function(){
-                    $(".header_Option a span.header").addClass("hover");   
-                },function(){
-                    $(".header_Option a span.header").removeClass("hover");
-                });
-        
-                var activeClass = 'dropdown-active';
-                var showingDropdown, showingMenu, showingParent;
-                var dropdown = $('#iniciarSesion');
-                var menu = $(".main_login");
-                var parent = $("#main_login");
-						
-                var hideMenu = function() {
-							
-                    if(showingDropdown) {
-								
-                        showingDropdown.removeClass(activeClass);
-                        showingMenu.fadeOut("slow");
-                        $("#iniciarSesion span").addClass("hoverInactive");					
-                        $("#login_penalty_message").css("display","none").html(""); 
-                        validador.resetForm();
-                        $('#login_email').val("");
-                        $('#login_pass').val("");
-                     
-                    }
-                };
-                var showMenu = function() {
-                               
-                    showingDropdown = dropdown.addClass(activeClass);
-                    showingMenu = menu.fadeIn("slow");
-                    showingParent = parent;
-                    $("#iniciarSesion span").removeClass("hoverInactive");					
-								
-                };
-						
-						
-						
-                dropdown.click(function(e) {
-                    if ( !dropdown.hasClass(activeClass) ){
-                        if(e) e.stopPropagation();
-                        if(e) e.preventDefault();
-                        showMenu(); 	
-                    }
-							
-						 
-                });
-                $("#loginReplace").click(function(e) {
-                    if(e) e.stopPropagation();
-                    if(e) e.preventDefault();
-                    hideMenu(); 
-						 
-                });
-								     
-                              
-                /* hide when clicked outside */
-                
-                $(document.body).click(function(e) {
-							
-                    if(showingParent) {
-                        var parentElement = showingParent[0];
-                        if(!$.contains(parentElement,e.target) || !parentElement == e.target) {
-                            hideMenu();
-									
-                        }
-                    }
-                });
-           
-            
-            
-               
-                var myLayout, innerLayout, middleLayout;
-                $(document).ready( function() {
-
-                    myLayout = $('body').layout({
-                    
-                         
-                        west__size:			197
-                        ,   center__paneSelector:  ".ui-layout-center"
-                        ,   north__paneClass:    "ui-layout-pane2"
-                        ,   closable:				true	// pane can open & close
-                        ,	resizable:				true	// when open, pane can be resized 
-                        ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-
-                        ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
-                        ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
-                            
-                        ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
-                        ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
-                        ,   south__paneClass: "ui-layout-pane"
-                        //	some resizing/toggling settings
-                    
-                
-                    });
-                    myLayout.allowOverflow('north'); 
- 		
-                    // ACCORDION - in the East pane - in a 'content-div'
-		
-
-                    // THEME SWITCHER
-                    //addThemeSwitcher('.ui-layout-north',{ top: '42px', right: '750px' });
-                
-                
-                    // if a new theme is applied, it could change the height of some content,
-                    // so call resizeAll to 'correct' any header/footer heights affected
-                    // NOTE: this is only necessary because we are changing CSS *AFTER LOADING* using themeSwitcher
-                    setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
-         
-         
-                        
-                });
-       
-           
-                      
-                var activeClass2 = 'active-class2';
-                var showingDropdown2, showingMenu2, showingParent2;
-                var dropdown2 = $('#tipo');
-                var menu2 = $("#menu2");
-                var parent2 = $("#tipo");
-						
-                
-                var showMenu2 = function() {
-                               
-                    showingDropdown2 = dropdown2.addClass(activeClass2);
-                    showingMenu2 = menu2.fadeIn("slow");
-                    showingParent2 = parent2;
-                    					
-								
-                };
-                var hideMenu2 = function() {
-							
-                    if(showingDropdown2) {
-								
-                        showingDropdown2.removeClass(activeClass2);
-                        showingMenu2.fadeOut("slow");
-                        					
-                    }
-                };				
-						
-               
-                
-                
-                $(".option").click(function(e) {
-                    var a = $(this).text() + "<span class='indicator-down' id='indicator-down'></span>";
-                    $("#actual").html(a);			
-						 
-                });
-                
-                dropdown2.click(function(e) {
-                    if ( !dropdown2.hasClass(activeClass2) ){
-                        if(e) e.stopPropagation();
-                        if(e) e.preventDefault();
-                        showMenu2(); 	
-                    }else{
-                        hideMenu2();
-                    }				
-						 
-                });
-                
-    
-                
-                 
-               
-                dropdown2.hover(function(){},function(){ 
-							
-                    if(showingParent2) {
-                                             
-                        hideMenu2();
-									
-                    }
-                    
-                });	
-	
-
             });
+            var myLayout, innerLayout, middleLayout;
+            $(document).ready( function() {
+
+                myLayout = $('body').layout({
+                    
+                         
+                    west__size:			197
+                    ,   center__paneSelector:  ".ui-layout-center"
+                    ,   north__paneClass:    "ui-layout-pane2"
+                    ,   closable:				true	// pane can open & close
+                    ,	resizable:				true	// when open, pane can be resized 
+                    ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+
+                    ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
+                    ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
+                            
+                    ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
+                    ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
+                    ,   south__paneClass: "ui-layout-pane"
+                    //	some resizing/toggling settings
+                    
+                
+                });
+                myLayout.allowOverflow('north'); 
+ 		
+                // ACCORDION - in the East pane - in a 'content-div'
+		
+
+                // THEME SWITCHER
+                //addThemeSwitcher('.ui-layout-north',{ top: '42px', right: '750px' });
+                
+                
+                // if a new theme is applied, it could change the height of some content,
+                // so call resizeAll to 'correct' any header/footer heights affected
+                // NOTE: this is only necessary because we are changing CSS *AFTER LOADING* using themeSwitcher
+                setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
+         
+            });
+         
         </script>
     </head>
 
@@ -548,58 +385,34 @@
 
                             <ul class="nav pull-right">
                                 <li class="divider-vertical"></li>
-                                <div class="header_Option">
-                                    <a href="#" id="iniciarSesion" class="icon_arrow">
-                                        <span class="hoverInactive header">Iniciar Sesion</span>
-                                    </a>
-                                    <div class="main_login" name="main_login" id="main_login">
-                                        <a id="loginReplace" class="icon_arrow" href="#">
-                                            <span class="label">Iniciar Sesion</span>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar Sesion <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
 
-                                        </a>
-                                        <div class="tabs">
-                                            <div id="login_mediafire" class="current" style="padding-left: 20px; padding-top: 10px; padding-bottom: 20px;">
-
-                                                <div id="login_spinner" style="margin-left: -19px; padding: 82px 0pt; display: none;">
-                                                    <div > 
-                                                        <p style="margin:20px; text-align:center">
-                                                            <img src="http://cdn.mediafire.com/images/icons/ajax-loader-grey_round.gif"></p> 
-                                                        <p style="text-align:center">Iniciando Sesi&oacute;n ...</p> 
-                                                    </div> 
-                                                </div>
-
-                                                <div id="login_form">
-                                                    <p id="login_penalty_message" style="display: none; margin: 10px 20px 10px 0pt; padding: 5px;" class="soc_error"></p>
-                                                    <form  action="" method="post" id="form_login1" name="form_login1">
-                                                        <fieldset>
-                                                            <label>C&oacute;digo: </label>
-                                                            <input type="text" id="login_email" name="usuario" class="{required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
-                                                            <label>Contrase&ntilde;a: </label>
-                                                            <input type="password" autocomplete="off" id="login_pass" name="password" class="{required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
-                                                            <a class="forgot-pwd" href="#">
-                                                                olvid&oacute; su contrase&ntilde;a?
-                                                            </a>
-                                                            <label>Tipo: </label>
-                                                            <div class="dropdown" id="tipo">
-                                                                <a href="#" id="actual" >Autoevaluacion Institucional<span class="indicator-down" id="indicator-down"></span></a>
-                                                                <ul style="left:auto;right:0;" id="menu2">
-                                                                    <li class="option">Autoevaluacion Institucional</li> 
-                                                                    <li class="option">Comite Central</li> 
-                                                                    <li class="option">Otros</li> 
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <input type="submit" value="Ingresar" name="submit_login" id="submit_login"/>
-                                                            <div id="login_secure_header_link">
-                                                            </div>
-                                                        </fieldset>
-                                                    </form>
-                                                </div>
+                                        <form  id="formulario_login" class="well"  action="" method="post">
+                                            <div class='alert alert-error' style="display: none">
+                                                <a data-dismiss='alert' class='close' >×</a>
+                                                <strong >Error!</strong> 
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                            <label>Usuario</label>
+                                            <input id="codigo" type="text" name="codigo" class="span3 {required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
+                                            <label>Contrase&ntilde;a</label>
+                                            <input id="pass" type="password" name="pass" class="span3 {required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
+                                            <label><a href="#">Olvidó su contrase&ntilde;a?</a></label>
+
+                                            <label>Tipo</label>
+                                            <select id="tipo" name="tipo" class="span3">
+                                                <option>Autoevaluacion Institucional</option>
+                                                <option>Comite Central</option>
+                                                <option>Otros</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-primary btn-large" name="submit_login">Ingresar</button>
+
+                                        </form>
+                                    </ul>
+
+                                </li>
                             </ul>
                         </div><!-- /.nav-collapse -->
                     </div>
