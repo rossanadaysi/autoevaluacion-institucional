@@ -1534,9 +1534,9 @@ form.form-search button.btn{
   float: left;
   display: none;
   min-width: 160px;
-  max-width: 220px;
+ /* max-width: 220px;*/
   _width: 160px;
-  padding: 4px 0;
+  padding: 0;
   margin: 0;
   list-style: none;
   background-color: #ffffff;
@@ -1572,7 +1572,7 @@ form.form-search button.btn{
 }
 .dropdown-menu a {
   display: block;
-  padding: 3px 15px;
+  padding: 3px 0 3px 15px;
   clear: both;
   font-weight: normal;
   line-height: 18px;
@@ -1619,7 +1619,7 @@ form.form-search button.btn{
 .well {
   min-height: 20px;
   padding: 19px;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   background-color: #f5f5f5;
   border: 1px solid #eee;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -1749,6 +1749,7 @@ form.form-search button.btn{
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  width: 270px;
 }
 .btn-large .icon {
   margin-top: 1px;
@@ -2444,7 +2445,7 @@ button.btn.small, input[type="submit"].btn.small {
   background-color: transparent;
 }
 .navbar .btn, .navbar .btn-group {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .navbar .btn-group .btn {
   margin-top: 0;
@@ -2600,7 +2601,7 @@ button.btn.small, input[type="submit"].btn.small {
   display: inline-block;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid #ffffff;
+  border-bottom: 6px solid #F5F5F5;
   position: absolute;
   top: -6px;
   left: 10px;

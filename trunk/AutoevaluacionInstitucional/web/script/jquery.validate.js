@@ -95,7 +95,7 @@ $.extend($.fn, {
 	},
 	// http://docs.jquery.com/Plugins/Validation/valid
 	valid: function() {
-        if ( $(this[0]).is('form')) {
+           if ( $(this[0]).is('form')) {
             return this.validate().form();
         } else {
             var valid = true;
@@ -369,6 +369,7 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/showErrors
 		showErrors: function(errors) {
+
 			if(errors) {
 				// add items to error list and map
 				$.extend( this.errorMap, errors );
