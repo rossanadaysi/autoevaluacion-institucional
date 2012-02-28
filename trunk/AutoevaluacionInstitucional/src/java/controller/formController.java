@@ -88,7 +88,7 @@ public class formController extends HttpServlet {
 
                         session.setAttribute("auxAsignarF", 1);
                         session.setAttribute("auxAsignarC1", 1);
-                        
+
                     } else {
                         for (int i = 1; i <= numRows; i++) {
                             String id = request.getParameter("id" + i);
@@ -109,8 +109,8 @@ public class formController extends HttpServlet {
 
                             conSql.UpdateSql("UPDATE `ponderacionfactor` SET `ponderacion` = '" + ponderacion + "',`justificacion` = '" + justificacion + "' WHERE `ponderacionfactor`.`id` ='" + idPonderacion + "'", bd);
                         }
-                    }
 
+                    }
                 }
 
             } else if (request.getParameter(
@@ -256,7 +256,7 @@ public class formController extends HttpServlet {
 // setScale is immutable
                 bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
                 r = bde.doubleValue();
-                System.out.println(r);
+                System.out.println("r: " + r);
                 session.setAttribute("pondec", r);
                 session.setAttribute("idc", id);
                 //  conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);

@@ -11,10 +11,17 @@
         
         else{
             if($("#select option:selected").val() == "1"){
-                $("#filtro").show();
+                $("#formula").show();
+                $("option[rel=popover]")
+                .popover()
+                .click(function(e) {
+                    e.preventDefault()
+                }) 
+ filtro
+
             }
             else{
-                $("#filtro").hide(); 
+                $("#formula").hide(); 
             }
                 
             
@@ -37,29 +44,41 @@
         return false;
     }
 
+ 
+   
            
 </script>
 <br>
 <div class="hero-unit">
     <div class="row">
         <div class="span10">
+            <a ></a>
             <form  id="formAsigMue" method="post">
                 <fieldset>
                     <legend>Asignación de Muestra</legend>
                     <p>Fuente</p>
-                    <select id="select" name="fuente" onchange="presionSubmit(this)">
+                    <select class="span3" id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
                         <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
                             <option value="${item2[0]}">${item2[1]}</option>
                         </c:forEach>
                     </select>
                     <br>
+                    <div id="formula" style="display: none;">
+                        <p>Formular Calculo Muestra</p>
+
+                        <select class="span3" id="select" name="formula" onchange="presionSubmit(this)">
+                            <option value="--">Seleccione una Formula</option>
+                            <option data-content="<p> <div><img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/f1.gif'></div></p><br><p> n = Tamaño de la muestra. </p><p> Z = Nivel de confianza aplicado al estudio. Basados en la tabla Z. </p><p> p = probabilidad de ocurrencia del evento previsto. </p><p> q = Probabilidad de no ocurrencia del evento previsto. </p><p> EE = Error de tolerancia máxima permitida. </p><p> N = Tamaño de la población." rel="popover"  value="${item2[0]}" data-original-title="Detalle Formula">Muestreo aleatorio por conglomerado</option>
+                        </select>
+                    </div>
+                    <br>
                     <div id="filtro" style="display: none;">
                         <p>Filtros</p>
                         <table>
                             <tr>
                                 <td>
-                                    <select id="select" name="programas" onchange="presionSubmit(this)">
+                                    <select  class="span3" id="select" name="programas" onchange="presionSubmit(this)">
                                         <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
