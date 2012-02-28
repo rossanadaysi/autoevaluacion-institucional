@@ -1,1 +1,1 @@
-Select Count(*), id from fuente
+Select id from ponderacioncaracteristica where ponderacioncaracteristica.proceso_id = 76 and ponderacioncaracteristica.caracteristica_id = 1

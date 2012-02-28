@@ -6,3 +6,6 @@ INSERT INTO programa (id, nombre, descripcion, facultad_id, sede_id) SELECT id, 
 INSERT INTO proceso (id, fechainicio, fechacierre, descripcion, programa_id) SELECT id, fechainicio, fechacierre, descripcion, programa_id FROM autoevaluacion.proceso; 
 INSERT INTO encuesta (id, nombre, descripcion, instrucciones, mensaje, fecha) SELECT id, nombre, descripcion, instrucciones, mensaje, fecha FROM autoevaluacion.encuesta;
 INSERT INTO fuente (id, nombre, descripcion) SELECT id, nombre, descripcion FROM autoevaluacion.fuente;
+INSERT INTO persona (`id` ,`nombre` ,`apellido` ,`password` ,`mail`) SELECT `id` ,`nombre` ,`apellido` ,`password` ,`mail` FROM autoevaluacion.persona;
+INSERT INTO estudiante (`id`, `semestre`, `periodo`, `año`, `persona_id`, `fuente_id`, `programa_id`) SELECT `id`, `semestre`, `periodo`, `año`, `persona_id`, `fuente_id`, `programa_id` FROM autoevaluacion.estudiante;
+INSERT INTO docente (`id`, `tipo`, `persona_id`, `fuente_id`, `programa_id`) SELECT `id`, `tipo`, `persona_id`, `fuente_id`, `programa_id` FROM autoevaluacion.docente;

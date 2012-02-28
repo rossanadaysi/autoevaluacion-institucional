@@ -132,6 +132,8 @@ public class loginController extends HttpServlet {
                                     session.setAttribute("auxAsignarF", 0);
                                     session.setAttribute("auxAsignarC", 0);
                                     session.setAttribute("aux_IniciarP", 0);
+                                    session.setAttribute("auxAsignarC1", 0);
+
                                     // menu = 1;
                                     //session.setAttribute("auxIndex2", menu);
                                     session.setAttribute("mensaje", "Autoevaluación Institucional");

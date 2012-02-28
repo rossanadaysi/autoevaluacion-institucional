@@ -30,7 +30,7 @@ public class AsignacionEncuestasAI implements Action {
         Proceso proceso = (Proceso) session.getAttribute("proceso");
         int idProceso = proceso.getId();
         String bd = (String) session.getAttribute("bd");
-
+    
         Result rs2 = null;
         String sql2 = "Select* from fuente";
         rs2 = conSql.CargarSql2(sql2, bd);

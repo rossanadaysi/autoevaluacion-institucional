@@ -397,7 +397,7 @@
                                                             window[ "innerLayout" ] = null;    
                                                         }
                         
-                        
+                                                        var auxAsignarC1;
                         
                                                         selectedRowIds = [];
                         
@@ -425,17 +425,17 @@
 
                                                                     $("#formPondeFa").submit(function(event){
                                                                         event.preventDefault();
-                                             
+                                                                        
                                                                         $.ajax({
                                                                             type: 'POST',
                                                                             url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
                                                                             data: $("#formPondeFa").serialize(),
                                                                             success: function(){
-                                                                          
-                                                                              
+                                                                               
                                                                                 //alert("Ponderación de Factores Actualizada con Exito!");
                                                                                 $('#myModalF').modal();
                                                                                 $('#myModalF').on('hidden', function () {
+                                                                                    $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                                     location = "<%=request.getContextPath()%>/#PonderacionFactores"; 
                                                                                     $(".nav-pills li").removeClass("active");
                                                                                 })
@@ -465,7 +465,8 @@
                                                                 type: "POST", 
                                                                 url: url3, 
                                                                 success: function(data) 
-                                                                {
+                                                                { 
+                                                                 
                                                                     $("div.ui-layout-center").append(data);
                                                                     setTimeout(function(){
                                                                         $("div.ui-layout-center").scrollspy();   
@@ -493,8 +494,7 @@
                                             
                                                                         }); //fin $.ajax
                                                                     }); //fin submit
-                                        
-                                     
+                                                                                                        
                              
                                                                 } //fin success
                                                             }); //fin del $.ajax
@@ -2316,7 +2316,7 @@
                                                         <p>Mantener informado a la comunidad academica sobre el proceso de autoevaluacion institucional. </p>
                                                         <p><a href="#" class="btn">Ver detalles »</a></p>
                                                     </div><!--/span-->
-                                                    
+
 
                                                 </div><!--/row-->
 
@@ -2477,6 +2477,20 @@
                                                 <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
                                                 <br>
                                                     <p>Debe configurar todo el proceso para continuar.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+                                            </div>
+                                        </div>
+                                        <div class="modal hide fade" id="myModalC1">
+                                            <div class="modal-header">
+                                                <a data-dismiss="modal" class="close">×</a>
+                                                <h3>Atención!</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>Ponderación de Características.</h4>
+                                                <br>
+                                                    <p>Debe asignar primero la poderación de factores para proceder a las asignación de ponderación de características.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
