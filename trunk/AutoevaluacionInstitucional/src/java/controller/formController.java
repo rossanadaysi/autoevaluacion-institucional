@@ -66,11 +66,11 @@ public class formController extends HttpServlet {
                     int ponderacion = Integer.parseInt(request.getParameter("ponderacion" + i));
                     contador = contador + ponderacion;
                 }
-                if (contador > 100) {
-                    System.out.println("supera 100");
+                if (contador != 100) {
+                    System.out.println("Distinto de 100");
                     session.setAttribute("auxAsignarF1", 0);
                 } else {
-                    System.out.println("no supera 100");
+                    System.out.println("igual a 100");
                     session.setAttribute("auxAsignarF1", 1);
 
                     if (session.getAttribute("auxAsignarF").equals(0)) {

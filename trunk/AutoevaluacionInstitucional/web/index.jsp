@@ -231,9 +231,14 @@
             $().ready(function() {
                 $(".progress").ajaxStart(function(){
                    $(this).show(); 
+                   $(".bar").css("width","50%");
                 });
                 $(".progress").ajaxStop(function(){
-                   $(this).hide(); 
+                   $(".bar").css("width","100%");
+                   setTimeout(function(){
+                       $(".progress").hide();
+                   },400);
+                    
                 });
                 
                 $('.dropdown-menu').find('form').click(function (e) {
@@ -375,7 +380,7 @@
                                             <div class="progress progress-info
                                                  progress-striped active" style="display: none;">
                                                 <div class="bar"
-                                                     style="width: 80%;"></div>
+                                                     style="width: 5%;"></div>
                                             </div>
 
                                             <div class='alert alert-error' style="display: none">
