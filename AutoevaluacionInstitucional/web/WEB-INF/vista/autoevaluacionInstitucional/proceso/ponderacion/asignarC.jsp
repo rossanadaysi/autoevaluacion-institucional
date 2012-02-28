@@ -65,12 +65,11 @@
                                     <th>#</th>
                                     <th>Caracteristica</th>
                                     <th>Nivel de Importancia</th>
-                                    <th>Justificaciòn</th>
+                                    <th>Justificación</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
-
                                     <tr id="PonderacionCaracteristicas${iter.index+1}">   
                                         <td>
                                             <c:out value="${row[0]}"/>
@@ -151,7 +150,6 @@
                             </div>
                         </div>  <!--alert-->
                         <br>
-
                         <table class="table table-striped">
                             <thead>
                                 <tr>

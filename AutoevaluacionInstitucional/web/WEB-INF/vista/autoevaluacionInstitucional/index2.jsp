@@ -58,6 +58,8 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-scrollspy.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-alert.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-modal.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-tooltip.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-popover.js"></script>
         <style type="text/css">
 
             .slick-cell .options a {
@@ -229,7 +231,7 @@
             
             
             $(document).ready(function() {
-                 location ="/AutoevaluacionInstitucional/#";                                                                      
+                location ="/AutoevaluacionInstitucional/#";                                                                      
                 $("ul.nav-list li a").click(function(event){
                     $(".nav li").removeClass("active");
                     $(this).parent().siblings().removeClass("active");
@@ -338,7 +340,7 @@
                         if(hash=="#inicio"){
                             $("div.ui-layout-center").empty();
                             $("div.ui-layout-center").append(
-                            "<div class='span10'>"
+                            "<div class='span10' style='text-align: justify'>"
                                 +"<div class='hero-unit'>"
                                 +"<h1>Autoevaluaci&oacute;n Institucional!</h1>"
                                 +"<p>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>"
@@ -2289,7 +2291,7 @@
 
         <div class="ui-layout-center">
 
-            <div class="span10">
+            <div class="span10" style="text-align: justify">
                 <div class="hero-unit">
                     <h1>Autoevaluaci&oacute;n Institucional!</h1>
                     <p>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>
