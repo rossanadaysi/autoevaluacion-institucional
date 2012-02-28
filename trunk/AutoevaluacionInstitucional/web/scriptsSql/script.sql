@@ -213,7 +213,8 @@ CREATE TABLE IF NOT EXISTS `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `ponderacioncaracteristica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ponderacion` int(11) NOT NULL,
+  `nivelimportancia` int(11) NOT NULL,
+  `ponderacion` double NOT NULL,
   `justificacion` varchar(500) NOT NULL,
   `proceso_id` int(11) NOT NULL,
   `caracteristica_id` int(11) NOT NULL,

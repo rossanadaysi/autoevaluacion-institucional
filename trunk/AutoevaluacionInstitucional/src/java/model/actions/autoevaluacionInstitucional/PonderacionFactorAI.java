@@ -37,7 +37,7 @@ public class PonderacionFactorAI implements Action {
 
         Result rs = null;
         rs = conSql.CargarSql2("Select* from factor", bd);
-
+        session.setAttribute("auxAsignarF1", 1);
 
 
         if (rs2.getRowCount() > 0) {

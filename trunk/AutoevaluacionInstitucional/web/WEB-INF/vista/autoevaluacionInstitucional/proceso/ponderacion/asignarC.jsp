@@ -1,6 +1,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript" language="JavaScript">
+    
+    function presionSubmit(va, idc)
+    {
+        var a = "#"+va;
+        var b = $("#select1 option:selected").val();
+       
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=cargarPonde",
+            data: $("#formPondeCara").serialize() + "&idc=" + idc,
+            success: function(){
+                $(a).load("<%=request.getContextPath()%>/ControllerAI?action=ponderacionAjax");
+            } //fin success
+                                            
+        }); //fin */
+        
+        return false;
+    }
 
+    $(document).ready(function() {
+        if(${auxAsignarC1} == 0){
+            $('#myModalC1').modal(); 
+            $('#myModalC1').on('hidden', function () {
+                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI&men=2");
+                $(".nav-header li").removeClass("active");
+                location = "<%=request.getContextPath()%>/#PonderacionFactor"; 
+                                                                                    
+            })
+        }
+    });
+ 
+           
+</script>
 <c:if test="${auxAsignarC == 0}">
     <br id="PonderacionCaracteristicas">
     <div class="subnav">
@@ -33,7 +66,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Caracteristica</th>
-                                    <th>Ponderación</th>
+                                    <th>Nivel de Importancia</th>
                                     <th>Justificaciòn</th>
                                 </tr>
                             </thead>
@@ -116,10 +149,9 @@
                                 <a data-dismiss="alert" class="close">×</a>
                                 <strong>Información!</strong>
                                 La ponderación de caracteristicas ya ha sido actualizada.
+                                <a href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica">Ver Detalle de Ponderación de Características Asignada.</a>
                             </div>
                         </div>  <!--alert-->
-
-                        <a href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica">Detalle de Ponderación de Características Asignada.</a>
                         <br>
 
                         <table class="table table-striped">
@@ -127,7 +159,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Característica</th>
-                                    <th>Ponderacion</th>
+                                    <th>Nivel de Importancia</th>
+                                    <th>Ponderación</th>
                                     <th>Justificacion</th>
                                 </tr>
                             </thead><!--thead-->
@@ -141,10 +174,9 @@
                                             <c:out value="${row2[5]}"/>
                                         </td>
                                         <td>
-                                            <select class="span1" name="ponderacion${row2[4]}">
-                                                <option value="NULL">--</option>
+                                            <select id="select1" onchange="presionSubmit(this.name, ${row2[4]}) " class="span1" name="ponderacion${row2[4]}">
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 0}">
+                                                    <c:when test="${row2[6] == 0}">
                                                         <option selected="selected" value="0">0</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -152,7 +184,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 1}">
+                                                    <c:when test="${row2[6] == 1}">
                                                         <option selected="selected" value="1">1</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -160,7 +192,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 2}">
+                                                    <c:when test="${row2[6] == 2}">
                                                         <option selected="selected" value="2">2</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -168,7 +200,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 3}">
+                                                    <c:when test="${row2[6] == 3}">
                                                         <option selected="selected" value="3">3</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -176,7 +208,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 4}">
+                                                    <c:when test="${row2[6] == 4}">
                                                         <option selected="selected" value="4">4</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -184,7 +216,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 5}">
+                                                    <c:when test="${row2[6] == 5}">
                                                         <option selected="selected" value="5">5</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -192,7 +224,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 6}">
+                                                    <c:when test="${row2[6] == 6}">
                                                         <option selected="selected" value="6">6</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -200,7 +232,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 7}">
+                                                    <c:when test="${row2[6] == 7}">
                                                         <option selected="selected" value="7">7</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -208,7 +240,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 8}">
+                                                    <c:when test="${row2[6] == 8}">
                                                         <option selected="selected" value="8">8</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -216,7 +248,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 9}">
+                                                    <c:when test="${row2[6] == 9}">
                                                         <option selected="selected" value="9">9</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -224,7 +256,7 @@
                                                     </c:otherwise>
                                                 </c:choose>  
                                                 <c:choose>
-                                                    <c:when test="${row2[1] == 10}">
+                                                    <c:when test="${row2[6] == 10}">
                                                         <option selected="selected" value="10">10</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -235,11 +267,17 @@
                                             <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
                                         </td>
                                         <td>
+                                            <div id="ponderacion${row2[4]}">
+                                                <input name="ponderacion2${row2[4]}" type="text" class="input-mini uneditable-input" value="${row2[1]}"/>
+                                            </div>
+                                        </td>
+                                        <td>
                                             <textarea name="justificacion${row2[4]}" rows="3" class="span5">${row2[2]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
-                                </c:forEach>
+                                <input type="hidden"  value="${row[0]}" name="id${row[4]}">
+                            </c:forEach>
                             </tbody>
                         </table>
                         <input type="hidden" name="count" id="count" value="${iterador}">
