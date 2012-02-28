@@ -229,33 +229,22 @@
         </style>
         <script type="text/javascript">
             $().ready(function() {
+                $(".progress").ajaxStart(function(){
+                   $(this).show(); 
+                });
+                $(".progress").ajaxStop(function(){
+                   $(this).hide(); 
+                });
+                
                 $('.dropdown-menu').find('form').click(function (e) {
                     var target = $(e.target);
                     if(!target.is("a"))
-                    e.stopPropagation();
+                        e.stopPropagation();
                 });
-                var validador = $("#formulario_login").validate({
-                      showErrors: function(errorMap, errorList) {
-                        var errores = " ";
-                        for ( var i = 0; errorList[i]; i++ ) {
-                            var error = errorList[i];
-                            errores+= error.message+"<br/>";
-                        }
-                        
-                        $(".alert-error").html(""
-                            +"<a data-dismiss='alert' class='close'>×</a>"
-                            +"<strong>Error!</strong>"+ errores
-                            +"");
-                       if(errores!=" "){
-                           $(".alert-error").show();
-                       } else{
-                           $(".alert-error").html("").hide();
-                      
-                       }
-                        
-                    },
+                $("#formulario_login").validate({
+                    errorLabelContainer:".alert-error",
                     submitHandler: function() {
-                      this.timer = setTimeout(function () {
+                        this.timer = setTimeout(function () {
                             $.ajax({
                                 url: '/AutoevaluacionInstitucional/loginController',
                                 data: 'un='+ $('#codigo').val() +'&pw=' + $('#pass').val() +'&tp=' + $('#tipo :selected').val(),
@@ -273,39 +262,32 @@
                                     }
                                     else if(msg == 1)
                                     { 
-                                        $(".alert-error").html(""
-                                            +"<a data-dismiss='alert' class='close'>×</a>"
-                                            +"<strong>Error!</strong> Usuario No Posee Permisos Para Ingresas bajo ese perfil."
-                                            +"");
-                                        
+                                        $(".alert-error").html("<a data-dismiss='alert' class='close'>×</a>"  
+                                            +"<strong>Error!</strong>"
+                                            +"<label for='pass' generated='true' class='error'> Usuario No Posee Permisos Para Ingresas bajo ese perfil.</label>");  
+                                        $(".alert-error").show();
+                                      
                                     }
-                                    else if(msg == 2)
+                                    else if(msg == 2 || msg == 3)
                                     { 
-                                      $(".alert-error").html(""
-                                            +"<a data-dismiss='alert' class='close'>×</a>"
-                                            +"<strong>Error!</strong> Contraseña Incorrecta."
-                                            +"");
+                                        $(".alert-error").html("<a data-dismiss='alert' class='close'>×</a>"  
+                                            +"<strong>Error!</strong>"
+                                            +"<label for='pass' generated='true' class='error'> C&oacutedigo y/o Contraseña Incorrecto(s).</label>");  
+                                        $(".alert-error").show();
                                       
                                       
                                         
                                     }
-                                    else if(msg == 3)
-                                    {
-                                        
-                                        $(".alert-error").html(""
-                                            +"<a data-dismiss='alert' class='close'>×</a>"
-                                            +"<strong>Error!</strong> Usuario No Existe."
-                                            +"");
-                                                                                  
-                                    }
+                                    
                                     else if(msg == 4)
                                     { 
+                                        $(".alert-error").html("<a data-dismiss='alert' class='close'>×</a>"  
+                                            +"<strong>Error!</strong>"
+                                            +"<label for='pass' generated='true' class='error'> Formato de Código Incorrecto.</label>");  
+                                        $(".alert-error").show();
+                                      
                                         
-                                        $(".alert-error").html(""
-                                            +"<a data-dismiss='alert' class='close'>×</a>"
-                                            +"<strong>Error!</strong> Formato de Código Incorrecto."
-                                            +"");
-                                        
+                                       
                                     }
                                 }
                               
@@ -390,9 +372,15 @@
                                     <ul class="dropdown-menu">
 
                                         <form  id="formulario_login" class="well"  action="" method="post">
+                                            <div class="progress progress-info
+                                                 progress-striped active" style="display: none;">
+                                                <div class="bar"
+                                                     style="width: 80%;"></div>
+                                            </div>
+
                                             <div class='alert alert-error' style="display: none">
-                                                <a data-dismiss='alert' class='close' >×</a>
-                                                <strong >Error!</strong> 
+                                                <a data-dismiss='alert' class='close'>×</a>  
+                                                <strong>Error!</strong>
                                             </div>
 
                                             <label>Usuario</label>
