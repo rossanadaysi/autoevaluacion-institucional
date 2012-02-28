@@ -24,9 +24,7 @@
         if(${auxAsignarC1} == 0){
             $('#myModalC1').modal(); 
             $('#myModalC1').on('hidden', function () {
-                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI&men=2");
-                $(".nav-header li").removeClass("active");
-                location = "<%=request.getContextPath()%>/#PonderacionFactor"; 
+            $("ul.nav-list li:eq(2) a").trigger("click");
                                                                                     
             })
         }
