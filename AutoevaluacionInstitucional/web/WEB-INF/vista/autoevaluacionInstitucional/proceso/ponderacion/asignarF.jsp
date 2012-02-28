@@ -55,7 +55,7 @@
                                             <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
-                                            <input name="ponderacion${row[0]}" type="text">
+                                            <input name="ponderacion${row[0]}" class="span1" type="text">
                                             <input type="hidden"  value="${row[0]}" name="id${row[0]}">
                                         </td>
                                         <td>
