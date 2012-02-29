@@ -1,6 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:if test="${auxAsignarF == 0}">
+<script type="text/javascript" language="JavaScript">
+                $("div[rel=popover]")
+                .popover({
+                    trigger:"manual"
+                })
+                .click(function(e) {
+                    e.preventDefault()
+                }) 
+
+
+</script>
+
+<c:if test="${auxAsignarF == 0}"><!--Si no se ha asignado nada-->
     <br  id="PonderacionFactores">
     <div class="subnav">
         <ul class="nav nav-pills">
@@ -32,7 +44,7 @@
                                 <div class="alert alert-error">
                                     <a data-dismiss="alert" class="close">×</a>
                                     <strong>Error!</strong>
-                                    La sumatoria de la ponderación asignada a los factores no debe ser mayor de 100.
+                                    La sumatoria de la ponderación asignada a los factores debe ser  100.
                                 </div>
                             </div>
                         </c:if>
@@ -55,7 +67,7 @@
                                             <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
-                                            <input name="ponderacion${row[0]}" class="span1" type="text">
+                                            <input name="ponderacion${row[0]}" class="span1 {required:true,number:true}" type="text">
                                             <input type="hidden"  value="${row[0]}" name="id${row[0]}">
                                         </td>
                                         <td>
@@ -142,9 +154,11 @@
                                             <c:out value="${row2[5]}"/>
                                         </td>
                                         <td>
-                                            <input class="span1" name="ponderacion${row2[4]}" type="text" value="${row2[1]}"/>
+                                            <input class="span1 {required:true,number:true}" name="ponderacion${row2[4]}" type="text" value="${row2[1]}" />
                                             <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
+                                            <div data-content="And here's some amazing content. It's very engaging. right?" rel="popover" data-original-title="A Title"></div>
                                         </td>
+
                                         <td>
                                             <textarea name="justificacion${row2[4]}" rows="3" class="span5">${row2[2]}</textarea>
                                         </td>
