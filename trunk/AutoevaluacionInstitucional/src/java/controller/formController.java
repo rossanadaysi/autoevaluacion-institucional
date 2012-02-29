@@ -61,12 +61,12 @@ public class formController extends HttpServlet {
 
                 session.setAttribute("idproceso", idproceso);
 
-                int contador = 0;
+                Double contador = 0.0;
                 for (int i5 = 1; i5 <= numRows; i5++) {
-                    int ponderacion = Integer.parseInt(request.getParameter("ponderacion" + i5));
+                    Double ponderacion = Double.parseDouble(request.getParameter("ponderacion" + i5));
                     contador = contador + ponderacion;
                 }
-                if (contador != 100) {
+                if (contador != 100.0) {
                     System.out.println("Distinto de 100");
                     session.setAttribute("auxAsignarF1", 0);
                 } else {
