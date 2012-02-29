@@ -17,8 +17,6 @@
                 .click(function(e) {
                     e.preventDefault()
                 }) 
- filtro
-
             }
             else{
                 $("#formula").hide(); 
@@ -88,7 +86,7 @@
                                 <td>
                                     <select id="select" name="semestres" onchange="presionSubmit(this)">
                                         <option value="--">Seleccione Semestre</option>
-                                        <option value="1">Primer Semestre</option
+                                        <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
                                         <option value="3">Tercero Semestre</option>
                                         <option value="4">Cuarto Semestre</option>
@@ -106,8 +104,9 @@
                     <br> 
                     <div  id="resultados2"></div>
                 </fieldset>
+                        </form>
         </div>
     </div>
 </div>
-</form>  
+  
 
