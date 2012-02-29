@@ -17,6 +17,8 @@
                 .click(function(e) {
                     e.preventDefault()
                 }) 
+
+
             }
             else{
                 $("#formula").hide(); 

@@ -143,6 +143,7 @@
                                         </td>
                                         <td>
                                             <input class="span1" name="ponderacion${row2[4]}" type="text" value="${row2[2]}"/>
+                                            <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
                                         </td>
                                         <td>
                                             <textarea name="justificacion${row2[4]}" rows="3" class="span5">${row2[2]}</textarea>
