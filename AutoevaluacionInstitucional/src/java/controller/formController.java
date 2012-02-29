@@ -62,8 +62,8 @@ public class formController extends HttpServlet {
                 session.setAttribute("idproceso", idproceso);
 
                 int contador = 0;
-                for (int i = 1; i <= numRows; i++) {
-                    int ponderacion = Integer.parseInt(request.getParameter("ponderacion" + i));
+                for (int i5 = 1; i5 <= numRows; i5++) {
+                    int ponderacion = Integer.parseInt(request.getParameter("ponderacion" + i5));
                     contador = contador + ponderacion;
                 }
                 if (contador != 100) {
@@ -74,6 +74,7 @@ public class formController extends HttpServlet {
                     session.setAttribute("auxAsignarF1", 1);
 
                     if (session.getAttribute("auxAsignarF").equals(0)) {
+                       
                         for (int i = 1; i <= numRows; i++) {
                             String id = request.getParameter("id" + i);
                             String ponderacion = request.getParameter("ponderacion" + i);
@@ -90,17 +91,18 @@ public class formController extends HttpServlet {
                         session.setAttribute("auxAsignarC1", 1);
 
                     } else {
+                        
                         for (int i = 1; i <= numRows; i++) {
                             String id = request.getParameter("id" + i);
                             String ponderacion = request.getParameter("ponderacion" + i);
                             String justificacion = request.getParameter("justificacion" + i);
                             int idPonderacion = 0;
-
-
+                      
                             rs = conSql.CargarSql("Select id from ponderacionfactor where ponderacionfactor.proceso_id = '" + idProceso + "' and ponderacionfactor.factor_id = '" + id + "'", bd);
                             try {
                                 while (rs.next()) {
                                     idPonderacion = Integer.parseInt(rs.getString(1));
+                                    System.out.println(idPonderacion);
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
