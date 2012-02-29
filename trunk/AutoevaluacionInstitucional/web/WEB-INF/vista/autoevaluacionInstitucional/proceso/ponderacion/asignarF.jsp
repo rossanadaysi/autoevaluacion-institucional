@@ -142,7 +142,7 @@
                                             <c:out value="${row2[5]}"/>
                                         </td>
                                         <td>
-                                            <input class="span1" name="ponderacion${row2[4]}" type="text" value="${row2[2]}"/>
+                                            <input class="span1" name="ponderacion${row2[4]}" type="text" value="${row2[1]}"/>
                                             <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
                                         </td>
                                         <td>
