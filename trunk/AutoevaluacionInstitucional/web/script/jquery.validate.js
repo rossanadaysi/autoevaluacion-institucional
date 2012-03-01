@@ -620,7 +620,7 @@ $.extend($.validator, {
 			this.hideErrors();
 			this.addWrapper( this.toShow ).show();
 		},
-
+                
 		validElements: function() {
 			return this.currentElements.not(this.invalidElements());
 		},
@@ -663,7 +663,7 @@ $.extend($.validator, {
 			}
 			this.toShow = this.toShow.add(label);
 		},
-
+                
 		errorsFor: function(element) {
 			var name = this.idOrName(element);
     		return this.errors().filter(function() {
