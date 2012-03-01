@@ -234,7 +234,16 @@
             
             $(document).ready(function() {
                 location ="/AutoevaluacionInstitucional/#inicio"; 
-                  
+                
+                $("input[name^='ponderacion']").blur(function(){
+                    console.log("dsad");
+                    $("input[name^='ponderacion']").each(function(){
+                        suma+=Number($(this).val());
+                    
+                    });
+            
+                    $("#suma input").val(suma);
+                })    
                 
                 
                     
@@ -336,7 +345,7 @@
                         $(".subnav ul.nav-pills li:eq(1)").addClass("active");
                     }
                                                 
-                    if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash==""){
+                    if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1){
                                                   
                     }else{
                                                     
@@ -432,23 +441,34 @@
 
                                         $("#formPondeFa").validate({
                                             
-                                           highlight: function(element, errorClass) {
-                                               $(element).parent("td").children("div").popover('show');
+                                            errorElement: "em"
+                                            ,
+                                            highlight: function(element, errorClass) {
+                                                $(element).parent("td").children("div").addClass("in");
+                                                $(element).parent("td").children("div").show();
                                             },
-                                             unhighlight: function(element, errorClass, validClass) {
-                                                    $(element).parent("td").children("div").popover('hide');
-                                                },    
-                                                errorPlacement: function(error, element) {
-                                                    error.appendTo( element.parent("td").children("div") );
-                                                    
-                                                },
-                                                rules: {
-                                                    field: {
-                                                        required: true,
-                                                        number: true
-                                                    }
-                                                },
-                                                submitHandler: function() {
+                                            unhighlight: function(element, errorClass, validClass) {
+                                                $(element).parent("td").children("div").removeClass("in");
+                                                $(element).parent("td").children("div").hide();
+                                            },    
+                                            errorPlacement: function(error, element) {
+                                                error.appendTo($(element).parent("td").children("div"));
+                                            },    
+                                             
+                                            rules: {
+                                                field: {
+                                                    required: true,
+                                                    number: true
+                                                }
+                                            },
+                                            submitHandler: function() {
+                                                var suma=0;                                    
+                                                $("input[name^='ponderacion']").each(function(){
+                                                    suma+=Number($(this).val());
+            
+         
+                                                });
+                                                if(suma==100){
                                                     setTimeout(function () {
                                                         $.ajax({
                                                             type: 'POST',
@@ -466,10 +486,16 @@
                                             
                                                         }); //fin $.ajax
                                                     }, 400);
+                                                } else{
+                                                
+                                                    $(".alert-error").show();
+                                                    location = "#PonderacionFactores";
                                                 }
-                                                ,
-                                                debug:true
-                                            });
+                                                    
+                                                    
+                                            } //fin submitHandler
+                                                
+                                        });
 
 
 
@@ -481,260 +507,260 @@
                                         
                                      
                              
-                                        } //fin success
-                                    }); //fin del $.ajax
+                                    } //fin success
+                                }); //fin del $.ajax
                          
                                                        
                        
-                                }
-                                else if(hash == "#PonderacionCaracteristica"){
-                                    url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                            }
+                            else if(hash == "#PonderacionCaracteristica"){
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
                                                         
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: url3, 
-                                        success: function(data) 
-                                        { 
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    { 
                                                                  
-                                            $("div.ui-layout-center").append(data);
-                                            setTimeout(function(){
-                                                $("div.ui-layout-center").scrollspy();   
-                                            }, 500);
-                                            $("div.ui-layout-center").scrollspy('refresh');
+                                        $("div.ui-layout-center").append(data);
+                                        setTimeout(function(){
+                                            $("div.ui-layout-center").scrollspy();   
+                                        }, 500);
+                                        $("div.ui-layout-center").scrollspy('refresh');
     
                                     
-                                            $("#formPondeCara").submit(function(event){
-                                                event.preventDefault();
+                                        $("#formPondeCara").submit(function(event){
+                                            event.preventDefault();
                                              
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
-                                                    data: $("#formPondeCara").serialize(),
-                                                    success: function(){
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
+                                                data: $("#formPondeCara").serialize(),
+                                                success: function(){
                                                                             
-                                                        $('#myModalC').modal(); 
-                                                        $('#myModalC').on('hidden', function () {
-                                                            location = "<%=request.getContextPath()%>/#PonderacionCaracteristicas";
+                                                    $('#myModalC').modal(); 
+                                                    $('#myModalC').on('hidden', function () {
+                                                        location = "<%=request.getContextPath()%>/#PonderacionCaracteristicas";
                                                         
                                                                                     
-                                                        })
+                                                    })
                                              
-                                                    } //fin success
+                                                } //fin success
                                             
-                                                }); //fin $.ajax
-                                            }); //fin submit
+                                            }); //fin $.ajax
+                                        }); //fin submit
                                                                                                         
                              
-                                        } //fin success
-                                    }); //fin del $.ajax
+                                    } //fin success
+                                }); //fin del $.ajax
                          
                                                         
-                                }
-                                else if(hash == "#AsignacionEncuestas"){
-                                    url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                            }
+                            else if(hash == "#AsignacionEncuestas"){
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
                       
-                                    var jaja34 = function(){
-                                        $("div.ui-layout-center").empty();
-                                        $.ajax({ 
-                                            type: "POST", 
-                                            url: url3, 
-                                            success: function(data) 
-                                            {
-                                       
-                                                $("div.ui-layout-center").append(data);
-                                    
-                                                $("#formAsigEnc").submit(function(event){
-                                                    event.preventDefault();
-                                             
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
-                                                        data: $("#formAsigEnc").serialize(),
-                                                        success: function(){
-                                                                                    
-                                                            $("#resultados").hide();
-                                                            $("#select option:eq(0)").attr("selected","selected");
-                                                            $('#myModalE').modal();  
-                                                                                    
-                                                                                   
-                                                        } //fin success
-                                            
-                                                    }); //fin $.ajax
-                                                }); //fin submit
-                                        
-                                     
-                             
-                                            } //fin success
-                                        }); //fin del $.ajax
-                         
-                                    } //fin jaja34  
-                                    jaja34(); 
-                       
-
-                                }
-                                else if(hash == "#AsignacionMuestra"){
-                                    url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                          
-                      
-                                    var jaja34 = function(){
-                                        $("div.ui-layout-center").empty();
-                                        $.ajax({ 
-                                            type: "POST", 
-                                            url: url3, 
-                                            success: function(data) 
-                                            {
-                                       
-                                                $("div.ui-layout-center").append(data);
-                                    
-                                                $("#formAsigMue").submit(function(event){
-                                                    event.preventDefault();
-                                             
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
-                                                        data: $("#formAsigMue").serialize(),
-                                                        success: function(){
-                                                                                    
-                                                            $("#resultados2").hide();
-                                                            $("#select option:eq(0)").attr("selected","selected");
-                                                            $('#myModalM').modal();  
-                                                                                    
-                                                                                   
-                                                        } //fin success
-                                            
-                                                    }); //fin $.ajax
-                                                }); //fin submit
-                                        
-                                     
-                             
-                                            } //fin success
-                                        }); //fin del $.ajax
-                         
-                                    } //fin jaja34  
-                                    jaja34(); 
-                       
-
-                                }
-                                else if(hash == "#CrearProceso"){
-                                    var a = 0;
-                                    url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                var jaja34 = function(){
                                     $("div.ui-layout-center").empty();
                                     $.ajax({ 
                                         type: "POST", 
                                         url: url3, 
                                         success: function(data) 
                                         {
+                                       
                                             $("div.ui-layout-center").append(data);
-                                            $("#formCrearProc").submit(function(event){
+                                    
+                                            $("#formAsigEnc").submit(function(event){
                                                 event.preventDefault();
+                                             
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
-                                                    data: $("#formCrearProc").serialize(),
+                                                    url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
+                                                    data: $("#formAsigEnc").serialize(),
                                                     success: function(){
-                                                        $('#myModalP1').modal(); 
+                                                                                    
+                                                        $("#resultados").hide();
+                                                        $("#select option:eq(0)").attr("selected","selected");
+                                                        $('#myModalE').modal();  
+                                                                                    
+                                                                                   
+                                                    } //fin success
+                                            
+                                                }); //fin $.ajax
+                                            }); //fin submit
+                                        
+                                     
+                             
+                                        } //fin success
+                                    }); //fin del $.ajax
+                         
+                                } //fin jaja34  
+                                jaja34(); 
+                       
+
+                            }
+                            else if(hash == "#AsignacionMuestra"){
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                          
+                      
+                                var jaja34 = function(){
+                                    $("div.ui-layout-center").empty();
+                                    $.ajax({ 
+                                        type: "POST", 
+                                        url: url3, 
+                                        success: function(data) 
+                                        {
+                                       
+                                            $("div.ui-layout-center").append(data);
+                                    
+                                            $("#formAsigMue").submit(function(event){
+                                                event.preventDefault();
+                                             
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
+                                                    data: $("#formAsigMue").serialize(),
+                                                    success: function(){
+                                                                                    
+                                                        $("#resultados2").hide();
+                                                        $("#select option:eq(0)").attr("selected","selected");
+                                                        $('#myModalM').modal();  
+                                                                                    
+                                                                                   
+                                                    } //fin success
+                                            
+                                                }); //fin $.ajax
+                                            }); //fin submit
+                                        
+                                     
+                             
+                                        } //fin success
+                                    }); //fin del $.ajax
+                         
+                                } //fin jaja34  
+                                jaja34(); 
+                       
+
+                            }
+                            else if(hash == "#CrearProceso"){
+                                var a = 0;
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        $("#formCrearProc").submit(function(event){
+                                            event.preventDefault();
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                data: $("#formCrearProc").serialize(),
+                                                success: function(){
+                                                    $('#myModalP1').modal(); 
                                                                                
                                                                                                          
-                                                    } //fin success
-                                                }); //fin $.ajax
-                                            }); //fin submit
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                }
-                                else if(hash == "#CrearProceso1"){
-                                    var a = 0;
-                                    url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: url3, 
-                                        success: function(data) 
-                                        {
-                                            $("div.ui-layout-center").append(data);
-                                            $("#formCrearProc").submit(function(event){
-                                                event.preventDefault();
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
-                                                    data: $("#formCrearProc").serialize(),
-                                                    beforeSend: function(){
-                                                        $('#myModalLoading').modal();   
-                                                        $("#myModalLoading .bar").css("width","50%");
-                                                    },
-                                                    complete:function(){
-                                                        $("#myModalLoading .bar").css("width","100%");
-                                                        setTimeout(function(){
-                                                            $('#myModalLoading').modal("hide");
-                                                        },400);
-                                                    },
-                                                    success: function(){
+                                                } //fin success
+                                            }); //fin $.ajax
+                                        }); //fin submit
+                                    } //fin success
+                                }); //fin del $.ajax
+                            }
+                            else if(hash == "#CrearProceso1"){
+                                var a = 0;
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        $("#formCrearProc").submit(function(event){
+                                            event.preventDefault();
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                data: $("#formCrearProc").serialize(),
+                                                beforeSend: function(){
+                                                    $('#myModalLoading').modal();   
+                                                    $("#myModalLoading .bar").css("width","50%");
+                                                },
+                                                complete:function(){
+                                                    $("#myModalLoading .bar").css("width","100%");
+                                                    setTimeout(function(){
+                                                        $('#myModalLoading').modal("hide");
+                                                    },400);
+                                                },
+                                                success: function(){
                                                         
-                                                        setTimeout(function(){
-                                                            $('#myModalP').modal(); 
+                                                    setTimeout(function(){
+                                                        $('#myModalP').modal(); 
                                                                                     
                                                                                 
-                                                        },2000);
+                                                    },2000);
                                                                                 
-                                                        $('#myModalP').on('hidden', function () {
-                                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                            location = '/AutoevaluacionInstitucional/';
-                                                        });
+                                                    $('#myModalP').on('hidden', function () {
+                                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                        location = '/AutoevaluacionInstitucional/';
+                                                    });
                                                                                 
                                                                                                                                                                                      
-                                                    } //fin success
-                                                }); //fin $.ajax
-                                            }); //fin submit
-                                        } //fin success
-                                    }); //fin del $.ajax
-                                }
-                                else if(hash == "#IniciarProceso"){
-                                    url3 = url3.replace('#', "formController?action=")+"AI";
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: url3, 
-                                        success: function(data) 
-                                        {
-                                            if(${aux_IniciarP} == 0){
-                                                $('#myModalIP').modal(); 
-                                            }else{
-                                                $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                            
-                                                location = "<%=request.getContextPath()%>/#detalleProceso";    
-                                            }                            
-                                                             
-                                        } //fin success
-                                    }); //fin del $.ajax
-                          
-                                                      
-                       
-                                }
-                                else if(hash == "#CerrarProceso"){
-                                    url3 = url3.replace('#', "formController?action=")+"AI";
-                                    $("div.ui-layout-center").empty();
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: url3, 
-                                        success: function(data) 
-                                        {
+                                                } //fin success
+                                            }); //fin $.ajax
+                                        }); //fin submit
+                                    } //fin success
+                                }); //fin del $.ajax
+                            }
+                            else if(hash == "#IniciarProceso"){
+                                url3 = url3.replace('#', "formController?action=")+"AI";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        if(${aux_IniciarP} == 0){
+                                            $('#myModalIP').modal(); 
+                                        }else{
                                             $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                             
-                                            location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                                            location = "<%=request.getContextPath()%>/#detalleProceso";    
+                                        }                            
                                                              
-                                        } //fin success
-                                    }); //fin del $.ajax
+                                    } //fin success
+                                }); //fin del $.ajax
                           
                                                       
                        
-                                }
-                                else {
-                                    url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                    $("div.ui-layout-center").load(url3);
-                                }
+                            }
+                            else if(hash == "#CerrarProceso"){
+                                url3 = url3.replace('#', "formController?action=")+"AI";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                            
+                                        location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                                                             
+                                    } //fin success
+                                }); //fin del $.ajax
+                          
+                                                      
+                       
+                            }
+                            else {
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                $("div.ui-layout-center").load(url3);
+                            }
                             
                             
                         
@@ -743,1526 +769,1526 @@
                       
                        
                        
-                            }else{
+                        }else{
                         
-                                if(hash == "#detalleProceso")
-                                {
+                            if(hash == "#detalleProceso")
+                            {
                         
                          
-                                    $.unsubscribe("set_grid_width");
+                                $.unsubscribe("set_grid_width");
                         
-                                    if(middleLayout){
-                                        middleLayout.destroy();
+                                if(middleLayout){
+                                    middleLayout.destroy();
                             
-                                    } 
-                                    if(innerLayout){
-                                        innerLayout.destroy();
+                                } 
+                                if(innerLayout){
+                                    innerLayout.destroy();
                             
-                                    }
+                                }
                         
                         
                         
-                                    selectedRowIds = [];
+                                selectedRowIds = [];
                         
                 
-                                    $("div.ui-layout-center").empty();
+                                $("div.ui-layout-center").empty();
                         
-                                    var dataView;
-                                    var grid;
-                                    //  var pager;
-                                    //var columnpicker;
-                                    var grid_opts={};
-                                    var data = [];
-                                    var selectedRowIds = [];
+                                var dataView;
+                                var grid;
+                                //  var pager;
+                                //var columnpicker;
+                                var grid_opts={};
+                                var data = [];
+                                var selectedRowIds = [];
 
 
 
 
 
-                                    var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                        return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                            ""+dataContext["programa"]+"";
+                                var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                    return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                        ""+dataContext["programa"]+"";
 
 
-                                    };
+                                };
             
             
-                                    var columns = [
-                                        {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
-                                        {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
-                                        {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
-                                        {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
+                                var columns = [
+                                    {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
+                                    {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
+                                    {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
+                                    {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
                 
-                                    ];
+                                ];
 
-                                    var options = {
-                                        editable: false,
-                                        autoEdit: false,
-                                        enableAddRow: false,
-                                        enableCellNavigation: true,
-                                        asyncEditorLoading: false,
-                                        enableColumnReorder: false,
-                                        forceFitColumns: true
+                                var options = {
+                                    editable: false,
+                                    autoEdit: false,
+                                    enableAddRow: false,
+                                    enableCellNavigation: true,
+                                    asyncEditorLoading: false,
+                                    enableColumnReorder: false,
+                                    forceFitColumns: true
                         
-                                    };
+                                };
 
-                                    var sortcol = "Nombre";
-                                    var sortdir = 1;
-                                    //var percentCompleteThreshold = 0;
-                                    var searchString = "";
+                                var sortcol = "Nombre";
+                                var sortdir = 1;
+                                //var percentCompleteThreshold = 0;
+                                var searchString = "";
 
-                                    function myFilter(item) {
+                                function myFilter(item) {
                
-                                        if (searchString != "" && item["programa"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                            return false;
+                                    if (searchString != "" && item["programa"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                        return false;
 
-                                        return true;
-                                    }
+                                    return true;
+                                }
 
                
-                                    $(".grid-header .ui-icon")
-                                    .addClass("ui-state-default ui-corner-all")
-                                    .mouseover(function(e) {
-                                        $(e.target).addClass("ui-state-hover")
-                                    })
-                                    .mouseout(function(e) {
-                                        $(e.target).removeClass("ui-state-hover")
-                                    });
+                                $(".grid-header .ui-icon")
+                                .addClass("ui-state-default ui-corner-all")
+                                .mouseover(function(e) {
+                                    $(e.target).addClass("ui-state-hover")
+                                })
+                                .mouseout(function(e) {
+                                    $(e.target).removeClass("ui-state-hover")
+                                });
 
 
                     
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: "/AutoevaluacionInstitucional/jsonController?ejecucion=indexAI", 
-                                        dataType: 'json', 
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: "/AutoevaluacionInstitucional/jsonController?ejecucion=indexAI", 
+                                    dataType: 'json', 
                             
-                                        success: function(json) 
-                                        {
-                                            $(".ui-layout-center").append("<div class='middle-north'>"
-                                                +"<div class='row wellMio'>"
-                                                +"<div class='span5'>"
-                                                +"<h3>${msjLogIn1}</h3>"
-                                                +"<h4>${msjLogIn2}</h4>"
-                                                +"</div>"
-                                                +"<div class='pull-right'>"
-                                                +"<form class='form-search'>"
-                                                +"<input type='text' id='txtSearch' class='input-medium search-query'>"
-                                                +"<button class='btn' type='submit'>Buscar</button>"
-                                                +"</form>"
-                                                +"</div>"
-                                                +"</div>"
-                                                +"</div>"   
-                                                +"<div class='middle-center'>"
-                                                +"<div class='inner-center' style='float:left;'>"
-                                                +"<div id='myGrid'></div></div></div>");
-                                            if(json.length > 0) 
-                                            { for (var i = 0; i < json.length; i++) 
-                                                {
-                                                    data[i] = { 
-                                                        id: json[i].id, 
-                                                        fechaInicio: json[i].fechaInicio, 
-                                                        fechaCierre: json[i].fechaCierre, 
-                                                        descripcion: json[i].descripcion,
-                                                        programa: json[i].programa
-                                                    }; 
-                                                } 
-                                                dataView = new Slick.Data.DataView();
+                                    success: function(json) 
+                                    {
+                                        $(".ui-layout-center").append("<div class='middle-north'>"
+                                            +"<div class='row wellMio'>"
+                                            +"<div class='span5'>"
+                                            +"<h3>${msjLogIn1}</h3>"
+                                            +"<h4>${msjLogIn2}</h4>"
+                                            +"</div>"
+                                            +"<div class='pull-right'>"
+                                            +"<form class='form-search'>"
+                                            +"<input type='text' id='txtSearch' class='input-medium search-query'>"
+                                            +"<button class='btn' type='submit'>Buscar</button>"
+                                            +"</form>"
+                                            +"</div>"
+                                            +"</div>"
+                                            +"</div>"   
+                                            +"<div class='middle-center'>"
+                                            +"<div class='inner-center' style='float:left;'>"
+                                            +"<div id='myGrid'></div></div></div>");
+                                        if(json.length > 0) 
+                                        { for (var i = 0; i < json.length; i++) 
+                                            {
+                                                data[i] = { 
+                                                    id: json[i].id, 
+                                                    fechaInicio: json[i].fechaInicio, 
+                                                    fechaCierre: json[i].fechaCierre, 
+                                                    descripcion: json[i].descripcion,
+                                                    programa: json[i].programa
+                                                }; 
+                                            } 
+                                            dataView = new Slick.Data.DataView();
                           
-                                                grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                var fil=[];
-                                                grid.setSelectedRows(fil); 
-                                                // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                            grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                            var fil=[];
+                                            grid.setSelectedRows(fil); 
+                                            // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                            //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                $.subscribe("set_grid_height", function (new_height) {
-                                                    grid_opts.height = new_height-90;
-                                                    $("#myGrid").css('height', grid_opts.height);
-                                                    grid.resizeCanvas();
+                                            $.subscribe("set_grid_height", function (new_height) {
+                                                grid_opts.height = new_height-90;
+                                                $("#myGrid").css('height', grid_opts.height);
+                                                grid.resizeCanvas();
                                         
-                                                });
+                                            });
             
-                                                $.subscribe("set_grid_width", function (new_width) {
-                                                    grid_opts.width = new_width+20;
-                                                    $("#myGrid").css('width', grid_opts.width );
-                                                    grid.autosizeColumns();
-                                                    //grid.resizeCanvas();
-                                                });
+                                            $.subscribe("set_grid_width", function (new_width) {
+                                                grid_opts.width = new_width+20;
+                                                $("#myGrid").css('width', grid_opts.width );
+                                                grid.autosizeColumns();
+                                                //grid.resizeCanvas();
+                                            });
                                                                     
 
             
 
-                                                /*   al cambiar el contenido de una celda
-                                                 *   grid.onCellChange = function(row,col,item) {
+                                            /*   al cambiar el contenido de una celda
+                                             *   grid.onCellChange = function(row,col,item) {
              dataView.updateItem(item.id,item);    
          };
 
                      grid.onAddNewRow = addItem;
-                                                 */  //al presionar teclas
-                                                grid.onKeyDown = function(e) {
+                                             */  //al presionar teclas
+                                            grid.onKeyDown = function(e) {
                                     
-                                                    var rows = [];
-                                                    selectedRowIds = [];
+                                                var rows = [];
+                                                selectedRowIds = [];
                                     
-                                                    // select all rows on ctrl-a
-                                                    if (e.which == 65 && e.ctrlKey)
-                                                    {
-                                                        for (var i = 0; i < dataView.rows.length; i++) {
-                                                            rows.push(i);
-                                                            selectedRowIds.push(dataView.rows[i].id);
-                                                        }
-
-                                                        grid.setSelectedRows(rows);
-
-                                                        return true;
-                                                    }  
-                                                    if(e.which == 27){
-                                                        grid.setSelectedRows(rows);
-                                                        return true;
+                                                // select all rows on ctrl-a
+                                                if (e.which == 65 && e.ctrlKey)
+                                                {
+                                                    for (var i = 0; i < dataView.rows.length; i++) {
+                                                        rows.push(i);
+                                                        selectedRowIds.push(dataView.rows[i].id);
                                                     }
-                                                    return false;
+
+                                                    grid.setSelectedRows(rows);
+
+                                                    return true;
+                                                }  
+                                                if(e.which == 27){
+                                                    grid.setSelectedRows(rows);
+                                                    return true;
+                                                }
+                                                return false;
                                     
 
                                    
-                                                };
+                                            };
 
-                                                grid.onSelectedRowsChanged = function() {
-                                                    selectedRowIds = [];
-                                                    var rows = grid.getSelectedRows();
-                                                    for (var i = 0, l = rows.length; i < l; i++) {
-                                                        var item = dataView.rows[rows[i]];
-                                                        if (item) selectedRowIds.push(item.id);
-                                                    }
-                                                };
+                                            grid.onSelectedRowsChanged = function() {
+                                                selectedRowIds = [];
+                                                var rows = grid.getSelectedRows();
+                                                for (var i = 0, l = rows.length; i < l; i++) {
+                                                    var item = dataView.rows[rows[i]];
+                                                    if (item) selectedRowIds.push(item.id);
+                                                }
+                                            };
 
                 
                 
-                                                grid.onSort = function(sortCol, sortAsc) {
-                                                    sortdir = sortAsc ? 1 : -1;
-                                                    sortcol = sortCol.field;
+                                            grid.onSort = function(sortCol, sortAsc) {
+                                                sortdir = sortAsc ? 1 : -1;
+                                                sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                };
+                                            };
 
-                                                // wire up model events to drive the grid
-                                                dataView.onRowCountChanged.subscribe(function(args) {
-                                                    grid.updateRowCount();
-                                                    grid.render();
-                                                });
+                                            // wire up model events to drive the grid
+                                            dataView.onRowCountChanged.subscribe(function(args) {
+                                                grid.updateRowCount();
+                                                grid.render();
+                                            });
 
-                                                dataView.onRowsChanged.subscribe(function(rows) {
-                                                    grid.removeRows(rows);
-                                                    grid.render();
+                                            dataView.onRowsChanged.subscribe(function(rows) {
+                                                grid.removeRows(rows);
+                                                grid.render();
 
-                                                    if (selectedRowIds.length > 0)
+                                                if (selectedRowIds.length > 0)
+                                                {
+                                                    // since how the original data maps onto rows has changed,
+                                                    // the selected rows in the grid need to be updated
+                                                    var selRows = [];
+                                                    for (var i = 0; i < selectedRowIds.length; i++)
                                                     {
-                                                        // since how the original data maps onto rows has changed,
-                                                        // the selected rows in the grid need to be updated
-                                                        var selRows = [];
-                                                        for (var i = 0; i < selectedRowIds.length; i++)
-                                                        {
-                                                            var idx = dataView.getRowById(selectedRowIds[i]);
-                                                            if (idx != undefined)
-                                                                selRows.push(idx);
-                                                        }
-
-                                                        grid.setSelectedRows(selRows);
+                                                        var idx = dataView.getRowById(selectedRowIds[i]);
+                                                        if (idx != undefined)
+                                                            selRows.push(idx);
                                                     }
-                                                });
 
-                                                dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                    grid.setSelectedRows(selRows);
+                                                }
+                                            });
+
+                                            dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                    grid.setOptions({enableAddRow:options.enableAddRow});
-                                                });
+                                                grid.setOptions({enableAddRow:options.enableAddRow});
+                                            });
                 
                 
-                                                $("#txtSearch").keyup(function(e) {
-                                                    Slick.GlobalEditorLock.cancelCurrentEdit();
+                                            $("#txtSearch").keyup(function(e) {
+                                                Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                    // clear on Esc
-                                                    if (e.which == 27)
-                                                        this.value = "";
+                                                // clear on Esc
+                                                if (e.which == 27)
+                                                    this.value = "";
 
-                                                    searchString = this.value;
-                                                    dataView.refresh();
-                                                });
+                                                searchString = this.value;
+                                                dataView.refresh();
+                                            });
 
 
-                                                dataView.beginUpdate();
-                                                dataView.setItems(data);
-                                                dataView.setFilter(myFilter);
-                                                dataView.endUpdate();
+                                            dataView.beginUpdate();
+                                            dataView.setItems(data);
+                                            dataView.setFilter(myFilter);
+                                            dataView.endUpdate();
                         
 
-                                                grid.onContextMenu = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onContextMenu = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    return true;
-                                                }; 
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                return true;
+                                            }; 
                                 
-                                                grid.onClick = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onClick = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    var ancla = $(".rowOption");
-                                                    if(e.target == ancla[0]){
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                var ancla = $(".rowOption");
+                                                if(e.target == ancla[0]){
                                                               
-                                                        $(".slick-cell .options a").jjmenu("click", 
-                                                        // menu items:
-                                                        [ {getByFunction:function(myData) {
-                                                                    return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                        {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                        {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                        {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                    ];
-                                                                }
-                                                            } 
-                                                        ], 
-                                                        // myReplaces / userData:
-                                                        {   "tbRow":function(){
+                                                    $(".slick-cell .options a").jjmenu("click", 
+                                                    // menu items:
+                                                    [ {getByFunction:function(myData) {
+                                                                return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                    {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                    {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                    {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                ];
+                                                            }
+                                                        } 
+                                                    ], 
+                                                    // myReplaces / userData:
+                                                    {   "tbRow":function(){
                        
                         
-                                                                var fila = jQuery(triggerElement);
-                                                                var celdas = [];
-                                                                jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                    celdas[celdas.length] = jQuery(this).html();
+                                                            var fila = jQuery(triggerElement);
+                                                            var celdas = [];
+                                                            jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                });
-                                                                if(selectedRowIds.length > 1){
-                                                                    celdas[0] ="seleccionados"; 
-                                                                }
-                                                                return celdas;    
+                                                            });
+                                                            if(selectedRowIds.length > 1){
+                                                                celdas[0] ="seleccionados"; 
                                                             }
+                                                            return celdas;    
+                                                        }
                     
                                           
-                                                        }, 
-                                                        // effects:
-                                                        {show:"default", xposition:"left", yposition:"auto"
+                                                    }, 
+                                                    // effects:
+                                                    {show:"default", xposition:"left", yposition:"auto"
                 
-                                                        });
+                                                    });
                                                
-                                                        setTimeout(function () { 
-                                                            $(".slick-cell .options a").addClass("hover");
-                                                            $(".slick-cell .options a").parents("div").addClass("hover");
-                                                            $(".slick-cell .options a").trigger("click");
-                                                        }, 200);
-                                                        setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                    setTimeout(function () { 
+                                                        $(".slick-cell .options a").addClass("hover");
+                                                        $(".slick-cell .options a").parents("div").addClass("hover");
+                                                        $(".slick-cell .options a").trigger("click");
+                                                    }, 200);
+                                                    setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                    }else{
-                                                        var filadelaTabla =  $(".slick-row");
-                                                        var rowsx =[];
-                                                        if(!$.contains(filadelaTabla[0],e.target)){
-                                                            grid.setSelectedRows(rowsx);
+                                                }else{
+                                                    var filadelaTabla =  $(".slick-row");
+                                                    var rowsx =[];
+                                                    if(!$.contains(filadelaTabla[0],e.target)){
+                                                        grid.setSelectedRows(rowsx);
                                                 
-                                                        }
                                                     }
+                                                }
                                         
-                                                }; 
+                                            }; 
                                 
                                 
                                 
-                                                $("#myGrid").bind("draginit", function(e,dd) {
-                                                    var cell = grid.getCellFromEvent(e);
-                                                    if (!cell)
-                                                        return false;
+                                            $("#myGrid").bind("draginit", function(e,dd) {
+                                                var cell = grid.getCellFromEvent(e);
+                                                if (!cell)
+                                                    return false;
 
-                                                    dd.row = cell.row;
-                                                    if (!data[dd.row])
-                                                        return false;
+                                                dd.row = cell.row;
+                                                if (!data[dd.row])
+                                                    return false;
 
-                                                    if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                        return false;
-                                                });
+                                                if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                    return false;
+                                            });
 
                             
-                                                // jjmen(); 
+                                            // jjmen(); 
                   
-                                            } //fin del if
+                                        } //fin del if
                        
-                                        }//fin del success
-                                    }); //fin del .ajax
+                                    }//fin del success
+                                }); //fin del .ajax
                 
                     
                     
-                                }
-                                if(hash == "#listarProcesos")
-                                {
+                            }
+                            if(hash == "#listarProcesos")
+                            {
                                                  
-                                    //  $.unsubscribe("set_grid_width");
+                                //  $.unsubscribe("set_grid_width");
                         
-                                    if(middleLayout){
-                                        middleLayout.destroy();
+                                if(middleLayout){
+                                    middleLayout.destroy();
                             
-                                    } 
-                                    if(innerLayout){
-                                        innerLayout.destroy();
+                                } 
+                                if(innerLayout){
+                                    innerLayout.destroy();
                             
-                                    }
+                                }
                         
                         
                         
-                                    selectedRowIds = [];
+                                selectedRowIds = [];
                         
                 
-                                    $("div.ui-layout-center").empty();
+                                $("div.ui-layout-center").empty();
                         
-                                    var dataView;
-                                    var grid;
-                                    //  var pager;
-                                    //var columnpicker;
-                                    var grid_opts={};
-                                    var data = [];
-                                    var selectedRowIds = [];
+                                var dataView;
+                                var grid;
+                                //  var pager;
+                                //var columnpicker;
+                                var grid_opts={};
+                                var data = [];
+                                var selectedRowIds = [];
 
 
 
 
 
-                                    var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                        return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                            ""+dataContext["programa"]+"";
+                                var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                    return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                        ""+dataContext["programa"]+"";
 
 
-                                    };
+                                };
             
             
-                                    var columns = [
-                                        {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
-                                        {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
-                                        {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
-                                        {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
+                                var columns = [
+                                    {id:"programa", name:"Nombre", field:"programa", minWidth:100,  sortable:true, formatter:storyTitleFormatter },	
+                                    {id:"fechaInicio", name:"Fecha de Inicio", field:"fechaInicio", minWidth:100, sortable:true },
+                                    {id:"fechaCierre", name:"Fecha de Cierre", field:"fechaCierre", minWidth:100, sortable:true},
+                                    {id:"descripcion", name:"Descripcin", field:"descripcion", width:150, sortable:true}
                 
-                                    ];
+                                ];
 
-                                    var options = {
-                                        editable: false,
-                                        autoEdit: false,
-                                        enableAddRow: false,
-                                        enableCellNavigation: true,
-                                        asyncEditorLoading: false,
-                                        enableColumnReorder: false,
-                                        forceFitColumns: true
+                                var options = {
+                                    editable: false,
+                                    autoEdit: false,
+                                    enableAddRow: false,
+                                    enableCellNavigation: true,
+                                    asyncEditorLoading: false,
+                                    enableColumnReorder: false,
+                                    forceFitColumns: true
                         
-                                    };
+                                };
 
-                                    var sortcol = "Fecha de Inicio";
-                                    var sortdir = 1;
-                                    //var percentCompleteThreshold = 0;
-                                    var searchString = "";
+                                var sortcol = "Fecha de Inicio";
+                                var sortdir = 1;
+                                //var percentCompleteThreshold = 0;
+                                var searchString = "";
 
-                                    function myFilter(item) {
+                                function myFilter(item) {
                
-                                        if (searchString != "" && item["Fecha de Inicio"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                            return false;
+                                    if (searchString != "" && item["Fecha de Inicio"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                        return false;
 
-                                        return true;
-                                    }
+                                    return true;
+                                }
 
                
-                                    $(".grid-header .ui-icon")
-                                    .addClass("ui-state-default ui-corner-all")
-                                    .mouseover(function(e) {
-                                        $(e.target).addClass("ui-state-hover")
-                                    })
-                                    .mouseout(function(e) {
-                                        $(e.target).removeClass("ui-state-hover")
-                                    });
+                                $(".grid-header .ui-icon")
+                                .addClass("ui-state-default ui-corner-all")
+                                .mouseover(function(e) {
+                                    $(e.target).addClass("ui-state-hover")
+                                })
+                                .mouseout(function(e) {
+                                    $(e.target).removeClass("ui-state-hover")
+                                });
 
 
                     
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarProcesos", 
-                                        dataType: 'json', 
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarProcesos", 
+                                    dataType: 'json', 
                             
-                                        success: function(json) 
-                                        {
-                                            $(".ui-layout-center").append("<div class='middle-north'>"
-                                                +"<div class='row wellMio'>"
-                                                +"<div class='span5'>"
-                                                +"<h3>Procesos Realizados</h3>"
-                                                +"<h4>Detalle de Procesos Ejecutados.</h4>"
-                                                +"</div>"
-                                                +"<div class='pull-right'>"
-                                                +"<form class='form-search'>"
-                                                +"<input type='text' class='input-medium search-query'>"
-                                                +"<button class='btn' type='submit'>Buscar</button>"
-                                                +"</form>"
-                                                +"</div>"
-                                                +"</div>"
-                                                +"</div>"   
-                                                +"<div class='middle-center'>"
-                                                +"<div class='inner-center' style='float:left;'>"
-                                                +"<div id='myGrid'></div></div></div>");
+                                    success: function(json) 
+                                    {
+                                        $(".ui-layout-center").append("<div class='middle-north'>"
+                                            +"<div class='row wellMio'>"
+                                            +"<div class='span5'>"
+                                            +"<h3>Procesos Realizados</h3>"
+                                            +"<h4>Detalle de Procesos Ejecutados.</h4>"
+                                            +"</div>"
+                                            +"<div class='pull-right'>"
+                                            +"<form class='form-search'>"
+                                            +"<input type='text' class='input-medium search-query'>"
+                                            +"<button class='btn' type='submit'>Buscar</button>"
+                                            +"</form>"
+                                            +"</div>"
+                                            +"</div>"
+                                            +"</div>"   
+                                            +"<div class='middle-center'>"
+                                            +"<div class='inner-center' style='float:left;'>"
+                                            +"<div id='myGrid'></div></div></div>");
             
                                                                
                             
-                                            if(json.length > 0) 
-                                            { for (var i = 0; i < json.length; i++) 
-                                                {
-                                                    data[i] = { 
-                                                        id: json[i].id, 
-                                                        fechaInicio: json[i].fechaInicio, 
-                                                        fechaCierre: json[i].fechaCierre, 
-                                                        descripcion: json[i].descripcion,
-                                                        programa: json[i].programa
-                                                    }; 
-                                                } 
-                                                dataView = new Slick.Data.DataView();
+                                        if(json.length > 0) 
+                                        { for (var i = 0; i < json.length; i++) 
+                                            {
+                                                data[i] = { 
+                                                    id: json[i].id, 
+                                                    fechaInicio: json[i].fechaInicio, 
+                                                    fechaCierre: json[i].fechaCierre, 
+                                                    descripcion: json[i].descripcion,
+                                                    programa: json[i].programa
+                                                }; 
+                                            } 
+                                            dataView = new Slick.Data.DataView();
                           
-                                                grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                var fil=[];
-                                                grid.setSelectedRows(fil); 
-                                                // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                            grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                            var fil=[];
+                                            grid.setSelectedRows(fil); 
+                                            // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                            //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                $.subscribe("set_grid_height", function (new_height) {
-                                                    grid_opts.height = new_height-90;
-                                                    $("#myGrid").css('height', grid_opts.height);
-                                                    grid.resizeCanvas();
+                                            $.subscribe("set_grid_height", function (new_height) {
+                                                grid_opts.height = new_height-90;
+                                                $("#myGrid").css('height', grid_opts.height);
+                                                grid.resizeCanvas();
                                                                  
-                                                });
+                                            });
 
-                                                $.subscribe("set_grid_width", function (new_width) {
-                                                    grid_opts.width = new_width+20;
-                                                    $("#myGrid").css('width', grid_opts.width );
-                                                    grid.autosizeColumns();
-                                                    //grid.resizeCanvas();
-                                                });
+                                            $.subscribe("set_grid_width", function (new_width) {
+                                                grid_opts.width = new_width+20;
+                                                $("#myGrid").css('width', grid_opts.width );
+                                                grid.autosizeColumns();
+                                                //grid.resizeCanvas();
+                                            });
 
             
 
-                                                /*   al cambiar el contenido de una celda
-                                                 *   grid.onCellChange = function(row,col,item) {
+                                            /*   al cambiar el contenido de una celda
+                                             *   grid.onCellChange = function(row,col,item) {
              dataView.updateItem(item.id,item);    
          };
 
                      grid.onAddNewRow = addItem;
-                                                 */  //al presionar teclas
-                                                grid.onKeyDown = function(e) {
+                                             */  //al presionar teclas
+                                            grid.onKeyDown = function(e) {
                                     
-                                                    var rows = [];
-                                                    selectedRowIds = [];
+                                                var rows = [];
+                                                selectedRowIds = [];
                                     
-                                                    // select all rows on ctrl-a
-                                                    if (e.which == 65 && e.ctrlKey)
-                                                    {
-                                                        for (var i = 0; i < dataView.rows.length; i++) {
-                                                            rows.push(i);
-                                                            selectedRowIds.push(dataView.rows[i].id);
-                                                        }
-
-                                                        grid.setSelectedRows(rows);
-
-                                                        return true;
-                                                    }  
-                                                    if(e.which == 27){
-                                                        grid.setSelectedRows(rows);
-                                                        return true;
+                                                // select all rows on ctrl-a
+                                                if (e.which == 65 && e.ctrlKey)
+                                                {
+                                                    for (var i = 0; i < dataView.rows.length; i++) {
+                                                        rows.push(i);
+                                                        selectedRowIds.push(dataView.rows[i].id);
                                                     }
-                                                    return false;
+
+                                                    grid.setSelectedRows(rows);
+
+                                                    return true;
+                                                }  
+                                                if(e.which == 27){
+                                                    grid.setSelectedRows(rows);
+                                                    return true;
+                                                }
+                                                return false;
                                     
 
                                    
-                                                };
+                                            };
 
-                                                grid.onSelectedRowsChanged = function() {
-                                                    selectedRowIds = [];
-                                                    var rows = grid.getSelectedRows();
-                                                    for (var i = 0, l = rows.length; i < l; i++) {
-                                                        var item = dataView.rows[rows[i]];
-                                                        if (item) selectedRowIds.push(item.id);
-                                                    }
-                                                };
+                                            grid.onSelectedRowsChanged = function() {
+                                                selectedRowIds = [];
+                                                var rows = grid.getSelectedRows();
+                                                for (var i = 0, l = rows.length; i < l; i++) {
+                                                    var item = dataView.rows[rows[i]];
+                                                    if (item) selectedRowIds.push(item.id);
+                                                }
+                                            };
 
                 
                 
-                                                grid.onSort = function(sortCol, sortAsc) {
-                                                    sortdir = sortAsc ? 1 : -1;
-                                                    sortcol = sortCol.field;
+                                            grid.onSort = function(sortCol, sortAsc) {
+                                                sortdir = sortAsc ? 1 : -1;
+                                                sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                };
+                                            };
 
-                                                // wire up model events to drive the grid
-                                                dataView.onRowCountChanged.subscribe(function(args) {
-                                                    grid.updateRowCount();
-                                                    grid.render();
-                                                });
+                                            // wire up model events to drive the grid
+                                            dataView.onRowCountChanged.subscribe(function(args) {
+                                                grid.updateRowCount();
+                                                grid.render();
+                                            });
 
-                                                dataView.onRowsChanged.subscribe(function(rows) {
-                                                    grid.removeRows(rows);
-                                                    grid.render();
+                                            dataView.onRowsChanged.subscribe(function(rows) {
+                                                grid.removeRows(rows);
+                                                grid.render();
 
-                                                    if (selectedRowIds.length > 0)
+                                                if (selectedRowIds.length > 0)
+                                                {
+                                                    // since how the original data maps onto rows has changed,
+                                                    // the selected rows in the grid need to be updated
+                                                    var selRows = [];
+                                                    for (var i = 0; i < selectedRowIds.length; i++)
                                                     {
-                                                        // since how the original data maps onto rows has changed,
-                                                        // the selected rows in the grid need to be updated
-                                                        var selRows = [];
-                                                        for (var i = 0; i < selectedRowIds.length; i++)
-                                                        {
-                                                            var idx = dataView.getRowById(selectedRowIds[i]);
-                                                            if (idx != undefined)
-                                                                selRows.push(idx);
-                                                        }
-
-                                                        grid.setSelectedRows(selRows);
+                                                        var idx = dataView.getRowById(selectedRowIds[i]);
+                                                        if (idx != undefined)
+                                                            selRows.push(idx);
                                                     }
-                                                });
 
-                                                dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                    grid.setSelectedRows(selRows);
+                                                }
+                                            });
+
+                                            dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                    grid.setOptions({enableAddRow:options.enableAddRow});
-                                                });
+                                                grid.setOptions({enableAddRow:options.enableAddRow});
+                                            });
                 
                 
-                                                $("#txtSearch").keyup(function(e) {
-                                                    Slick.GlobalEditorLock.cancelCurrentEdit();
+                                            $("#txtSearch").keyup(function(e) {
+                                                Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                    // clear on Esc
-                                                    if (e.which == 27)
-                                                        this.value = "";
+                                                // clear on Esc
+                                                if (e.which == 27)
+                                                    this.value = "";
 
-                                                    searchString = this.value;
-                                                    dataView.refresh();
-                                                });
+                                                searchString = this.value;
+                                                dataView.refresh();
+                                            });
 
 
-                                                dataView.beginUpdate();
-                                                dataView.setItems(data);
-                                                dataView.setFilter(myFilter);
-                                                dataView.endUpdate();
+                                            dataView.beginUpdate();
+                                            dataView.setItems(data);
+                                            dataView.setFilter(myFilter);
+                                            dataView.endUpdate();
                         
 
-                                                grid.onContextMenu = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onContextMenu = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    return true;
-                                                }; 
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                return true;
+                                            }; 
                                 
-                                                grid.onClick = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onClick = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    var ancla = $(".rowOption");
-                                                    if(e.target == ancla[0]){
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                var ancla = $(".rowOption");
+                                                if(e.target == ancla[0]){
                                                               
-                                                        $(".slick-cell .options a").jjmenu("click", 
-                                                        // menu items:
-                                                        [ {getByFunction:function(myData) {
-                                                                    return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                        {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                        {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                        {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                    ];
-                                                                }
-                                                            } 
-                                                        ], 
-                                                        // myReplaces / userData:
-                                                        {   "tbRow":function(){
+                                                    $(".slick-cell .options a").jjmenu("click", 
+                                                    // menu items:
+                                                    [ {getByFunction:function(myData) {
+                                                                return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                    {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                    {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                    {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                ];
+                                                            }
+                                                        } 
+                                                    ], 
+                                                    // myReplaces / userData:
+                                                    {   "tbRow":function(){
                        
                         
-                                                                var fila = jQuery(triggerElement);
-                                                                var celdas = [];
-                                                                jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                    celdas[celdas.length] = jQuery(this).html();
+                                                            var fila = jQuery(triggerElement);
+                                                            var celdas = [];
+                                                            jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                });
-                                                                if(selectedRowIds.length > 1){
-                                                                    celdas[0] ="seleccionados"; 
-                                                                }
-                                                                return celdas;    
+                                                            });
+                                                            if(selectedRowIds.length > 1){
+                                                                celdas[0] ="seleccionados"; 
                                                             }
+                                                            return celdas;    
+                                                        }
                     
                                           
-                                                        }, 
-                                                        // effects:
-                                                        {show:"default", xposition:"left", yposition:"auto"
+                                                    }, 
+                                                    // effects:
+                                                    {show:"default", xposition:"left", yposition:"auto"
                 
-                                                        });
+                                                    });
                                                
-                                                        setTimeout(function () { 
-                                                            $(".slick-cell .options a").addClass("hover");
-                                                            $(".slick-cell .options a").parents("div").addClass("hover");
-                                                            $(".slick-cell .options a").trigger("click");
-                                                        }, 200);
-                                                        setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                    setTimeout(function () { 
+                                                        $(".slick-cell .options a").addClass("hover");
+                                                        $(".slick-cell .options a").parents("div").addClass("hover");
+                                                        $(".slick-cell .options a").trigger("click");
+                                                    }, 200);
+                                                    setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                    }else{
-                                                        var filadelaTabla =  $(".slick-row");
-                                                        var rowsx =[];
-                                                        if(!$.contains(filadelaTabla[0],e.target)){
-                                                            grid.setSelectedRows(rowsx);
+                                                }else{
+                                                    var filadelaTabla =  $(".slick-row");
+                                                    var rowsx =[];
+                                                    if(!$.contains(filadelaTabla[0],e.target)){
+                                                        grid.setSelectedRows(rowsx);
                                                 
-                                                        }
                                                     }
+                                                }
                                         
-                                                }; 
+                                            }; 
                                 
                                 
                                 
-                                                $("#myGrid").bind("draginit", function(e,dd) {
-                                                    var cell = grid.getCellFromEvent(e);
-                                                    if (!cell)
-                                                        return false;
+                                            $("#myGrid").bind("draginit", function(e,dd) {
+                                                var cell = grid.getCellFromEvent(e);
+                                                if (!cell)
+                                                    return false;
 
-                                                    dd.row = cell.row;
-                                                    if (!data[dd.row])
-                                                        return false;
+                                                dd.row = cell.row;
+                                                if (!data[dd.row])
+                                                    return false;
 
-                                                    if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                        return false;
-                                                });
+                                                if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                    return false;
+                                            });
 
                             
-                                                // jjmen(); 
+                                            // jjmen(); 
                   
-                                            } //fin del if
+                                        } //fin del if
                        
-                                        }//fin del success
-                                    }); //fin del .ajax
+                                    }//fin del success
+                                }); //fin del .ajax
                 
                     
                     
+                            }
+                        
+                            if(hash == "#listarPonderacionFactor"){
+                 
+                                $.unsubscribe("set_grid_width");
+                        
+                                if(middleLayout){
+                                    middleLayout.destroy();
+                            
+                                } 
+                                if(innerLayout){
+                                    innerLayout.destroy();
+                            
                                 }
                         
-                                if(hash == "#listarPonderacionFactor"){
-                 
-                                    $.unsubscribe("set_grid_width");
-                        
-                                    if(middleLayout){
-                                        middleLayout.destroy();
-                            
-                                    } 
-                                    if(innerLayout){
-                                        innerLayout.destroy();
-                            
-                                    }
                         
                         
-                        
-                                    selectedRowIds = [];
+                                selectedRowIds = [];
                         
                 
-                                    $("div.ui-layout-center").empty();
+                                $("div.ui-layout-center").empty();
                         
-                                    var dataView;
-                                    var grid;
-                                    //  var pager;
-                                    //var columnpicker;
-                                    var grid_opts={};
-                                    var data = [];
-                                    var selectedRowIds = [];
+                                var dataView;
+                                var grid;
+                                //  var pager;
+                                //var columnpicker;
+                                var grid_opts={};
+                                var data = [];
+                                var selectedRowIds = [];
 
 
 
 
 
-                                    var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                        return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                            ""+dataContext["programa"]+"";
+                                var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                    return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                        ""+dataContext["programa"]+"";
 
 
-                                    };
+                                };
             
             
-                                    var columns = [
-                                        {id:"factor", name:"Factor", field:"factor", minWidth:100,  sortable:true },	
-                                        {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                        {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
+                                var columns = [
+                                    {id:"factor", name:"Factor", field:"factor", minWidth:100,  sortable:true },	
+                                    {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
+                                    {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
                 
-                                    ];
+                                ];
 
-                                    var options = {
-                                        editable: false,
-                                        autoEdit: false,
-                                        enableAddRow: false,
-                                        enableCellNavigation: true,
-                                        asyncEditorLoading: false,
-                                        enableColumnReorder: false,
-                                        forceFitColumns: true
+                                var options = {
+                                    editable: false,
+                                    autoEdit: false,
+                                    enableAddRow: false,
+                                    enableCellNavigation: true,
+                                    asyncEditorLoading: false,
+                                    enableColumnReorder: false,
+                                    forceFitColumns: true
                         
-                                    };
+                                };
 
-                                    var sortcol = "factor";
-                                    var sortdir = 1;
-                                    //var percentCompleteThreshold = 0;
-                                    var searchString = "";
+                                var sortcol = "factor";
+                                var sortdir = 1;
+                                //var percentCompleteThreshold = 0;
+                                var searchString = "";
 
-                                    function myFilter(item) {
+                                function myFilter(item) {
                
-                                        if (searchString != "" && item["factor"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                            return false;
+                                    if (searchString != "" && item["factor"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                        return false;
 
-                                        return true;
-                                    }
+                                    return true;
+                                }
 
                
-                                    $(".grid-header .ui-icon")
-                                    .addClass("ui-state-default ui-corner-all")
-                                    .mouseover(function(e) {
-                                        $(e.target).addClass("ui-state-hover")
-                                    })
-                                    .mouseout(function(e) {
-                                        $(e.target).removeClass("ui-state-hover")
-                                    });
+                                $(".grid-header .ui-icon")
+                                .addClass("ui-state-default ui-corner-all")
+                                .mouseover(function(e) {
+                                    $(e.target).addClass("ui-state-hover")
+                                })
+                                .mouseout(function(e) {
+                                    $(e.target).removeClass("ui-state-hover")
+                                });
 
 
                     
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionFactor", 
-                                        dataType: 'json', 
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionFactor", 
+                                    dataType: 'json', 
                             
-                                        success: function(json) 
-                                        {
-                                            $(".ui-layout-center").append("<div class='middle-north'>"
-                                                +"<div class='row wellMio'>"
-                                                +"<div class='span5'>"
-                                                +"<h3>Ponderación de Factores</h3>"
-                                                +"<h4>Detalle de Ponderación.</h4>"
-                                                +"</div>"
-                                                +"<div class='pull-right'>"
-                                                +"<form class='form-search'>"
-                                                +"<input type='text' class='input-medium search-query'>"
-                                                +"<button class='btn' type='submit'>Buscar</button>"
-                                                +"</form>"
-                                                +"</div>"
-                                                +"</div>"
-                                                +"</div>"   
-                                                +"<div class='middle-center'>"
-                                                +"<div class='inner-center' style='float:left;'>"
-                                                +"<div id='myGrid'></div></div></div>");
+                                    success: function(json) 
+                                    {
+                                        $(".ui-layout-center").append("<div class='middle-north'>"
+                                            +"<div class='row wellMio'>"
+                                            +"<div class='span5'>"
+                                            +"<h3>Ponderación de Factores</h3>"
+                                            +"<h4>Detalle de Ponderación.</h4>"
+                                            +"</div>"
+                                            +"<div class='pull-right'>"
+                                            +"<form class='form-search'>"
+                                            +"<input type='text' class='input-medium search-query'>"
+                                            +"<button class='btn' type='submit'>Buscar</button>"
+                                            +"</form>"
+                                            +"</div>"
+                                            +"</div>"
+                                            +"</div>"   
+                                            +"<div class='middle-center'>"
+                                            +"<div class='inner-center' style='float:left;'>"
+                                            +"<div id='myGrid'></div></div></div>");
             
-                                            middleLayout = $('div.ui-layout-center').layout({ 
-                                                north__paneSelector:    ".middle-north"
-                                                ,   north__paneClass:    "ui-layout-pane"
-                                                ,   center__paneSelector:    ".middle-center"
-                                                ,	spacing_open:			8  // ALL panes
-                                                ,	spacing_closed:			8  // ALL panes
+                                        middleLayout = $('div.ui-layout-center').layout({ 
+                                            north__paneSelector:    ".middle-north"
+                                            ,   north__paneClass:    "ui-layout-pane"
+                                            ,   center__paneSelector:    ".middle-center"
+                                            ,	spacing_open:			8  // ALL panes
+                                            ,	spacing_closed:			8  // ALL panes
                    
-                                            });
+                                        });
                 
-                                            innerLayout = $('div.middle-center').layout({ 
+                                        innerLayout = $('div.middle-center').layout({ 
                        
-                                                center__paneSelector:    ".inner-center"
-                                                ,	spacing_open:			8  // ALL panes
-                                                ,	spacing_closed:			8  // ALL panes
+                                            center__paneSelector:    ".inner-center"
+                                            ,	spacing_open:			8  // ALL panes
+                                            ,	spacing_closed:			8  // ALL panes
                     
-                                                ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                    $.publish("set_grid_height", [state.innerHeight]);
-                                                    $.publish("set_grid_width", [state.innerWidth]);
-                                                }
+                                            ,   center__onresize: function (name, el, state, opts, Layout) { 
+                                                $.publish("set_grid_height", [state.innerHeight]);
+                                                $.publish("set_grid_width", [state.innerWidth]);
+                                            }
                  
-                                            });
+                                        });
                 
                         
                 
                     
                 
-                                            $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                            $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
+                                        $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
+                                        $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
 		
 		
-                                            setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
+                                        setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
          
                             
-                                            if(json.length > 0) 
-                                            { for (var i = 0; i < json.length; i++) 
-                                                {
-                                                    data[i] = { 
-                                                        id: json[i].id, 
-                                                        factor: json[i].factor, 
-                                                        ponderacion: json[i].ponderacion, 
-                                                        justificacion: json[i].justificacion
+                                        if(json.length > 0) 
+                                        { for (var i = 0; i < json.length; i++) 
+                                            {
+                                                data[i] = { 
+                                                    id: json[i].id, 
+                                                    factor: json[i].factor, 
+                                                    ponderacion: json[i].ponderacion, 
+                                                    justificacion: json[i].justificacion
                                             
-                                                    }; 
-                                                } 
-                                                dataView = new Slick.Data.DataView();
+                                                }; 
+                                            } 
+                                            dataView = new Slick.Data.DataView();
                           
-                                                grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                var fil=[];
-                                                grid.setSelectedRows(fil); 
-                                                // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                            grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                            var fil=[];
+                                            grid.setSelectedRows(fil); 
+                                            // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                            //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                $.subscribe("set_grid_height", function (new_height) {
-                                                    grid_opts.height = new_height-90;
-                                                    $("#myGrid").css('height', grid_opts.height);
-                                                    grid.resizeCanvas();
+                                            $.subscribe("set_grid_height", function (new_height) {
+                                                grid_opts.height = new_height-90;
+                                                $("#myGrid").css('height', grid_opts.height);
+                                                grid.resizeCanvas();
                                         
-                                                });
+                                            });
             
-                                                $.subscribe("set_grid_width", function (new_width) {
-                                                    grid_opts.width = new_width+20;
-                                                    $("#myGrid").css('width', grid_opts.width );
-                                                    grid.autosizeColumns();
-                                                    //grid.resizeCanvas();
-                                                });
+                                            $.subscribe("set_grid_width", function (new_width) {
+                                                grid_opts.width = new_width+20;
+                                                $("#myGrid").css('width', grid_opts.width );
+                                                grid.autosizeColumns();
+                                                //grid.resizeCanvas();
+                                            });
 
 
             
 
-                                                /*   al cambiar el contenido de una celda
-                                                 *   grid.onCellChange = function(row,col,item) {
+                                            /*   al cambiar el contenido de una celda
+                                             *   grid.onCellChange = function(row,col,item) {
              dataView.updateItem(item.id,item);    
          };
 
                      grid.onAddNewRow = addItem;
-                                                 */  //al presionar teclas
-                                                grid.onKeyDown = function(e) {
+                                             */  //al presionar teclas
+                                            grid.onKeyDown = function(e) {
                                     
-                                                    var rows = [];
-                                                    selectedRowIds = [];
+                                                var rows = [];
+                                                selectedRowIds = [];
                                     
-                                                    // select all rows on ctrl-a
-                                                    if (e.which == 65 && e.ctrlKey)
-                                                    {
-                                                        for (var i = 0; i < dataView.rows.length; i++) {
-                                                            rows.push(i);
-                                                            selectedRowIds.push(dataView.rows[i].id);
-                                                        }
-
-                                                        grid.setSelectedRows(rows);
-
-                                                        return true;
-                                                    }  
-                                                    if(e.which == 27){
-                                                        grid.setSelectedRows(rows);
-                                                        return true;
+                                                // select all rows on ctrl-a
+                                                if (e.which == 65 && e.ctrlKey)
+                                                {
+                                                    for (var i = 0; i < dataView.rows.length; i++) {
+                                                        rows.push(i);
+                                                        selectedRowIds.push(dataView.rows[i].id);
                                                     }
-                                                    return false;
+
+                                                    grid.setSelectedRows(rows);
+
+                                                    return true;
+                                                }  
+                                                if(e.which == 27){
+                                                    grid.setSelectedRows(rows);
+                                                    return true;
+                                                }
+                                                return false;
                                     
 
                                    
-                                                };
+                                            };
 
-                                                grid.onSelectedRowsChanged = function() {
-                                                    selectedRowIds = [];
-                                                    var rows = grid.getSelectedRows();
-                                                    for (var i = 0, l = rows.length; i < l; i++) {
-                                                        var item = dataView.rows[rows[i]];
-                                                        if (item) selectedRowIds.push(item.id);
-                                                    }
-                                                };
+                                            grid.onSelectedRowsChanged = function() {
+                                                selectedRowIds = [];
+                                                var rows = grid.getSelectedRows();
+                                                for (var i = 0, l = rows.length; i < l; i++) {
+                                                    var item = dataView.rows[rows[i]];
+                                                    if (item) selectedRowIds.push(item.id);
+                                                }
+                                            };
 
                 
                 
-                                                grid.onSort = function(sortCol, sortAsc) {
-                                                    sortdir = sortAsc ? 1 : -1;
-                                                    sortcol = sortCol.field;
+                                            grid.onSort = function(sortCol, sortAsc) {
+                                                sortdir = sortAsc ? 1 : -1;
+                                                sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                };
+                                            };
 
-                                                // wire up model events to drive the grid
-                                                dataView.onRowCountChanged.subscribe(function(args) {
-                                                    grid.updateRowCount();
-                                                    grid.render();
-                                                });
+                                            // wire up model events to drive the grid
+                                            dataView.onRowCountChanged.subscribe(function(args) {
+                                                grid.updateRowCount();
+                                                grid.render();
+                                            });
 
-                                                dataView.onRowsChanged.subscribe(function(rows) {
-                                                    grid.removeRows(rows);
-                                                    grid.render();
+                                            dataView.onRowsChanged.subscribe(function(rows) {
+                                                grid.removeRows(rows);
+                                                grid.render();
 
-                                                    if (selectedRowIds.length > 0)
+                                                if (selectedRowIds.length > 0)
+                                                {
+                                                    // since how the original data maps onto rows has changed,
+                                                    // the selected rows in the grid need to be updated
+                                                    var selRows = [];
+                                                    for (var i = 0; i < selectedRowIds.length; i++)
                                                     {
-                                                        // since how the original data maps onto rows has changed,
-                                                        // the selected rows in the grid need to be updated
-                                                        var selRows = [];
-                                                        for (var i = 0; i < selectedRowIds.length; i++)
-                                                        {
-                                                            var idx = dataView.getRowById(selectedRowIds[i]);
-                                                            if (idx != undefined)
-                                                                selRows.push(idx);
-                                                        }
-
-                                                        grid.setSelectedRows(selRows);
+                                                        var idx = dataView.getRowById(selectedRowIds[i]);
+                                                        if (idx != undefined)
+                                                            selRows.push(idx);
                                                     }
-                                                });
 
-                                                dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                    grid.setSelectedRows(selRows);
+                                                }
+                                            });
+
+                                            dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                    grid.setOptions({enableAddRow:options.enableAddRow});
-                                                });
+                                                grid.setOptions({enableAddRow:options.enableAddRow});
+                                            });
                 
                 
-                                                $("#txtSearch").keyup(function(e) {
-                                                    Slick.GlobalEditorLock.cancelCurrentEdit();
+                                            $("#txtSearch").keyup(function(e) {
+                                                Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                    // clear on Esc
-                                                    if (e.which == 27)
-                                                        this.value = "";
+                                                // clear on Esc
+                                                if (e.which == 27)
+                                                    this.value = "";
 
-                                                    searchString = this.value;
-                                                    dataView.refresh();
-                                                });
+                                                searchString = this.value;
+                                                dataView.refresh();
+                                            });
 
 
-                                                dataView.beginUpdate();
-                                                dataView.setItems(data);
-                                                dataView.setFilter(myFilter);
-                                                dataView.endUpdate();
+                                            dataView.beginUpdate();
+                                            dataView.setItems(data);
+                                            dataView.setFilter(myFilter);
+                                            dataView.endUpdate();
                         
 
-                                                grid.onContextMenu = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onContextMenu = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    return true;
-                                                }; 
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                return true;
+                                            }; 
                                 
-                                                grid.onClick = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onClick = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    var ancla = $(".rowOption");
-                                                    if(e.target == ancla[0]){
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                var ancla = $(".rowOption");
+                                                if(e.target == ancla[0]){
                                                               
-                                                        $(".slick-cell .options a").jjmenu("click", 
-                                                        // menu items:
-                                                        [ {getByFunction:function(myData) {
-                                                                    return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                        {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                        {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                        {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                    ];
-                                                                }
-                                                            } 
-                                                        ], 
-                                                        // myReplaces / userData:
-                                                        {   "tbRow":function(){
+                                                    $(".slick-cell .options a").jjmenu("click", 
+                                                    // menu items:
+                                                    [ {getByFunction:function(myData) {
+                                                                return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                    {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                    {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                    {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                ];
+                                                            }
+                                                        } 
+                                                    ], 
+                                                    // myReplaces / userData:
+                                                    {   "tbRow":function(){
                        
                         
-                                                                var fila = jQuery(triggerElement);
-                                                                var celdas = [];
-                                                                jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                    celdas[celdas.length] = jQuery(this).html();
+                                                            var fila = jQuery(triggerElement);
+                                                            var celdas = [];
+                                                            jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                });
-                                                                if(selectedRowIds.length > 1){
-                                                                    celdas[0] ="seleccionados"; 
-                                                                }
-                                                                return celdas;    
+                                                            });
+                                                            if(selectedRowIds.length > 1){
+                                                                celdas[0] ="seleccionados"; 
                                                             }
+                                                            return celdas;    
+                                                        }
                     
                                           
-                                                        }, 
-                                                        // effects:
-                                                        {show:"default", xposition:"left", yposition:"auto"
+                                                    }, 
+                                                    // effects:
+                                                    {show:"default", xposition:"left", yposition:"auto"
                 
-                                                        });
+                                                    });
                                                
-                                                        setTimeout(function () { 
-                                                            $(".slick-cell .options a").addClass("hover");
-                                                            $(".slick-cell .options a").parents("div").addClass("hover");
-                                                            $(".slick-cell .options a").trigger("click");
-                                                        }, 200);
-                                                        setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                    setTimeout(function () { 
+                                                        $(".slick-cell .options a").addClass("hover");
+                                                        $(".slick-cell .options a").parents("div").addClass("hover");
+                                                        $(".slick-cell .options a").trigger("click");
+                                                    }, 200);
+                                                    setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                    }else{
-                                                        var filadelaTabla =  $(".slick-row");
-                                                        var rowsx =[];
-                                                        if(!$.contains(filadelaTabla[0],e.target)){
-                                                            grid.setSelectedRows(rowsx);
+                                                }else{
+                                                    var filadelaTabla =  $(".slick-row");
+                                                    var rowsx =[];
+                                                    if(!$.contains(filadelaTabla[0],e.target)){
+                                                        grid.setSelectedRows(rowsx);
                                                 
-                                                        }
                                                     }
-                                        
-                                                }; 
-                                
-                                
-                                
-                                                $("#myGrid").bind("draginit", function(e,dd) {
-                                                    var cell = grid.getCellFromEvent(e);
-                                                    if (!cell)
-                                                        return false;
-
-                                                    dd.row = cell.row;
-                                                    if (!data[dd.row])
-                                                        return false;
-
-                                                    if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                        return false;
-                                                });
-
-                            
-                                                // jjmen(); 
-                  
-                                            } //fin del if
-                       
-                                        }//fin del success
-                                    }); //fin del .ajax
-                        
-                        
-                        
-                        
-                                }
-                                if(hash == "#listarPonderacionCaracteristica"){
-                 
-                                    $.unsubscribe("set_grid_width");
-                        
-                                    if(middleLayout){
-                                        middleLayout.destroy();
-                            
-                                    } 
-                                    if(innerLayout){
-                                        innerLayout.destroy();
-                            
-                                    }
-                        
-                        
-                        
-                                    selectedRowIds = [];
-                        
-                
-                                    $("div.ui-layout-center").empty();
-                        
-                                    var dataView;
-                                    var grid;
-                                    //  var pager;
-                                    //var columnpicker;
-                                    var grid_opts={};
-                                    var data = [];
-                                    var selectedRowIds = [];
-
-
-
-
-
-                                    var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                        return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                            ""+dataContext["programa"]+"";
-
-
-                                    };
-            
-            
-                                    var columns = [
-                                        {id:"caracteristica", name:"Caracteristica", field:"caracteristica", minWidth:100,  sortable:true },	
-                                        {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                        {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
-                
-                                    ];
-
-                                    var options = {
-                                        editable: false,
-                                        autoEdit: false,
-                                        enableAddRow: false,
-                                        enableCellNavigation: true,
-                                        asyncEditorLoading: false,
-                                        enableColumnReorder: false,
-                                        forceFitColumns: true
-                        
-                                    };
-
-                                    var sortcol = "caracteristica";
-                                    var sortdir = 1;
-                                    //var percentCompleteThreshold = 0;
-                                    var searchString = "";
-
-                                    function myFilter(item) {
-               
-                                        if (searchString != "" && item["caracteristica"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                            return false;
-
-                                        return true;
-                                    }
-
-               
-                                    $(".grid-header .ui-icon")
-                                    .addClass("ui-state-default ui-corner-all")
-                                    .mouseover(function(e) {
-                                        $(e.target).addClass("ui-state-hover")
-                                    })
-                                    .mouseout(function(e) {
-                                        $(e.target).removeClass("ui-state-hover")
-                                    });
-
-
-                    
-                                    $.ajax({ 
-                                        type: "POST", 
-                                        url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionCaracteristica", 
-                                        dataType: 'json', 
-                            
-                                        success: function(json) 
-                                        {
-                                            $(".ui-layout-center").append("<div class='middle-north'>"
-                                                +"<div class='row wellMio'>"
-                                                +"<div class='span5'>"
-                                                +"<h3>Ponderación de Factores</h3>"
-                                                +"<h4>Detalle de Ponderación</h4>"
-                                                +"</div>"
-                                                +"<div class='pull-right'>"
-                                                +"<form class='form-search'>"
-                                                +"<input type='text' class='input-medium search-query'>"
-                                                +"<button class='btn' type='submit'>Buscar</button>"
-                                                +"</form>"
-                                                +"</div>"
-                                                +"</div>"
-                                                +"</div>"   
-                                                +"<div class='middle-center'>"
-                                                +"<div class='inner-center' style='float:left;'>"
-                                                +"<div id='myGrid'></div></div></div>");
-            
-                                            middleLayout = $('div.ui-layout-center').layout({ 
-                                                north__paneSelector:    ".middle-north"
-                                                ,   north__paneClass:    "ui-layout-pane"
-                                                ,   center__paneSelector:    ".middle-center"
-                                                ,	spacing_open:			8  // ALL panes
-                                                ,	spacing_closed:			8  // ALL panes
-                   
-                                            });
-                
-                                            innerLayout = $('div.middle-center').layout({ 
-                       
-                                                center__paneSelector:    ".inner-center"
-                                                ,	spacing_open:			8  // ALL panes
-                                                ,	spacing_closed:			8  // ALL panes
-                    
-                                                ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                    $.publish("set_grid_height", [state.innerHeight]);
-                                                    $.publish("set_grid_width", [state.innerWidth]);
                                                 }
-                 
+                                        
+                                            }; 
+                                
+                                
+                                
+                                            $("#myGrid").bind("draginit", function(e,dd) {
+                                                var cell = grid.getCellFromEvent(e);
+                                                if (!cell)
+                                                    return false;
+
+                                                dd.row = cell.row;
+                                                if (!data[dd.row])
+                                                    return false;
+
+                                                if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                    return false;
                                             });
+
+                            
+                                            // jjmen(); 
+                  
+                                        } //fin del if
+                       
+                                    }//fin del success
+                                }); //fin del .ajax
+                        
+                        
+                        
+                        
+                            }
+                            if(hash == "#listarPonderacionCaracteristica"){
+                 
+                                $.unsubscribe("set_grid_width");
+                        
+                                if(middleLayout){
+                                    middleLayout.destroy();
+                            
+                                } 
+                                if(innerLayout){
+                                    innerLayout.destroy();
+                            
+                                }
+                        
+                        
+                        
+                                selectedRowIds = [];
+                        
+                
+                                $("div.ui-layout-center").empty();
+                        
+                                var dataView;
+                                var grid;
+                                //  var pager;
+                                //var columnpicker;
+                                var grid_opts={};
+                                var data = [];
+                                var selectedRowIds = [];
+
+
+
+
+
+                                var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
+                                    return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
+                                        ""+dataContext["programa"]+"";
+
+
+                                };
+            
+            
+                                var columns = [
+                                    {id:"caracteristica", name:"Caracteristica", field:"caracteristica", minWidth:100,  sortable:true },	
+                                    {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
+                                    {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
+                
+                                ];
+
+                                var options = {
+                                    editable: false,
+                                    autoEdit: false,
+                                    enableAddRow: false,
+                                    enableCellNavigation: true,
+                                    asyncEditorLoading: false,
+                                    enableColumnReorder: false,
+                                    forceFitColumns: true
+                        
+                                };
+
+                                var sortcol = "caracteristica";
+                                var sortdir = 1;
+                                //var percentCompleteThreshold = 0;
+                                var searchString = "";
+
+                                function myFilter(item) {
+               
+                                    if (searchString != "" && item["caracteristica"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
+                                        return false;
+
+                                    return true;
+                                }
+
+               
+                                $(".grid-header .ui-icon")
+                                .addClass("ui-state-default ui-corner-all")
+                                .mouseover(function(e) {
+                                    $(e.target).addClass("ui-state-hover")
+                                })
+                                .mouseout(function(e) {
+                                    $(e.target).removeClass("ui-state-hover")
+                                });
+
+
+                    
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionCaracteristica", 
+                                    dataType: 'json', 
+                            
+                                    success: function(json) 
+                                    {
+                                        $(".ui-layout-center").append("<div class='middle-north'>"
+                                            +"<div class='row wellMio'>"
+                                            +"<div class='span5'>"
+                                            +"<h3>Ponderación de Factores</h3>"
+                                            +"<h4>Detalle de Ponderación</h4>"
+                                            +"</div>"
+                                            +"<div class='pull-right'>"
+                                            +"<form class='form-search'>"
+                                            +"<input type='text' class='input-medium search-query'>"
+                                            +"<button class='btn' type='submit'>Buscar</button>"
+                                            +"</form>"
+                                            +"</div>"
+                                            +"</div>"
+                                            +"</div>"   
+                                            +"<div class='middle-center'>"
+                                            +"<div class='inner-center' style='float:left;'>"
+                                            +"<div id='myGrid'></div></div></div>");
+            
+                                        middleLayout = $('div.ui-layout-center').layout({ 
+                                            north__paneSelector:    ".middle-north"
+                                            ,   north__paneClass:    "ui-layout-pane"
+                                            ,   center__paneSelector:    ".middle-center"
+                                            ,	spacing_open:			8  // ALL panes
+                                            ,	spacing_closed:			8  // ALL panes
+                   
+                                        });
+                
+                                        innerLayout = $('div.middle-center').layout({ 
+                       
+                                            center__paneSelector:    ".inner-center"
+                                            ,	spacing_open:			8  // ALL panes
+                                            ,	spacing_closed:			8  // ALL panes
+                    
+                                            ,   center__onresize: function (name, el, state, opts, Layout) { 
+                                                $.publish("set_grid_height", [state.innerHeight]);
+                                                $.publish("set_grid_width", [state.innerWidth]);
+                                            }
+                 
+                                        });
                 
                         
                 
                     
                 
-                                            $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                            $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
+                                        $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
+                                        $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
 		
 		
-                                            setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
+                                        setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
          
                             
-                                            if(json.length > 0) 
-                                            { for (var i = 0; i < json.length; i++) 
-                                                {
-                                                    data[i] = { 
-                                                        id: json[i].id, 
-                                                        caracteristica: json[i].caracteristica, 
-                                                        ponderacion: json[i].ponderacion, 
-                                                        justificacion: json[i].justificacion
+                                        if(json.length > 0) 
+                                        { for (var i = 0; i < json.length; i++) 
+                                            {
+                                                data[i] = { 
+                                                    id: json[i].id, 
+                                                    caracteristica: json[i].caracteristica, 
+                                                    ponderacion: json[i].ponderacion, 
+                                                    justificacion: json[i].justificacion
                                             
-                                                    }; 
-                                                } 
-                                                dataView = new Slick.Data.DataView();
+                                                }; 
+                                            } 
+                                            dataView = new Slick.Data.DataView();
                           
-                                                grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                                var fil=[];
-                                                grid.setSelectedRows(fil); 
-                                                // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                                //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
+                                            grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
+                                            var fil=[];
+                                            grid.setSelectedRows(fil); 
+                                            // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+                                            //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
                 
                 
                 
-                                                $.subscribe("set_grid_height", function (new_height) {
-                                                    grid_opts.height = -60;
-                                                    $("#myGrid").css('height', grid_opts.height);
-                                                    grid.resizeCanvas();
+                                            $.subscribe("set_grid_height", function (new_height) {
+                                                grid_opts.height = -60;
+                                                $("#myGrid").css('height', grid_opts.height);
+                                                grid.resizeCanvas();
                                         
-                                                });
+                                            });
             
-                                                $.subscribe("set_grid_width", function (new_width) {
-                                                    grid_opts.width = new_width+20;
-                                                    $("#myGrid").css('width', grid_opts.width );
-                                                    grid.autosizeColumns();
-                                                    //grid.resizeCanvas();
-                                                });
+                                            $.subscribe("set_grid_width", function (new_width) {
+                                                grid_opts.width = new_width+20;
+                                                $("#myGrid").css('width', grid_opts.width );
+                                                grid.autosizeColumns();
+                                                //grid.resizeCanvas();
+                                            });
 
 
             
 
-                                                /*   al cambiar el contenido de una celda
-                                                 *   grid.onCellChange = function(row,col,item) {
+                                            /*   al cambiar el contenido de una celda
+                                             *   grid.onCellChange = function(row,col,item) {
              dataView.updateItem(item.id,item);    
          };
 
                      grid.onAddNewRow = addItem;
-                                                 */  //al presionar teclas
-                                                grid.onKeyDown = function(e) {
+                                             */  //al presionar teclas
+                                            grid.onKeyDown = function(e) {
                                     
-                                                    var rows = [];
-                                                    selectedRowIds = [];
+                                                var rows = [];
+                                                selectedRowIds = [];
                                     
-                                                    // select all rows on ctrl-a
-                                                    if (e.which == 65 && e.ctrlKey)
-                                                    {
-                                                        for (var i = 0; i < dataView.rows.length; i++) {
-                                                            rows.push(i);
-                                                            selectedRowIds.push(dataView.rows[i].id);
-                                                        }
-
-                                                        grid.setSelectedRows(rows);
-
-                                                        return true;
-                                                    }  
-                                                    if(e.which == 27){
-                                                        grid.setSelectedRows(rows);
-                                                        return true;
+                                                // select all rows on ctrl-a
+                                                if (e.which == 65 && e.ctrlKey)
+                                                {
+                                                    for (var i = 0; i < dataView.rows.length; i++) {
+                                                        rows.push(i);
+                                                        selectedRowIds.push(dataView.rows[i].id);
                                                     }
-                                                    return false;
+
+                                                    grid.setSelectedRows(rows);
+
+                                                    return true;
+                                                }  
+                                                if(e.which == 27){
+                                                    grid.setSelectedRows(rows);
+                                                    return true;
+                                                }
+                                                return false;
                                     
 
                                    
-                                                };
+                                            };
 
-                                                grid.onSelectedRowsChanged = function() {
-                                                    selectedRowIds = [];
-                                                    var rows = grid.getSelectedRows();
-                                                    for (var i = 0, l = rows.length; i < l; i++) {
-                                                        var item = dataView.rows[rows[i]];
-                                                        if (item) selectedRowIds.push(item.id);
-                                                    }
-                                                };
+                                            grid.onSelectedRowsChanged = function() {
+                                                selectedRowIds = [];
+                                                var rows = grid.getSelectedRows();
+                                                for (var i = 0, l = rows.length; i < l; i++) {
+                                                    var item = dataView.rows[rows[i]];
+                                                    if (item) selectedRowIds.push(item.id);
+                                                }
+                                            };
 
                 
                 
-                                                grid.onSort = function(sortCol, sortAsc) {
-                                                    sortdir = sortAsc ? 1 : -1;
-                                                    sortcol = sortCol.field;
+                                            grid.onSort = function(sortCol, sortAsc) {
+                                                sortdir = sortAsc ? 1 : -1;
+                                                sortcol = sortCol.field;
                                          
                 
                 
                 
                 
-                                                };
+                                            };
 
-                                                // wire up model events to drive the grid
-                                                dataView.onRowCountChanged.subscribe(function(args) {
-                                                    grid.updateRowCount();
-                                                    grid.render();
-                                                });
+                                            // wire up model events to drive the grid
+                                            dataView.onRowCountChanged.subscribe(function(args) {
+                                                grid.updateRowCount();
+                                                grid.render();
+                                            });
 
-                                                dataView.onRowsChanged.subscribe(function(rows) {
-                                                    grid.removeRows(rows);
-                                                    grid.render();
+                                            dataView.onRowsChanged.subscribe(function(rows) {
+                                                grid.removeRows(rows);
+                                                grid.render();
 
-                                                    if (selectedRowIds.length > 0)
+                                                if (selectedRowIds.length > 0)
+                                                {
+                                                    // since how the original data maps onto rows has changed,
+                                                    // the selected rows in the grid need to be updated
+                                                    var selRows = [];
+                                                    for (var i = 0; i < selectedRowIds.length; i++)
                                                     {
-                                                        // since how the original data maps onto rows has changed,
-                                                        // the selected rows in the grid need to be updated
-                                                        var selRows = [];
-                                                        for (var i = 0; i < selectedRowIds.length; i++)
-                                                        {
-                                                            var idx = dataView.getRowById(selectedRowIds[i]);
-                                                            if (idx != undefined)
-                                                                selRows.push(idx);
-                                                        }
-
-                                                        grid.setSelectedRows(selRows);
+                                                        var idx = dataView.getRowById(selectedRowIds[i]);
+                                                        if (idx != undefined)
+                                                            selRows.push(idx);
                                                     }
-                                                });
 
-                                                dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
+                                                    grid.setSelectedRows(selRows);
+                                                }
+                                            });
+
+                                            dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
                     
-                                                    grid.setOptions({enableAddRow:options.enableAddRow});
-                                                });
+                                                grid.setOptions({enableAddRow:options.enableAddRow});
+                                            });
                 
                 
-                                                $("#txtSearch").keyup(function(e) {
-                                                    Slick.GlobalEditorLock.cancelCurrentEdit();
+                                            $("#txtSearch").keyup(function(e) {
+                                                Slick.GlobalEditorLock.cancelCurrentEdit();
 
-                                                    // clear on Esc
-                                                    if (e.which == 27)
-                                                        this.value = "";
+                                                // clear on Esc
+                                                if (e.which == 27)
+                                                    this.value = "";
 
-                                                    searchString = this.value;
-                                                    dataView.refresh();
-                                                });
+                                                searchString = this.value;
+                                                dataView.refresh();
+                                            });
 
 
-                                                dataView.beginUpdate();
-                                                dataView.setItems(data);
-                                                dataView.setFilter(myFilter);
-                                                dataView.endUpdate();
+                                            dataView.beginUpdate();
+                                            dataView.setItems(data);
+                                            dataView.setFilter(myFilter);
+                                            dataView.endUpdate();
                         
 
-                                                grid.onContextMenu = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onContextMenu = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    return true;
-                                                }; 
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                return true;
+                                            }; 
                                 
-                                                grid.onClick = function (e, row, cell)
-                                                {
-                                                    //al dar click derecho sobre el la tabla
-                                                    if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
+                                            grid.onClick = function (e, row, cell)
+                                            {
+                                                //al dar click derecho sobre el la tabla
+                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
                                    
-                                                    if(selectedRowIds.length <= 1){
-                                                        var rows = [];
-                                                        selectedRowIds = [];
-                                                        rows.push(row);
-                                                        selectedRowIds.push(""+rows[0]);
-                                                        grid.setSelectedRows(rows);
-                                                    }
-                                                    var ancla = $(".rowOption");
-                                                    if(e.target == ancla[0]){
+                                                if(selectedRowIds.length <= 1){
+                                                    var rows = [];
+                                                    selectedRowIds = [];
+                                                    rows.push(row);
+                                                    selectedRowIds.push(""+rows[0]);
+                                                    grid.setSelectedRows(rows);
+                                                }
+                                                var ancla = $(".rowOption");
+                                                if(e.target == ancla[0]){
                                                               
-                                                        $(".slick-cell .options a").jjmenu("click", 
-                                                        // menu items:
-                                                        [ {getByFunction:function(myData) {
-                                                                    return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                        {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                        {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                        {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                    ];
-                                                                }
-                                                            } 
-                                                        ], 
-                                                        // myReplaces / userData:
-                                                        {   "tbRow":function(){
+                                                    $(".slick-cell .options a").jjmenu("click", 
+                                                    // menu items:
+                                                    [ {getByFunction:function(myData) {
+                                                                return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
+                                                                    {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
+                                                                    {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
+                                                                    {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
+                                                                ];
+                                                            }
+                                                        } 
+                                                    ], 
+                                                    // myReplaces / userData:
+                                                    {   "tbRow":function(){
                        
                         
-                                                                var fila = jQuery(triggerElement);
-                                                                var celdas = [];
-                                                                jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                    celdas[celdas.length] = jQuery(this).html();
+                                                            var fila = jQuery(triggerElement);
+                                                            var celdas = [];
+                                                            jQuery(fila).parents(".slick-row").children().each(function() {
+                                                                celdas[celdas.length] = jQuery(this).html();
                                                                                        
-                                                                });
-                                                                if(selectedRowIds.length > 1){
-                                                                    celdas[0] ="seleccionados"; 
-                                                                }
-                                                                return celdas;    
+                                                            });
+                                                            if(selectedRowIds.length > 1){
+                                                                celdas[0] ="seleccionados"; 
                                                             }
+                                                            return celdas;    
+                                                        }
                     
                                           
-                                                        }, 
-                                                        // effects:
-                                                        {show:"default", xposition:"left", yposition:"auto"
+                                                    }, 
+                                                    // effects:
+                                                    {show:"default", xposition:"left", yposition:"auto"
                 
-                                                        });
+                                                    });
                                                
-                                                        setTimeout(function () { 
-                                                            $(".slick-cell .options a").addClass("hover");
-                                                            $(".slick-cell .options a").parents("div").addClass("hover");
-                                                            $(".slick-cell .options a").trigger("click");
-                                                        }, 200);
-                                                        setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
+                                                    setTimeout(function () { 
+                                                        $(".slick-cell .options a").addClass("hover");
+                                                        $(".slick-cell .options a").parents("div").addClass("hover");
+                                                        $(".slick-cell .options a").trigger("click");
+                                                    }, 200);
+                                                    setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
                                                
-                                                    }else{
-                                                        var filadelaTabla =  $(".slick-row");
-                                                        var rowsx =[];
-                                                        if(!$.contains(filadelaTabla[0],e.target)){
-                                                            grid.setSelectedRows(rowsx);
+                                                }else{
+                                                    var filadelaTabla =  $(".slick-row");
+                                                    var rowsx =[];
+                                                    if(!$.contains(filadelaTabla[0],e.target)){
+                                                        grid.setSelectedRows(rowsx);
                                                 
-                                                        }
                                                     }
+                                                }
                                         
-                                                }; 
+                                            }; 
                                 
                                 
                                 
-                                                $("#myGrid").bind("draginit", function(e,dd) {
-                                                    var cell = grid.getCellFromEvent(e);
-                                                    if (!cell)
-                                                        return false;
+                                            $("#myGrid").bind("draginit", function(e,dd) {
+                                                var cell = grid.getCellFromEvent(e);
+                                                if (!cell)
+                                                    return false;
 
-                                                    dd.row = cell.row;
-                                                    if (!data[dd.row])
-                                                        return false;
+                                                dd.row = cell.row;
+                                                if (!data[dd.row])
+                                                    return false;
 
-                                                    if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                        return false;
-                                                });
+                                                if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
+                                                    return false;
+                                            });
 
                             
-                                                // jjmen(); 
+                                            // jjmen(); 
                   
-                                            } //fin del if
+                                        } //fin del if
                        
-                                        }//fin del success
-                                    }); //fin del .ajax
+                                    }//fin del success
+                                }); //fin del .ajax
                         
                         
                         
                         
-                                }
+                            }
                     
                     
-                            } //fin del else
-                        }
-                    });        
-                });  //fin del function   
+                        } //fin del else
+                    }
+                });        
+            });  //fin del function   
                     
-                //setTimeout(function () { $.jstree._focused().select_node("#detalle"); }, 1000);
+            //setTimeout(function () { $.jstree._focused().select_node("#detalle"); }, 1000);
           
         </script> 
     </head>

@@ -1,17 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" language="JavaScript">
-                $("div[rel=popover]")
-                .popover({
-                    trigger:"manual"
-                })
-                .click(function(e) {
-                    e.preventDefault()
-                }) 
-
-
-</script>
-
 <c:if test="${auxAsignarF == 0}"><!--Si no se ha asignado nada-->
     <br  id="PonderacionFactores">
     <div class="subnav">
@@ -125,13 +113,20 @@
                                 </div>
                             </div>
                         </c:if>
-                        <div id="alert">
-                            <div class="alert alert-info">
-                                <a data-dismiss="alert" class="close">×</a>
-                                <strong>Información!</strong>
-                                La ponderación de factores ya ha sido asignada.
-                            </div>
+                        <div class="alert alert-info">
+                            <a data-dismiss="alert" class="close">×</a>
+                            <strong>Información!</strong>
+                            La ponderación de factores ya ha sido asignada.
                         </div>
+
+                        <div class="alert alert-block alert-error" style="display:none">
+                            <a href="#" data-dismiss="alert" class="close">×</a>
+                            <h4 class="alert-heading">Ha ocurrido un error!</h4>
+                            <p>La suma de la ponderacion de los factores debe ser 100.</p>
+                            <a class="btn btn-danger" data-dismiss="alert" href="#">Cerrar</a>
+                        </div>
+
+
                         <a href="<%=request.getContextPath()%>/#listarPonderacionFactor">Detalle de Ponderación de Factores Asignada.</a>
                         <br>
 
@@ -154,9 +149,13 @@
                                             <c:out value="${row2[5]}"/>
                                         </td>
                                         <td>
-                                            <input class="span1 {required:true,number:true}" name="ponderacion${row2[4]}" type="text" value="${row2[1]}" />
+                                            <input class="span1 {required:true,number:true}" name="ponderacion${row2[4]}" type="text" value="${row2[1]}"/>
+                                            <div class='alert alert-error fade' style="display: none">
+                                                <a data-dismiss='alert' class='close'>×</a>  
+                                                <strong>Error!</strong>
+                                            </div>
                                             <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
-                                            <div data-content="And here's some amazing content. It's very engaging. right?" rel="popover" data-original-title="A Title"></div>
+
                                         </td>
 
                                         <td>
@@ -167,6 +166,13 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        
+                        <div class="alert alert-info" id="suma">
+                            <a data-dismiss="alert" class="close">×</a>
+                            <strong>Suma Actual de los Factores:</strong>
+                            <input type="text" value="0"/> 
+                        </div>
+
                         <input type="hidden" name="count" id="count" value="${iterador}">
                         <div class="form-actions">
                             <button class="btn btn-primary" type="submit">Actualizar Ponderación</button>
