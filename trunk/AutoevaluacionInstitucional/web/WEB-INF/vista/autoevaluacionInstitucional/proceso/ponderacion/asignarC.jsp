@@ -28,6 +28,30 @@
                                                                                     
             })
         }
+        
+      $('a[href^=#PonderacionCaracteristicas]').click(function() {
+     
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+                && location.hostname == this.hostname) {
+
+                var $target2 = $(this.hash);
+             
+                $target2 = $target2.length && $target2 || $('[name=' + this.hash.slice(1) +']');
+                if ($target2.length) {
+                    var targetOffset = $target2.offset().top;
+                    var actual = $('div.ui-layout-center').scrollTop();
+                    if(actual!=0){
+                        $('div.ui-layout-center').animate({scrollTop: actual + targetOffset - 80}, 500);
+                    }else{
+                        $('div.ui-layout-center').animate({scrollTop: targetOffset - 118}, 500);
+                    }
+
+                   return false;
+                }
+
+            }
+        });  
+        
     });
  
            
