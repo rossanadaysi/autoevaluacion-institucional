@@ -51,10 +51,10 @@
     
 </script>
 <c:if test="${auxAsignarF == 0}"><!--Si no se ha asignado nada-->
-    <br  id="PonderacionFactores">
+    <br/>
     <div class="subnav">
         <ul class="nav nav-pills">
-            <li><a>Ponderación de Factores</a></li>
+            <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
             <c:forEach items="${factores.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
                     <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
@@ -70,10 +70,7 @@
                 </c:choose>
             </c:forEach>
         </ul>
-        <div class="right">
-            <input type="text" value="0"/> 
-        </div>
-    </div>
+       </div>
     <div class="hero-unit">
         <div class="row">
             <div class="span10">
@@ -112,7 +109,7 @@
                                             <input type="hidden"  value="${row[0]}" name="id${row[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="justificacion${row[0]}" rows="3" class="span5"></textarea>
+                                            <textarea name="justificacion${row[0]}" rows="3" class="span5 {required:true}"></textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
@@ -131,10 +128,10 @@
     </div><!--/hero-unit--> 
 </c:if>
 <c:if test="${auxAsignarF == 1}">
-    <br id="PonderacionFactores">
+    <br/>
     <div class="subnav" >
         <ul class="nav nav-pills">
-            <li><a>Ponderación de Factores</a></li>
+            <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
             <c:forEach items="${pondeFactores.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
                     <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
@@ -174,7 +171,7 @@
                             La ponderación de factores ya ha sido asignada.
                         </div>
 
-                        <div class="alert alert-block alert-error" style="display:none">
+                        <div class="alert alert-block alert-error" style="display:none" id="PonderacionFactores">
                             <a href="#" data-dismiss="alert" class="close">×</a>
                             <h4 class="alert-heading">Ha ocurrido un error!</h4>
                             <p>La suma de la ponderacion de los factores debe ser 100.</p>
@@ -214,7 +211,7 @@
                                         </td>
 
                                         <td>
-                                            <textarea name="justificacion${row2[4]}" rows="3" class="span5">${row2[2]}</textarea>
+                                            <textarea name="justificacion${row2[4]}" rows="3" class="span5 {required:true}">${row2[2]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}"/>
