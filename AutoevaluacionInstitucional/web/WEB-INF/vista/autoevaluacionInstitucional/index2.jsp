@@ -476,7 +476,7 @@
                                                 } else{
                                                 
                                                     $(".alert-error").show();
-                                                    location = "#PonderacionFactores";
+                                                    $("ul.nav-pills li:eq(0) a").trigger("click");
                                                 }
                                                     
                                                     
