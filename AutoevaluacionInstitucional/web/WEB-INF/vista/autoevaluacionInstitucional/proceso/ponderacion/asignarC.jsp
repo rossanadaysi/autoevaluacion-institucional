@@ -60,7 +60,7 @@
     <br id="PonderacionCaracteristicas">
     <div class="subnav">
         <ul class="nav nav-pills" >
-            <li><a>Ponderación de Características</a></li>
+            <li><a><strong>Ponderación de Características</strong></a></li>
             <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
                     <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
@@ -142,7 +142,7 @@
 
     <div class="subnav" >
         <ul class="nav nav-pills">
-            <li><a>Ponderación de Características</a></li>
+            <li><a><strong>Ponderación de Características</strong></a></li>
             <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
                     <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
