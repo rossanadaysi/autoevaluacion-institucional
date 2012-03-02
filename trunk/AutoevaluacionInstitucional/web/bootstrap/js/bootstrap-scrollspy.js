@@ -51,7 +51,7 @@
           })
 
         this.offsets = $.map(this.targets, function (id) {
-          return $(id).position().top
+          return $(id).position().top -80
         })
       }
 
