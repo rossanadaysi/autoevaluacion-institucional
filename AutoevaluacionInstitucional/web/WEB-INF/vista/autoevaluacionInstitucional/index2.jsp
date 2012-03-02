@@ -235,19 +235,6 @@
             $(document).ready(function() {
                 location ="/AutoevaluacionInstitucional/#inicio"; 
                 
-                $("input[name^='ponderacion']").blur(function(){
-                    console.log("dsad");
-                    $("input[name^='ponderacion']").each(function(){
-                        suma+=Number($(this).val());
-                    
-                    });
-            
-                    $("#suma input").val(suma);
-                })    
-                
-                
-                    
-            
                 $("ul.nav-list li a").click(function(event){
                     $(".nav li").removeClass("active");
                     $(this).parent().siblings().removeClass("active");
@@ -266,6 +253,7 @@
                             if ($('.subnav').hasClass('subnav-fixed')) return;
                             // Remember top position
                             var offset = $('.subnav').offset()
+                            
                             $('.subnav').attr('data-top', offset.top);
                         }
 
@@ -341,8 +329,7 @@
                     var hash = location.hash;
                 
                     if(hash.indexOf("PonderacionFactores")!=-1){
-                        $(".subnav ul.nav-pills li").removeClass("active");
-                        $(".subnav ul.nav-pills li:eq(1)").addClass("active");
+                       
                     }
                                                 
                     if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1){
@@ -436,7 +423,7 @@
                                         }, 500);
                                                                     
                                         $("div.ui-layout-center").scrollspy('refresh');
-                                                                    
+                                        //{offset:80}                            
 
 
                                         $("#formPondeFa").validate({
@@ -530,7 +517,7 @@
                                             $("div.ui-layout-center").scrollspy();   
                                         }, 500);
                                         $("div.ui-layout-center").scrollspy('refresh');
-    
+                                        //{offset:80}   
                                     
                                         $("#formPondeCara").submit(function(event){
                                             event.preventDefault();

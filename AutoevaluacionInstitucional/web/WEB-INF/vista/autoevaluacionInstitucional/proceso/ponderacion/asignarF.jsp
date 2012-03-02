@@ -1,5 +1,55 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var sum=0;
+        $("input[name^='ponderacion']").each(function(){
+                sum+=Number($(this).val());
+                    
+            });
+       $("li a#total").html("<strong>Total Ponderacion: "+sum+"</strong>");
+        
+        $("input[name^='ponderacion']").keyup(function(){
+            var suma=0;                                                
+            $("input[name^='ponderacion']").each(function(){
+                suma+=Number($(this).val());
+                    
+            });
+            $("li a#total").html("<strong>Total Ponderacion: "+suma+"</strong>");
+            
+        });
+        
+            $('a[href^=#PonderacionFactores]').click(function() {
+     
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+                && location.hostname == this.hostname) {
+
+                var $target2 = $(this.hash);
+             
+                $target2 = $target2.length && $target2 || $('[name=' + this.hash.slice(1) +']');
+                if ($target2.length) {
+                    var targetOffset = $target2.offset().top;
+                    var actual = $('div.ui-layout-center').scrollTop();
+                    if(actual!=0){
+                        $('div.ui-layout-center').animate({scrollTop: actual + targetOffset - 80}, 500);
+                    }else{
+                        $('div.ui-layout-center').animate({scrollTop: targetOffset - 118}, 500);
+                    }
+                    
+
+                   return false;
+                }
+
+            }
+        });
+        
+                
+    });//fin ready
+    
+     
+
+    
+</script>
 <c:if test="${auxAsignarF == 0}"><!--Si no se ha asignado nada-->
     <br  id="PonderacionFactores">
     <div class="subnav">
@@ -20,6 +70,9 @@
                 </c:choose>
             </c:forEach>
         </ul>
+        <div class="right">
+            <input type="text" value="0"/> 
+        </div>
     </div>
     <div class="hero-unit">
         <div class="row">
@@ -96,7 +149,9 @@
                     </c:when>
                 </c:choose>
             </c:forEach>
+        <li><a id="total"><strong>Total Ponderacion: </strong></a></li>
         </ul>
+
     </div>
     <div class="hero-unit" >
         <div class="row">
@@ -166,13 +221,6 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                        
-                        <div class="alert alert-info" id="suma">
-                            <a data-dismiss="alert" class="close">×</a>
-                            <strong>Suma Actual de los Factores:</strong>
-                            <input type="text" value="0"/> 
-                        </div>
-
                         <input type="hidden" name="count" id="count" value="${iterador}">
                         <div class="form-actions">
                             <button class="btn btn-primary" type="submit">Actualizar Ponderación</button>
