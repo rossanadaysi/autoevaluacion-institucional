@@ -336,9 +336,9 @@
                                                     
                         if(hash=="#CerrarSesion"){
                             $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
-                            function(data) {
-                                location = "<%=request.getContextPath()%>/";
-                                                     
+                             function(data) {
+                                      location = "<%=request.getContextPath()%>/";
+                                 
                             });
                                                         
                         }
@@ -652,7 +652,6 @@
                                         $("#formCrearProc").validate({
                                             
                                             submitHandler: function() {
-                                            event.preventDefault();
                                             $.ajax({
                                                 type: 'POST',
                                                 url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
@@ -677,7 +676,9 @@
                                                                                 
                                                     $('#myModalP').on('hidden', function () {
                                                         $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                        location = '/AutoevaluacionInstitucional/';
+                                                        setTimeout(function(){
+                                                            location = '/AutoevaluacionInstitucional/';
+                                                        }, 200);
                                                     });
                                                                                 
                                                                                                                                                                                      
