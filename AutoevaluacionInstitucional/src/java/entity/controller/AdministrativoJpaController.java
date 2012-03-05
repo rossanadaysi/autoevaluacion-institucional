@@ -6,21 +6,21 @@ package entity.controller;
 
 import connection.jpaConnection;
 import entity.Administrativo;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entity.Persona;
 import entity.Programa;
 import entity.Fuente;
-import entity.Persona;
+import entity.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class AdministrativoJpaController implements Serializable {
 
@@ -36,6 +36,11 @@ public class AdministrativoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Persona personaId = administrativo.getPersonaId();
+            if (personaId != null) {
+                personaId = em.getReference(personaId.getClass(), personaId.getId());
+                administrativo.setPersonaId(personaId);
+            }
             Programa programaId = administrativo.getProgramaId();
             if (programaId != null) {
                 programaId = em.getReference(programaId.getClass(), programaId.getId());
@@ -46,12 +51,11 @@ public class AdministrativoJpaController implements Serializable {
                 fuenteId = em.getReference(fuenteId.getClass(), fuenteId.getId());
                 administrativo.setFuenteId(fuenteId);
             }
-            Persona personaId = administrativo.getPersonaId();
-            if (personaId != null) {
-                personaId = em.getReference(personaId.getClass(), personaId.getId());
-                administrativo.setPersonaId(personaId);
-            }
             em.persist(administrativo);
+            if (personaId != null) {
+                personaId.getAdministrativoList().add(administrativo);
+                personaId = em.merge(personaId);
+            }
             if (programaId != null) {
                 programaId.getAdministrativoList().add(administrativo);
                 programaId = em.merge(programaId);
@@ -59,10 +63,6 @@ public class AdministrativoJpaController implements Serializable {
             if (fuenteId != null) {
                 fuenteId.getAdministrativoList().add(administrativo);
                 fuenteId = em.merge(fuenteId);
-            }
-            if (personaId != null) {
-                personaId.getAdministrativoList().add(administrativo);
-                personaId = em.merge(personaId);
             }
             em.getTransaction().commit();
         } finally {
@@ -78,12 +78,16 @@ public class AdministrativoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Administrativo persistentAdministrativo = em.find(Administrativo.class, administrativo.getId());
+            Persona personaIdOld = persistentAdministrativo.getPersonaId();
+            Persona personaIdNew = administrativo.getPersonaId();
             Programa programaIdOld = persistentAdministrativo.getProgramaId();
             Programa programaIdNew = administrativo.getProgramaId();
             Fuente fuenteIdOld = persistentAdministrativo.getFuenteId();
             Fuente fuenteIdNew = administrativo.getFuenteId();
-            Persona personaIdOld = persistentAdministrativo.getPersonaId();
-            Persona personaIdNew = administrativo.getPersonaId();
+            if (personaIdNew != null) {
+                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+                administrativo.setPersonaId(personaIdNew);
+            }
             if (programaIdNew != null) {
                 programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
                 administrativo.setProgramaId(programaIdNew);
@@ -92,11 +96,15 @@ public class AdministrativoJpaController implements Serializable {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
                 administrativo.setFuenteId(fuenteIdNew);
             }
-            if (personaIdNew != null) {
-                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-                administrativo.setPersonaId(personaIdNew);
-            }
             administrativo = em.merge(administrativo);
+            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+                personaIdOld.getAdministrativoList().remove(administrativo);
+                personaIdOld = em.merge(personaIdOld);
+            }
+            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+                personaIdNew.getAdministrativoList().add(administrativo);
+                personaIdNew = em.merge(personaIdNew);
+            }
             if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
                 programaIdOld.getAdministrativoList().remove(administrativo);
                 programaIdOld = em.merge(programaIdOld);
@@ -112,14 +120,6 @@ public class AdministrativoJpaController implements Serializable {
             if (fuenteIdNew != null && !fuenteIdNew.equals(fuenteIdOld)) {
                 fuenteIdNew.getAdministrativoList().add(administrativo);
                 fuenteIdNew = em.merge(fuenteIdNew);
-            }
-            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-                personaIdOld.getAdministrativoList().remove(administrativo);
-                personaIdOld = em.merge(personaIdOld);
-            }
-            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-                personaIdNew.getAdministrativoList().add(administrativo);
-                personaIdNew = em.merge(personaIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -150,6 +150,11 @@ public class AdministrativoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The administrativo with id " + id + " no longer exists.", enfe);
             }
+            Persona personaId = administrativo.getPersonaId();
+            if (personaId != null) {
+                personaId.getAdministrativoList().remove(administrativo);
+                personaId = em.merge(personaId);
+            }
             Programa programaId = administrativo.getProgramaId();
             if (programaId != null) {
                 programaId.getAdministrativoList().remove(administrativo);
@@ -159,11 +164,6 @@ public class AdministrativoJpaController implements Serializable {
             if (fuenteId != null) {
                 fuenteId.getAdministrativoList().remove(administrativo);
                 fuenteId = em.merge(fuenteId);
-            }
-            Persona personaId = administrativo.getPersonaId();
-            if (personaId != null) {
-                personaId.getAdministrativoList().remove(administrativo);
-                personaId = em.merge(personaId);
             }
             em.remove(administrativo);
             em.getTransaction().commit();

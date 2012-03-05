@@ -5,22 +5,12 @@
 package entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 @Entity
 @Table(name = "estudiante")
@@ -34,10 +24,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Basic(optional = false)
     @Column(name = "semestre")
     private String semestre;
@@ -47,12 +36,12 @@ public class Estudiante implements Serializable {
     @Basic(optional = false)
     @Column(name = "anio")
     private String anio;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Programa programaId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -60,22 +49,22 @@ public class Estudiante implements Serializable {
     public Estudiante() {
     }
 
-    public Estudiante(Integer id) {
+    public Estudiante(String id) {
         this.id = id;
     }
 
-    public Estudiante(Integer id, String semestre, String periodo, String anio) {
+    public Estudiante(String id, String semestre, String periodo, String anio) {
         this.id = id;
         this.semestre = semestre;
         this.periodo = periodo;
         this.anio = anio;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -103,20 +92,20 @@ public class Estudiante implements Serializable {
         this.anio = anio;
     }
 
-    public Programa getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(Programa programaId) {
-        this.programaId = programaId;
-    }
-
     public Persona getPersonaId() {
         return personaId;
     }
 
     public void setPersonaId(Persona personaId) {
         this.personaId = personaId;
+    }
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
     }
 
     public Fuente getFuenteId() {

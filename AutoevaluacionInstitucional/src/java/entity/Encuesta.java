@@ -7,25 +7,13 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 @Entity
 @Table(name = "encuesta")
@@ -39,12 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Encuesta.findByMensaje", query = "SELECT e FROM Encuesta e WHERE e.mensaje = :mensaje"),
     @NamedQuery(name = "Encuesta.findByFecha", query = "SELECT e FROM Encuesta e WHERE e.fecha = :fecha")})
 public class Encuesta implements Serializable {
-    @Basic(optional = false)
-    @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
-    private List<Asignacionencuesta> asignacionencuestaList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,8 +42,14 @@ public class Encuesta implements Serializable {
     private String instrucciones;
     @Column(name = "mensaje")
     private String mensaje;
+    @Basic(optional = false)
+    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
     private List<Encuestahaspregunta> encuestahaspreguntaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encuestaId")
+    private List<Asignacionencuesta> asignacionencuestaList;
 
     public Encuesta() {
     }
@@ -116,6 +104,14 @@ public class Encuesta implements Serializable {
         this.mensaje = mensaje;
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
     @XmlTransient
     public List<Encuestahaspregunta> getEncuestahaspreguntaList() {
         return encuestahaspreguntaList;
@@ -123,6 +119,15 @@ public class Encuesta implements Serializable {
 
     public void setEncuestahaspreguntaList(List<Encuestahaspregunta> encuestahaspreguntaList) {
         this.encuestahaspreguntaList = encuestahaspreguntaList;
+    }
+
+    @XmlTransient
+    public List<Asignacionencuesta> getAsignacionencuestaList() {
+        return asignacionencuestaList;
+    }
+
+    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
+        this.asignacionencuestaList = asignacionencuestaList;
     }
 
     @Override
@@ -148,23 +153,6 @@ public class Encuesta implements Serializable {
     @Override
     public String toString() {
         return "entity.Encuesta[ id=" + id + " ]";
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    @XmlTransient
-    public List<Asignacionencuesta> getAsignacionencuestaList() {
-        return asignacionencuestaList;
-    }
-
-    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
-        this.asignacionencuestaList = asignacionencuestaList;
     }
     
 }

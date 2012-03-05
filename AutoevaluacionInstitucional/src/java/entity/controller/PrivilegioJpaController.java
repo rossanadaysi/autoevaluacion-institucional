@@ -6,21 +6,21 @@ package entity.controller;
 
 import connection.jpaConnection;
 import entity.Privilegio;
-import entity.controller.exceptions.IllegalOrphanException;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entity.Representantehasprivilegio;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class PrivilegioJpaController implements Serializable {
 

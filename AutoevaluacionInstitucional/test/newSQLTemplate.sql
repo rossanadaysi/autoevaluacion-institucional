@@ -1,1 +1,1 @@
-Select id from ponderacioncaracteristica where ponderacioncaracteristica.proceso_id = 76 and ponderacioncaracteristica.caracteristica_id = 1
+select persona.nombre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = 1 and estudiante.programa_id = 50

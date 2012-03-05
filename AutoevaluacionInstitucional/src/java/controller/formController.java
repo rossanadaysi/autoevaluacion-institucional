@@ -13,7 +13,9 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.sql.Result;
+import javax.servlet.jsp.jstl.sql.ResultSupport;
 
 /**
  *
@@ -74,7 +77,7 @@ public class formController extends HttpServlet {
                     session.setAttribute("auxAsignarF1", 1);
 
                     if (session.getAttribute("auxAsignarF").equals(0)) {
-                       
+
                         for (int i = 1; i <= numRows; i++) {
                             String id = request.getParameter("id" + i);
                             String ponderacion = request.getParameter("ponderacion" + i);
@@ -91,13 +94,13 @@ public class formController extends HttpServlet {
                         session.setAttribute("auxAsignarC1", 1);
 
                     } else {
-                        
+
                         for (int i = 1; i <= numRows; i++) {
                             String id = request.getParameter("id" + i);
                             String ponderacion = request.getParameter("ponderacion" + i);
                             String justificacion = request.getParameter("justificacion" + i);
                             int idPonderacion = 0;
-                      
+
                             rs = conSql.CargarSql("Select id from ponderacionfactor where ponderacionfactor.proceso_id = '" + idProceso + "' and ponderacionfactor.factor_id = '" + id + "'", bd);
                             try {
                                 while (rs.next()) {
@@ -411,7 +414,6 @@ public class formController extends HttpServlet {
 
                 String idFuente = request.getParameter("fuente");
                 int id = Integer.valueOf(idFuente);
-
                 int idMuestra = (Integer) session.getAttribute("idMuestra");
 
                 String idP = request.getParameter("programas");
@@ -426,27 +428,193 @@ public class formController extends HttpServlet {
 
                 int fil = 0;
 
+                try {
+                    //Estatico
+                    if (id == 1) {
+                        tabla = "muestraestudiante";
+                        tabla1 = "estudiante";
+                        if (!idP.equals("--") && !idS.equals("--")) {
+                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP + " and " + tabla1 + ".semestre = " + idS;
+                            System.out.println(sql2);
+                            fil = 1;
+                        } else if (!idP.equals("--")) {
+                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP;
+                            System.out.println(sql2);
+                            fil = 1;
+                        } else if (!idS.equals("--")) {
+                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".semestre = " + idS;
+                            System.out.println(sql2);
+                            fil = 1;
+                        }
+
+                    } else if (id == 2) {
+
+                        tabla = "muestradocente";
+                        tabla1 = "docente";
+                    }
+
+                    if (fil == 0) {
+                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id";
+                    }
+
+                    rs2 = conSql.CargarSql2(sql2, bd);
+                    if (rs2 != null) {
+                        session.setAttribute("muestras", rs2);
+                        System.out.println("result: " + rs2.getRowCount());
+                    }
+
+//*                
+
+                    Result rs = null;
+                    String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
+                    rs = conSql.CargarSql2(sql, bd);
+
+                    if (rs.getRowCount() != 0) {
+                        //  System.out.println("si hay asignacion de muestras");
+                        session.setAttribute("muestrasSeleccionadas", rs);
+                        session.setAttribute("aux_asignarM", 1);
+                    } else {
+                        //f  System.out.println("no hay asignacion de muestras!!!!!");
+                        session.setAttribute("aux_asignarM", 0);
+                    }
+                } catch (Error ex) {
+                    //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (request.getParameter(
+                    "action").equals("selectorAsignarMuestra2AI")) {
+                HttpSession session = request.getSession();
+                sqlController conSql = new sqlController();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                int idProceso = proceso.getId();
+                String bd = (String) session.getAttribute("bd");
+
+                String idFuente = request.getParameter("fuente");
+                int id = Integer.valueOf(idFuente);
+                int idMuestra = (Integer) session.getAttribute("idMuestra");
+
+                String idP = request.getParameter("programas");
+                String idS = request.getParameter("semestres");
+
+                String sql = null;
+
+                //Estatico
+                if (id == 1) {
+
+
+                    if (!idP.equals("--") && !idS.equals("--")) {
+                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS + " order by estudiante.id";
+                    } else if (!idP.equals("--")) {
+                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " order by estudiante.id";
+                    } else if (!idS.equals("--")) {
+                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.id";
+                    }
+                    else if (idP.equals("--") && idS.equals("--")) {
+                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
+                    }
+
+
+                } else if (id == 2) {
+                }
+
+                Result rs = conSql.CargarSql2(sql, bd);
+                session.setAttribute("selectorAsignarM2", rs);
+
+
+
+            } else if (request.getParameter(
+                    "action").equals("generarMuestra")) {
+
+                HttpSession session = request.getSession();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+
+                sqlController conSql = new sqlController();
+
+                String idFormula = request.getParameter("formula");
+                String idFuente = request.getParameter("fuente");
+                int id = Integer.parseInt(idFuente);
+
+                String bd = (String) session.getAttribute("bd");
+
+                int idMuestra = (Integer) session.getAttribute("idMuestra");
+
+                String tabla = null;
+                String tabla1 = null;
+
+                if (id == 1) {
+
+                    tabla = "muestraestudiante";
+                    tabla1 = "estudiante";
+
+                    System.out.println("generando..");
+
+
+                    ArrayList rs = (ArrayList) session.getAttribute("muestraCalculada2");
+
+
+
+                    Iterator i = rs.iterator();
+
+
+                    while (i.hasNext()) {
+
+
+                        String s1 = (String) i.next();
+                        System.out.println(s1);
+                        String[] campos = s1.split("/");
+
+
+                        String muestra = campos[campos.length - 1];
+                        String programa = campos[campos.length - 2];
+
+
+
+                        String sql = "SELECT * FROM estudiante where estudiante.programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
+                        ResultSet rs1 = conSql.CargarSql(sql, bd);
+                        try {
+                            while (rs1.next()) {
+                                String sql2 = "insert into muestraestudiante values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "')";
+                                conSql.UpdateSql(sql2, bd);
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+
+
+
+
+                }
+
+
+
+                //Estatico
+
+            } else if (request.getParameter(
+                    "action").equals("calcularMuestraAI")) {
+
+                HttpSession session = request.getSession();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+
+                sqlController conSql = new sqlController();
+
+                String idFormula = request.getParameter("formula");
+                String idFuente = request.getParameter("fuente");
+                int id = Integer.parseInt(idFuente);
+
+                String bd = (String) session.getAttribute("bd");
+
+                int idMuestra = (Integer) session.getAttribute("idMuestra");
+
+                String tabla = null;
+                String tabla1 = null;
+
                 //Estatico
                 if (id == 1) {
 
                     tabla = "muestraestudiante";
                     tabla1 = "estudiante";
-                    if (!idP.equals("--") && !idS.equals("--")) {
-
-                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP + " and " + tabla1 + ".semestre = " + idS;
-                        System.out.println(sql2);
-                        fil = 1;
-                    } else if (!idP.equals("--")) {
-
-                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP;
-                        System.out.println(sql2);
-                        fil = 1;
-                    } else if (!idS.equals("--")) {
-
-                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".semestre = " + idS;
-                        System.out.println(sql2);
-                        fil = 1;
-                    }
 
                 } else if (id == 2) {
 
@@ -454,34 +622,83 @@ public class formController extends HttpServlet {
                     tabla1 = "docente";
                 }
 
-                if (fil == 0) {
-                    System.out.println("nott");
-                    sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id";
 
-                }
+                ResultSet rs = null;
+                String sql = "";
 
-                rs2 = conSql.CargarSql2(sql2, bd);
-                if (rs2 != null) {
-                    session.setAttribute("muestras", rs2);
-                }
 
-//*                
-                try {
+                // rs = conSql.CargarSql(sql, bd);
 
-                    Result rs = null;
-                    String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
-                    rs = conSql.CargarSql2(sql, bd);
-                    if (rs.getRowCount() != 0) {
-                        System.out.println("si hay asignacion de muestras");
-                        session.setAttribute("muestrasSeleccionadas", rs);
-                        session.setAttribute("aux_asignarM", 1);
-                    } else {
-                        System.out.println("no hay asignacion de muestras!!!!!");
-                        session.setAttribute("aux_asignarM", 0);
+                if (idFormula.equals("1")) {
+                    //Tamaño muestra
+                    double n;
+                    //Nivel de confianza
+                    double z = 1.96;
+                    //Probabilidad Ocurrencia
+                    double p = 0.5;
+                    //Nivel de tolerancia 
+                    double e = 0.04;
+                    //Porbabilidad de no ocurrencia
+                    double q = 0.5;
+                    //Tamaño de la población
+                    double N = 0.0;
+
+                    try {
+
+
+                        sql = "Select count(*) from " + tabla1;
+                        rs = conSql.CargarSql(sql, bd);
+
+                        while (rs.next()) {
+                            N = Double.parseDouble(rs.getString(1));
+                        }
+
+                        System.out.println("Población de Estudiantes: " + N);
+
+                        n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
+
+                        System.out.println("Resultado Fórmula: " + n);
+
+                        if (idFuente.equals("1")) {
+
+                            double muestraEstudiante = 0.0;
+
+                            double cociente = n / N;
+
+                            System.out.println("Cociente: " + cociente);
+
+
+                            sql = "Select programa.nombre, ROUND(count(*)*" + cociente + " ,0), programa.id from estudiante inner join programa on estudiante.programa_id = programa.id group by estudiante.programa_id order by programa.nombre";
+
+                            ResultSet rs1 = conSql.CargarSql(sql, bd);
+
+
+
+                            ArrayList l = new ArrayList();
+
+                            while (rs1.next()) {
+                                String s = rs1.getString(3) + "/" + rs1.getString(2);
+                                l.add(s);
+
+                            }
+                            session.setAttribute("muestraCalculada2", l);
+
+                            Result result = conSql.CargarSql2(sql, bd);
+
+                            session.setAttribute("muestraCalculada", result);
+
+
+
+
+
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } catch (Error ex) {
-                    //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+
+
                 }
+
 
             } else if (request.getParameter(
                     "action").equals("crearProcesoAIp")) {
@@ -494,13 +711,16 @@ public class formController extends HttpServlet {
 
 
                 if (session.getAttribute("aux_index2").equals(1)) {
-                    System.out.println("aja1");
                     proceso = (Proceso) session.getAttribute("proceso");
                     int idProceso = proceso.getId();
                     String bd = (String) session.getAttribute("bd");
+                    System.out.println("bd");
                     proceso.setDescripcion(request.getParameter("descripcion"));
                     try {
+                        conSql.UpdateSql("UPDATE `proceso` SET `descripcion` = '" + request.getParameter("descripcion") + "' WHERE `proceso`.`id` = " + idProceso, bd);
                         conProceso.edit(proceso);
+
+
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {
@@ -551,6 +771,8 @@ public class formController extends HttpServlet {
                 p.setFechacierre(date);
                 try {
                     pc.edit(p);
+
+
                 } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
@@ -615,6 +837,8 @@ public class formController extends HttpServlet {
                  */
                 try {
                     pc.edit(p);
+
+
                 } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {

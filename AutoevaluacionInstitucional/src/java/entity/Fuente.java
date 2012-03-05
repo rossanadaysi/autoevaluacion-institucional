@@ -6,23 +6,13 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 @Entity
 @Table(name = "fuente")
@@ -33,8 +23,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Fuente.findByNombre", query = "SELECT f FROM Fuente f WHERE f.nombre = :nombre"),
     @NamedQuery(name = "Fuente.findByDescripcion", query = "SELECT f FROM Fuente f WHERE f.descripcion = :descripcion")})
 public class Fuente implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
-    private List<Asignacionencuesta> asignacionencuestaList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +46,8 @@ public class Fuente implements Serializable {
     private List<Empleador> empleadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
     private List<Directorprograma> directorprogramaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
+    private List<Asignacionencuesta> asignacionencuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
     private List<Docente> docenteList;
 
@@ -152,6 +142,15 @@ public class Fuente implements Serializable {
     }
 
     @XmlTransient
+    public List<Asignacionencuesta> getAsignacionencuestaList() {
+        return asignacionencuestaList;
+    }
+
+    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
+        this.asignacionencuestaList = asignacionencuestaList;
+    }
+
+    @XmlTransient
     public List<Docente> getDocenteList() {
         return docenteList;
     }
@@ -183,15 +182,6 @@ public class Fuente implements Serializable {
     @Override
     public String toString() {
         return "entity.Fuente[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Asignacionencuesta> getAsignacionencuestaList() {
-        return asignacionencuestaList;
-    }
-
-    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
-        this.asignacionencuestaList = asignacionencuestaList;
     }
     
 }

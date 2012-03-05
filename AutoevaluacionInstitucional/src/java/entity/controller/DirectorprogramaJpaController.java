@@ -4,12 +4,8 @@
  */
 package entity.controller;
 
-import connection.jpaConnection;
 import entity.Directorprograma;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,18 +13,24 @@ import javax.persistence.criteria.Root;
 import entity.Persona;
 import entity.Programa;
 import entity.Fuente;
+import entity.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class DirectorprogramaJpaController implements Serializable {
 
-    public DirectorprogramaJpaController() {
+    public DirectorprogramaJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
     }
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return jpaConnection.getEntityManager();
+        return emf.createEntityManager();
     }
 
     public void create(Directorprograma directorprograma) {
@@ -219,4 +221,5 @@ public class DirectorprogramaJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

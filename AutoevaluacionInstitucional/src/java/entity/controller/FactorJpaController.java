@@ -4,31 +4,33 @@
  */
 package entity.controller;
 
-import connection.jpaConnection;
-import entity.Factor;
-import entity.controller.exceptions.IllegalOrphanException;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entity.Caracteristica;
+import entity.Factor;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class FactorJpaController implements Serializable {
 
-    public FactorJpaController() {
+    public FactorJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
     }
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return jpaConnection.getEntityManager();
+        return emf.createEntityManager();
     }
 
     public void create(Factor factor) {
@@ -196,4 +198,5 @@ public class FactorJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

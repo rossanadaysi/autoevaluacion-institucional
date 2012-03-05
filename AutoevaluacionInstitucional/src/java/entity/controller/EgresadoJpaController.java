@@ -4,31 +4,33 @@
  */
 package entity.controller;
 
-import connection.jpaConnection;
 import entity.Egresado;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entity.Persona;
 import entity.Programa;
 import entity.Fuente;
-import entity.Persona;
+import entity.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class EgresadoJpaController implements Serializable {
 
-    public EgresadoJpaController() {
+    public EgresadoJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
     }
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return jpaConnection.getEntityManager();
+        return emf.createEntityManager();
     }
 
     public void create(Egresado egresado) {
@@ -36,6 +38,11 @@ public class EgresadoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Persona personaId = egresado.getPersonaId();
+            if (personaId != null) {
+                personaId = em.getReference(personaId.getClass(), personaId.getId());
+                egresado.setPersonaId(personaId);
+            }
             Programa programaId = egresado.getProgramaId();
             if (programaId != null) {
                 programaId = em.getReference(programaId.getClass(), programaId.getId());
@@ -46,12 +53,11 @@ public class EgresadoJpaController implements Serializable {
                 fuenteId = em.getReference(fuenteId.getClass(), fuenteId.getId());
                 egresado.setFuenteId(fuenteId);
             }
-            Persona personaId = egresado.getPersonaId();
-            if (personaId != null) {
-                personaId = em.getReference(personaId.getClass(), personaId.getId());
-                egresado.setPersonaId(personaId);
-            }
             em.persist(egresado);
+            if (personaId != null) {
+                personaId.getEgresadoList().add(egresado);
+                personaId = em.merge(personaId);
+            }
             if (programaId != null) {
                 programaId.getEgresadoList().add(egresado);
                 programaId = em.merge(programaId);
@@ -59,10 +65,6 @@ public class EgresadoJpaController implements Serializable {
             if (fuenteId != null) {
                 fuenteId.getEgresadoList().add(egresado);
                 fuenteId = em.merge(fuenteId);
-            }
-            if (personaId != null) {
-                personaId.getEgresadoList().add(egresado);
-                personaId = em.merge(personaId);
             }
             em.getTransaction().commit();
         } finally {
@@ -78,12 +80,16 @@ public class EgresadoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Egresado persistentEgresado = em.find(Egresado.class, egresado.getId());
+            Persona personaIdOld = persistentEgresado.getPersonaId();
+            Persona personaIdNew = egresado.getPersonaId();
             Programa programaIdOld = persistentEgresado.getProgramaId();
             Programa programaIdNew = egresado.getProgramaId();
             Fuente fuenteIdOld = persistentEgresado.getFuenteId();
             Fuente fuenteIdNew = egresado.getFuenteId();
-            Persona personaIdOld = persistentEgresado.getPersonaId();
-            Persona personaIdNew = egresado.getPersonaId();
+            if (personaIdNew != null) {
+                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+                egresado.setPersonaId(personaIdNew);
+            }
             if (programaIdNew != null) {
                 programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
                 egresado.setProgramaId(programaIdNew);
@@ -92,11 +98,15 @@ public class EgresadoJpaController implements Serializable {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
                 egresado.setFuenteId(fuenteIdNew);
             }
-            if (personaIdNew != null) {
-                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-                egresado.setPersonaId(personaIdNew);
-            }
             egresado = em.merge(egresado);
+            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+                personaIdOld.getEgresadoList().remove(egresado);
+                personaIdOld = em.merge(personaIdOld);
+            }
+            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+                personaIdNew.getEgresadoList().add(egresado);
+                personaIdNew = em.merge(personaIdNew);
+            }
             if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
                 programaIdOld.getEgresadoList().remove(egresado);
                 programaIdOld = em.merge(programaIdOld);
@@ -112,14 +122,6 @@ public class EgresadoJpaController implements Serializable {
             if (fuenteIdNew != null && !fuenteIdNew.equals(fuenteIdOld)) {
                 fuenteIdNew.getEgresadoList().add(egresado);
                 fuenteIdNew = em.merge(fuenteIdNew);
-            }
-            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-                personaIdOld.getEgresadoList().remove(egresado);
-                personaIdOld = em.merge(personaIdOld);
-            }
-            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-                personaIdNew.getEgresadoList().add(egresado);
-                personaIdNew = em.merge(personaIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -150,6 +152,11 @@ public class EgresadoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The egresado with id " + id + " no longer exists.", enfe);
             }
+            Persona personaId = egresado.getPersonaId();
+            if (personaId != null) {
+                personaId.getEgresadoList().remove(egresado);
+                personaId = em.merge(personaId);
+            }
             Programa programaId = egresado.getProgramaId();
             if (programaId != null) {
                 programaId.getEgresadoList().remove(egresado);
@@ -159,11 +166,6 @@ public class EgresadoJpaController implements Serializable {
             if (fuenteId != null) {
                 fuenteId.getEgresadoList().remove(egresado);
                 fuenteId = em.merge(fuenteId);
-            }
-            Persona personaId = egresado.getPersonaId();
-            if (personaId != null) {
-                personaId.getEgresadoList().remove(egresado);
-                personaId = em.merge(personaId);
             }
             em.remove(egresado);
             em.getTransaction().commit();
@@ -219,4 +221,5 @@ public class EgresadoJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

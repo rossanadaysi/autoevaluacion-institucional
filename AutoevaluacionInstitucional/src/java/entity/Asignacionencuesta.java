@@ -5,22 +5,12 @@
 package entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Arturo González
+ * @author Usuario
  */
 @Entity
 @Table(name = "asignacionencuesta")
@@ -35,15 +25,15 @@ public class Asignacionencuesta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
-    @JoinColumn(name = "fuente_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Fuente fuenteId;
     @JoinColumn(name = "encuesta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Encuesta encuestaId;
+    @JoinColumn(name = "fuente_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Fuente fuenteId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
 
     public Asignacionencuesta() {
     }
@@ -60,12 +50,12 @@ public class Asignacionencuesta implements Serializable {
         this.id = id;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
+    public Encuesta getEncuestaId() {
+        return encuestaId;
     }
 
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
+    public void setEncuestaId(Encuesta encuestaId) {
+        this.encuestaId = encuestaId;
     }
 
     public Fuente getFuenteId() {
@@ -76,12 +66,12 @@ public class Asignacionencuesta implements Serializable {
         this.fuenteId = fuenteId;
     }
 
-    public Encuesta getEncuestaId() {
-        return encuestaId;
+    public Proceso getProcesoId() {
+        return procesoId;
     }
 
-    public void setEncuestaId(Encuesta encuestaId) {
-        this.encuestaId = encuestaId;
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     @Override

@@ -110,8 +110,8 @@ public class loginController extends HttpServlet {
         Persona persona = new Persona();
 
         try {
-            int id = Integer.parseInt(un);
-            persona = conPersona.findPersona(id);
+            
+            persona = conPersona.findPersona(un);
 
             System.out.println("Procesando..");
             if (persona != null) {

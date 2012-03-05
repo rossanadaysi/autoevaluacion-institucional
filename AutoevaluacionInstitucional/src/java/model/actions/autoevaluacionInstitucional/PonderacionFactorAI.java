@@ -32,11 +32,11 @@ public class PonderacionFactorAI implements Action {
 
 
         Result rs2 = null;
-        String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
+        String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + " order by factor.id";
         rs2 = conSql.CargarSql2(sql, bd);
 
         Result rs = null;
-        rs = conSql.CargarSql2("Select* from factor", bd);
+        rs = conSql.CargarSql2("Select* from factor order by factor.id", bd);
         session.setAttribute("auxAsignarF1", 1);
 
 
