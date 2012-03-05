@@ -4,16 +4,10 @@
  */
 package model.actions.navigation;
 
-import entity.Proceso;
 import entity.controller.PrivilegioJpaController;
-import entity.controller.ProcesoJpaController;
 import entity.controller.ProgramaJpaController;
 import entity.controller.RepresentanteJpaController;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.IOException;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,6 +41,10 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/ponderacion/ponderacionAjax";
         } else if (path.equals("selectorAsignarMuestraAI")) {
             path = "autoevaluacionInstitucional/proceso/muestra/selectorAsignarM";
+        } else if (path.equals("selectorAsignarMuestra2AI")) {
+            path = "autoevaluacionInstitucional/proceso/muestra/selectorAsignarM2";
+        } else if (path.equals("muestraCalculada")) {
+            path = "autoevaluacionInstitucional/proceso/muestra/muestraCalculada";
         } else if (path.equals("indexCC")) {
             path = "comiteCentral/index";
         } else if (path.equals("listarRepresentante")) {

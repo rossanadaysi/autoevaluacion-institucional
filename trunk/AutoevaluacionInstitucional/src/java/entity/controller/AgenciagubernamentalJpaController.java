@@ -6,20 +6,20 @@ package entity.controller;
 
 import connection.jpaConnection;
 import entity.Agenciagubernamental;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Fuente;
 import entity.Persona;
+import entity.Fuente;
+import entity.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class AgenciagubernamentalJpaController implements Serializable {
 
@@ -35,24 +35,24 @@ public class AgenciagubernamentalJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Fuente fuenteId = agenciagubernamental.getFuenteId();
-            if (fuenteId != null) {
-                fuenteId = em.getReference(fuenteId.getClass(), fuenteId.getId());
-                agenciagubernamental.setFuenteId(fuenteId);
-            }
             Persona personaId = agenciagubernamental.getPersonaId();
             if (personaId != null) {
                 personaId = em.getReference(personaId.getClass(), personaId.getId());
                 agenciagubernamental.setPersonaId(personaId);
             }
-            em.persist(agenciagubernamental);
+            Fuente fuenteId = agenciagubernamental.getFuenteId();
             if (fuenteId != null) {
-                fuenteId.getAgenciagubernamentalList().add(agenciagubernamental);
-                fuenteId = em.merge(fuenteId);
+                fuenteId = em.getReference(fuenteId.getClass(), fuenteId.getId());
+                agenciagubernamental.setFuenteId(fuenteId);
             }
+            em.persist(agenciagubernamental);
             if (personaId != null) {
                 personaId.getAgenciagubernamentalList().add(agenciagubernamental);
                 personaId = em.merge(personaId);
+            }
+            if (fuenteId != null) {
+                fuenteId.getAgenciagubernamentalList().add(agenciagubernamental);
+                fuenteId = em.merge(fuenteId);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,27 +68,19 @@ public class AgenciagubernamentalJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Agenciagubernamental persistentAgenciagubernamental = em.find(Agenciagubernamental.class, agenciagubernamental.getId());
-            Fuente fuenteIdOld = persistentAgenciagubernamental.getFuenteId();
-            Fuente fuenteIdNew = agenciagubernamental.getFuenteId();
             Persona personaIdOld = persistentAgenciagubernamental.getPersonaId();
             Persona personaIdNew = agenciagubernamental.getPersonaId();
-            if (fuenteIdNew != null) {
-                fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
-                agenciagubernamental.setFuenteId(fuenteIdNew);
-            }
+            Fuente fuenteIdOld = persistentAgenciagubernamental.getFuenteId();
+            Fuente fuenteIdNew = agenciagubernamental.getFuenteId();
             if (personaIdNew != null) {
                 personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
                 agenciagubernamental.setPersonaId(personaIdNew);
             }
+            if (fuenteIdNew != null) {
+                fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
+                agenciagubernamental.setFuenteId(fuenteIdNew);
+            }
             agenciagubernamental = em.merge(agenciagubernamental);
-            if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
-                fuenteIdOld.getAgenciagubernamentalList().remove(agenciagubernamental);
-                fuenteIdOld = em.merge(fuenteIdOld);
-            }
-            if (fuenteIdNew != null && !fuenteIdNew.equals(fuenteIdOld)) {
-                fuenteIdNew.getAgenciagubernamentalList().add(agenciagubernamental);
-                fuenteIdNew = em.merge(fuenteIdNew);
-            }
             if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
                 personaIdOld.getAgenciagubernamentalList().remove(agenciagubernamental);
                 personaIdOld = em.merge(personaIdOld);
@@ -96,6 +88,14 @@ public class AgenciagubernamentalJpaController implements Serializable {
             if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
                 personaIdNew.getAgenciagubernamentalList().add(agenciagubernamental);
                 personaIdNew = em.merge(personaIdNew);
+            }
+            if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
+                fuenteIdOld.getAgenciagubernamentalList().remove(agenciagubernamental);
+                fuenteIdOld = em.merge(fuenteIdOld);
+            }
+            if (fuenteIdNew != null && !fuenteIdNew.equals(fuenteIdOld)) {
+                fuenteIdNew.getAgenciagubernamentalList().add(agenciagubernamental);
+                fuenteIdNew = em.merge(fuenteIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -126,15 +126,15 @@ public class AgenciagubernamentalJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The agenciagubernamental with id " + id + " no longer exists.", enfe);
             }
-            Fuente fuenteId = agenciagubernamental.getFuenteId();
-            if (fuenteId != null) {
-                fuenteId.getAgenciagubernamentalList().remove(agenciagubernamental);
-                fuenteId = em.merge(fuenteId);
-            }
             Persona personaId = agenciagubernamental.getPersonaId();
             if (personaId != null) {
                 personaId.getAgenciagubernamentalList().remove(agenciagubernamental);
                 personaId = em.merge(personaId);
+            }
+            Fuente fuenteId = agenciagubernamental.getFuenteId();
+            if (fuenteId != null) {
+                fuenteId.getAgenciagubernamentalList().remove(agenciagubernamental);
+                fuenteId = em.merge(fuenteId);
             }
             em.remove(agenciagubernamental);
             em.getTransaction().commit();

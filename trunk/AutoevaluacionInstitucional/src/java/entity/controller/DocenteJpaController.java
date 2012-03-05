@@ -4,31 +4,33 @@
  */
 package entity.controller;
 
-import connection.jpaConnection;
 import entity.Docente;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Programa;
 import entity.Persona;
+import entity.Programa;
 import entity.Fuente;
+import entity.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class DocenteJpaController implements Serializable {
 
-    public DocenteJpaController() {
+    public DocenteJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
     }
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return jpaConnection.getEntityManager();
+        return emf.createEntityManager();
     }
 
     public void create(Docente docente) {
@@ -36,15 +38,15 @@ public class DocenteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Programa programaId = docente.getProgramaId();
-            if (programaId != null) {
-                programaId = em.getReference(programaId.getClass(), programaId.getId());
-                docente.setProgramaId(programaId);
-            }
             Persona personaId = docente.getPersonaId();
             if (personaId != null) {
                 personaId = em.getReference(personaId.getClass(), personaId.getId());
                 docente.setPersonaId(personaId);
+            }
+            Programa programaId = docente.getProgramaId();
+            if (programaId != null) {
+                programaId = em.getReference(programaId.getClass(), programaId.getId());
+                docente.setProgramaId(programaId);
             }
             Fuente fuenteId = docente.getFuenteId();
             if (fuenteId != null) {
@@ -52,13 +54,13 @@ public class DocenteJpaController implements Serializable {
                 docente.setFuenteId(fuenteId);
             }
             em.persist(docente);
-            if (programaId != null) {
-                programaId.getDocenteList().add(docente);
-                programaId = em.merge(programaId);
-            }
             if (personaId != null) {
                 personaId.getDocenteList().add(docente);
                 personaId = em.merge(personaId);
+            }
+            if (programaId != null) {
+                programaId.getDocenteList().add(docente);
+                programaId = em.merge(programaId);
             }
             if (fuenteId != null) {
                 fuenteId.getDocenteList().add(docente);
@@ -78,33 +80,25 @@ public class DocenteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Docente persistentDocente = em.find(Docente.class, docente.getId());
-            Programa programaIdOld = persistentDocente.getProgramaId();
-            Programa programaIdNew = docente.getProgramaId();
             Persona personaIdOld = persistentDocente.getPersonaId();
             Persona personaIdNew = docente.getPersonaId();
+            Programa programaIdOld = persistentDocente.getProgramaId();
+            Programa programaIdNew = docente.getProgramaId();
             Fuente fuenteIdOld = persistentDocente.getFuenteId();
             Fuente fuenteIdNew = docente.getFuenteId();
-            if (programaIdNew != null) {
-                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
-                docente.setProgramaId(programaIdNew);
-            }
             if (personaIdNew != null) {
                 personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
                 docente.setPersonaId(personaIdNew);
+            }
+            if (programaIdNew != null) {
+                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
+                docente.setProgramaId(programaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
                 docente.setFuenteId(fuenteIdNew);
             }
             docente = em.merge(docente);
-            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
-                programaIdOld.getDocenteList().remove(docente);
-                programaIdOld = em.merge(programaIdOld);
-            }
-            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
-                programaIdNew.getDocenteList().add(docente);
-                programaIdNew = em.merge(programaIdNew);
-            }
             if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
                 personaIdOld.getDocenteList().remove(docente);
                 personaIdOld = em.merge(personaIdOld);
@@ -112,6 +106,14 @@ public class DocenteJpaController implements Serializable {
             if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
                 personaIdNew.getDocenteList().add(docente);
                 personaIdNew = em.merge(personaIdNew);
+            }
+            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
+                programaIdOld.getDocenteList().remove(docente);
+                programaIdOld = em.merge(programaIdOld);
+            }
+            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
+                programaIdNew.getDocenteList().add(docente);
+                programaIdNew = em.merge(programaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getDocenteList().remove(docente);
@@ -150,15 +152,15 @@ public class DocenteJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The docente with id " + id + " no longer exists.", enfe);
             }
-            Programa programaId = docente.getProgramaId();
-            if (programaId != null) {
-                programaId.getDocenteList().remove(docente);
-                programaId = em.merge(programaId);
-            }
             Persona personaId = docente.getPersonaId();
             if (personaId != null) {
                 personaId.getDocenteList().remove(docente);
                 personaId = em.merge(personaId);
+            }
+            Programa programaId = docente.getProgramaId();
+            if (programaId != null) {
+                programaId.getDocenteList().remove(docente);
+                programaId = em.merge(programaId);
             }
             Fuente fuenteId = docente.getFuenteId();
             if (fuenteId != null) {
@@ -219,4 +221,5 @@ public class DocenteJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

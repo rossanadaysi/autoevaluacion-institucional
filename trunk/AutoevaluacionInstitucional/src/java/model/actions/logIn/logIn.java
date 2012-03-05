@@ -41,7 +41,7 @@ public class logIn implements Action {
         sqlController conSql = new sqlController();
 
         Persona persona = new Persona();
-        persona = conPersona.findPersona(Integer.parseInt(request.getParameter("usuario")));
+        persona = conPersona.findPersona(request.getParameter("usuario"));
         System.out.println("Procesando..");
         if (persona != null) {
             if (persona.getPassword().equals(request.getParameter("password"))) {

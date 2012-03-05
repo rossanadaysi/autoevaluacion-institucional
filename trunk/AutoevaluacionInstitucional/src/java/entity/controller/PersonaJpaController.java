@@ -5,30 +5,22 @@
 package entity.controller;
 
 import connection.jpaConnection;
-import entity.Persona;
-import entity.controller.exceptions.IllegalOrphanException;
-import entity.controller.exceptions.NonexistentEntityException;
-import entity.controller.exceptions.PreexistingEntityException;
+import entity.*;
 import java.io.Serializable;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Administrativo;
 import java.util.ArrayList;
 import java.util.List;
-import entity.Egresado;
-import entity.Representante;
-import entity.Agenciagubernamental;
-import entity.Estudiante;
-import entity.Empleador;
-import entity.Directorprograma;
-import entity.Docente;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
+import entity.controller.exceptions.PreexistingEntityException;
+import javax.persistence.EntityManager;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class PersonaJpaController implements Serializable {
 
@@ -441,7 +433,7 @@ public class PersonaJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = persona.getId();
+                String id = persona.getId();
                 if (findPersona(id) == null) {
                     throw new NonexistentEntityException("The persona with id " + id + " no longer exists.");
                 }
@@ -454,7 +446,7 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -559,7 +551,7 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
-    public Persona findPersona(Integer id) {
+    public Persona findPersona(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Persona.class, id);
@@ -580,5 +572,4 @@ public class PersonaJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

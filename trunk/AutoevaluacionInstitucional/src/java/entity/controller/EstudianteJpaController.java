@@ -4,47 +4,50 @@
  */
 package entity.controller;
 
-import connection.jpaConnection;
 import entity.Estudiante;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Programa;
 import entity.Persona;
+import entity.Programa;
 import entity.Fuente;
+import entity.controller.exceptions.NonexistentEntityException;
+import entity.controller.exceptions.PreexistingEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class EstudianteJpaController implements Serializable {
 
-    public EstudianteJpaController() {
+    public EstudianteJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
     }
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return jpaConnection.getEntityManager();
+        return emf.createEntityManager();
     }
 
-    public void create(Estudiante estudiante) {
+    public void create(Estudiante estudiante) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Programa programaId = estudiante.getProgramaId();
-            if (programaId != null) {
-                programaId = em.getReference(programaId.getClass(), programaId.getId());
-                estudiante.setProgramaId(programaId);
-            }
             Persona personaId = estudiante.getPersonaId();
             if (personaId != null) {
                 personaId = em.getReference(personaId.getClass(), personaId.getId());
                 estudiante.setPersonaId(personaId);
+            }
+            Programa programaId = estudiante.getProgramaId();
+            if (programaId != null) {
+                programaId = em.getReference(programaId.getClass(), programaId.getId());
+                estudiante.setProgramaId(programaId);
             }
             Fuente fuenteId = estudiante.getFuenteId();
             if (fuenteId != null) {
@@ -52,19 +55,24 @@ public class EstudianteJpaController implements Serializable {
                 estudiante.setFuenteId(fuenteId);
             }
             em.persist(estudiante);
-            if (programaId != null) {
-                programaId.getEstudianteList().add(estudiante);
-                programaId = em.merge(programaId);
-            }
             if (personaId != null) {
                 personaId.getEstudianteList().add(estudiante);
                 personaId = em.merge(personaId);
+            }
+            if (programaId != null) {
+                programaId.getEstudianteList().add(estudiante);
+                programaId = em.merge(programaId);
             }
             if (fuenteId != null) {
                 fuenteId.getEstudianteList().add(estudiante);
                 fuenteId = em.merge(fuenteId);
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findEstudiante(estudiante.getId()) != null) {
+                throw new PreexistingEntityException("Estudiante " + estudiante + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -78,33 +86,25 @@ public class EstudianteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getId());
-            Programa programaIdOld = persistentEstudiante.getProgramaId();
-            Programa programaIdNew = estudiante.getProgramaId();
             Persona personaIdOld = persistentEstudiante.getPersonaId();
             Persona personaIdNew = estudiante.getPersonaId();
+            Programa programaIdOld = persistentEstudiante.getProgramaId();
+            Programa programaIdNew = estudiante.getProgramaId();
             Fuente fuenteIdOld = persistentEstudiante.getFuenteId();
             Fuente fuenteIdNew = estudiante.getFuenteId();
-            if (programaIdNew != null) {
-                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
-                estudiante.setProgramaId(programaIdNew);
-            }
             if (personaIdNew != null) {
                 personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
                 estudiante.setPersonaId(personaIdNew);
+            }
+            if (programaIdNew != null) {
+                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
+                estudiante.setProgramaId(programaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
                 estudiante.setFuenteId(fuenteIdNew);
             }
             estudiante = em.merge(estudiante);
-            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
-                programaIdOld.getEstudianteList().remove(estudiante);
-                programaIdOld = em.merge(programaIdOld);
-            }
-            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
-                programaIdNew.getEstudianteList().add(estudiante);
-                programaIdNew = em.merge(programaIdNew);
-            }
             if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
                 personaIdOld.getEstudianteList().remove(estudiante);
                 personaIdOld = em.merge(personaIdOld);
@@ -112,6 +112,14 @@ public class EstudianteJpaController implements Serializable {
             if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
                 personaIdNew.getEstudianteList().add(estudiante);
                 personaIdNew = em.merge(personaIdNew);
+            }
+            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
+                programaIdOld.getEstudianteList().remove(estudiante);
+                programaIdOld = em.merge(programaIdOld);
+            }
+            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
+                programaIdNew.getEstudianteList().add(estudiante);
+                programaIdNew = em.merge(programaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getEstudianteList().remove(estudiante);
@@ -125,7 +133,7 @@ public class EstudianteJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = estudiante.getId();
+                String id = estudiante.getId();
                 if (findEstudiante(id) == null) {
                     throw new NonexistentEntityException("The estudiante with id " + id + " no longer exists.");
                 }
@@ -138,7 +146,7 @@ public class EstudianteJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -150,15 +158,15 @@ public class EstudianteJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The estudiante with id " + id + " no longer exists.", enfe);
             }
-            Programa programaId = estudiante.getProgramaId();
-            if (programaId != null) {
-                programaId.getEstudianteList().remove(estudiante);
-                programaId = em.merge(programaId);
-            }
             Persona personaId = estudiante.getPersonaId();
             if (personaId != null) {
                 personaId.getEstudianteList().remove(estudiante);
                 personaId = em.merge(personaId);
+            }
+            Programa programaId = estudiante.getProgramaId();
+            if (programaId != null) {
+                programaId.getEstudianteList().remove(estudiante);
+                programaId = em.merge(programaId);
             }
             Fuente fuenteId = estudiante.getFuenteId();
             if (fuenteId != null) {
@@ -198,7 +206,7 @@ public class EstudianteJpaController implements Serializable {
         }
     }
 
-    public Estudiante findEstudiante(Integer id) {
+    public Estudiante findEstudiante(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Estudiante.class, id);
@@ -219,4 +227,5 @@ public class EstudianteJpaController implements Serializable {
             em.close();
         }
     }
+    
 }

@@ -33,7 +33,7 @@ public class PonderacionCaracteristicaAI implements Action {
 
 
         Result rs3 = null;
-        String sql3 = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
+        String sql3 = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso;
         rs3 = conSql.CargarSql2(sql3, bd);
 
         if (rs3.getRowCount() > 0) {
@@ -42,11 +42,11 @@ public class PonderacionCaracteristicaAI implements Action {
 
 
             Result rs = null;
-            String sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre, nivelimportancia from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + "";
+            String sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre, nivelimportancia from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + " order by caracteristica.id";
             rs = conSql.CargarSql2(sql, bd);
 
             Result rs2 = null;
-            rs2 = conSql.CargarSql2("Select* from caracteristica", bd);
+            rs2 = conSql.CargarSql2("Select* from caracteristica order by caracteristica.id", bd);
 
             if (rs.getRowCount() > 0) {
                 session.setAttribute("auxAsignarC", 1);

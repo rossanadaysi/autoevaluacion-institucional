@@ -46,7 +46,7 @@ public class pCrearRepresentante implements Action {
             Representante representante = new Representante();
             Representantehasprivilegio repre_privi = new Representantehasprivilegio();
 
-            persona.setId(Integer.parseInt(request.getParameter("cedula")));
+            persona.setId(request.getParameter("cedula"));
             persona.setNombre(request.getParameter("nombres"));
             persona.setApellido(request.getParameter("apellidos"));
             persona.setPassword(request.getParameter("password"));

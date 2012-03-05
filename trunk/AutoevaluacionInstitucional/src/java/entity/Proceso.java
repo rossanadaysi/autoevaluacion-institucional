@@ -6,25 +6,13 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 @Entity
 @Table(name = "proceso")
@@ -36,8 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proceso.findByFechacierre", query = "SELECT p FROM Proceso p WHERE p.fechacierre = :fechacierre"),
     @NamedQuery(name = "Proceso.findByDescripcion", query = "SELECT p FROM Proceso p WHERE p.descripcion = :descripcion")})
 public class Proceso implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
-    private List<Asignacionencuesta> asignacionencuestaList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +40,8 @@ public class Proceso implements Serializable {
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Asignacionencuesta> asignacionencuestaList;
 
     public Proceso() {
     }
@@ -107,6 +95,15 @@ public class Proceso implements Serializable {
         this.programaId = programaId;
     }
 
+    @XmlTransient
+    public List<Asignacionencuesta> getAsignacionencuestaList() {
+        return asignacionencuestaList;
+    }
+
+    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
+        this.asignacionencuestaList = asignacionencuestaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -130,15 +127,6 @@ public class Proceso implements Serializable {
     @Override
     public String toString() {
         return "entity.Proceso[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Asignacionencuesta> getAsignacionencuestaList() {
-        return asignacionencuestaList;
-    }
-
-    public void setAsignacionencuestaList(List<Asignacionencuesta> asignacionencuestaList) {
-        this.asignacionencuestaList = asignacionencuestaList;
     }
     
 }

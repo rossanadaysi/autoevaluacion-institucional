@@ -34,6 +34,7 @@
             <form  id="formAsigEnc" method="post">
                 <fieldset>
                     <legend>Asignacion de Encuestas</legend>
+                    <p>Fuente</p>
                     <select id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
                         <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">

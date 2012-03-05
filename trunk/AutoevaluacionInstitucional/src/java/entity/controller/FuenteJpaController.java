@@ -5,28 +5,21 @@
 package entity.controller;
 
 import connection.jpaConnection;
-import entity.Fuente;
-import entity.controller.exceptions.IllegalOrphanException;
-import entity.controller.exceptions.NonexistentEntityException;
+import entity.*;
 import java.io.Serializable;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Administrativo;
 import java.util.ArrayList;
 import java.util.List;
-import entity.Egresado;
-import entity.Agenciagubernamental;
-import entity.Estudiante;
-import entity.Empleador;
-import entity.Directorprograma;
-import entity.Docente;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
+import javax.persistence.EntityManager;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 public class FuenteJpaController implements Serializable {
 
@@ -55,6 +48,9 @@ public class FuenteJpaController implements Serializable {
         }
         if (fuente.getDirectorprogramaList() == null) {
             fuente.setDirectorprogramaList(new ArrayList<Directorprograma>());
+        }
+        if (fuente.getAsignacionencuestaList() == null) {
+            fuente.setAsignacionencuestaList(new ArrayList<Asignacionencuesta>());
         }
         if (fuente.getDocenteList() == null) {
             fuente.setDocenteList(new ArrayList<Docente>());
@@ -99,6 +95,12 @@ public class FuenteJpaController implements Serializable {
                 attachedDirectorprogramaList.add(directorprogramaListDirectorprogramaToAttach);
             }
             fuente.setDirectorprogramaList(attachedDirectorprogramaList);
+            List<Asignacionencuesta> attachedAsignacionencuestaList = new ArrayList<Asignacionencuesta>();
+            for (Asignacionencuesta asignacionencuestaListAsignacionencuestaToAttach : fuente.getAsignacionencuestaList()) {
+                asignacionencuestaListAsignacionencuestaToAttach = em.getReference(asignacionencuestaListAsignacionencuestaToAttach.getClass(), asignacionencuestaListAsignacionencuestaToAttach.getId());
+                attachedAsignacionencuestaList.add(asignacionencuestaListAsignacionencuestaToAttach);
+            }
+            fuente.setAsignacionencuestaList(attachedAsignacionencuestaList);
             List<Docente> attachedDocenteList = new ArrayList<Docente>();
             for (Docente docenteListDocenteToAttach : fuente.getDocenteList()) {
                 docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getId());
@@ -160,6 +162,15 @@ public class FuenteJpaController implements Serializable {
                     oldFuenteIdOfDirectorprogramaListDirectorprograma = em.merge(oldFuenteIdOfDirectorprogramaListDirectorprograma);
                 }
             }
+            for (Asignacionencuesta asignacionencuestaListAsignacionencuesta : fuente.getAsignacionencuestaList()) {
+                Fuente oldFuenteIdOfAsignacionencuestaListAsignacionencuesta = asignacionencuestaListAsignacionencuesta.getFuenteId();
+                asignacionencuestaListAsignacionencuesta.setFuenteId(fuente);
+                asignacionencuestaListAsignacionencuesta = em.merge(asignacionencuestaListAsignacionencuesta);
+                if (oldFuenteIdOfAsignacionencuestaListAsignacionencuesta != null) {
+                    oldFuenteIdOfAsignacionencuestaListAsignacionencuesta.getAsignacionencuestaList().remove(asignacionencuestaListAsignacionencuesta);
+                    oldFuenteIdOfAsignacionencuestaListAsignacionencuesta = em.merge(oldFuenteIdOfAsignacionencuestaListAsignacionencuesta);
+                }
+            }
             for (Docente docenteListDocente : fuente.getDocenteList()) {
                 Fuente oldFuenteIdOfDocenteListDocente = docenteListDocente.getFuenteId();
                 docenteListDocente.setFuenteId(fuente);
@@ -195,6 +206,8 @@ public class FuenteJpaController implements Serializable {
             List<Empleador> empleadorListNew = fuente.getEmpleadorList();
             List<Directorprograma> directorprogramaListOld = persistentFuente.getDirectorprogramaList();
             List<Directorprograma> directorprogramaListNew = fuente.getDirectorprogramaList();
+            List<Asignacionencuesta> asignacionencuestaListOld = persistentFuente.getAsignacionencuestaList();
+            List<Asignacionencuesta> asignacionencuestaListNew = fuente.getAsignacionencuestaList();
             List<Docente> docenteListOld = persistentFuente.getDocenteList();
             List<Docente> docenteListNew = fuente.getDocenteList();
             List<String> illegalOrphanMessages = null;
@@ -244,6 +257,14 @@ public class FuenteJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Directorprograma " + directorprogramaListOldDirectorprograma + " since its fuenteId field is not nullable.");
+                }
+            }
+            for (Asignacionencuesta asignacionencuestaListOldAsignacionencuesta : asignacionencuestaListOld) {
+                if (!asignacionencuestaListNew.contains(asignacionencuestaListOldAsignacionencuesta)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Asignacionencuesta " + asignacionencuestaListOldAsignacionencuesta + " since its fuenteId field is not nullable.");
                 }
             }
             for (Docente docenteListOldDocente : docenteListOld) {
@@ -299,6 +320,13 @@ public class FuenteJpaController implements Serializable {
             }
             directorprogramaListNew = attachedDirectorprogramaListNew;
             fuente.setDirectorprogramaList(directorprogramaListNew);
+            List<Asignacionencuesta> attachedAsignacionencuestaListNew = new ArrayList<Asignacionencuesta>();
+            for (Asignacionencuesta asignacionencuestaListNewAsignacionencuestaToAttach : asignacionencuestaListNew) {
+                asignacionencuestaListNewAsignacionencuestaToAttach = em.getReference(asignacionencuestaListNewAsignacionencuestaToAttach.getClass(), asignacionencuestaListNewAsignacionencuestaToAttach.getId());
+                attachedAsignacionencuestaListNew.add(asignacionencuestaListNewAsignacionencuestaToAttach);
+            }
+            asignacionencuestaListNew = attachedAsignacionencuestaListNew;
+            fuente.setAsignacionencuestaList(asignacionencuestaListNew);
             List<Docente> attachedDocenteListNew = new ArrayList<Docente>();
             for (Docente docenteListNewDocenteToAttach : docenteListNew) {
                 docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getId());
@@ -370,6 +398,17 @@ public class FuenteJpaController implements Serializable {
                     if (oldFuenteIdOfDirectorprogramaListNewDirectorprograma != null && !oldFuenteIdOfDirectorprogramaListNewDirectorprograma.equals(fuente)) {
                         oldFuenteIdOfDirectorprogramaListNewDirectorprograma.getDirectorprogramaList().remove(directorprogramaListNewDirectorprograma);
                         oldFuenteIdOfDirectorprogramaListNewDirectorprograma = em.merge(oldFuenteIdOfDirectorprogramaListNewDirectorprograma);
+                    }
+                }
+            }
+            for (Asignacionencuesta asignacionencuestaListNewAsignacionencuesta : asignacionencuestaListNew) {
+                if (!asignacionencuestaListOld.contains(asignacionencuestaListNewAsignacionencuesta)) {
+                    Fuente oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta = asignacionencuestaListNewAsignacionencuesta.getFuenteId();
+                    asignacionencuestaListNewAsignacionencuesta.setFuenteId(fuente);
+                    asignacionencuestaListNewAsignacionencuesta = em.merge(asignacionencuestaListNewAsignacionencuesta);
+                    if (oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta != null && !oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta.equals(fuente)) {
+                        oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta.getAsignacionencuestaList().remove(asignacionencuestaListNewAsignacionencuesta);
+                        oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta = em.merge(oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta);
                     }
                 }
             }
@@ -455,6 +494,13 @@ public class FuenteJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Fuente (" + fuente + ") cannot be destroyed since the Directorprograma " + directorprogramaListOrphanCheckDirectorprograma + " in its directorprogramaList field has a non-nullable fuenteId field.");
+            }
+            List<Asignacionencuesta> asignacionencuestaListOrphanCheck = fuente.getAsignacionencuestaList();
+            for (Asignacionencuesta asignacionencuestaListOrphanCheckAsignacionencuesta : asignacionencuestaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Fuente (" + fuente + ") cannot be destroyed since the Asignacionencuesta " + asignacionencuestaListOrphanCheckAsignacionencuesta + " in its asignacionencuestaList field has a non-nullable fuenteId field.");
             }
             List<Docente> docenteListOrphanCheck = fuente.getDocenteList();
             for (Docente docenteListOrphanCheckDocente : docenteListOrphanCheck) {

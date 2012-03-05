@@ -2,9 +2,57 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
     
-    function presionSubmit(va)
+    function presionSubmit3()
     {
         
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=generarMuestra",
+            data: $("#formAsigMue").serialize(),
+            beforeSend:function(){
+                $("#resultados2").html('CARGANDO...');
+                // $("#resultados2").show();
+            },
+            success: function(){
+                //   
+                //$("#resultados2").hide()
+                $("#enlace").hide();
+                $("#filtro").show();
+                $("#resultados2").html('Seleccione un Programa para ver La muestra Asignada al mismo.');
+                $("#resultados2").show();
+                  
+            } //fin success
+                                            
+        }); //fin $.ajax
+            
+    }
+    function presionSubmit2(va)
+    {
+        
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=calcularMuestraAI",
+            data: $("#formAsigMue").serialize(),
+            beforeSend:function(){
+                $("#resultados2").html('CARGANDO...');
+                // $("#resultados2").show();
+            },
+            success: function(){
+                $("#resultados3").load("<%=request.getContextPath()%>/ControllerAI?action=muestraCalculada");
+                $("#resultados3").show();
+                $("#resultados2").hide()
+                $("#enlace").show();
+                  
+            } //fin success
+                                            
+        }); //fin $.ajax
+            
+    }
+        
+    function presionSubmit(va)
+    {
+      
+            
         if($("#select option:selected").val() == "--"){
             $("#resultados2").hide();
         }
@@ -21,26 +69,47 @@
 
             }
             else{
-                $("#formula").hide(); 
-            }
-                
-            
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
-                data: $("#formAsigMue").serialize(),
-                beforeSend:function(){
-                    $("#resultados2").html('CARGANDO...');
-                    $("#resultados2").show();
-                },
-                success: function(){
-                    $("#resultados2").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI");
-                    $("#resultados2").show();
-                } //fin success
+                         
+               
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
+                    data: $("#formAsigMue").serialize(),
+                    beforeSend:function(){
+                        $("#resultados2").html('CARGANDO...');
+                        $("#resultados2").show();
+                    },
+                    success: function(){
+                        $("#resultados2").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI");
+                        $("#resultados2").show();
+                    } //fin success
                                             
-            }); //fin $.ajax
-            
+                }); //fin $.ajax
+            }
         }
+        return false;
+    }
+    
+    function presionSubmit4(va)
+    {
+        
+       
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
+            data: $("#formAsigMue").serialize(),
+            beforeSend:function(){
+                $("#resultados4").html('CARGANDO...');
+                $("#resultados4").show();
+            },
+            success: function(){
+                $("#resultados4").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI");
+                $("#resultados4").show();
+            } //fin success
+                                            
+        }); //fin $.ajax
+            
+    
         return false;
     }
 
@@ -51,11 +120,11 @@
 <br>
 <div class="hero-unit">
     <div class="row">
-        <div class="span10">
-            <a ></a>
-            <form  id="formAsigMue" method="post">
-                <fieldset>
-                    <legend>Asignación de Muestra</legend>
+        <fieldset>
+            <legend>Asignación de Muestra</legend>
+            <div class="span5" style="border: 1px solid #FFF;">
+                <form  id="formAsigMue" method="post">
+
                     <p>Fuente</p>
                     <select class="span3" id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
@@ -65,20 +134,23 @@
                     </select>
                     <br>
                     <div id="formula" style="display: none;">
-                        <p>Formular Calculo Muestra</p>
+                        <p>Calcular Muestra</p>
 
-                        <select class="span3" id="select" name="formula" onchange="presionSubmit(this)">
+                        <select class="span3" id="select" name="formula" onchange="presionSubmit2(this)">
                             <option value="--">Seleccione una Formula</option>
-                            <option data-content="<p> <div><img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/f1.gif'></div></p><br><p> n = Tamaño de la muestra. </p><p> Z = Nivel de confianza aplicado al estudio. Basados en la tabla Z. </p><p> p = probabilidad de ocurrencia del evento previsto. </p><p> q = Probabilidad de no ocurrencia del evento previsto. </p><p> EE = Error de tolerancia máxima permitida. </p><p> N = Tamaño de la población." rel="popover"  value="${item2[0]}" data-original-title="Detalle Formula">Muestreo aleatorio por conglomerado</option>
+                            <option data-content="<p> <div><img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/f1.gif'></div></p><br><p> n = Tamaño de la muestra. </p><p> Z = Nivel de confianza aplicado al estudio. Basados en la tabla Z. </p><p> p = probabilidad de ocurrencia del evento previsto. </p><p> q = Probabilidad de no ocurrencia del evento previsto. </p><p> EE = Error de tolerancia máxima permitida. </p><p> N = Tamaño de la población." rel="popover"  value="1" data-original-title="Detalle Formula">Muestreo aleatorio por conglomerado</option>
                         </select>
                     </div>
                     <br>
+                    <div id="enlace" style="display: none;">
+                        <button class="btn btn-secundary" onclick="presionSubmit3()" type="button">Generar Muestra Aleatoriamente</button>
+                    </div>
                     <div id="filtro" style="display: none;">
                         <p>Filtros</p>
                         <table>
                             <tr>
                                 <td>
-                                    <select  class="span3" id="select" name="programas" onchange="presionSubmit(this)">
+                                    <select  class="span3" id="select" name="programas" onchange="presionSubmit4(this)">
                                         <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
@@ -86,7 +158,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select id="select" name="semestres" onchange="presionSubmit(this)">
+                                    <select id="select" name="semestres" onchange="presionSubmit4(this)">
                                         <option value="--">Seleccione Semestre</option>
                                         <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
@@ -105,8 +177,18 @@
                     </div>
                     <br> 
                     <div  id="resultados2"></div>
-                </fieldset>
-                        </form>
-        </div>
+
+                </form>
+            </div>
+            <div  class="span4">
+                <div  style="height: 10px;" id="resultados3"></div>
+            </div>
+            <div  class="span10">
+                <div id="resultados4"></div> 
+            </div>
+
+        </fieldset>
     </div>
 </div>
+
+

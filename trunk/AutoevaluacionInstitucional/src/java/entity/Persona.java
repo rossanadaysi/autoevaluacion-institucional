@@ -6,21 +6,13 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vanesa
+ * @author Usuario
  */
 @Entity
 @Table(name = "persona")
@@ -37,7 +29,7 @@ public class Persona implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
@@ -69,22 +61,22 @@ public class Persona implements Serializable {
     public Persona() {
     }
 
-    public Persona(Integer id) {
+    public Persona(String id) {
         this.id = id;
     }
 
-    public Persona(Integer id, String nombre, String apellido, String password) {
+    public Persona(String id, String nombre, String apellido, String password) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.password = password;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

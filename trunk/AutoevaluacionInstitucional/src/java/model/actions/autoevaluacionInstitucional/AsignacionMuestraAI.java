@@ -85,7 +85,7 @@ public class AsignacionMuestraAI implements Action {
         }
 
         rs2 = null;
-        sql2 = "Select* from programa";
+        sql2 = "Select* from programa order by programa.nombre";
         rs2 = conSql.CargarSql2(sql2, bd);
 
 
