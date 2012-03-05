@@ -229,8 +229,6 @@
 
         </style>
         <script type="text/javascript">
-                    
-            
             
             $(document).ready(function() {
                 location ="/AutoevaluacionInstitucional/#inicio"; 
@@ -518,29 +516,6 @@
                                         }, 500);
                                         $("div.ui-layout-center").scrollspy('refresh');
                                         //{offset:80}   
-                                    
-                                        $("#formPondeCara").submit(function(event){
-                                            event.preventDefault();
-                                             
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
-                                                data: $("#formPondeCara").serialize(),
-                                                success: function(){
-                                                                            
-                                                    $('#myModalC').modal(); 
-                                                    $('#myModalC').on('hidden', function () {
-                                                        location = "<%=request.getContextPath()%>/#PonderacionCaracteristicas";
-                                                        
-                                                                                    
-                                                    })
-                                             
-                                                } //fin success
-                                            
-                                            }); //fin $.ajax
-                                        }); //fin submit
-                                                                                                        
-                             
                                     } //fin success
                                 }); //fin del $.ajax
                          
@@ -642,9 +617,11 @@
                                     success: function(data) 
                                     {
                                         $("div.ui-layout-center").append(data);
-                                        $("#formCrearProc").submit(function(event){
-                                            event.preventDefault();
-                                            $.ajax({
+                                        setTimeout(function(){},200);
+                                        $("#formCrearProc").validate({
+                                            submitHandler: function(){
+                                        
+                                                $.ajax({
                                                 type: 'POST',
                                                 url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
                                                 data: $("#formCrearProc").serialize(),
@@ -653,8 +630,11 @@
                                                                                
                                                                                                          
                                                 } //fin success
-                                            }); //fin $.ajax
-                                        }); //fin submit
+                                            }); //fin $.ajax    
+                                            }
+                                        });
+                                        
+                                       
                                     } //fin success
                                 }); //fin del $.ajax
                             }
@@ -668,7 +648,10 @@
                                     success: function(data) 
                                     {
                                         $("div.ui-layout-center").append(data);
-                                        $("#formCrearProc").submit(function(event){
+                                        setTimeout(function(){},200);
+                                        $("#formCrearProc").validate({
+                                            
+                                            submitHandler: function() {
                                             event.preventDefault();
                                             $.ajax({
                                                 type: 'POST',
@@ -699,8 +682,14 @@
                                                                                 
                                                                                                                                                                                      
                                                 } //fin success
-                                            }); //fin $.ajax
-                                        }); //fin submit
+                                                }); //fin $.ajax   
+                                             }   
+                                                });
+                                        
+                                        
+                                        
+                                        
+                                        
                                     } //fin success
                                 }); //fin del $.ajax
                             }

@@ -1,8 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
-    
-    function presionSubmit(va, idc)
+function presionSubmit(va, idc)
     {
         var a = "#"+va;
         var b = $("#select1 option:selected").val();
@@ -24,12 +23,12 @@
         if(${auxAsignarC1} == 0){
             $('#myModalC1').modal(); 
             $('#myModalC1').on('hidden', function () {
-            $("ul.nav-list li:eq(2) a").trigger("click");
+                $("ul.nav-list li:eq(2) a").trigger("click");
                                                                                     
             })
         }
         
-      $('a[href^=#PonderacionCaracteristicas]').click(function() {
+        $('a[href^=#PonderacionCaracteristicas]').click(function() {
      
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
                 && location.hostname == this.hostname) {
@@ -46,13 +45,41 @@
                         $('div.ui-layout-center').animate({scrollTop: targetOffset - 118}, 500);
                     }
 
-                   return false;
+                    return false;
                 }
 
             }
         });  
         
-    });
+        
+        $("#formPondeCara").validate({
+            
+            submitHandler: function(){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
+                                    data: $("#formPondeCara").serialize(),
+                                    success: function(){
+                                                                            
+                                        $('#myModalC').modal(); 
+                                        $('#myModalC').on('hidden', function () {
+                                            location = "<%=request.getContextPath()%>/#PonderacionCaracteristicas";
+                                                        
+                                                                                    
+                                        })
+                                             
+                                    } //fin success
+                                            
+                                }); //fin $.ajax
+            
+                            } 
+    
+    
+                        });
+        
+        
+        
+                    });
  
            
 </script>
@@ -102,8 +129,8 @@
                                             <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
-                                            <select class="span1" name="ponderacion${row[0]}">
-                                                <option value="NULL">--</option>
+                                            <select class="span1 {required:true}" id="ponderacion${row[0]}" name="ponderacion${row[0]}">
+                                                <option value=""></option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -119,7 +146,7 @@
                                             <input type="hidden"  value="${row[0]}" name="id${row[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="justificacion${row[0]}" rows="3" class="span5"></textarea>
+                                            <textarea name="justificacion${row[0]}" rows="3" class="span5 {required:true}"></textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
@@ -292,7 +319,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <textarea name="justificacion${row2[4]}" rows="3" class="span5">${row2[2]}</textarea>
+                                            <textarea name="justificacion${row2[4]}" rows="3" class="span5 {required:true}">${row2[2]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
