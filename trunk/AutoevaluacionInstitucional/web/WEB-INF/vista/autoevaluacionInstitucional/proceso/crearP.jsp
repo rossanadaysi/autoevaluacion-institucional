@@ -34,7 +34,7 @@
                         <label for="descripcion" class="control-label">Descripcion</label>
                         <div class="controls">
                             <c:if test="${aux_index2 == 0}">
-                                <textarea rows="3" id="descripcion" name="descripcion" class="input-xlarge"></textarea>
+                                <textarea rows="3" name="descripcion" class="input-xlarge {required:true}"></textarea>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -43,7 +43,7 @@
                         </div>
                     </c:if>
                     <c:if test="${aux_index2 == 1}">
-                        <textarea rows="3" id="descripcion" name="descripcion" class="input-xlarge">${descripcionProceso}</textarea>
+                        <textarea rows="3" name="descripcion" class="input-xlarge {required:true}">${descripcionProceso}</textarea>
                         </div>
                         </div>
                         <div class="form-actions">
