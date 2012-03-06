@@ -1,8 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+    $(document).ready(function(){
+       $('#collapseOne').on('hide', function () {
+            $("a[href='#collapseOne']  i").removeClass("icon-arrow-up");
+            $("a[href='#collapseOne']  i").addClass("icon-arrow-down");
+            
+        });
+        $('#collapseOne').on('show', function () {
+            $("a[href='#collapseOne']  i").removeClass("icon-arrow-down");
+            $("a[href='#collapseOne']  i").addClass("icon-arrow-up");
+            
+        }); 
+    });
+</script>
+
+
 <div class="accordion-group">
     <div class="accordion-heading">
-        <a href="#collapseOne" data-parent="#resultados3" data-toggle="collapse" class="accordion-toggle">
+        <a href="#collapseOne" data-parent="#resultados3" data-toggle="collapse" class="accordion-toggle"><i class="icon-arrow-down"></i>
             Muestra Calculada Para la Fuente Seleccionada 
         </a>
         
