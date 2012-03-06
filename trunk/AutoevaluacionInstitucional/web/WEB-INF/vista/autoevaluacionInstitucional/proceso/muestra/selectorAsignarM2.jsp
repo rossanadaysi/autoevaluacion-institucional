@@ -2,29 +2,40 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("a[href *='collapseOne']").click(function(){
-            if($("#collapseTwo").hasClass("in")){
-                $("#collapseTwo").collapse("hide");
-            }
-           
-        });
-        $("a[href *='collapseTwo']").click(function(){
+        
             if($("#collapseOne").hasClass("in")){
                 $("#collapseOne").collapse("hide");
             }
+           
+           $('#collapseOne').on('show', function () {
+            $("#collapseTwo").collapse("hide");
             
         });
+        
+        $('#collapseTwo').on('hide', function () {
+            $("a[href='#collapseTwo']  i").removeClass("icon-arrow-up");
+            $("a[href='#collapseTwo']  i").addClass("icon-arrow-down");
+            
+        });
+        $('#collapseTwo').on('show', function () {
+            $("a[href='#collapseTwo']  i").removeClass("icon-arrow-down");
+            $("a[href='#collapseTwo']  i").addClass("icon-arrow-up");
+            $("#collapseOne").collapse("hide");
+            
+        });
+        
+        
     });
    
 </script>
 <div class="accordion-group">
     <div class="accordion-heading">
-        <a href="#collapseTwo" data-parent="#resultados4" data-toggle="collapse" class="accordion-toggle">
-            Muestra Generada Para la Fuente Seleccionada
+        <a href="#collapseTwo" data-parent="#resultados4" data-toggle="collapse" class="accordion-toggle"><i class="icon-arrow-up"></i>
+        Muestra Generada Para la Fuente Seleccionada
         </a>
 
     </div>
-    <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
+    <div class="accordion-body in collapse" id="collapseTwo">
         <div class="accordion-inner">
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
