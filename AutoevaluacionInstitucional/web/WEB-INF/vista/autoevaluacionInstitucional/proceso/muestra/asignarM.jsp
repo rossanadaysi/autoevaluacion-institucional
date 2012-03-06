@@ -38,10 +38,19 @@
                 // $("#resultados2").show();
             },
             success: function(){
-                $("#resultados3").load("<%=request.getContextPath()%>/ControllerAI?action=muestraCalculada");
-                $("#resultados3").show();
-                $("#resultados2").hide()
-                $("#enlace").show();
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=muestraCalculada",
+                    success: function(data){
+                        $("#resultados3").html(data);
+                        $("#resultados3").show();
+                        $("#resultados2").hide()
+                        $("#enlace").show();
+                    }
+                })
+                
+                
+               
                   
             } //fin success
                                             
@@ -103,8 +112,14 @@
                 $("#resultados4").show();
             },
             success: function(){
-                $("#resultados4").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI");
-                $("#resultados4").show();
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                    success: function(data){
+                        $("#resultados4").html(data);
+                        $("#resultados4").show();
+                    }
+                })
             } //fin success
                                             
         }); //fin $.ajax
@@ -113,8 +128,7 @@
         return false;
     }
 
- 
-   
+    
            
 </script>
 <br>
@@ -181,10 +195,10 @@
                 </form>
             </div>
             <div  class="span4">
-                <div  style="height: 10px;" id="resultados3"></div>
+                <div  id="resultados3" class="accordion" style="position: absolute;"></div>
             </div>
             <div  class="span10">
-                <div id="resultados4"></div> 
+                <div id="resultados4" class="accordion"></div> 
             </div>
 
         </fieldset>

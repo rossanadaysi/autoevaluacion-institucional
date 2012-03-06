@@ -62,6 +62,7 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-modal.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-tooltip.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-popover.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
         <style type="text/css">
 
             .slick-cell .options a {
@@ -330,7 +331,7 @@
                        
                     }
                                                 
-                    if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1){
+                    if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
                                                   
                     }else{
                                                     
