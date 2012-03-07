@@ -63,6 +63,8 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-tooltip.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-popover.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-button.js"></script>
+       
         <style type="text/css">
 
             .slick-cell .options a {
