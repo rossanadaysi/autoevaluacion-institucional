@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.sql.Result;
-import javax.servlet.jsp.jstl.sql.ResultSupport;
 
 /**
  *
@@ -416,8 +415,58 @@ public class formController extends HttpServlet {
                 int id = Integer.valueOf(idFuente);
                 int idMuestra = (Integer) session.getAttribute("idMuestra");
 
-                String idP = request.getParameter("programas");
-                String idS = request.getParameter("semestres");
+                Result rs2 = null;
+                String tabla = null;
+                String tabla1 = null;
+                String sql2 = null;
+
+                try {
+
+                    //Estatico
+                    if (id == 1) {
+                        tabla = "muestraestudiante";
+                        tabla1 = "estudiante";
+
+
+                    } else if (id == 2) {
+
+                        tabla = "muestradocente";
+                        tabla1 = "docente";
+                    }
+
+
+                    Result rs = null;
+                    String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
+                    rs = conSql.CargarSql2(sql, bd);
+
+                    if (rs.getRowCount() != 0) {
+                        //  System.out.println("si hay asignacion de muestras");
+                        session.setAttribute("muestrasSeleccionadas", rs);
+                        session.setAttribute("aux_asignarM", 1);
+
+                    } else {
+                        //f  System.out.println("no hay asignacion de muestras!!!!!");
+                        session.setAttribute("aux_asignarM", 0);
+                    }
+
+
+                } catch (Error ex) {
+                    //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (request.getParameter(
+                    "action").equals("selectorAsignarMuestra3AI")) {
+                System.out.println("selectorAsignarMuestra3AI");
+                HttpSession session = request.getSession();
+                sqlController conSql = new sqlController();
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                int idProceso = proceso.getId();
+                String bd = (String) session.getAttribute("bd");
+
+                String idFuente = request.getParameter("fuente");
+                int id = Integer.valueOf(idFuente);
+                int idMuestra = (Integer) session.getAttribute("idMuestra");
+
 
 
                 Result rs2 = null;
@@ -426,23 +475,30 @@ public class formController extends HttpServlet {
                 String sql2 = null;
 
 
+                String idP = request.getParameter("programas2");
+                String idS = request.getParameter("semestres2");
                 int fil = 0;
 
                 try {
+
                     //Estatico
                     if (id == 1) {
                         tabla = "muestraestudiante";
                         tabla1 = "estudiante";
+
                         if (!idP.equals("--") && !idS.equals("--")) {
-                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP + " and " + tabla1 + ".semestre = " + idS;
+                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre , persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla1 + ".programa_id = " + idP
+                                    + " and " + tabla1 + ".semestre = " + idS;
                             System.out.println(sql2);
                             fil = 1;
                         } else if (!idP.equals("--")) {
-                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".programa_id = " + idP;
+                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1
+                                    + ".persona_id = persona.id where " + tabla1
+                                    + ".programa_id = " + idP;
                             System.out.println(sql2);
                             fil = 1;
                         } else if (!idS.equals("--")) {
-                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id  where " + tabla1 + ".semestre = " + idS;
+                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla1 + ".semestre = " + idS;
                             System.out.println(sql2);
                             fil = 1;
                         }
@@ -454,7 +510,9 @@ public class formController extends HttpServlet {
                     }
 
                     if (fil == 0) {
-                        sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id";
+                        sql2 = "Select " + tabla1 + ".id,persona.id, persona.nombre, persona.apellido from "
+                                + tabla1 + " inner join persona on " + tabla1
+                                + ".persona_id = persona.id";
                     }
 
                     rs2 = conSql.CargarSql2(sql2, bd);
@@ -462,8 +520,6 @@ public class formController extends HttpServlet {
                         session.setAttribute("muestras", rs2);
                         System.out.println("result: " + rs2.getRowCount());
                     }
-
-//*                
 
                     Result rs = null;
                     String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
@@ -473,16 +529,19 @@ public class formController extends HttpServlet {
                         //  System.out.println("si hay asignacion de muestras");
                         session.setAttribute("muestrasSeleccionadas", rs);
                         session.setAttribute("aux_asignarM", 1);
+
                     } else {
                         //f  System.out.println("no hay asignacion de muestras!!!!!");
                         session.setAttribute("aux_asignarM", 0);
                     }
+
                 } catch (Error ex) {
                     //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else if (request.getParameter(
                     "action").equals("selectorAsignarMuestra2AI")) {
+                System.out.println("selectorAsignarMuestra2AI");
                 HttpSession session = request.getSession();
                 sqlController conSql = new sqlController();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
@@ -508,8 +567,7 @@ public class formController extends HttpServlet {
                         sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " order by estudiante.id";
                     } else if (!idS.equals("--")) {
                         sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.id";
-                    }
-                    else if (idP.equals("--") && idS.equals("--")) {
+                    } else if (idP.equals("--") && idS.equals("--")) {
                         sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
                     }
 
@@ -519,6 +577,7 @@ public class formController extends HttpServlet {
 
                 Result rs = conSql.CargarSql2(sql, bd);
                 session.setAttribute("selectorAsignarM2", rs);
+
 
 
 
@@ -546,19 +605,11 @@ public class formController extends HttpServlet {
                     tabla = "muestraestudiante";
                     tabla1 = "estudiante";
 
-                    System.out.println("generando..");
-
-
                     ArrayList rs = (ArrayList) session.getAttribute("muestraCalculada2");
-
-
-
                     Iterator i = rs.iterator();
 
-
+                    conSql.UpdateSql("TRUNCATE TABLE `muestraestudiante` ", bd);
                     while (i.hasNext()) {
-
-
                         String s1 = (String) i.next();
                         System.out.println(s1);
                         String[] campos = s1.split("/");
@@ -569,7 +620,7 @@ public class formController extends HttpServlet {
 
 
 
-                        String sql = "SELECT * FROM estudiante where estudiante.programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
+                        String sql = "SELECT * FROM estudiante where estudiante.programa_id = " + programa + " and estudiante.semestre != 01 and  estudiante.semestre != 02 ORDER BY Rand() LIMIT " + muestra;
                         ResultSet rs1 = conSql.CargarSql(sql, bd);
                         try {
                             while (rs1.next()) {
