@@ -2,12 +2,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(document).ready(function(){
-       $('#collapseOne').on('hide', function () {
+       $('#collapseOne').on('hidden', function () {
             $("a[href='#collapseOne']  i").removeClass("icon-arrow-up");
             $("a[href='#collapseOne']  i").addClass("icon-arrow-down");
             
+            
+            
         });
-        $('#collapseOne').on('show', function () {
+        $('#collapseOne').on('shown', function () {
             $("a[href='#collapseOne']  i").removeClass("icon-arrow-down");
             $("a[href='#collapseOne']  i").addClass("icon-arrow-up");
             
@@ -23,7 +25,7 @@
         </a>
         
     </div>
-    <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
+    <div class="accordion-body collapse" id="collapseOne" style="height: 0px; z-index:2;background-color: #FFFFFF;">
         <div class="accordion-inner">
             <table class="table table-striped table-bordered table-condensed">
                     <thead>
