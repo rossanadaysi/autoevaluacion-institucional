@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
-    
     function presionSubmit3()
     {
         
@@ -10,13 +9,14 @@
             url: "<%=request.getContextPath()%>/formController?action=generarMuestra",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
+                $("#enlace").hide();
+                $("#cargando").show();
                 $("#resultados2").html('CARGANDO...');
                 // $("#resultados2").show();
             },
             success: function(){
                 //   
-                //$("#resultados2").hide()
-                $("#enlace").hide();
+                $("#cargando").hide();
                 $("#filtro").show();
                 $("#resultados2").html('Seleccione un Programa para ver La muestra Asignada al mismo.');
                 $("#resultados2").show();
@@ -158,6 +158,11 @@
                     <br>
                     <div id="enlace" style="display: none;">
                         <button class="btn btn-secundary" onclick="presionSubmit3()" type="button">Generar Muestra Aleatoriamente</button>
+                    </div>
+                    <div class="alert alert-info" id="cargando" style="display: none; width: 221px;">
+                        <a class="close">×</a>
+                        <img src="<%=request.getContextPath()%>/css/images/wait.gif" style="float:left; padding: 1px 10px 0 0;">
+                        Generando Muestra...
                     </div>
                     <div id="filtro" style="display: none;">
                         <p>Filtros</p>
