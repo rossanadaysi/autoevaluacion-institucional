@@ -43,6 +43,8 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/muestra/selectorAsignarM";
         } else if (path.equals("selectorAsignarMuestra2AI")) {
             path = "autoevaluacionInstitucional/proceso/muestra/selectorAsignarM2";
+        } else if (path.equals("selectorAsignarMuestra3AI")) {
+            path = "autoevaluacionInstitucional/proceso/muestra/selectorAsignarM3";
         } else if (path.equals("muestraCalculada")) {
             path = "autoevaluacionInstitucional/proceso/muestra/muestraCalculada";
         } else if (path.equals("indexCC")) {
