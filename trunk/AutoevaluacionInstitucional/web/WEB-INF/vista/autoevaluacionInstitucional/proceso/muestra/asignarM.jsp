@@ -1,5 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function() { 
+        $.fcbkListSelection("#fcbklist","600","50","3");     
+    });
+</script>
 <script type="text/javascript" language="JavaScript">
     
     $(document).ready(function() {$('#boton1').button()})
@@ -79,6 +85,8 @@
             $("#formula").hide();
             $("#enlace").hide();
             $("#filtro").hide();
+            $("#resultadoAlert").hide();
+           
         }
         else{
             $("#formula").hide();  
@@ -91,19 +99,14 @@
                 data: $("#formAsigMue").serialize(),
                 beforeSend:function(){
                 },
-                success: function(){
-                    if(${aux_asignarM == 1}){
-                        $("#resultadoAlert").show();
-                        $("#filtro").show();
-                    }else{
-                        $("#formula").show();
-                        $("option[rel=popover]")
-                        .popover()
-                        .click(function(e) {
-                            e.preventDefault()
-                    
-                        })
-                    }
+                success: function(data){
+                    $.ajax({
+                        type: 'POST',
+                        url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
+                        success: function(data){
+                            $("#resultados2").html(data);
+                        }
+                    })
                 } //fin success
                                             
             }); //fin $.ajax
