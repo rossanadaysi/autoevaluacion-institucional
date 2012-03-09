@@ -17,9 +17,6 @@
                 Las encuestas ya han sido asignadas para la fuente seleccionada.
             </div>
         </div>
-
-
-
         <ul id="fcbklist">
             <c:forEach items="${encuestas.rowsByIndex}" var="item" varStatus="iter">
                 <c:set var="auxx" value="1"></c:set>

@@ -3,8 +3,9 @@
 <script type="text/javascript" language="JavaScript">
     $("#buton5").click(function(){
         var a = $("#select3 option:selected").index();
+        var b = $("#select4 option:selected").index();
         $("#select5 option:eq("+a+")").attr("selected", "selected");
-        $("#select4 option:eq(0)").attr("selected", "selected");
+        $("#select6 option:eq("+b+")").attr("selected", "selected");
         $("#filtro").hide();
         $("#filtro2").show();
         $.ajax({

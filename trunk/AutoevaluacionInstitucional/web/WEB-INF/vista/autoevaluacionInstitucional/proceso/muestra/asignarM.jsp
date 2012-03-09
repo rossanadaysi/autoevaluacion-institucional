@@ -261,7 +261,6 @@
                             <tr>
                                 <td>
                                     <select  class="span3" id="select5" name="programas2" onchange="presionSubmit6(this)">
-                                        <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
                                         </c:forEach>
@@ -269,7 +268,6 @@
                                 </td>
                                 <td>
                                     <select id="select6" name="semestres2" onchange="presionSubmit6(this)">
-                                        <option value="--">Seleccione Semestre</option>
                                         <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
                                         <option value="3">Tercero Semestre</option>
