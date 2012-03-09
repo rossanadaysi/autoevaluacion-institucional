@@ -1,11 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
-<script type="text/javascript" language="JavaScript">
-    $(document).ready(function() { 
-        $.fcbkListSelection("#fcbklist","600","50","3");     
-    });
-</script>
 <script type="text/javascript" language="JavaScript">
     
     $(document).ready(function() {$('#boton1').button()})
