@@ -64,7 +64,7 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-popover.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-button.js"></script>
-       
+
         <style type="text/css">
 
             .slick-cell .options a {
@@ -263,8 +263,8 @@
                                                     
                         if(hash=="#CerrarSesion"){
                             $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
-                             function(data) {
-                                      location = "<%=request.getContextPath()%>/";
+                            function(data) {
+                                location = "<%=request.getContextPath()%>/";
                                  
                             });
                                                         
@@ -494,7 +494,6 @@
                             else if(hash == "#AsignacionMuestra"){
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
-                      
                                 var jaja34 = function(){
                                     $("div.ui-layout-center").empty();
                                     $.ajax({ 
@@ -504,7 +503,7 @@
                                         {
                                        
                                             $("div.ui-layout-center").append(data);
-                                    
+                                            /*
                                             $("#formAsigMue").submit(function(event){
                                                 event.preventDefault();
                                              
@@ -523,6 +522,7 @@
                                             
                                                 }); //fin $.ajax
                                             }); //fin submit
+                                             */
                                         
                                      
                              
@@ -549,15 +549,15 @@
                                             submitHandler: function(){
                                         
                                                 $.ajax({
-                                                type: 'POST',
-                                                url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
-                                                data: $("#formCrearProc").serialize(),
-                                                success: function(){
-                                                    $('#myModalP1').modal(); 
+                                                    type: 'POST',
+                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                    data: $("#formCrearProc").serialize(),
+                                                    success: function(){
+                                                        $('#myModalP1').modal(); 
                                                                                
                                                                                                          
-                                                } //fin success
-                                            }); //fin $.ajax    
+                                                    } //fin success
+                                                }); //fin $.ajax    
                                             }
                                         });
                                         
@@ -579,40 +579,40 @@
                                         $("#formCrearProc").validate({
                                             
                                             submitHandler: function() {
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
-                                                data: $("#formCrearProc").serialize(),
-                                                beforeSend: function(){
-                                                    $('#myModalLoading').modal();   
-                                                    $("#myModalLoading .bar").css("width","50%");
-                                                },
-                                                complete:function(){
-                                                    $("#myModalLoading .bar").css("width","100%");
-                                                    setTimeout(function(){
-                                                        $('#myModalLoading').modal("hide");
-                                                    },400);
-                                                },
-                                                success: function(){
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                    data: $("#formCrearProc").serialize(),
+                                                    beforeSend: function(){
+                                                        $('#myModalLoading').modal();   
+                                                        $("#myModalLoading .bar").css("width","50%");
+                                                    },
+                                                    complete:function(){
+                                                        $("#myModalLoading .bar").css("width","100%");
+                                                        setTimeout(function(){
+                                                            $('#myModalLoading').modal("hide");
+                                                        },400);
+                                                    },
+                                                    success: function(){
                                                         
-                                                    setTimeout(function(){
-                                                        $('#myModalP').modal(); 
+                                                        setTimeout(function(){
+                                                            $('#myModalP').modal(); 
                                                                                     
                                                                                 
-                                                    },2000);
+                                                        },2000);
                                                                                 
-                                                    $('#myModalP').on('hidden', function () {
-                                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                        setTimeout(function(){
-                                                            location = '/AutoevaluacionInstitucional/';
-                                                        }, 200);
-                                                    });
+                                                        $('#myModalP').on('hidden', function () {
+                                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                            setTimeout(function(){
+                                                                location = '/AutoevaluacionInstitucional/';
+                                                            }, 200);
+                                                        });
                                                                                 
                                                                                                                                                                                      
-                                                } //fin success
+                                                    } //fin success
                                                 }); //fin $.ajax   
-                                             }   
-                                                });
+                                            }   
+                                        });
                                         
                                         
                                         

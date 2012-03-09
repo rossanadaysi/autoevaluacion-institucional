@@ -356,6 +356,8 @@ public class formController extends HttpServlet {
 
 
                 String idFuente = request.getParameter("fuente");
+                
+                System.out.println("idfuentexxx : " + idFuente);
 
                 int id = Integer.valueOf(idFuente);
 
@@ -366,6 +368,10 @@ public class formController extends HttpServlet {
 
                 String tabla = null;
                 String tabla1 = null;
+
+
+                String idP = request.getParameter("programas2");
+                String idS = request.getParameter("semestres2");
 
                 //Estatico
                 if (id == 1) {
@@ -380,28 +386,31 @@ public class formController extends HttpServlet {
                 }
 
 
-                if (session.getAttribute("aux_asignarM").equals(1)) {
-                    System.out.println("sisasasasasas");
-                    String sql2 = "delete from `" + tabla + "` where `muestra_id` = " + idMuestra;
-                    conSql.UpdateSql(sql2, bd);
-
-                }
+                String sql2 = "delete t1 from `" + tabla + "` t1 inner join estudiante on t1.estudiante_id = estudiante.id  where `muestra_id` = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS;
+                conSql.UpdateSql(sql2, bd);
+                System.out.println(sql2);
 
                 ResultSet rs = null;
-                String sql = "Select* from " + tabla1;
+                String sql = "Select* from " + tabla1 + " where estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS;
 
-
+                System.out.println(sql);
+                
                 rs = conSql.CargarSql(sql, bd);
                 try {
+                    System.out.println("insertando0");
                     while (rs.next()) {
+                        System.out.println("insertando: " + rs.getString(1));
+                        System.out.println("parametro: " + request.getParameter(rs.getString(1)));
                         if (request.getParameter(rs.getString(1)).equals("1")) {
-                            String sql2 = "INSERT INTO `" + tabla + "` (`id`, `muestra_id`, `" + tabla1 + "_id`) VALUES (NULL, '" + idMuestra + "', '" + rs.getString(1) + "')";
+                            System.out.println("insertando" + rs.getString(1));
+                            sql2 = "INSERT INTO `" + tabla + "` (`id`, `muestra_id`, `" + tabla1 + "_id`) VALUES (NULL, '" + idMuestra + "', '" + rs.getString(1) + "')";
                             conSql.UpdateSql(sql2, bd);
                         }
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                System.out.println("termino esa monda");
 
             } else if (request.getParameter(
                     "action").equals("selectorAsignarMuestraAI")) {
@@ -456,7 +465,7 @@ public class formController extends HttpServlet {
 
             } else if (request.getParameter(
                     "action").equals("selectorAsignarMuestra3AI")) {
-                
+
                 System.out.println("selectorAsignarMuestra3AI");
                 HttpSession session = request.getSession();
                 sqlController conSql = new sqlController();
@@ -488,18 +497,40 @@ public class formController extends HttpServlet {
                         tabla1 = "estudiante";
 
                         if (!idP.equals("--") && !idS.equals("--")) {
+                            fil = 1;
                             sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre , persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla1 + ".programa_id = " + idP
                                     + " and " + tabla1 + ".semestre = " + idS;
                             System.out.println(sql2);
-                            fil = 1;
+                            rs2 = conSql.CargarSql2(sql2, bd);
+                            if (rs2 != null) {
+                                session.setAttribute("muestras", rs2);
+                                System.out.println("result: " + rs2.getRowCount());
+                            }
+
+                            Result rs = null;
+                            String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
+                            rs = conSql.CargarSql2(sql, bd);
+
+                            if (rs.getRowCount() != 0) {
+                                //  System.out.println("si hay asignacion de muestras");
+                                session.setAttribute("muestrasSeleccionadas", rs);
+                                session.setAttribute("aux_asignarM", 1);
+
+                            } else {
+                                //f  System.out.println("no hay asignacion de muestras!!!!!");
+                                session.setAttribute("aux_asignarM", 0);
+                            }
+                            session.setAttribute("aux_selectorAsignarM3", 1);
                         } else if (!idP.equals("--")) {
-                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1
-                                    + ".persona_id = persona.id where " + tabla1
-                                    + ".programa_id = " + idP;
+                            session.setAttribute("aux_selectorAsignarM3", 0);
+                            //   sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1
+                            //  + ".persona_id = persona.id where " + tabla1
+                            //    + ".programa_id = " + idP;
                             System.out.println(sql2);
                             fil = 1;
                         } else if (!idS.equals("--")) {
-                            sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla1 + ".semestre = " + idS;
+                            session.setAttribute("aux_selectorAsignarM3", 0);
+                            //sql2 = "Select " + tabla1 + ".id, persona.id, persona.nombre, persona.apellido from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla1 + ".semestre = " + idS;
                             System.out.println(sql2);
                             fil = 1;
                         }
@@ -511,30 +542,16 @@ public class formController extends HttpServlet {
                     }
 
                     if (fil == 0) {
-                      /*  sql2 = "Select " + tabla1 + ".id,persona.id, persona.nombre, persona.apellido from "
-                                + tabla1 + " inner join persona on " + tabla1
-                                + ".persona_id = persona.id";*/
+                        session.setAttribute("aux_selectorAsignarM3", 0);
+                        /*
+                         * sql2 = "Select " + tabla1 + ".id,persona.id,
+                         * persona.nombre, persona.apellido from " + tabla1 + "
+                         * inner join persona on " + tabla1 + ".persona_id =
+                         * persona.id";
+                         */
                     }
 
-                    rs2 = conSql.CargarSql2(sql2, bd);
-                    if (rs2 != null) {
-                        session.setAttribute("muestras", rs2);
-                        System.out.println("result: " + rs2.getRowCount());
-                    }
 
-                    Result rs = null;
-                    String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
-                    rs = conSql.CargarSql2(sql, bd);
-
-                    if (rs.getRowCount() != 0) {
-                        //  System.out.println("si hay asignacion de muestras");
-                        session.setAttribute("muestrasSeleccionadas", rs);
-                        session.setAttribute("aux_asignarM", 1);
-
-                    } else {
-                        //f  System.out.println("no hay asignacion de muestras!!!!!");
-                        session.setAttribute("aux_asignarM", 0);
-                    }
 
                 } catch (Error ex) {
                     //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);

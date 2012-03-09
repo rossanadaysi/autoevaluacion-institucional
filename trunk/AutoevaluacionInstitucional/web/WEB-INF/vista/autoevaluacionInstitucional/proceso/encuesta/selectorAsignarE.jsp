@@ -45,7 +45,6 @@
         </div>
     </c:if>
     <c:if test="${aux_asignarE == 0}">
-
         <ul id="fcbklist">
             <c:forEach items="${encuestas.rowsByIndex}" var="item" varStatus="iter">
                 <li>
@@ -55,8 +54,6 @@
                 </li>
             </c:forEach>
         </ul>
-
-
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Asignar Encuesta Para Fuente Seleccionada</button>
         </div>
