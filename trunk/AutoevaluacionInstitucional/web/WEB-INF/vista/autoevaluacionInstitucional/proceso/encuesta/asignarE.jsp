@@ -3,7 +3,6 @@
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.js"></script>
 <script type="text/javascript" language="JavaScript">
-    
     function presionSubmit(va)
     {
         
@@ -23,9 +22,7 @@
             }); //fin $.ajax
         }
         return false;
-    }
-
-           
+    }          
 </script>
 <br>
 <div class="hero-unit">

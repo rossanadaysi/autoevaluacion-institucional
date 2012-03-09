@@ -1,32 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link type="text/css" rel="stylesheet" href="jQuery/dragDrop/fcbklistselection.css" />
 <script type="text/javascript" language="JavaScript">
-    
-    
-    /*   $("#buton1").click(function(){
-        $("#opciones").hide(); 
-        $("#filtro").hide();
-        $("#filtro2").show();  
-        var a = $("#select3 option:selected").index();
-      
-        $("#select5 option:eq("+a+")").attr("selected", "selected");
-        
-        $("#select4 option:eq(0)").attr("selected", "selected");
-        
-        $("#tablax").hide(); 
-        $("#selectorx").show(); 
-        
-        
-    })*/
     $("#buton5").click(function(){
+        var a = $("#select3 option:selected").index();
+        $("#select5 option:eq("+a+")").attr("selected", "selected");
+        $("#select4 option:eq(0)").attr("selected", "selected");
+        $("#filtro").hide();
+        $("#filtro2").show();
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
-            
-                // $("#resultados4").hide();
             },
             success: function(){
                 $.ajax({
@@ -37,10 +22,8 @@
                         $("#resultados4").show();
                     }
                 })
-            } //fin success
-                                            
+            } //fin success                    
         }); //fin $.ajax
-            
     }) 
 </script>
 <div id="tablax" style="z-index: 1;">

@@ -6,8 +6,7 @@
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
         $.fcbkListSelection("#fcbklist","600","50","3");       
-    });
-            
+    });         
 </script>
 <div id="div1">
     <c:if test="${aux_asignarE == 1}">
