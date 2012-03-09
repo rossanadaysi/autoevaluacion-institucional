@@ -109,14 +109,14 @@
         return false;
     }
     
-    function presionSubmit4(va)
-    {      
+    function presionSubmit4()
+    {     
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
-               
+             
                 $("#resultados4").show();
             },
             success: function(){
@@ -136,30 +136,26 @@
     function presionSubmit6(va)
     {
         
-       
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
-            
+               
                 $("#resultados4").show();
             },
             success: function(){
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra3AI",
                     success: function(data){
                         $("#resultados4").html(data);
-                        $("#tablax").hide();
-                        $("#selectorx").show();
                         $("#resultados4").show();
                     }
                 })
-            } //fin success
-                                            
+            } //fin success                                          
         }); //fin $.ajax
-            
+        return false;
          
         return false;
     }
@@ -183,6 +179,46 @@
         })
     })  
         
+    $("#formAsigMue6").submit(function(event){
+        event.preventDefault();
+        var a = $("#select5 option:selected").index();
+        var b = $("#select6 option:selected").index();
+        $("#select3 option:eq("+a+")").attr("selected", "selected");
+        $("#select4 option:eq("+b+")").attr("selected", "selected");
+        $("#filtro").show();
+        $("#filtro2").hide();
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
+            data: $("#formAsigMue6").serialize(),
+            error: function(error1, error2, error3){
+                console.log("eeror");
+        
+                console.log(error1.responseText);
+            },
+            success: function(){
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
+                    data: $("#formAsigMue6").serialize(),
+                    beforeSend:function(){
+             
+                        $("#resultados4").show();
+                    },
+                    success: function(){
+                        $.ajax({
+                            type: 'POST',
+                            url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                            success: function(data){
+                                $("#resultados4").html(data);
+                                $("#resultados4").show();
+                            }
+                        })
+                    } //fin success                                          
+                }); //fin $.ajax
+            } //fin success                    
+        }); //fin $.ajax
+    }) 
            
 </script>
 <br>
@@ -191,7 +227,7 @@
         <fieldset>
             <legend>Asignación de Muestra</legend>
             <div class="span5" style="border: 1px solid #FFF;">
-                <form  id="formAsigMue" method="post">
+                <form  id="formAsigMue6" method="post">
                     <p>Fuente</p>
                     <select class="span3" id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
@@ -229,7 +265,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <select  class="span3" id="select3" name="programas" onchange="presionSubmit4(this)">
+                                    <select  class="span3" id="select3" name="programas" onchange="presionSubmit4()">
                                         <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
@@ -237,7 +273,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select id="select4" name="semestres" onchange="presionSubmit4(this)">
+                                    <select id="select4" name="semestres" onchange="presionSubmit4()">
                                         <option value="--">Seleccione Semestre</option>
                                         <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
@@ -261,6 +297,7 @@
                             <tr>
                                 <td>
                                     <select  class="span3" id="select5" name="programas2" onchange="presionSubmit6(this)">
+                                        <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
                                         </c:forEach>
@@ -268,6 +305,7 @@
                                 </td>
                                 <td>
                                     <select id="select6" name="semestres2" onchange="presionSubmit6(this)">
+                                        <option value="--">Seleccione Semestre</option>
                                         <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
                                         <option value="3">Tercero Semestre</option>
@@ -285,13 +323,14 @@
                         <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
                     </div>
                     <div  id="resultados2"></div>
+
+                    <div  class="span4">
+                        <div  id="resultados3" class="accordion" style="position: absolute;"></div>
+                    </div>
+                    <div  class="span10">
+                        <div id="resultados4" class="accordion"></div> 
+                    </div>
                 </form>
-            </div>
-            <div  class="span4">
-                <div  id="resultados3" class="accordion" style="position: absolute;"></div>
-            </div>
-            <div  class="span10">
-                <div id="resultados4" class="accordion"></div> 
             </div>
         </fieldset>
     </div>
