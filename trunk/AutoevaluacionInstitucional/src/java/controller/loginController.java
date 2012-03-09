@@ -202,6 +202,7 @@ public class loginController extends HttpServlet {
                                 } else if (r.getRol().equals("Comite Central") && tipo.equals("Comite Central")) {
                                     out.println(0);
                                     session.setAttribute("tipoLogin", "Comite Central");
+                                    session.setAttribute("representante", r);
                                     System.out.println("usuario de comite central autorizado.");
                                 } else {
                                     out.println(1);

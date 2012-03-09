@@ -9,8 +9,15 @@
         System.out.println("aux: " + session1.getAttribute("tipoLogin"));
         if (aux == null || aux.equals("")) {
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexAI");
-            rd.forward(request, response);
+            if (aux.equals("Autoevaluacion Institucional")) {
+                RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexAI");
+                rd.forward(request, response);
+            } else {
+                if (aux.equals("Comite Central")) {
+                    RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexCC");
+                    rd.forward(request, response);
+                }
+            }
 
         }
 
@@ -230,14 +237,14 @@
         <script type="text/javascript">
             $().ready(function() {
                 $(".progress").ajaxStart(function(){
-                   $(this).show(); 
-                   $(".bar").css("width","50%");
+                    $(this).show(); 
+                    $(".bar").css("width","50%");
                 });
                 $(".progress").ajaxStop(function(){
-                   $(".bar").css("width","100%");
-                   setTimeout(function(){
-                       $(".progress").hide();
-                   },400);
+                    $(".bar").css("width","100%");
+                    setTimeout(function(){
+                        $(".progress").hide();
+                    },400);
                     
                 });
                 
