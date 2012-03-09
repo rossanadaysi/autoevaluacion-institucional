@@ -511,9 +511,9 @@ public class formController extends HttpServlet {
                     }
 
                     if (fil == 0) {
-                        sql2 = "Select " + tabla1 + ".id,persona.id, persona.nombre, persona.apellido from "
+                      /*  sql2 = "Select " + tabla1 + ".id,persona.id, persona.nombre, persona.apellido from "
                                 + tabla1 + " inner join persona on " + tabla1
-                                + ".persona_id = persona.id";
+                                + ".persona_id = persona.id";*/
                     }
 
                     rs2 = conSql.CargarSql2(sql2, bd);
@@ -569,7 +569,7 @@ public class formController extends HttpServlet {
                     } else if (!idS.equals("--")) {
                         sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.id";
                     } else if (idP.equals("--") && idS.equals("--")) {
-                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
+                        //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
                     }
 
 
