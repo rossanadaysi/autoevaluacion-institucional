@@ -348,6 +348,7 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("asignarMuestraAIp")) {
 
+                System.out.println("entro");
                 HttpSession session = request.getSession();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 Asignacionencuesta ae = new Asignacionencuesta();
@@ -356,7 +357,7 @@ public class formController extends HttpServlet {
 
 
                 String idFuente = request.getParameter("fuente");
-                
+
                 System.out.println("idfuentexxx : " + idFuente);
 
                 int id = Integer.valueOf(idFuente);
@@ -387,14 +388,15 @@ public class formController extends HttpServlet {
 
 
                 String sql2 = "delete t1 from `" + tabla + "` t1 inner join estudiante on t1.estudiante_id = estudiante.id  where `muestra_id` = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS;
+                System.out.println("Delete: " + sql2);
                 conSql.UpdateSql(sql2, bd);
-                System.out.println(sql2);
+
 
                 ResultSet rs = null;
                 String sql = "Select* from " + tabla1 + " where estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS;
 
-                System.out.println(sql);
-                
+                System.out.println("Select: " + sql);
+
                 rs = conSql.CargarSql(sql, bd);
                 try {
                     System.out.println("insertando0");
@@ -670,6 +672,7 @@ public class formController extends HttpServlet {
 
                 String idFormula = request.getParameter("formula");
                 String idFuente = request.getParameter("fuente");
+                System.out.println("IDIDIDIDIDID: " + idFuente);
                 int id = Integer.parseInt(idFuente);
 
                 String bd = (String) session.getAttribute("bd");

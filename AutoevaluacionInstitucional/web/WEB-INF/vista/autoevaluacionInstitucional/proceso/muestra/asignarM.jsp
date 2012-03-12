@@ -171,55 +171,16 @@
         })
     })  
         
-    $("#formAsigMue6").submit(function(event){
-        event.preventDefault();
-        var a = $("#select5 option:selected").index();
-        var b = $("#select6 option:selected").index();
-        $("#select3 option:eq("+a+")").attr("selected", "selected");
-        $("#select4 option:eq("+b+")").attr("selected", "selected");
-        $("#filtro").show();
-        $("#filtro2").hide();
-        $.ajax({
-            type: 'POST',
-            url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
-            data: $("#formAsigMue6").serialize(),
-            error: function(error1, error2, error3){
-                console.log("eeror");
-        
-                console.log(error1.responseText);
-            },
-            success: function(){
-                $.ajax({
-                    type: 'POST',
-                    url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
-                    data: $("#formAsigMue6").serialize(),
-                    beforeSend:function(){
-             
-                        $("#resultados4").show();
-                    },
-                    success: function(){
-                        $.ajax({
-                            type: 'POST',
-                            url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
-                            success: function(data){
-                                $("#resultados4").html(data);
-                                $("#resultados4").show();
-                            }
-                        })
-                    } //fin success                                          
-                }); //fin $.ajax
-            } //fin success                    
-        }); //fin $.ajax
-    }) 
-           
+  
 </script>
 <br>
 <div class="hero-unit">
     <div class="row">
-        <fieldset>
-            <legend>Asignación de Muestra</legend>
-            <div class="span5" style="border: 1px solid #FFF;">
-                <form  id="formAsigMue6" method="post">
+        <form  id="formAsigMue" method="post">
+            <fieldset>
+                <legend>Asignación de Muestra</legend>
+                <div class="span5" style="border: 1px solid #FFF;">
+
                     <p>Fuente</p>
                     <select class="span3" id="select" name="fuente" onchange="presionSubmit(this)">
                         <option value="--">Seleccione una Fuente</option>
@@ -253,7 +214,7 @@
                         Generando Muestra...
                     </div>
                     <div id="filtro" style="display: none;">
-                        <p>Filtros</p>
+                        <p>Filtros 1</p>
                         <table>
                             <tr>
                                 <td>
@@ -281,10 +242,10 @@
                                 </td>
                             </tr>
                         </table>
-                        <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                        <div style=""><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
                     </div>
                     <div id="filtro2" style="display: none;">
-                        <p>Filtros</p>
+                        <p>Filtros 2</p>
                         <table>
                             <tr>
                                 <td>
@@ -315,16 +276,16 @@
                         <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
                     </div>
                     <div  id="resultados2"></div>
-
-                    <div  class="span4">
-                        <div  id="resultados3" class="accordion" style="position: absolute;"></div>
-                    </div>
                     <div  class="span10">
-                        <div id="resultados4" class="accordion"></div> 
+                        <div id="resultados4" class="accordion" style="margin-left: -30px;"></div> 
                     </div>
-                </form>
-            </div>
-        </fieldset>
+
+                </div>
+                <div  class="span4">
+                    <div  id="resultados3" class="accordion" style="position: absolute;"></div>
+                </div>
+            </fieldset>
+        </form>
     </div>
 </div>
 

@@ -12,15 +12,16 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
-            beforeSend:function(){
-            },
             success: function(){
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra3AI",
+                    beforeSend:function(){
+                        $("#resultados4").hide();
+                    },
                     success: function(data){
-                        $("#resultados4").html(data);
-                        $("#resultados4").show();
+                        $("#resultados4").html(data)
+                        setTimeout(function(){$("#resultados4").show()}, 100);  
                     }
                 })
             } //fin success                    
