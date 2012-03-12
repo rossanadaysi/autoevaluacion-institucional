@@ -112,19 +112,18 @@
             $(function(){
             
                 $(window).hashchange(function(){
-                      
-                    var hash = location.hash;
+                      var hash = location.hash;
                 
                     if(hash=="#CerrarSesion"){
-                        $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion',
-                        function(data) {
+                        $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion', function(data) {
                             location = "<%=request.getContextPath()%>/";
                                  
                         });//fin post
                                                         
                     }
                     
-                    if(hash == "#CrearFactor"){
+                    if(hash == "#crearFactor"){
+                            
                             var url3 = "<%=request.getContextPath()%>/"+hash;
                              url3 = url3.replace('#', "ControllerCC?action=")+"CC";
                           
@@ -140,11 +139,45 @@
                                     } //fin success
                                 }); //fin del $.ajax
                          
-                    
                     }
+                    
+                    if(hash == "#crearCaracteristica"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
+                    
+                    if(hash == "#crearIndicador"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
+                    
                 
-              
-            });
+            });//fin hashchange
+            });//fin function
         </script>
 
     </head>
@@ -231,7 +264,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseCaracteristicas" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a><i class="icon-plus"></i> Crear Caracteristicas</a></li>
+                                        <li><a href="#crearCaracteristica"><i class="icon-plus"></i> Crear Caracteristicas</a></li>
                                         <li><a><i class="icon-th-list"></i> listar Caracteristicas</a></li>
                                     </div>
                                 </div>
@@ -246,7 +279,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseIndicadores" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a><i class="icon-plus"></i> Crear Indicadores</a></li>
+                                        <li><a href="#crearIndicador"><i class="icon-plus"></i> Crear Indicadores</a></li>
                                         <li><a><i class="icon-th-list"></i> listar Indicadores</a></li>
                                     </div>
                                 </div>

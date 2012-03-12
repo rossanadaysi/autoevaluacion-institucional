@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Ususario
  */
-public class ajaxController extends HttpServlet {
+public class formController2 extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,10 +32,10 @@ public class ajaxController extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ajaxController</title>");  
+            out.println("<title>Servlet formController2</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ajaxController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet formController2 at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
              */
