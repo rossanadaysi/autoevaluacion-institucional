@@ -4,9 +4,9 @@
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
-            <form id="formCrearFact" class="form-horizontal" method="post">
+            <form id="formCrearIndic" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Crear Factor</legend>
+                    <legend>Crear Indicador</legend>
                     <div class="control-group">
                         <label for="nombre"  class="control-label">Nombre</label>
                         <div class="controls">
@@ -20,7 +20,7 @@
                         </div>
                         </div>
                         <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Crear Factor</button>
+                            <button class="btn btn-primary" type="submit">Crear Indicador</button>
                             <button class="btn" type="reset">Cancelar</button>
                         </div>
                     </fieldset>

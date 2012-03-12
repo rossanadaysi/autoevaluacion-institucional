@@ -115,10 +115,6 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
             data: $("#formAsigMue").serialize(),
-            beforeSend:function(){
-             
-                $("#resultados4").show();
-            },
             success: function(){
                 $.ajax({
                     type: 'POST',
@@ -140,10 +136,6 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
-            beforeSend:function(){
-               
-                $("#resultados4").show();
-            },
             success: function(){
                 $.ajax({
                     type: 'POST',

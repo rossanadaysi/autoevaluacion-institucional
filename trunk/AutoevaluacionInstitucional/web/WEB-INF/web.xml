@@ -33,7 +33,7 @@
     </servlet>
     <servlet>
         <servlet-name>ajaxController</servlet-name>
-        <servlet-class>controller.ajaxController</servlet-class>
+        <servlet-class>controller.formController2</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
