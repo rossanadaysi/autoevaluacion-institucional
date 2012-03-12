@@ -9,12 +9,12 @@
         System.out.println("aux: " + session1.getAttribute("tipoLogin"));
         if (aux == null || aux.equals("")) {
         } else {
-            if (aux.equals("Autoevaluacion Institucional")) {
+            if (aux.equals("autoevaluacionInstitucional")) {
                 RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexAI");
                 rd.forward(request, response);
             } else {
                 if (aux.equals("Comite Central")) {
-                    RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexCC");
+                    RequestDispatcher rd = request.getRequestDispatcher("/ControllerCC?action=indexCC");
                     rd.forward(request, response);
                 }
             }

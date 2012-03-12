@@ -19,7 +19,7 @@
         <!-- Le styles -->
         <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
-        <link href="<%=request.getContextPath()%>/bootstrap/css/docs.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/bootstrap/css/docs2.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet"/>
 
 
@@ -116,14 +116,33 @@
                     var hash = location.hash;
                 
                     if(hash=="#CerrarSesion"){
-                            $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
-                             function(data) {
-                                      location = "<%=request.getContextPath()%>/";
+                        $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion',
+                        function(data) {
+                            location = "<%=request.getContextPath()%>/";
                                  
-                            });
+                        });//fin post
                                                         
-                        }
-                });
+                    }
+                    
+                    if(hash == "#CrearFactor"){
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                          
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                       
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    
+                    }
+                
               
             });
         </script>
@@ -187,11 +206,83 @@
                 <div id="menu" style="padding: 8px 0pt;" class="well">
                     <ul class="nav nav-list">  
                         <li class="nav-header">Modelo de Autoevaluaci&oacute;n</li>
-                        <li><a><i class="icon-th"></i> Factores</a></li>
-                        <li><a><i class="icon-tag"></i> Caracteristicas</a></li>
-                        <li><a><i class="icon-tags"></i> Indicadores</a></li>
-                        <li><a><i class="icon-glass"></i> Preguntas</a></li>
-                        <li><a><i class="icon-question-sign"></i> Encuestas</a></li>
+                        
+                        <div id="accordion1" class="accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a href="#collapseOne" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
+                                        Factores
+                                    </a>
+                                </div>
+                                <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factores</a></li>
+                                        <li><a href="#ListarFactores"><i class="icon-th-list"></i> listar Factores</a></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion2" class="accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a href="#collapseCaracteristicas" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+                                        Caracteristicas
+                                    </a>
+                                </div>
+                                <div class="accordion-body collapse" id="collapseCaracteristicas" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        <li><a><i class="icon-plus"></i> Crear Caracteristicas</a></li>
+                                        <li><a><i class="icon-th-list"></i> listar Caracteristicas</a></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion3" class="accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a href="#collapseIndicadores" data-parent="#accordion3" data-toggle="collapse" class="accordion-toggle">
+                                        Indicadores
+                                    </a>
+                                </div>
+                                <div class="accordion-body collapse" id="collapseIndicadores" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        <li><a><i class="icon-plus"></i> Crear Indicadores</a></li>
+                                        <li><a><i class="icon-th-list"></i> listar Indicadores</a></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion4" class="accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a href="#collapsePreguntas" data-parent="#accordion4" data-toggle="collapse" class="accordion-toggle">
+                                        Preguntas
+                                    </a>
+                                </div>
+                                <div class="accordion-body collapse" id="collapsePreguntas" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        <li><a><i class="icon-plus"></i> Crear Preguntas</a></li>
+                                        <li><a><i class="icon-th-list"></i> listar Preguntas</a></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordion5" class="accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a href="#collapseEncuestas" data-parent="#accordion5" data-toggle="collapse" class="accordion-toggle">
+                                        Encuestas
+                                    </a>
+                                </div>
+                                <div class="accordion-body collapse" id="collapseEncuestas" style="height: 0px;">
+                                    <div class="accordion-inner">
+                                        <li><a><i class="icon-plus"></i> Crear Encuestas</a></li>
+                                        <li><a><i class="icon-th-list"></i> listar Encuestas</a></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </ul>
                 </div>
             </div>
