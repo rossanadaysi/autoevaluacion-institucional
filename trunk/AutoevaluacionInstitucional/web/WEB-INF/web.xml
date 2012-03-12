@@ -27,6 +27,14 @@
         <servlet-name>formController</servlet-name>
         <servlet-class>controller.formController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>fontControllerCC</servlet-name>
+        <servlet-class>controller.fontControllerCC</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ajaxController</servlet-name>
+        <servlet-class>controller.ajaxController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -42,6 +50,14 @@
     <servlet-mapping>
         <servlet-name>formController</servlet-name>
         <url-pattern>/formController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>fontControllerCC</servlet-name>
+        <url-pattern>/ControllerCC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxController</servlet-name>
+        <url-pattern>/ajaxController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
