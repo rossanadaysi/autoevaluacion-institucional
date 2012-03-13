@@ -4,6 +4,9 @@
  */
 package model.actions.navigation;
 
+import entity.controller.CaracteristicaJpaController;
+import entity.controller.FactorJpaController;
+import entity.controller.IndicadorJpaController;
 import entity.controller.PrivilegioJpaController;
 import entity.controller.ProgramaJpaController;
 import entity.controller.RepresentanteJpaController;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import model.Action;
 
 /**
@@ -26,9 +30,12 @@ public class navegacion implements Action {
         ProgramaJpaController conPrograma = new ProgramaJpaController();
         PrivilegioJpaController conPivilegio = new PrivilegioJpaController();
         RepresentanteJpaController conRepresentante = new RepresentanteJpaController();
-
+        FactorJpaController conFactor = new FactorJpaController(); 
+        IndicadorJpaController conIndicador = new IndicadorJpaController(); 
+        CaracteristicaJpaController conCaracteristica = new CaracteristicaJpaController(); 
+        
         String path = request.getParameter("action");
-
+       
         if (path.equals("CrearProcesoAI")) {
             path = "autoevaluacionInstitucional/proceso/crear";
         } else if (path.equals("detalleProcesoAI")) {
@@ -58,7 +65,17 @@ public class navegacion implements Action {
             path = "comiteCentral/representante/crear";
         } else if (path.equals("indexAI")) {
             path = "autoevaluacionInstitucional/index2";
+        } else if (path.equals("listarFactoresCC")) {
+            session.setAttribute("listfactores", conFactor.findFactorEntities());
+            path = "comiteCentral/factor/listar";
+        } else if (path.equals("listarIndicadoresCC")) {
+            session.setAttribute("listindicadores", conIndicador.findIndicadorEntities());
+            path = "comiteCentral/indicador/listar";
+        } else if (path.equals("listarCaracteristicasCC")) {
+            session.setAttribute("listcaracteristicas", conCaracteristica.findCaracteristicaEntities());
+            path = "comiteCentral/caracteristica/listar";
         }
+        
 
 
         String url = "/WEB-INF/vista/" + path + ".jsp";

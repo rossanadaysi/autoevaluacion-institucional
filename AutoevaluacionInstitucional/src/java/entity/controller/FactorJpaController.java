@@ -4,6 +4,7 @@
  */
 package entity.controller;
 
+import connection.jpaConnection;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -16,7 +17,6 @@ import entity.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -24,13 +24,11 @@ import javax.persistence.EntityManagerFactory;
  */
 public class FactorJpaController implements Serializable {
 
-    public FactorJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public FactorJpaController() {
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return jpaConnection.getEntityManager();
     }
 
     public void create(Factor factor) {
@@ -198,5 +196,4 @@ public class FactorJpaController implements Serializable {
             em.close();
         }
     }
-    
 }
