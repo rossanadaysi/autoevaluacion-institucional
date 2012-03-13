@@ -296,7 +296,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factores</a></li>
+                                        <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factor</a></li>
                                         <li><a href="#listarFactores"><i class="icon-th-list"></i> listar Factores</a></li>
                                     </div>
                                 </div>
@@ -311,7 +311,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseCaracteristicas" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a href="#crearCaracteristica"><i class="icon-plus"></i> Crear Caracteristicas</a></li>
+                                        <li><a href="#crearCaracteristica"><i class="icon-plus"></i> Crear Caracteristica</a></li>
                                         <li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> listar Caracteristicas</a></li>
                                     </div>
                                 </div>
@@ -326,7 +326,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseIndicadores" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a href="#crearIndicador"><i class="icon-plus"></i> Crear Indicadores</a></li>
+                                        <li><a href="#crearIndicador"><i class="icon-plus"></i> Crear Indicador</a></li>
                                         <li><a href="#listarIndicadores"><i class="icon-th-list"></i> listar Indicadores</a></li>
                                     </div>
                                 </div>
@@ -341,7 +341,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapsePreguntas" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a><i class="icon-plus"></i> Crear Preguntas</a></li>
+                                        <li><a><i class="icon-plus"></i> Crear Pregunta</a></li>
                                         <li><a><i class="icon-th-list"></i> listar Preguntas</a></li>
                                     </div>
                                 </div>
@@ -356,7 +356,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseEncuestas" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a><i class="icon-plus"></i> Crear Encuestas</a></li>
+                                        <li><a><i class="icon-plus"></i> Crear Encuesta</a></li>
                                         <li><a><i class="icon-th-list"></i> listar Encuestas</a></li>
                                     </div>
                                 </div>
