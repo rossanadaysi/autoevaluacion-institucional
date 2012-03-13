@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import model.Action;
 
 /**
@@ -47,7 +48,6 @@ public class fontControllerCC extends HttpServlet {
             ResourceBundle rb = ResourceBundle.getBundle("/properties/actions2");
             String action = request.getParameter("action");
             String clase = null;
-
             clase = rb.getString(action);
 
             Action objeto = (Action) Class.forName(clase).newInstance();

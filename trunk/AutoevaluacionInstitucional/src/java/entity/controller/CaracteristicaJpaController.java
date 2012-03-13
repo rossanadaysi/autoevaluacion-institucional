@@ -4,6 +4,7 @@
  */
 package entity.controller;
 
+import connection.jpaConnection;
 import entity.Caracteristica;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -25,14 +26,13 @@ import javax.persistence.EntityManagerFactory;
  */
 public class CaracteristicaJpaController implements Serializable {
 
-    public CaracteristicaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public CaracteristicaJpaController() {
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return jpaConnection.getEntityManager();
     }
+
 
     public void create(Caracteristica caracteristica) {
         if (caracteristica.getIndicadorList() == null) {

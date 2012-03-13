@@ -4,6 +4,7 @@
  */
 package entity.controller;
 
+import connection.jpaConnection;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -25,13 +26,11 @@ import javax.persistence.EntityManagerFactory;
  */
 public class IndicadorJpaController implements Serializable {
 
-    public IndicadorJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public IndicadorJpaController() {
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return jpaConnection.getEntityManager();
     }
 
     public void create(Indicador indicador) {

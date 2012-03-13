@@ -174,7 +174,54 @@
                                 }); //fin del $.ajax
                          
                     }
-                    
+                    if(hash == "#listarFactores"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
+                    if(hash == "#listarIndicadores"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
+                    if(hash == "#listarCaracteristicas"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
                 
             });//fin hashchange
             });//fin function
@@ -250,7 +297,7 @@
                                 <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
                                     <div class="accordion-inner">
                                         <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factores</a></li>
-                                        <li><a href="#ListarFactores"><i class="icon-th-list"></i> listar Factores</a></li>
+                                        <li><a href="#listarFactores"><i class="icon-th-list"></i> listar Factores</a></li>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +312,7 @@
                                 <div class="accordion-body collapse" id="collapseCaracteristicas" style="height: 0px;">
                                     <div class="accordion-inner">
                                         <li><a href="#crearCaracteristica"><i class="icon-plus"></i> Crear Caracteristicas</a></li>
-                                        <li><a><i class="icon-th-list"></i> listar Caracteristicas</a></li>
+                                        <li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> listar Caracteristicas</a></li>
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +327,7 @@
                                 <div class="accordion-body collapse" id="collapseIndicadores" style="height: 0px;">
                                     <div class="accordion-inner">
                                         <li><a href="#crearIndicador"><i class="icon-plus"></i> Crear Indicadores</a></li>
-                                        <li><a><i class="icon-th-list"></i> listar Indicadores</a></li>
+                                        <li><a href="#listarIndicadores"><i class="icon-th-list"></i> listar Indicadores</a></li>
                                     </div>
                                 </div>
                             </div>
