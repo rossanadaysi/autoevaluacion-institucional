@@ -6,9 +6,8 @@
     $(document).ready(function() { 
         $.fcbkListSelection("#fcbklist","600","50","3");     
     });
-    $("#buton7").click(function(){
-       
-           
+    $("#botonActualizarMuestra").click(function(){
+
         var a = $("#select5 option:selected").index();
         var b = $("#select6 option:selected").index();
         $("#select3 option:eq("+a+")").attr("selected", "selected");
@@ -19,6 +18,13 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
             data: $("#formAsigMue").serialize(),
+            beforeSend: function(){
+                $("#resultados4").html("<div class='alert alert-info' id='cargando' style='display: none; width: 221px;'>"
+                    +"<a class='close'>×</a>"
+                    +"<img src='<%=request.getContextPath()%>/css/images/wait.gif' style='float:left; padding: 1px 10px 0 0;'>"
+                    +"Cargando..."
+                    +"</div>");
+            },
             error: function(error1, error2, error3){
                 console.log("eeror");
         
@@ -34,8 +40,9 @@
                             type: 'POST',
                             url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
                             success: function(data){
+                                $("#resultados4").hide();
                                 $("#resultados4").html(data);
-                                $("#resultados4").show();
+                                $("#resultados4").show(); 
                             }
                         })
                     } //fin success                                          
@@ -43,11 +50,17 @@
             } //fin success                    
         }); //fin $.ajax
     }) 
-    $("#buton8").click(function(){
+    $("#botonCancelar").click(function(){
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
             success: function(data){
+                var a = $("#select5 option:selected").index();
+                var b = $("#select6 option:selected").index();
+                $("#select3 option:eq("+a+")").attr("selected", "selected");
+                $("#select4 option:eq("+b+")").attr("selected", "selected");
+                $("#filtro").show();
+                $("#filtro2").hide();
                 $("#resultados4").html(data);
                 $("#resultados4").show();
             }
@@ -82,8 +95,8 @@
         </c:forEach> 
     </ul>
     <div class="form-actions">
-        <button class="btn btn-primary" id="buton7" type="button">Actualizar Muestra Para Fuente Seleccionada</button>
-        <button class="btn btn-secundary" id="buton8" type="button">Cancelar</button>
+        <button class="btn btn-primary" id="botonActualizarMuestra" type="button">Actualizar Muestra Para Fuente Seleccionada</button>
+        <button class="btn btn-secundary" id="botonCancelar" type="button">Cancelar</button>
 
     </div>
 </c:if>

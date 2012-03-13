@@ -12,14 +12,8 @@
             $("option[rel=popover]")
             .popover()
             .click(function(e) {
-                e.preventDefault()
-                    
+                e.preventDefault()      
             })
         }
-  
-  
     });
-            
-  
-                
 </script>
