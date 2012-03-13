@@ -2,10 +2,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
     
-    $(document).ready(function() {$('#boton1').button()})
-    
-    
-    function presionSubmit3()
+    $(document).ready(function() {$('#botonGenerarMuestra').button()})
+ 
+    function presionSubmitGenerarMuestra()
     {
         
         $.ajax({
@@ -30,7 +29,7 @@
         }); //fin $.ajax
             
     }
-    function presionSubmit2(va)
+    function presionSubmitFormula()
     {
         
         if($("#select2 option:selected").val() == "--"){
@@ -69,7 +68,7 @@
         }
     }
         
-    function presionSubmit(va)
+    function presionSubmitFuente()
     {
         $("option[rel=popover]")
         if($("#select option:selected").val() == "--"){
@@ -79,14 +78,19 @@
             $("#formula").hide();
             $("#enlace").hide();
             $("#filtro").hide();
+            $("#filtro1").hide();
             $("#resultadoAlert").hide();
            
         }
         else{
-            $("#formula").hide();  
             $("#resultados2").hide();
             $("#resultados3").hide();
             $("#resultados4").hide();
+            $("#formula").hide();
+            $("#enlace").hide();
+            $("#filtro").hide();
+            $("#filtro1").hide();
+            $("#resultadoAlert").hide();
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
@@ -109,7 +113,7 @@
         return false;
     }
     
-    function presionSubmit4()
+    function presionSubmitFiltro()
     {     
         $.ajax({
             type: 'POST',
@@ -129,20 +133,28 @@
         return false;
     }
 
-    function presionSubmit6(va)
+    function presionSubmitFiltro2()
     {
         
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
+            beforeSend:function(){
+                $("#resultados4").html("<div class='alert alert-info' id='cargando' style='width: 221px;'>"
+                    +"<a class='close'>×</a>"
+                    +"<img src='<%=request.getContextPath()%>/css/images/wait.gif' style='float:center; padding: 1px 10px 0 0;'>"
+                    +"Cargando..."
+                    +"</div>");
+            },
             success: function(){
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra3AI",
                     success: function(data){
+                        $("#resultados4").hide();
                         $("#resultados4").html(data);
-                        $("#resultados4").show();
+                        setTimeout(function(){$("#resultados4").show()}, 50);  
                     }
                 })
             } //fin success                                          
@@ -151,14 +163,12 @@
          
         return false;
     }
-    
-    
-    
-    
-    $("#buton2").click(function(){
+       
+    $("#botonNuevaMuestra").click(function(){
         $("#resultados2").hide(); 
         $("#resultadoAlert").hide();
         $("#filtro").hide(); 
+        $("#filtro2").hide(); 
         $("#resultados3").hide(); 
         $("#resultados4").hide();
         $("#select2 option:eq(0)").attr("selected", "selected");
@@ -180,9 +190,8 @@
             <fieldset>
                 <legend>Asignación de Muestra</legend>
                 <div class="span5" style="border: 1px solid #FFF;">
-
                     <p>Fuente</p>
-                    <select class="span3" id="select" name="fuente" onchange="presionSubmit(this)">
+                    <select class="span3" id="select" name="fuente" onchange="presionSubmitFuente()">
                         <option value="--">Seleccione una Fuente</option>
                         <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
                             <option value="${item2[0]}">${item2[1]}</option>
@@ -194,19 +203,19 @@
                             <strong>Información!</strong>
                             La muestra ya ha sido asignada para la fuente seleccionada.
                         </div>
-                        <button class="btn btn-secundary" id="buton2"  type="button">Generar Nueva Muestra</button>
+                        <button class="btn btn-secundary" id="botonNuevaMuestra"  type="button">Generar Nueva Muestra</button>
                         <br>
                         <br>
                     </div>
                     <div id="formula" style="display: none;">
                         <p>Calcular Muestra</p>
-                        <select class="span3" id="select2" name="formula" onchange="presionSubmit2(this)">
+                        <select class="span3" id="select2" name="formula" onchange="presionSubmitFormula()">
                             <option value="--">Seleccione una Formula</option>
                             <option data-content="<p> <div><img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/f1.gif'></div></p><br><p> n = Tamaño de la muestra. </p><p> Z = Nivel de confianza aplicado al estudio. Basados en la tabla Z. </p><p> p = probabilidad de ocurrencia del evento previsto. </p><p> q = Probabilidad de no ocurrencia del evento previsto. </p><p> EE = Error de tolerancia máxima permitida. </p><p> N = Tamaño de la población." rel="popover"  value="1" data-original-title="Detalle Formula">Muestreo aleatorio por conglomerado</option>
                         </select>
                     </div>
                     <div id="enlace" style="display: none;">
-                        <button id="boton1" class="btn btn-primary" onclick="presionSubmit3()" data-loading-text="loading..." type="button">Generar Muestra Aleatoriamente</button>
+                        <button id="botonGenerarMuestra" class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra Aleatoriamente</button>
                     </div>
                     <div class="alert alert-info" id="cargando" style="display: none; width: 221px;">
                         <a class="close">×</a>
@@ -214,11 +223,11 @@
                         Generando Muestra...
                     </div>
                     <div id="filtro" style="display: none;">
-                        <p>Filtros 1</p>
+                        <p>Filtros</p>
                         <table>
                             <tr>
                                 <td>
-                                    <select  class="span3" id="select3" name="programas" onchange="presionSubmit4()">
+                                    <select  class="span3" id="select3" name="programas" onchange="presionSubmitFiltro()">
                                         <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
@@ -226,7 +235,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select id="select4" name="semestres" onchange="presionSubmit4()">
+                                    <select id="select4" name="semestres" onchange="presionSubmitFiltro()">
                                         <option value="--">Seleccione Semestre</option>
                                         <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
@@ -245,11 +254,11 @@
                         <div style=""><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
                     </div>
                     <div id="filtro2" style="display: none;">
-                        <p>Filtros 2</p>
+                        <p>Filtros</p>
                         <table>
                             <tr>
                                 <td>
-                                    <select  class="span3" id="select5" name="programas2" onchange="presionSubmit6(this)">
+                                    <select  class="span3" id="select5" name="programas2" onchange="presionSubmitFiltro2()">
                                         <option value="--">Seleccione Programa</option>
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
@@ -257,7 +266,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select id="select6" name="semestres2" onchange="presionSubmit6(this)">
+                                    <select id="select6" name="semestres2" onchange="presionSubmitFiltro2()">
                                         <option value="--">Seleccione Semestre</option>
                                         <option value="1">Primer Semestre</option>
                                         <option value="2">Segundo Semestre</option>
@@ -279,7 +288,6 @@
                     <div  class="span10">
                         <div id="resultados4" class="accordion" style="margin-left: -30px;"></div> 
                     </div>
-
                 </div>
                 <div  class="span4">
                     <div  id="resultados3" class="accordion" style="position: absolute;"></div>
