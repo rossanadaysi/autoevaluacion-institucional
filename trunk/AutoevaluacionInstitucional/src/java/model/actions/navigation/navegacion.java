@@ -5,8 +5,10 @@
 package model.actions.navigation;
 
 import entity.controller.CaracteristicaJpaController;
+import entity.controller.EncuestaJpaController;
 import entity.controller.FactorJpaController;
 import entity.controller.IndicadorJpaController;
+import entity.controller.PreguntaJpaController;
 import entity.controller.PrivilegioJpaController;
 import entity.controller.ProgramaJpaController;
 import entity.controller.RepresentanteJpaController;
@@ -33,6 +35,8 @@ public class navegacion implements Action {
         FactorJpaController conFactor = new FactorJpaController(); 
         IndicadorJpaController conIndicador = new IndicadorJpaController(); 
         CaracteristicaJpaController conCaracteristica = new CaracteristicaJpaController(); 
+        PreguntaJpaController conPregunta = new PreguntaJpaController(); 
+        EncuestaJpaController conEncuesta = new EncuestaJpaController(); 
         
         String path = request.getParameter("action");
        
@@ -74,8 +78,13 @@ public class navegacion implements Action {
         } else if (path.equals("listarCaracteristicasCC")) {
             session.setAttribute("listcaracteristicas", conCaracteristica.findCaracteristicaEntities());
             path = "comiteCentral/caracteristica/listar";
+        }else if (path.equals("listarPreguntasCC")) {
+            session.setAttribute("listpreguntas", conPregunta.findPreguntaEntities());
+            path = "comiteCentral/pregunta/listar";
+        }else if (path.equals("listarEncuestasCC")) {
+            session.setAttribute("listencuestas", conEncuesta.findEncuestaEntities());
+            path = "comiteCentral/encuesta/listar";
         }
-        
 
 
         String url = "/WEB-INF/vista/" + path + ".jsp";

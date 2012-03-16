@@ -12,36 +12,42 @@
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
-            <form id="formCrearCarac" method="post">
+            <form id="formCrearCarac" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Crear Caracteristica</legend>
-                    
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" class="input-xlarge" value=""/>
-                    
-                    
-
-                        <label for="descripcion">Descripcion</label>
-                        <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}"></textarea>
-
-
-                    
-                               <h4>Asignar Indicadores</h4>
-                    <ul id="fcbklist">
-                        <c:forEach items="${listindicadores}" var="row" varStatus="iter">
-                            <li>
-                                <strong>${row.nombre}</strong><br/> 
-                                <span class="fcbkitem_text">${row.descripcion}</span>
-                                <input name="${row.nombre}" type="hidden" value="0"/>
-                            </li>
-                        </c:forEach>
-                    </ul>
-
-                        <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Crear Caracteristica</button>
-                            <button class="btn" type="reset">Cancelar</button>
+                    <div class="control-group">
+                        <label for="nombre" class="control-label">Nombre</label>
+                        <div class="controls">
+                            <input type="text" id="nombre" class="input-xlarge" value=""/>
                         </div>
-                    </fieldset>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="descripcion" class="control-label">Descripcion</label>
+                        <div class="controls">
+                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label  class="control-label">Asignar Indicadores</label>
+                        <div class="controls">
+                            <ul id="fcbklist">
+                                <c:forEach items="${listindicadores}" var="row" varStatus="iter">
+                                    <li>
+                                        <strong>${row.nombre}</strong><br/> 
+                                        <span class="fcbkitem_text">${row.descripcion}</span>
+                                        <input name="${row.nombre}" type="hidden" value="0"/>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>    
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Crear Caracteristica</button>
+                        <button class="btn" type="reset">Cancelar</button>
+                    </div>
+                </fieldset>
             </form>
         </div><!--/span-->        
     </div><!--/row-->    

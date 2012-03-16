@@ -4,6 +4,7 @@
  */
 package entity.controller;
 
+import connection.jpaConnection;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -25,13 +26,11 @@ import javax.persistence.EntityManagerFactory;
  */
 public class PreguntaJpaController implements Serializable {
 
-    public PreguntaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public PreguntaJpaController() {
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return jpaConnection.getEntityManager();
     }
 
     public void create(Pregunta pregunta) {
