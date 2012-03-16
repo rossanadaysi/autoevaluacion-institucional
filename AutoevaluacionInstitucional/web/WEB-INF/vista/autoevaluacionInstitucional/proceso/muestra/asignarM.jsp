@@ -70,7 +70,7 @@
         
     function presionSubmitFuente()
     {
-        $("option[rel=popover]")
+        
         if($("#select option:selected").val() == "--"){
             $("#resultados2").hide();
             $("#resultados3").hide();

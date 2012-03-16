@@ -12,15 +12,25 @@
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
-            <form id="formCrearFact" method="post">
+            <form id="formCrearFact" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Crear Factor</legend>
+                    <div class="control-group">
                     <label for="nombre"  class="control-label">Nombre</label>
+                    <div class="controls">
                     <input type="text" id="nombre" class="input-xlarge" value=""/>
-                    <label for="descripcion">Descripcion</label>
+                    </div>
+                    </div>
+                    <div class="control-group">
+                    <label for="descripcion" class="control-label">Descripcion</label>
+                    <div class="controls">
                     <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}"></textarea>
-                    <h4>Asignar Caracteristicas</h4>
-                    <ul id="fcbklist">
+                    </div>    
+                    </div>
+                    <div class="control-group">
+                        <label for="descripcion" class="control-label">Asignar Caracteristicas</label>
+                        <div class="controls">
+                            <ul id="fcbklist">
                         <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
                             <li>
                                 <strong>${row.nombre}</strong><br/> 
@@ -29,6 +39,10 @@
                             </li>
                         </c:forEach>
                     </ul>
+                        </div>
+                    </div>
+                    
+                    
 
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Crear Factor</button>

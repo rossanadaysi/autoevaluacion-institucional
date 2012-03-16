@@ -181,7 +181,55 @@
                                 }); //fin del $.ajax
                          
                     }
+                    if(hash == "#crearEncuesta"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
                     if(hash == "#listarFactores"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
+                    if(hash == "#listarPreguntas"){
+                            
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                         
+                    }
+                    if(hash == "#listarEncuestas"){
                             
                             var url3 = "<%=request.getContextPath()%>/"+hash;
                              url3 = url3.replace('#', "ControllerCC?action=")+"CC";
@@ -365,7 +413,7 @@
                                 <div class="accordion-body collapse" id="collapsePreguntas" style="height: 0px;">
                                     <div class="accordion-inner">
                                         <li><a href="#crearPregunta"><i class="icon-plus"></i> Crear Pregunta</a></li>
-                                        <li><a><i class="icon-th-list"></i> listar Preguntas</a></li>
+                                        <li><a href="#listarPreguntas"><i class="icon-th-list"></i> listar Preguntas</a></li>
                                     </div>
                                 </div>
                             </div>
@@ -379,8 +427,8 @@
                                 </div>
                                 <div class="accordion-body collapse" id="collapseEncuestas" style="height: 0px;">
                                     <div class="accordion-inner">
-                                        <li><a><i class="icon-plus"></i> Crear Encuesta</a></li>
-                                        <li><a><i class="icon-th-list"></i> listar Encuestas</a></li>
+                                        <li><a href="#crearEncuesta"><i class="icon-plus"></i> Crear Encuesta</a></li>
+                                        <li><a href="#listarEncuestas"><i class="icon-th-list"></i> listar Encuestas</a></li>
                                     </div>
                                 </div>
                             </div>
