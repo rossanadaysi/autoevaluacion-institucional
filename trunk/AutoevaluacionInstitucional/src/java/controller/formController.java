@@ -401,8 +401,6 @@ public class formController extends HttpServlet {
                 try {
                     System.out.println("insertando0");
                     while (rs.next()) {
-                        System.out.println("insertando: " + rs.getString(1));
-                        System.out.println("parametro: " + request.getParameter(rs.getString(1)));
                         if (request.getParameter(rs.getString(1)).equals("1")) {
                             System.out.println("insertando" + rs.getString(1));
                             sql2 = "INSERT INTO `" + tabla + "` (`id`, `muestra_id`, `" + tabla1 + "_id`) VALUES (NULL, '" + idMuestra + "', '" + rs.getString(1) + "')";
