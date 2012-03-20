@@ -53,10 +53,10 @@
     <class>entity.Docente</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/autoevaluacion"/>
-      <property name="javax.persistence.jdbc.password" value="123456"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://iesoluciones.com/gies_autoeva"/>
+      <property name="javax.persistence.jdbc.password" value="AutoEvaluacion2010"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.user" value="gies_autoeva"/>
     </properties>
   </persistence-unit>
 </persistence>
