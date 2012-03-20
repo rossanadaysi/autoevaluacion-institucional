@@ -4,12 +4,21 @@
  */
 package controller;
 
+import entity.Caracteristica;
+import entity.Factor;
+import entity.Indicador;
+import entity.controller.CaracteristicaJpaController;
+import entity.controller.FactorJpaController;
+import entity.controller.IndicadorJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,17 +38,49 @@ public class formController2 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet formController2</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet formController2 at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-             */
-        } finally {            
+            if (request.getParameter("action").equals("crearFactorAI")) {
+                HttpSession session = request.getSession();
+                Factor fa = new Factor();
+                FactorJpaController conFa = new FactorJpaController();
+                CaracteristicaJpaController conCa = new CaracteristicaJpaController();
+                fa.setNombre(request.getParameter("nombre"));
+                fa.setDescripcion(request.getParameter("descripcion"));
+
+                List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
+                List<Caracteristica> aux = new ArrayList<Caracteristica>();
+                for (int i = 0; i < listadeCaracteristicas.size(); i++) {
+                    if (request.getParameter(listadeCaracteristicas.get(i).getNombre()).equals("1")) {
+                        aux.add(listadeCaracteristicas.get(i));
+
+                    }
+                }
+                fa.setCaracteristicaList(aux);
+                conFa.create(fa);
+            }
+            if (request.getParameter("action").equals("crearCaracteristicaAI")) {
+                HttpSession session = request.getSession();
+                Caracteristica ca = new Caracteristica();
+                CaracteristicaJpaController conCa = new CaracteristicaJpaController();
+                IndicadorJpaController conIn = new IndicadorJpaController();
+                ca.setNombre(request.getParameter("nombre"));
+                ca.setDescripcion(request.getParameter("descripcion"));
+                FactorJpaController conFa = new FactorJpaController();
+                Factor fa = conFa.findFactor(Integer.parseInt(request.getParameter("factores")));
+                ca.setFactorId(fa);
+
+                List<Indicador> listadeIndicadores = conIn.findIndicadorEntities();
+                List<Indicador> aux = new ArrayList<Indicador>();
+                for (int i = 0; i < listadeIndicadores.size(); i++) {
+                    if (request.getParameter(listadeIndicadores.get(i).getNombre()).equals("1")) {
+                        aux.add(listadeIndicadores.get(i));
+
+                    }
+                }
+                ca.setIndicadorList(aux);
+                conCa.create(ca);
+            }
+            
+        } finally {
             out.close();
         }
     }
