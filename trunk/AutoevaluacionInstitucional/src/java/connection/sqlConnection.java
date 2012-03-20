@@ -56,10 +56,10 @@ public class sqlConnection {
     // * @param clave  Clave de la BD MySQL.
     //+
     public void conectarMySQL(String bd) {
-        String maquina = "localhost";
+        String maquina = "iesoluciones.com";
         String nombreBD = bd;
-        String usuario = "root";
-        String clave = "123456";
+        String usuario = "gies_autoeva";
+        String clave = "AutoEvaluacion2010";
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
