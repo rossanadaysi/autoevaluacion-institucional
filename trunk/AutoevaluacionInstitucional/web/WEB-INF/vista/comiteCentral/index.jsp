@@ -143,6 +143,10 @@
                                 }); //fin del $.ajax
                          
                     }
+                        if(hash.indexOf("#editarFactor")!=-1){
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                            url3 = url3.replace('#editarFactor', "ControllerCC?action=editarFactorCC");
+                   }
                     
                     if(hash == "#crearCaracteristica"){
                             
