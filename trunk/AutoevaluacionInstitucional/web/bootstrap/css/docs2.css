@@ -795,3 +795,25 @@ form.well {
 .accordion {
   margin-bottom: 0;
 }
+
+ td.action {
+  min-width: 40px;
+}
+
+
+.icon16 a{
+  background-image: url("../../css/images/acciones.png");
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  vertical-align: middle;
+  width: 16px;
+}
+
+.icon16 .delete {
+  background-position: -16px 0;
+}
+.icon16 .edit {
+  background-position: 0 0;
+  
+}
