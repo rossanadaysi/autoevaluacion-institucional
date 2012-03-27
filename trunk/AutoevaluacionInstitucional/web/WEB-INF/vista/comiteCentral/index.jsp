@@ -146,6 +146,24 @@
                         if(hash.indexOf("#editarFactor")!=-1){
                             var url3 = "<%=request.getContextPath()%>/"+hash;
                             url3 = url3.replace('#editarFactor', "ControllerCC?action=editarFactorCC");
+                            url3 = url3.replace('&', "&idF=");
+                            
+                            $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").hide();
+                                    },
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        $("div.ui-layout-center").show(100);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                            
+                            
                    }
                     
                     if(hash == "#crearCaracteristica"){
