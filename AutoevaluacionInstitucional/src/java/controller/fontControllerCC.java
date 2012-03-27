@@ -49,9 +49,10 @@ public class fontControllerCC extends HttpServlet {
             String action = request.getParameter("action");
             String clase = null;
             clase = rb.getString(action);
-
+            
             Action objeto = (Action) Class.forName(clase).newInstance();
-
+            
+            
             String ruta = objeto.procesar(request);
 
            // System.out.println("action: '" + action + "' procesada.");

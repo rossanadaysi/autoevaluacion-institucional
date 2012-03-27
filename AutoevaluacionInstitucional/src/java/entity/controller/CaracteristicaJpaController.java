@@ -189,6 +189,17 @@ public class CaracteristicaJpaController implements Serializable {
     public List<Caracteristica> findCaracteristicaEntities(int maxResults, int firstResult) {
         return findCaracteristicaEntities(false, maxResults, firstResult);
     }
+    
+    public List<Caracteristica> findCaracteristicasSeleccionadas(Factor f){
+         EntityManager em = getEntityManager();
+         try {
+            Query q = em.createQuery("SELECT c FROM Caracteristica c WHERE c.factorId = :factor");
+            q.setParameter("factor", f);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     private List<Caracteristica> findCaracteristicaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();

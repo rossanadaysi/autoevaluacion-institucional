@@ -22,33 +22,33 @@
             }
         });
         var removeValue = function(obj){
-        var randid = obj.find("[type=hidden]").attr("randid");
-        var inputid = elem.attr('id') + "_values";
-        if ($("#" + inputid).length != 0) {
-            try {
-                eval("json = " + $("#" + inputid).val() + ";");
-                var string = "{";
-                $.each(json, function(i, item){
-                    if (i && item && i != randid) {
-                        string += "\"" + i + "\":\"" + item + "\",";
+            var randid = obj.find("[type=hidden]").attr("randid");
+            var inputid = elem.attr('id') + "_values";
+            if ($("#" + inputid).length != 0) {
+                try {
+                    eval("json = " + $("#" + inputid).val() + ";");
+                    var string = "{";
+                    $.each(json, function(i, item){
+                        if (i && item && i != randid) {
+                            string += "\"" + i + "\":\"" + item + "\",";
+                        }
+                    });
+                    //remove last ,
+                    if (string.length > 2) {
+                        string = string.substr(0, (string.length - 1));
+                        string += "}"
                     }
-                });
-                //remove last ,
-                if (string.length > 2) {
-                    string = string.substr(0, (string.length - 1));
-                    string += "}"
+                    else {
+                        string = "";
+                    }
+                    $("#" + inputid).val(string);
+                } 
+                catch (e) {                
                 }
-                else {
-                    string = "";
-                }
-                $("#" + inputid).val(string);
-            } 
-            catch (e) {                
             }
         }
-    }
         $("button[type='reset']").click(function(){
-        elem = $("#fcbklist");
+            elem = $("#fcbklist");
             $.each(elem.children("li").children(".fcbklist_item"), function(i, obj){
                 obj = $(obj);
                 
@@ -71,29 +71,45 @@
         <div class="span8">
             <form id="formCrearFact" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Crear Factor</legend>
+                    <legend>Editar Factor</legend>
                     <div class="control-group">
                         <label for="nombre"  class="control-label">Nombre</label>
                         <div class="controls">
-                            <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value=""/>
+                            <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value="${factor.getNombre()}"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="descripcion" class="control-label">Descripcion</label>
                         <div class="controls">
-                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}"></textarea>
+                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}">${factor.getDescripcion()}</textarea>
                         </div>    
                     </div>
                     <div class="control-group">
                         <label for="descripcion" class="control-label">Asignar Caracteristicas</label>
                         <div class="controls">
+
+
                             <ul id="fcbklist">
-                                <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
-                                    <li>
-                                        <strong>${row.nombre}</strong><br/> 
-                                        <span class="fcbkitem_text">${row.descripcion}</span>
-                                        <input name="${row.nombre}" type="hidden" value="0"/>
-                                    </li>
+                                <c:forEach items="${listcaracteristicas}" var="item" varStatus="iter">
+                                    <c:set var="auxx" value="1"></c:set>
+                                    
+                                        <c:if test="${item.factorId == factor}">
+                                            <li>
+                                                <c:set var="auxx" value="0"></c:set>
+                                                <strong>${item.nombre}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <input name="${item.nombre}" type="hidden" checked="checked" value="0"/>
+                                            </li>
+                                        </c:if>
+                                            
+                                    <c:if test="${auxx == 1}">
+                                        <li>
+                                            <c:set var="auxx" value="0"></c:set>
+                                            <strong>${item.nombre}</strong><br/> 
+                                            <span class="fcbkitem_text">${item.descripcion}</span>
+                                            <input name="${item.nombre}" type="hidden" value="0"/>
+                                        </li>
+                                    </c:if>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -102,7 +118,7 @@
 
 
                     <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Crear Factor</button>
+                        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
                     </div>
                 </fieldset>
