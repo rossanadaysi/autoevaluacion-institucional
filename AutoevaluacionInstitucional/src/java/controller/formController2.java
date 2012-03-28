@@ -7,9 +7,11 @@ package controller;
 import entity.Caracteristica;
 import entity.Factor;
 import entity.Indicador;
+import entity.Pregunta;
 import entity.controller.CaracteristicaJpaController;
 import entity.controller.FactorJpaController;
 import entity.controller.IndicadorJpaController;
+import entity.controller.PreguntaJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -78,6 +80,20 @@ public class formController2 extends HttpServlet {
                 }
                 ca.setIndicadorList(aux);
                 conCa.create(ca);
+            }
+            
+            
+            if (request.getParameter("action").equals("crearPreguntaCC")) {
+                HttpSession session = request.getSession();
+                Pregunta p = new Pregunta();
+                PreguntaJpaController conPre = new PreguntaJpaController();
+                IndicadorJpaController conIn = new IndicadorJpaController();
+                p.setPregunta(request.getParameter("pregunta"));
+                p.setTipo(request.getParameter("tipo"));
+                p.setIndicadorId(conIn.findIndicador(Integer.parseInt(request.getParameter("indicador"))));
+                conPre.create(p);
+                
+                session.setAttribute("listpreguntas", conPre.findPreguntaEntities());
             }
             
         } finally {

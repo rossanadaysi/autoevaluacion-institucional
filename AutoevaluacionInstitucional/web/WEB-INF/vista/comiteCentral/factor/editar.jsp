@@ -9,7 +9,7 @@
         //id(ul id),width,height(element height),row(elements in row)        
         $.fcbkListSelection("#fcbklist","600","50","3");       
         
-        $("#formCrearFact").validate({
+        $("#formEditarFact").validate({
             submitHandler: function(){
                 $.ajax({
                     type: 'POST',
@@ -69,7 +69,7 @@
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
-            <form id="formCrearFact" class="form-horizontal" method="post">
+            <form id="formEditarFact" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Editar Factor</legend>
                     <div class="control-group">
@@ -91,25 +91,23 @@
 
                             <ul id="fcbklist">
                                 <c:forEach items="${listcaracteristicas}" var="item" varStatus="iter">
-                                    <c:set var="auxx" value="1"></c:set>
-                                    
-                                        <c:if test="${item.factorId == factor}">
+                                    <c:choose>
+                                        <c:when test="${item.factorId != factor}">
                                             <li>
-                                                <c:set var="auxx" value="0"></c:set>
+                                                <strong>${item.nombre}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <input name="${item.nombre}" type="hidden" value="0"/>
+                                            </li>
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li>
                                                 <strong>${item.nombre}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.descripcion}</span>
                                                 <input name="${item.nombre}" type="hidden" checked="checked" value="0"/>
                                             </li>
-                                        </c:if>
-                                            
-                                    <c:if test="${auxx == 1}">
-                                        <li>
-                                            <c:set var="auxx" value="0"></c:set>
-                                            <strong>${item.nombre}</strong><br/> 
-                                            <span class="fcbkitem_text">${item.descripcion}</span>
-                                            <input name="${item.nombre}" type="hidden" value="0"/>
-                                        </li>
-                                    </c:if>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -118,7 +116,7 @@
 
 
                     <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+                        <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
                     </div>
                 </fieldset>
