@@ -2311,7 +2311,12 @@
                             </c:otherwise>
                         </c:choose>
                     </ul>
+
                 </div>
+            </div>
+            <div align="center">
+                <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
+                <img src="<%=request.getContextPath()%>/css/Sin título-3.png" style="width: 224px; height: 80px"></img>
             </div>
         </div><!--/West-->
 

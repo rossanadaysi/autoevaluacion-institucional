@@ -1,1 +1,1 @@
-insert into muestradocente values (null, 1, (SELECT id from docente where persona_id = 1 LIMIT 1))
+Select programa.nombre, ROUND((count(*)*0.2),0), programa.id from docente inner join programa on docente.programa_id = programa.id inner join persona on docente.persona_id = persona.id  where docente.tipo <> 'aleatorio' group by docente.programa_id order by programa.nombre
