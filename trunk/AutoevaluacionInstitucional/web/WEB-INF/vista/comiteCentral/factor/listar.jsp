@@ -24,7 +24,7 @@
                                         <c:out value="${row.descripcion}"/>
                                     </td>
                                     <td class="action icon16">
-                                        <a title="Editar" href="#editarFactor&${row.id}" class="edit" href=""></a>
+                                        <a title="Editar" href="#editarFactor&${row.id}" class="edit"></a>
                                         <a title="Eliminar" class="delete" href=""></a>
                                     </td>
                                 </tr>

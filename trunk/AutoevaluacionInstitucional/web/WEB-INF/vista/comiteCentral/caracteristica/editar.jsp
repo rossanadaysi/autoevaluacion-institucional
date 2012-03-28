@@ -9,10 +9,10 @@
         //id(ul id),width,height(element height),row(elements in row)        
         $.fcbkListSelection("#fcbklist","600","50","3");       
         
-        $("#formCrearCarac").validate({
+        $("#formEditarCarac").validate({
             submitHandler: function(){
                 $.ajax({
-                    type: 'POST', 
+                    type: 'POST',
                     url: "<%=request.getContextPath()%>/formController2?action=crearCaracteristicaAI",
                     data: $("#formCrearCarac").serialize(),
                     success: function(){
@@ -24,33 +24,33 @@
         
         
         var removeValue = function(obj){
-        var randid = obj.find("[type=hidden]").attr("randid");
-        var inputid = elem.attr('id') + "_values";
-        if ($("#" + inputid).length != 0) {
-            try {
-                eval("json = " + $("#" + inputid).val() + ";");
-                var string = "{";
-                $.each(json, function(i, item){
-                    if (i && item && i != randid) {
-                        string += "\"" + i + "\":\"" + item + "\",";
+            var randid = obj.find("[type=hidden]").attr("randid");
+            var inputid = elem.attr('id') + "_values";
+            if ($("#" + inputid).length != 0) {
+                try {
+                    eval("json = " + $("#" + inputid).val() + ";");
+                    var string = "{";
+                    $.each(json, function(i, item){
+                        if (i && item && i != randid) {
+                            string += "\"" + i + "\":\"" + item + "\",";
+                        }
+                    });
+                    //remove last ,
+                    if (string.length > 2) {
+                        string = string.substr(0, (string.length - 1));
+                        string += "}"
                     }
-                });
-                //remove last ,
-                if (string.length > 2) {
-                    string = string.substr(0, (string.length - 1));
-                    string += "}"
+                    else {
+                        string = "";
+                    }
+                    $("#" + inputid).val(string);
+                } 
+                catch (e) {                
                 }
-                else {
-                    string = "";
-                }
-                $("#" + inputid).val(string);
-            } 
-            catch (e) {                
             }
         }
-    }
         $("button[type='reset']").click(function(){
-        elem = $("#fcbklist");
+            elem = $("#fcbklist");
             $.each(elem.children("li").children(".fcbklist_item"), function(i, obj){
                 obj = $(obj);
                 
@@ -72,20 +72,20 @@
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
-            <form id="formCrearCarac" class="form-horizontal" method="post">
+            <form id="formEditarCarac" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Crear Caracteristica</legend>
+                    <legend>Editar Caracteristica</legend>
                     <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
-                            <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value=""/>
+                            <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value="${caracteristica.getNombre()}"/>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="descripcion" class="control-label">Descripcion</label>
                         <div class="controls">
-                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}"></textarea>
+                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}">${caracteristica.getDescripcion()}</textarea>
                         </div>
                     </div>
                     <div class="control-group">
@@ -94,29 +94,50 @@
                             <select class="{required:true}" id="factores" name="factores">
                                 <option></option>
                                 <c:forEach items="${listfactores}" var="row" varStatus="iter">
-                                    <option value="${row.id}">${row.nombre}</option>
+                                    <c:choose>
+                                        <c:when test="${row != caracteristica.getFactorId()}">
+                                            <option value="${row.id}">${row.nombre}</option>    
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option selected="selected" value="${row.id}">${row.nombre}</option>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </select>                
-                                            
+
                         </div>
                     </div>
                     <div class="control-group">
                         <label  class="control-label">Asignar Indicadores</label>
                         <div class="controls">
+                            
                             <ul id="fcbklist">
-                                <c:forEach items="${listindicadores}" var="row" varStatus="iter">
-                                    <li>
-                                        <strong>${row.nombre}</strong><br/> 
-                                        <span class="fcbkitem_text">${row.descripcion}</span>
-                                        <input name="${row.nombre}" type="hidden" value="0"/>
-                                    </li>
+                                <c:forEach items="${listindicadores}" var="item" varStatus="iter">
+                                    <c:choose>
+                                        <c:when test="${item.caracteristicaId != caracteristica}">
+                                            <li>
+                                                <strong>${item.nombre}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <input name="${item.nombre}" type="hidden" value="0"/>
+                                            </li>
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li>
+                                                <strong>${item.nombre}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <input name="${item.nombre}" type="hidden" checked="checked" value="0"/>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </ul>
+                            
                         </div>
                     </div>    
 
                     <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Crear Caracteristica</button>
+                        <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
                     </div>
                 </fieldset>

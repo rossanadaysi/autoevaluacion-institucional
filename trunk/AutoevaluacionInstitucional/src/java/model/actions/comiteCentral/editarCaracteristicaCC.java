@@ -4,7 +4,6 @@
  */
 package model.actions.comiteCentral;
 
-import entity.Factor;
 import entity.controller.CaracteristicaJpaController;
 import entity.controller.FactorJpaController;
 import entity.controller.IndicadorJpaController;
@@ -23,17 +22,18 @@ public class editarCaracteristicaCC implements Action{
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         
         CaracteristicaJpaController conCaracteristica = new CaracteristicaJpaController(); 
+        FactorJpaController conFactor = new FactorJpaController(); 
         IndicadorJpaController conIndi = new IndicadorJpaController(); 
         HttpSession session = request.getSession();
         String idcaracteristica = request.getParameter("idC");
         
         
-        
         session.setAttribute("caracteristica",conCaracteristica.findCaracteristica(Integer.parseInt(idcaracteristica)));
         session.setAttribute("listindicadores", conIndi.findIndicadorEntities());
+        session.setAttribute("listfactores", conFactor.findFactorEntities());
         
         
-        String url = "/WEB-INF/vista/comiteCentral/indicador/editar.jsp";
+        String url = "/WEB-INF/vista/comiteCentral/caracteristica/editar.jsp";
         return url;
     }
     

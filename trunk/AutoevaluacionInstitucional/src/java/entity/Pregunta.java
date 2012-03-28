@@ -34,7 +34,7 @@ public class Pregunta implements Serializable {
     private String pregunta;
     @Basic(optional = false)
     @Column(name = "tipo")
-    private String tipo;
+    private String tipo; // 0 => 1-5, 1 => si/no  
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
     private List<Encuestahaspregunta> encuestahaspreguntaList;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
