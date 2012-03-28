@@ -19,10 +19,17 @@
             success: function(){
                 //   
                 $("#cargando").hide();
+                
                 $("#select3 option:eq(0)").attr("selected", "selected");
                 $("#select4 option:eq(0)").attr("selected", "selected");
-                $("#filtro").show();
-                $("#resultados2").show();
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                    success: function(data){
+                        $("#resultados4").html(data);
+                        $("#resultados4").show();
+                    }
+                })
                   
             } //fin success
                                             
@@ -79,10 +86,18 @@
             $("#enlace").hide();
             $("#filtro").hide();
             $("#filtro1").hide();
+            $("#filtro3").hide();
             $("#resultadoAlert").hide();
            
         }
         else{
+            $("#select2 option:eq(0)").attr("selected", "selected");
+            $("#select3 option:eq(0)").attr("selected", "selected");
+            $("#select4 option:eq(0)").attr("selected", "selected");
+            $("#select5 option:eq(0)").attr("selected", "selected");
+            $("#select6 option:eq(0)").attr("selected", "selected");
+            $("#select7 option:eq(0)").attr("selected", "selected");
+                
             $("#resultados2").hide();
             $("#resultados3").hide();
             $("#resultados4").hide();
@@ -90,6 +105,7 @@
             $("#enlace").hide();
             $("#filtro").hide();
             $("#filtro1").hide();
+            $("#filtro3").hide();
             $("#resultadoAlert").hide();
             $.ajax({
                 type: 'POST',
@@ -115,6 +131,7 @@
     
     function presionSubmitFiltro()
     {     
+              
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
@@ -169,6 +186,7 @@
         $("#resultadoAlert").hide();
         $("#filtro").hide(); 
         $("#filtro2").hide(); 
+        $("#filtro3").hide();
         $("#resultados3").hide(); 
         $("#resultados4").hide();
         $("#select2 option:eq(0)").attr("selected", "selected");
@@ -284,6 +302,23 @@
                         </table>
                         <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
                     </div>
+                    <div id="filtro3" style="display: none;">
+                        <p>Filtros</p>
+                        <table>
+                            <tr>
+                                <td>
+                                    <select  class="span3" id="select7" name="programas3" onchange="presionSubmitFiltro()">
+                                        <option value="--">Seleccione Programa</option>
+                                        <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
+                                            <option value="${item2[0]}">${item2[1]}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                    </div>
+
                     <div  id="resultados2"></div>
                     <div  class="span10">
                         <div id="resultados4" class="accordion" style="margin-left: -30px;"></div> 
