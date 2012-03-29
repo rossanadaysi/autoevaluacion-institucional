@@ -38,7 +38,7 @@ public class Pregunta implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
     private List<Encuestahaspregunta> encuestahaspreguntaList;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Indicador indicadorId;
 
     public Pregunta() {

@@ -81,8 +81,8 @@ public class formController2 extends HttpServlet {
                 ca.setIndicadorList(aux);
                 conCa.create(ca);
             }
-            
-            
+
+
             if (request.getParameter("action").equals("crearPreguntaCC")) {
                 HttpSession session = request.getSession();
                 Pregunta p = new Pregunta();
@@ -90,12 +90,15 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 p.setPregunta(request.getParameter("pregunta"));
                 p.setTipo(request.getParameter("tipo"));
-                p.setIndicadorId(conIn.findIndicador(Integer.parseInt(request.getParameter("indicador"))));
+                if (request.getParameter("indicador") != null && (!request.getParameter("indicador").equals("-1"))) {
+                    p.setIndicadorId(conIn.findIndicador(Integer.parseInt(request.getParameter("indicador"))));
+                }
+
                 conPre.create(p);
-                
+
                 session.setAttribute("listpreguntas", conPre.findPreguntaEntities());
             }
-            
+
         } finally {
             out.close();
         }
