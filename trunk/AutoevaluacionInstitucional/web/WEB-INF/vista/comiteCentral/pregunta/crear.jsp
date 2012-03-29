@@ -47,8 +47,8 @@
                         <label for="tipo" class="control-label">Tipo de la Pregunta</label>
                         <div class="controls">
                             <select name="tipo" id="tipo">
-                                <option data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/1-5.png'>" rel="popover" data-original-title="Elegir del 1 al 5" value="0">Elegir del 1 al 5</option>
-                                <option data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/Si-No.png'>" rel="popover" data-original-title="Si/No" value="1">Si/No</option>
+                                <option data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/1-5.png'>" rel="popover" data-original-title="Elegir del 1 al 5" value="Elegir 1-5">Elegir del 1 al 5</option>
+                                <option data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/Si-No.png'>" rel="popover" data-original-title="Si/No" value="Si/No">Si/No</option>
                             </select>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <label for="indicador" class="control-label">Asignar Indicador</label>
                         <div class="controls">
                             <select class="{required:true}" id="indicador" name="indicador">
-                                <option></option>
+                                <option value="-1"></option>
                                 <c:forEach items="${listindicadores}" var="row" varStatus="iter">
                                     <option value="${row.id}">${row.nombre}</option>
                                 </c:forEach>
