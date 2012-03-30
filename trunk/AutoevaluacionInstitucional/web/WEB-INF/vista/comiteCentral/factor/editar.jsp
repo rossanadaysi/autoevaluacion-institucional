@@ -13,8 +13,8 @@
             submitHandler: function(){
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/formController2?action=crearFactorAI",
-                    data: $("#formCrearFact").serialize(),
+                    url: "<%=request.getContextPath()%>/formController2?action=editarFactorCC",
+                    data: $("#formEditarFact").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarFactores"
                     } //fin success
@@ -113,7 +113,7 @@
                         </div>
                     </div>
 
-
+                        <input name="idF" type="hidden" value="${factor.getId()}">
 
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Guardar cambios</button>
