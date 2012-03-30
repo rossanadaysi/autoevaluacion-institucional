@@ -12,10 +12,14 @@ import entity.controller.CaracteristicaJpaController;
 import entity.controller.FactorJpaController;
 import entity.controller.IndicadorJpaController;
 import entity.controller.PreguntaJpaController;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +63,38 @@ public class formController2 extends HttpServlet {
                 fa.setCaracteristicaList(aux);
                 conFa.create(fa);
             }
+            
+             if (request.getParameter("action").equals("editarFactorCC")) {
+             HttpSession session = request.getSession();
+                String idF = request.getParameter("idF");
+                FactorJpaController conFa = new FactorJpaController();
+                Factor fa = conFa.findFactor(Integer.parseInt(idF));
+                CaracteristicaJpaController conCa = new CaracteristicaJpaController();
+                fa.setNombre(request.getParameter("nombre"));
+                fa.setDescripcion(request.getParameter("descripcion"));
+
+                List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
+                List<Caracteristica> aux = new ArrayList<Caracteristica>();
+                for (int i = 0; i < listadeCaracteristicas.size(); i++) {
+                    if (request.getParameter(listadeCaracteristicas.get(i).getNombre()).equals("1")) {
+                        aux.add(listadeCaracteristicas.get(i));
+
+                    }
+                }
+                fa.setCaracteristicaList(aux);
+                try {
+                    conFa.edit(fa);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+             
+             }
+            
             if (request.getParameter("action").equals("crearCaracteristicaAI")) {
                 HttpSession session = request.getSession();
                 Caracteristica ca = new Caracteristica();
