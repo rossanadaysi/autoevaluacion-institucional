@@ -6,7 +6,13 @@
  
     function presionSubmitGenerarMuestra()
     {
-        
+       
+        $("#select3 option:eq(0)").attr("selected", "selected");
+        $("#select4 option:eq(0)").attr("selected", "selected");
+        $("#select5 option:eq(0)").attr("selected", "selected");
+        $("#select6 option:eq(0)").attr("selected", "selected");
+        $("#select7 option:eq(0)").attr("selected", "selected");
+            
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=generarMuestra",
@@ -26,6 +32,7 @@
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
                     success: function(data){
+                       
                         $("#resultados4").html(data);
                         $("#resultados4").show();
                     }
@@ -39,12 +46,24 @@
     function presionSubmitFormula()
     {
         
+        $("#resultados2").hide();
+        $("#resultados3").hide();
+        $("#resultados4").hide();
+        $("#enlace").hide();
+        $("#filtro").hide();
+        $("#filtro1").hide();
+        $("#filtro2").hide();
+        $("#filtro3").hide();
+            
         if($("#select2 option:selected").val() == "--"){
             $("#resultados2").hide();
             $("#resultados3").hide();
             $("#resultados4").hide();
             $("#enlace").hide();
             $("#filtro").hide();
+            $("#filtro1").hide();
+            $("#filtro2").hide();
+            $("#filtro3").hide();
         }
         else{
             $.ajax({
@@ -86,6 +105,7 @@
             $("#enlace").hide();
             $("#filtro").hide();
             $("#filtro1").hide();
+            $("#filtro2").hide();
             $("#filtro3").hide();
             $("#resultadoAlert").hide();
            
@@ -104,6 +124,7 @@
             $("#formula").hide();
             $("#enlace").hide();
             $("#filtro").hide();
+            $("#filtro2").hide();
             $("#filtro1").hide();
             $("#filtro3").hide();
             $("#resultadoAlert").hide();
@@ -182,6 +203,7 @@
     }
        
     $("#botonNuevaMuestra").click(function(){
+    
         $("#resultados2").hide(); 
         $("#resultadoAlert").hide();
         $("#filtro").hide(); 

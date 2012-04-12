@@ -628,6 +628,8 @@ public class formController extends HttpServlet {
                     "action").equals("generarMuestra")) {
 
                 HttpSession session = request.getSession();
+
+                session.setAttribute("selectorAsignarM2", null);
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
 
                 sqlController conSql = new sqlController();
@@ -670,15 +672,23 @@ public class formController extends HttpServlet {
                 ArrayList rs = (ArrayList) session.getAttribute("muestraCalculada2");
                 Iterator i = rs.iterator();
 
-                conSql.UpdateSql("TRUNCATE TABLE `" + tabla + "` ", bd);
-                if (id == 2) {
-                    String sql = "DELETE from persona where persona.mail = 'aleatorioDocente'";
-                    conSql.UpdateSql(sql, bd);
+                try {
 
-                    sql = "DELETE from docente where docente.tipo = 'aleatorioDocente'";
-                    conSql.UpdateSql(sql, bd);
+                    conSql.UpdateSql("TRUNCATE TABLE `" + tabla + "` ", bd);
+
+                    if (id == 2) {
+
+                        String sql = "DELETE from docente where docente.tipo = 'aleatorioDocente'";
+                        conSql.UpdateSql(sql, bd);
+
+                        sql = "DELETE from persona where persona.mail = 'aleatorioDocente'";
+                        conSql.UpdateSql(sql, bd);
+
+                    }
+
+                } catch (Error e) {
+                    System.out.println(e);
                 }
-
                 while (i.hasNext()) {
 
                     String s1 = (String) i.next();
