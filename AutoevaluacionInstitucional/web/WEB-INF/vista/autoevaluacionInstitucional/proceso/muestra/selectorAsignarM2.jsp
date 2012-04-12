@@ -11,10 +11,7 @@
             $("#filtro").hide();
             $("#filtro3").show();
         }
-   
-         
-         
-             
+               
     })
     
     $("#botonEditarMuestra").click(function(){
