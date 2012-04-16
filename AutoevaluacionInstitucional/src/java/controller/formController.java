@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.sql.Result;
+import model.PasswordGenerator;
 
 /**
  *
@@ -584,6 +585,32 @@ public class formController extends HttpServlet {
                 int id = Integer.valueOf(idFuente);
                 int idMuestra = (Integer) session.getAttribute("idMuestra");
 
+                String tabla = null;
+                String tabla1 = null;
+
+                //Estatico
+                if (id == 1) {
+                    tabla = "muestraestudiante";
+                    tabla1 = "estudiante";
+                } else if (id == 2) {
+                    tabla = "muestradocente";
+                    tabla1 = "docente";
+                } else if (id == 3) {
+                    tabla = "muestraadministrativo";
+                    tabla1 = "administrativo";
+                } else if (id == 4) {
+                    tabla = "muestradirector";
+                    tabla1 = "directorprograma";
+                } else if (id == 5) {
+                    tabla = "muestraegresado";
+                    tabla1 = "egresado";
+                } else if (id == 6) {
+                    tabla = "muestraempleador";
+                    tabla1 = "empleador";
+                } else if (id == 7) {
+                    tabla = "muestraagencia";
+                    tabla1 = "agenciagubernamental";
+                }
 
                 String sql = null;
 
@@ -609,15 +636,16 @@ public class formController extends HttpServlet {
                     String idP = request.getParameter("programas3");
 
                     if (!idP.equals("--")) {
-                        System.out.println("hola");
                         sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
                     } else if (!idP.equals("--")) {
-                        System.out.println("hola1");
                         sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
                     } else if (idP.equals("--")) {
                         //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
                     }
 
+                } else {
+                    sql = "select persona.nombre, persona.apellido, persona.password from " + tabla1 + " inner join " + tabla + " on " + tabla1 + "." + tabla + "_id = " + tabla + ".id inner join persona on " + tabla + ".persona_id = persona.id where " + tabla1 + ".muestra_id = " + idMuestra + " order by " + tabla + ".id";
+                    System.out.println("sql8: " + sql);
                 }
 
                 session.setAttribute("idFuenteMuestra", id);
@@ -692,7 +720,7 @@ public class formController extends HttpServlet {
                         }
                         if (id == 3) {
 
-                            String sql = "DELETE from administrativo inner join persona on administrativo.persona = persona.id where persona.mail = 'aleatorioAdministrativo'";
+                            String sql = "DELETE from administrativo where administrativo.persona_id = (Select id from persona where persona.mail = 'aleatorioAdministrativo')";
                             conSql.UpdateSql(sql, bd);
 
                             sql = "DELETE from persona where persona.mail = 'aleatorioAdministrativo'";
@@ -701,7 +729,7 @@ public class formController extends HttpServlet {
                         }
                         if (id == 4) {
 
-                            String sql = "DELETE from directorprograma inner join persona on directorprograma.persona = persona.id where persona.mail = 'aleatorioDirectivo'";
+                            String sql = "DELETE from directorprograma where directorprograma.persona_id = (Select id from persona where persona.mail = 'aleatorioDirectivo')";
                             conSql.UpdateSql(sql, bd);
 
                             sql = "DELETE from persona where persona.mail = 'aleatorioDirectivo'";
@@ -710,7 +738,7 @@ public class formController extends HttpServlet {
                         }
                         if (id == 5) {
 
-                            String sql = "DELETE from egresado inner join persona on egresado.persona = persona.id where persona.mail = 'aleatorioEgresado'";
+                            String sql = "DELETE from egresado where egresado.persona_id = (Select id from persona where persona.mail = 'aleatorioEgresado')";
                             conSql.UpdateSql(sql, bd);
 
                             sql = "DELETE from persona where persona.mail = 'aleatorioEgresado'";
@@ -719,7 +747,7 @@ public class formController extends HttpServlet {
                         }
                         if (id == 6) {
 
-                            String sql = "DELETE from empleador inner join persona on empleador.persona = persona.id where persona.mail = 'aleatorioEmpleador'";
+                            String sql = "DELETE from empleador where empleador.persona_id = (Select id from persona where persona.mail = 'aleatorioEmpleador')";
                             conSql.UpdateSql(sql, bd);
 
                             sql = "DELETE from persona where persona.mail = 'aleatorioEmpleador'";
@@ -728,7 +756,7 @@ public class formController extends HttpServlet {
                         }
                         if (id == 7) {
 
-                            String sql = "DELETE from agenciagubernamental inner join persona on agenciagubernamental.persona = persona.id where persona.mail = 'aleatorioAgencia'";
+                            String sql = "DELETE from agenciagubernamental where agenciagubernamental.persona_id = (Select id from persona where persona.mail = 'aleatorioAgencia')";
                             conSql.UpdateSql(sql, bd);
 
                             sql = "DELETE from persona where persona.mail = 'aleatorioAgencia'";
@@ -806,27 +834,40 @@ public class formController extends HttpServlet {
                             }
                         } else {
 
-                            String sql;
-                            int contador = 0;
-                            sql = "SELECT CONV(FLOOR(RAND() * 99999999999999), 10, 36) from docente ORDER BY Rand() LIMIT " + muestra;
-                            System.out.println("sql1: " + sql);
-                            ResultSet rs1 = conSql.CargarSql(sql, bd);
-                            try {
-                                while (rs1.next()) {
-                                    String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + programa + "" + contador + "', 'Fuente'  , '" + tabla + "', '" + rs1.getString(2) + "', '" + aux + "')";
-                                    System.out.println("sql2: " + sql2);
-                                    conSql.UpdateSql(sql2, bd);
-                                    sql2 = "insert into " + tabla + " values (null, '" + aux + "', '" + proceso.getId() + "" + id + "" + programa + "" + contador + "', '" + id + "'  , '" + programa + "')";
+                            int d = (int) Math.floor(Double.parseDouble(muestra));
+
+                            for (int j = 0; j < d; j++) {
+
+                                String pass = PasswordGenerator.getPassword(
+                                        PasswordGenerator.MINUSCULAS
+                                        + PasswordGenerator.MAYUSCULAS
+                                        + PasswordGenerator.ESPECIALES, 6);
+
+                                String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + j + "', 'Fuente'  , '" + tabla1 + "', '" + pass + "', '" + aux + "')";
+                                System.out.println("sql2: " + sql2);
+                                conSql.UpdateSql(sql2, bd);
+                                if (id == 3 || id == 4 || id == 5) {
+                                    sql2 = "insert into " + tabla1 + " values (null, '" + proceso.getId() + "" + id + "" + j + "', '" + id + "'  , '" + 1 + "')";
                                     System.out.println("sql3: " + sql2);
                                     conSql.UpdateSql(sql2, bd);
-                                    sql2 = "insert into " + tabla1 + " values (null, '" + idMuestra + "', (SELECT id from " + tabla + " where persona_id = " + proceso.getId() + "" + id + "" + programa + "" + contador + " LIMIT 1))";
-                                    System.out.println("sql4: " + sql2);
-                                    conSql.UpdateSql(sql2, bd);
-                                    contador++;
                                 }
-                            } catch (SQLException ex) {
-                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                if (id == 6) {
+                                    sql2 = "insert into " + tabla1 + " values (null, null, '" + proceso.getId() + "" + id + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                    System.out.println("sql3: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                                if (id == 7) {
+                                    sql2 = "insert into " + tabla1 + " values (null, null, '" + proceso.getId() + "" + id + "" + j + "', '" + id + "')";
+                                    System.out.println("sql3: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                                sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = " + proceso.getId() + "" + id + "" + j + " LIMIT 1))";
+                                System.out.println("sql4: " + sql2);
+                                conSql.UpdateSql(sql2, bd);
+
+
                             }
+
                         }
                     }
                 } else {

@@ -1,1 +1,1 @@
-SELECT CONV(FLOOR(RAND() * 99999999999999), 10, 36) from docente ORDER BY Rand() LIMIT 50
+DELETE from administrativo where administrativo.persona_id = (Select id from persona where persona.mail = 'aleatorioAdministrativo')
