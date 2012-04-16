@@ -24,34 +24,53 @@
     </div>
     <div class="accordion-body collapse" id="collapseOne" style="height: 0px; z-index:2;background-color: #FFFFFF;">
         <div class="accordion-inner">
-            <table class="table table-striped table-bordered table-condensed">
-                <thead>
-                <th>Programa</th>
-                <th>Muestra</th>
-                </thead>
-                <tbody>
-                    <c:forEach items="${muestraCalculada.rowsByIndex}" var="item" varStatus="iter">
+            <c:if test="${muestraCalculada != null}">
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <th>Programa</th>
+                    <th>Muestra</th>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${muestraCalculada.rowsByIndex}" var="item" varStatus="iter">
+                            <tr>
+                                <td>${item[0]}</td>
+                                <c:choose>
+                                    <c:when test="${item[1]==0}">
+                                        <td>1</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>${item[1]}</td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </tr>
+                            <c:set var="iterador" value="${iterador + item[1]}" />
+                        </c:forEach>
+                    </tbody>
+                    <tfoot>
                         <tr>
-                            <td>${item[0]}</td>
-                            <c:choose>
-                                <c:when test="${item[1]==0}">
-                                    <td>1</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>${item[1]}</td>
-                                </c:otherwise>
-                            </c:choose>
+                            <td><strong>Total Muestra</strong></td>
+                            <td><strong>${iterador}</strong></td>
                         </tr>
-                        <c:set var="iterador" value="${iterador + item[1]}" />
-                    </c:forEach>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td><strong>Total Muestra</strong></td>
-                        <td><strong>${iterador}</strong></td>
-                    </tr>
-                </tfoot>
-            </table>   
+                    </tfoot>
+                </table>   
+            </c:if>
+            <c:if test="${muestraCalculada == null}">
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <th>Muestra Calculada</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <c:if test="${muestraIndividual != null}">
+                                <td>${muestraIndividual}</td>
+                            </c:if>
+                            <c:if test="${muestraIndividual == null}">
+                                <td>No existen datos en la base de datos. Configure tamanio de la muestra manualmente.</td>
+                            </c:if>
+                        </tr>
+                    </tbody>
+                </table>   
+            </c:if>
         </div>
     </div>
 </div>

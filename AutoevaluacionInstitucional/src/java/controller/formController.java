@@ -439,20 +439,20 @@ public class formController extends HttpServlet {
                         tabla = "muestradocente";
                         tabla1 = "docente";
                     } else if (id == 3) {
-                        tabla = "muestradocente";
-                        tabla1 = "docente";
+                        tabla = "muestraadministrativo";
+                        tabla1 = "administrativo";
                     } else if (id == 4) {
-                        tabla = "muestradocente";
-                        tabla1 = "docente";
+                        tabla = "muestradirector";
+                        tabla1 = "directorprograma";
                     } else if (id == 5) {
-                        tabla = "muestradocente";
-                        tabla1 = "docente";
+                        tabla = "muestraegresado";
+                        tabla1 = "egresado";
                     } else if (id == 6) {
-                        tabla = "muestradocente";
-                        tabla1 = "docente";
+                        tabla = "muestraempleador";
+                        tabla1 = "empleador";
                     } else if (id == 7) {
-                        tabla = "muestradocente";
-                        tabla1 = "docente";
+                        tabla = "muestraagencia";
+                        tabla1 = "agenciagubernamental";
                     }
 
                     session.setAttribute("idFuenteMuestra", id);
@@ -653,85 +653,184 @@ public class formController extends HttpServlet {
                     tabla = "muestradocente";
                     tabla1 = "docente";
                 } else if (id == 3) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraadministrativo";
+                    tabla1 = "administrativo";
                 } else if (id == 4) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestradirector";
+                    tabla1 = "directorprograma";
                 } else if (id == 5) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraegresado";
+                    tabla1 = "egresado";
                 } else if (id == 6) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraempleador";
+                    tabla1 = "empleador";
                 } else if (id == 7) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraagencia";
+                    tabla1 = "agenciagubernamental";
                 }
+                String aux = null;
+
 
                 ArrayList rs = (ArrayList) session.getAttribute("muestraCalculada2");
-                Iterator i = rs.iterator();
 
-                try {
+                if (rs != null) {
 
-                    conSql.UpdateSql("TRUNCATE TABLE `" + tabla + "` ", bd);
+                    Iterator i = rs.iterator();
 
-                    if (id == 2) {
+                    try {
 
-                        String sql = "DELETE from docente where docente.tipo = 'aleatorioDocente'";
-                        conSql.UpdateSql(sql, bd);
+                        conSql.UpdateSql("TRUNCATE TABLE `" + tabla + "` ", bd);
 
-                        sql = "DELETE from persona where persona.mail = 'aleatorioDocente'";
-                        conSql.UpdateSql(sql, bd);
+                        if (id == 2) {
 
-                    }
+                            String sql = "DELETE from docente where docente.tipo = 'aleatorioDocente'";
+                            conSql.UpdateSql(sql, bd);
 
-                } catch (Error e) {
-                    System.out.println(e);
-                }
-                while (i.hasNext()) {
+                            sql = "DELETE from persona where persona.mail = 'aleatorioDocente'";
+                            conSql.UpdateSql(sql, bd);
 
-                    String s1 = (String) i.next();
-                    String[] campos = s1.split("/");
-
-                    String muestra = campos[campos.length - 1];
-                    String programa = campos[campos.length - 2];
-
-                    if (id == 1) {
-                        String sql = "SELECT * FROM estudiante where estudiante.programa_id = " + programa + " and estudiante.semestre != 01 and  estudiante.semestre != 02 ORDER BY Rand() LIMIT " + muestra;
-                        ResultSet rs1 = conSql.CargarSql(sql, bd);
-                        try {
-                            while (rs1.next()) {
-                                String sql2 = "insert into muestraestudiante values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "')";
-                                conSql.UpdateSql(sql2, bd);
-                            }
-                        } catch (SQLException ex) {
-                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } else if (id == 2) {
+                        if (id == 3) {
 
-                        String sql;
-                        int contador = 0;
-                        sql = "SELECT id, CONV(FLOOR(RAND() * 99999999999999), 10, 36) from docente ORDER BY Rand() LIMIT " + muestra;
-                        System.out.println("sql1: " + sql);
-                        ResultSet rs1 = conSql.CargarSql(sql, bd);
-                        try {
-                            while (rs1.next()) {
-                                String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + programa + "" + contador + "', 'Fuente'  , 'Docente', '" + rs1.getString(2) + "', 'aleatorioDocente')";
-                                System.out.println("sql2: " + sql2);
-                                conSql.UpdateSql(sql2, bd);
-                                sql2 = "insert into docente values (null, 'aleatorioDocente', '" + proceso.getId() + "" + id + "" + programa + "" + contador + "', '" + id + "'  , '" + programa + "')";
-                                System.out.println("sql3: " + sql2);
-                                conSql.UpdateSql(sql2, bd);
-                                sql2 = "insert into muestradocente values (null, '" + idMuestra + "', (SELECT id from docente where persona_id = " + proceso.getId() + "" + id + "" + programa + "" + contador + " LIMIT 1))";
-                                System.out.println("sql4: " + sql2);
-                                conSql.UpdateSql(sql2, bd);
-                                contador++;
+                            String sql = "DELETE from administrativo inner join persona on administrativo.persona = persona.id where persona.mail = 'aleatorioAdministrativo'";
+                            conSql.UpdateSql(sql, bd);
+
+                            sql = "DELETE from persona where persona.mail = 'aleatorioAdministrativo'";
+                            conSql.UpdateSql(sql, bd);
+
+                        }
+                        if (id == 4) {
+
+                            String sql = "DELETE from directorprograma inner join persona on directorprograma.persona = persona.id where persona.mail = 'aleatorioDirectivo'";
+                            conSql.UpdateSql(sql, bd);
+
+                            sql = "DELETE from persona where persona.mail = 'aleatorioDirectivo'";
+                            conSql.UpdateSql(sql, bd);
+
+                        }
+                        if (id == 5) {
+
+                            String sql = "DELETE from egresado inner join persona on egresado.persona = persona.id where persona.mail = 'aleatorioEgresado'";
+                            conSql.UpdateSql(sql, bd);
+
+                            sql = "DELETE from persona where persona.mail = 'aleatorioEgresado'";
+                            conSql.UpdateSql(sql, bd);
+
+                        }
+                        if (id == 6) {
+
+                            String sql = "DELETE from empleador inner join persona on empleador.persona = persona.id where persona.mail = 'aleatorioEmpleador'";
+                            conSql.UpdateSql(sql, bd);
+
+                            sql = "DELETE from persona where persona.mail = 'aleatorioEmpleador'";
+                            conSql.UpdateSql(sql, bd);
+
+                        }
+                        if (id == 7) {
+
+                            String sql = "DELETE from agenciagubernamental inner join persona on agenciagubernamental.persona = persona.id where persona.mail = 'aleatorioAgencia'";
+                            conSql.UpdateSql(sql, bd);
+
+                            sql = "DELETE from persona where persona.mail = 'aleatorioAgencia'";
+                            conSql.UpdateSql(sql, bd);
+
+                        }
+
+
+                        if (id == 3) {
+                            aux = "aleatorioAdministrativo";
+                            tabla1 = "administrativo";
+                        } else if (id == 4) {
+                            aux = "aleatorioDirectivo";
+                            tabla1 = "directorprograma";
+                        } else if (id == 5) {
+                            aux = "aleatorioEgresado";
+                            tabla1 = "egresado";
+                        } else if (id == 6) {
+                            aux = "aleatorioEmpleador";
+                            tabla1 = "empleador";
+                        } else if (id == 7) {
+                            aux = "aleatorioAgencia";
+                            tabla1 = "agenciagubernamental";
+                        }
+
+
+
+
+
+
+                    } catch (Error e) {
+                        System.out.println(e);
+                    }
+                    while (i.hasNext()) {
+
+                        String s1 = (String) i.next();
+                        String[] campos = s1.split("/");
+
+                        String muestra = campos[campos.length - 1];
+                        String programa = campos[campos.length - 2];
+
+                        if (id == 1) {
+                            String sql = "SELECT * FROM estudiante where estudiante.programa_id = " + programa + " and estudiante.semestre != 01 and  estudiante.semestre != 02 ORDER BY Rand() LIMIT " + muestra;
+                            ResultSet rs1 = conSql.CargarSql(sql, bd);
+                            try {
+                                while (rs1.next()) {
+                                    String sql2 = "insert into muestraestudiante values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "')";
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        } catch (SQLException ex) {
-                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        } else if (id == 2) {
+
+                            String sql;
+                            int contador = 0;
+                            sql = "SELECT id, CONV(FLOOR(RAND() * 99999999999999), 10, 36) from docente ORDER BY Rand() LIMIT " + muestra;
+                            System.out.println("sql1: " + sql);
+                            ResultSet rs1 = conSql.CargarSql(sql, bd);
+                            try {
+                                while (rs1.next()) {
+                                    String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + programa + "" + contador + "', 'Fuente'  , 'Docente', '" + rs1.getString(2) + "', 'aleatorioDocente')";
+                                    System.out.println("sql2: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    sql2 = "insert into docente values (null, 'aleatorioDocente', '" + proceso.getId() + "" + id + "" + programa + "" + contador + "', '" + id + "'  , '" + programa + "')";
+                                    System.out.println("sql3: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    sql2 = "insert into muestradocente values (null, '" + idMuestra + "', (SELECT id from docente where persona_id = " + proceso.getId() + "" + id + "" + programa + "" + contador + " LIMIT 1))";
+                                    System.out.println("sql4: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    contador++;
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+
+                            String sql;
+                            int contador = 0;
+                            sql = "SELECT CONV(FLOOR(RAND() * 99999999999999), 10, 36) from docente ORDER BY Rand() LIMIT " + muestra;
+                            System.out.println("sql1: " + sql);
+                            ResultSet rs1 = conSql.CargarSql(sql, bd);
+                            try {
+                                while (rs1.next()) {
+                                    String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + programa + "" + contador + "', 'Fuente'  , '" + tabla + "', '" + rs1.getString(2) + "', '" + aux + "')";
+                                    System.out.println("sql2: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    sql2 = "insert into " + tabla + " values (null, '" + aux + "', '" + proceso.getId() + "" + id + "" + programa + "" + contador + "', '" + id + "'  , '" + programa + "')";
+                                    System.out.println("sql3: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    sql2 = "insert into " + tabla1 + " values (null, '" + idMuestra + "', (SELECT id from " + tabla + " where persona_id = " + proceso.getId() + "" + id + "" + programa + "" + contador + " LIMIT 1))";
+                                    System.out.println("sql4: " + sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    contador++;
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
+                } else {
+                    System.out.println("nulo");
                 }
             } else if (request.getParameter(
                     "action").equals("calcularMuestraAI")) {
@@ -760,20 +859,20 @@ public class formController extends HttpServlet {
                     tabla = "muestradocente";
                     tabla1 = "docente";
                 } else if (id == 3) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraadministrativo";
+                    tabla1 = "administrativo";
                 } else if (id == 4) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestradirector";
+                    tabla1 = "directorprograma";
                 } else if (id == 5) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraegresado";
+                    tabla1 = "egresado";
                 } else if (id == 6) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraempleador";
+                    tabla1 = "empleador";
                 } else if (id == 7) {
-                    tabla = "muestradocente";
-                    tabla1 = "docente";
+                    tabla = "muestraagencia";
+                    tabla1 = "agenciagubernamental";
                 }
 
                 ResultSet rs = null;
@@ -783,6 +882,10 @@ public class formController extends HttpServlet {
                 // rs = conSql.CargarSql(sql, bd);
 
                 if (idFormula.equals("1")) {
+                    session.setAttribute("muestraCalculada2", null);
+                    session.setAttribute("muestraCalculada", null);
+                    session.setAttribute("muestraIndividual", null);
+
                     //Tamaño muestra
                     double n;
                     //Nivel de confianza
@@ -797,39 +900,75 @@ public class formController extends HttpServlet {
                     double N = 0.0;
 
                     try {
-                        sql = "Select count(*) from " + tabla1;
-                        rs = conSql.CargarSql(sql, bd);
 
-                        while (rs.next()) {
-                            N = Double.parseDouble(rs.getString(1));
-                        }
+                        String aux = request.getParameter("tamanioPobla");
+                        System.out.println("aux: " + aux);
 
-                        n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
-
-                        if (idFuente.equals("1")) {
-                            double cociente = n / N;
-                            sql = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.2,0), programa.id from estudiante inner join programa on estudiante.programa_id = programa.id group by estudiante.programa_id order by programa.nombre";
-                        }
-                        if (idFuente.equals("2")) {
-                            double cociente = n / N;
-                            sql = "Select programa.nombre, ROUND((count(*)*0.2),0), programa.id from docente inner join programa on docente.programa_id = programa.id inner join persona on docente.persona_id = persona.id  where docente.tipo <> 'aleatorio' group by docente.programa_id order by programa.nombre";
-                        }
-
-                        ResultSet rs1 = conSql.CargarSql(sql, bd);
-                        ArrayList l = new ArrayList();
-                        while (rs1.next()) {
-                            String s;
-                            if (rs1.getString(2).equals("0")) {
-                                s = rs1.getString(3) + "/" + "1";
-                            } else {
-                                s = rs1.getString(3) + "/" + rs1.getString(2);
+                        if (aux != null) {
+                            N = Integer.parseInt(aux);
+                            System.out.println("Manual");
+                        } else {
+                            System.out.println("Bd");
+                            sql = "Select count(*) from " + tabla1;
+                            rs = conSql.CargarSql(sql, bd);
+                            while (rs.next()) {
+                                N = Double.parseDouble(rs.getString(1));
                             }
-                            l.add(s);
                         }
-                        session.setAttribute("muestraCalculada2", l);
-                        Result result = conSql.CargarSql2(sql, bd);
-                        session.setAttribute("muestraCalculada", result);
 
+
+                        if (N != 0.0) {
+
+                            n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
+
+                            ArrayList l = new ArrayList();
+                            String s;
+                            String sql2 = null;
+
+                            if (idFuente.equals("1")) {
+                                double cociente = n / N;
+                                sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.2,0), programa.id from estudiante inner join programa on estudiante.programa_id = programa.id group by estudiante.programa_id order by programa.nombre";
+                                Result result = conSql.CargarSql2(sql, bd);
+                                session.setAttribute("muestraCalculada", result);
+                            } else if (idFuente.equals("2")) {
+
+                                sql2 = "Select programa.nombre, ROUND((count(*)*0.2),0), programa.id from docente inner join programa on docente.programa_id = programa.id inner join persona on docente.persona_id = persona.id  where docente.tipo <> 'aleatorio' group by docente.programa_id order by programa.nombre";
+                                Result result = conSql.CargarSql2(sql, bd);
+                                session.setAttribute("muestraCalculada", result);
+                            } else {
+                                if (n != 0) {
+                                    s = "Muestra/" + n;
+                                    int d = (int) Math.floor(n);
+                                    session.setAttribute("muestraIndividual", d);
+                                } else {
+                                    s = "Muestra/" + 1;
+                                    session.setAttribute("muestraIndividual", 1);
+                                }
+                                l.add(s);
+                                session.setAttribute("muestraCalculada", null);
+                            }
+
+                            if (sql2 != null) {
+                                ResultSet rs1 = conSql.CargarSql(sql2, bd);
+
+                                while (rs1.next()) {
+
+                                    if (rs1.getString(2).equals("0")) {
+                                        s = rs1.getString(3) + "/" + "1";
+                                    } else {
+                                        s = rs1.getString(3) + "/" + rs1.getString(2);
+                                    }
+                                    l.add(s);
+                                }
+
+
+                            }
+
+                            session.setAttribute("muestraCalculada2", l);
+
+                        } else {
+                            System.out.println("null");
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
