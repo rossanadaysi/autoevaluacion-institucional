@@ -251,7 +251,7 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("div.ui-layout-center").append(data);
+                                        $("div.ui-layout-center").html(data);
                                         
                                     } //fin success
                                 }); //fin del $.ajax
@@ -482,5 +482,15 @@
                 </div>
             </div>
         </div><!--/West-->
+        
+        <div class="modal hide fade" id="myModalElimF">
+            <div class="modal-body">
+                ¿Esta usted seguro de que desea eliminar este Factor?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#eliminarFactor">Si</a>
+                <a class="btn" data-dismiss="modal" href="#">Cancelar</a>
+            </div>
+        </div><!--/ModalC1-->
     </body>
 </html> 
