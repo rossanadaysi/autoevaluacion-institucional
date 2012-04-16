@@ -18,7 +18,7 @@
             url: "<%=request.getContextPath()%>/formController?action=generarMuestra",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
-                $("#enlace").hide();
+                //$("#enlace").hide();
                 $("#cargando").show();
                 // $("#resultados2").show();
             },
@@ -43,7 +43,50 @@
         }); //fin $.ajax
             
     }
+    
+    
+    function presionSubmitConfigurarFormula()
+    {
+        $("#configuracionFormula").show();
+    }
+    
+    
     function presionSubmitFormula()
+    {
+        
+        $("#resultados2").hide();
+        $("#resultados3").hide();
+        $("#resultados4").hide();
+        $("#enlace").hide();
+        $("#filtro").hide();
+        $("#filtro1").hide();
+        $("#filtro2").hide();
+        $("#filtro3").hide();
+        $("#botonGenerarMuestra").hide();
+        $("#botonCalcularMuestra2").hide();
+        $("#botonCalcularMuestra").show();
+        $("#configuracionFormula").hide();
+     
+            
+        if($("#select2 option:selected").val() == "--"){
+            $("#resultados2").hide();
+            $("#resultados3").hide();
+            $("#resultados4").hide();
+            $("#enlace").hide();
+            $("#filtro").hide();
+            $("#filtro1").hide();
+            $("#filtro2").hide();
+            $("#filtro3").hide();
+        }
+        else{
+         
+            $("#enlace").show();
+        }
+    }
+    
+    
+    
+    function presionSubmitCalcularMuestra()
     {
         
         $("#resultados2").hide();
@@ -82,6 +125,9 @@
                             $("#resultados3").show();
                             $("#resultados2").hide()
                             $("#enlace").show();
+                            $("#botonGenerarMuestra").show();
+                            $("#botonCalcularMuestra2").show();
+                            $("#botonCalcularMuestra").hide();
                         }
                     })
                 
@@ -93,6 +139,7 @@
             }); //fin $.ajax
         }
     }
+    
         
     function presionSubmitFuente()
     {
@@ -108,6 +155,7 @@
             $("#filtro2").hide();
             $("#filtro3").hide();
             $("#resultadoAlert").hide();
+            $("#configuracionFormula").hide();
            
         }
         else{
@@ -117,6 +165,7 @@
             $("#select5 option:eq(0)").attr("selected", "selected");
             $("#select6 option:eq(0)").attr("selected", "selected");
             $("#select7 option:eq(0)").attr("selected", "selected");
+            $("#configuracionFormula").hide();
                 
             $("#resultados2").hide();
             $("#resultados3").hide();
@@ -254,8 +303,17 @@
                             <option data-content="<p> <div><img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/f1.gif'></div></p><br><p> n = Tamaño de la muestra. </p><p> Z = Nivel de confianza aplicado al estudio. Basados en la tabla Z. </p><p> p = probabilidad de ocurrencia del evento previsto. </p><p> q = Probabilidad de no ocurrencia del evento previsto. </p><p> EE = Error de tolerancia máxima permitida. </p><p> N = Tamaño de la población." rel="popover"  value="1" data-original-title="Detalle Formula">Muestreo aleatorio por conglomerado</option>
                         </select>
                     </div>
+                    <div id="configuracionFormula" style="display: none">
+                        <p>Tamaño de la Población: </p>
+                        <input name="tamanioPobla" type="text">
+                    </div>
                     <div id="enlace" style="display: none;">
-                        <button id="botonGenerarMuestra" class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra Aleatoriamente</button>
+                        <button style="display: none" id="botonGenerarMuestra" class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra</button>
+                        <button style="display: none" id="botonCalcularMuestra2" class="btn btn-secundary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
+                        <button id="botonCalcularMuestra" class="btn btn-primary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
+                        <button id="botonConfigurarFormula" class="btn btn-secundary" onclick="presionSubmitConfigurarFormula()" type="button">Configurar Parametros de Fórmula</button>
+                        <br>
+                        <br>
                     </div>
                     <div class="alert alert-info" id="cargando" style="display: none; width: 221px;">
                         <a class="close">×</a>
