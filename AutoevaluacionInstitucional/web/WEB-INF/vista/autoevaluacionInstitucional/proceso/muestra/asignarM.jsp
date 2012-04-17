@@ -201,7 +201,7 @@
     
     function presionSubmitFiltro()
     {     
-              
+        alert("hola");
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
@@ -392,6 +392,20 @@
                                         <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
                                             <option value="${item2[0]}">${item2[1]}</option>
                                         </c:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                    </div>
+                    <div id="filtro4" style="display: none;">
+                        <p>Filtros</p>
+                        <table>
+                            <tr>
+                                <td>
+                                    <select  class="span3" id="select8" name="programas4" onchange="presionSubmitFiltro()">
+                                        <option value="--">Seleccione Programa</option>
+                                        <option value="Todos">Todos</option>
                                     </select>
                                 </td>
                             </tr>
