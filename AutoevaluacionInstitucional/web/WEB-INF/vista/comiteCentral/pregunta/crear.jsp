@@ -39,7 +39,7 @@
                     <div class="control-group">
                         <label for="pregunta" class="control-label">Pregunta</label>
                         <div class="controls">
-                            <textarea rows="3" name="pregunta" id="pregunta" class="input-xlarge {required:true}"></textarea>
+                            <textarea rows="3" name="pregunta" id="pregunta" class="input-xxlarge {required:true}"></textarea>
                         </div>
                     </div>
 
