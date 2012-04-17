@@ -1,5 +1,35 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+    $(function(){
+        var actual = "";
+        $("a.delete").click(function(e){
+            e.preventDefault();
+            actual = $(this).attr("id"); 
+            $('#myModalElimP').modal();
+            
+        })   
+            
+        $("a[href='#eliminarPregunta']").click(function(){
+            $.ajax({  
+                type: "POST", 
+                url: url3, 
+                beforeSend :function(){
+                    $("div.ui-layout-center").empty();
+                },
+                success: function(data) 
+                {
+                    $("div.ui-layout-center").append(data);
+                    
+                                        
+                } //fin success
+            }); //fin del $.ajax
+        });
+    })
+</script>
+
+
+
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
@@ -23,9 +53,9 @@
                                     <td>
                                         <c:out value="${row.tipo}"/>
                                     </td>
-                                     <td class="action icon16">
+                                    <td class="action icon16">
                                         <a title="Editar" href="#editarPregunta&${row.id}" class="edit"></a>
-                                        <a title="Eliminar" class="delete" href=""></a>
+                                        <a title="Eliminar" class="delete" id="${row.id}" href=""></a>
                                     </td>
                                 </tr>
                             </c:forEach>

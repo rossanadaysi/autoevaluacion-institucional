@@ -134,6 +134,30 @@ public class formController2 extends HttpServlet {
 
                 session.setAttribute("listpreguntas", conPre.findPreguntaEntities());
             }
+            
+            if (request.getParameter("action").equals("editarPreguntaCC")) {
+                HttpSession session = request.getSession();
+                String idP = request.getParameter("idP");
+                PreguntaJpaController conPre = new PreguntaJpaController();
+                Pregunta pre = conPre.findPregunta(Integer.parseInt(idP));
+                pre.setPregunta(request.getParameter("pregunta"));
+                IndicadorJpaController conIn = new IndicadorJpaController();
+                pre.setTipo(request.getParameter("tipo"));
+                if (request.getParameter("indicador") != null && (!request.getParameter("indicador").equals("-1"))) {
+                    pre.setIndicadorId(conIn.findIndicador(Integer.parseInt(request.getParameter("indicador"))));
+                }
+                try {
+                    conPre.edit(pre);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                session.setAttribute("listpreguntas", conPre.findPreguntaEntities());
+            }
 
         } finally {
             out.close();

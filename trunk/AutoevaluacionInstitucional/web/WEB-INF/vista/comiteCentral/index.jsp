@@ -166,6 +166,29 @@
                             
                    }
                    
+                   if(hash.indexOf("#editarPregunta")!=-1){
+                            var url3 = "<%=request.getContextPath()%>/"+hash;
+                            url3 = url3.replace('#editarPregunta', "ControllerCC?action=editarPreguntaCC");
+                            url3 = url3.replace('&', "&idP=");
+                            
+                            $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").hide();
+                                    },
+                                    success: function(data) 
+                                    {
+                                        $("div.ui-layout-center").append(data);
+                                        $("div.ui-layout-center").show(100);
+                                        
+                                    } //fin success
+                                }); //fin del $.ajax
+                            
+                            
+                   }
+                   
                                       
                     if(hash == "#crearCaracteristica"){
                             
@@ -491,6 +514,16 @@
                 <a class="btn btn-primary" data-dismiss="modal" href="#eliminarFactor">Si</a>
                 <a class="btn" data-dismiss="modal" href="#">Cancelar</a>
             </div>
-        </div><!--/ModalC1-->
+        </div><!--/ModalElimF-->
+        
+        <div class="modal hide fade" id="myModalElimP">
+            <div class="modal-body">
+                ¿Esta usted seguro de que desea eliminar esta pregunta?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#eliminarPregunta">Si</a>
+                <a class="btn" data-dismiss="modal" href="#">Cancelar</a>
+            </div>
+        </div><!--/ModalElimP-->
     </body>
 </html> 
