@@ -25,25 +25,26 @@
     <div class="accordion-body collapse" id="collapseOne" style="height: 0px; z-index:2;background-color: #FFFFFF;">
         <div class="accordion-inner">
             <c:if test="${muestraCalculada != null}">
+                Estudiante / Docente
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Programa</th>
                     <th>Muestra</th>
                     </thead>
                     <tbody>
-                        <c:forEach items="${muestraCalculada.rowsByIndex}" var="item" varStatus="iter">
+                        <c:forEach items="${muestraCalculada.rowsByIndex}" var="item2" varStatus="iter">
                             <tr>
-                                <td>${item[0]}</td>
+                                <td>${item2[0]}</td>
                                 <c:choose>
-                                    <c:when test="${item[1]==0}">
+                                    <c:when test="${item2[1]==0}">
                                         <td>1</td>
                                     </c:when>
                                     <c:otherwise>
-                                        <td>${item[1]}</td>
+                                        <td>${item2[1]}</td>
                                     </c:otherwise>
                                 </c:choose>
                             </tr>
-                            <c:set var="iterador" value="${iterador + item[1]}" />
+                            <c:set var="iterador" value="${iterador + item2[1]}" />
                         </c:forEach>
                     </tbody>
                     <tfoot>
@@ -55,6 +56,7 @@
                 </table>   
             </c:if>
             <c:if test="${muestraCalculada == null}">
+                Otras Fuentes
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Muestra Calculada</th>

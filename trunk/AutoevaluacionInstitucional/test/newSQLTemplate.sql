@@ -1,1 +1,1 @@
-DELETE from administrativo where administrativo.persona_id = (Select id from persona where persona.mail = 'aleatorioAdministrativo')
+Select programa.nombre, ROUND((count(*)*0.2),0), programa.id from docente inner join programa on docente.programa_id = programa.id inner join persona on docente.persona_id = persona.id  where docente.tipo <> 'aleatorioDocente' group by docente.programa_id order by programa.nombre
