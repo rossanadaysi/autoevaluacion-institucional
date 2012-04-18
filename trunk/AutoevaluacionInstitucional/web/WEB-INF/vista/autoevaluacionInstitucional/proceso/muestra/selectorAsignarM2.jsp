@@ -56,13 +56,13 @@
         }); //fin $.ajax
     }) 
 </script>
-<c:if test="${idFuenteMuestra == 2 || idFuenteMuestra == 1}">
-    <c:choose>
-        <c:when test="${selectorAsignarM2 == null}">
-            Debe Seleccionar un filtro para listar la muestra asignada.
-        </c:when>
-        <c:otherwise>
-            <c:if test="${idFuenteMuestra == 2}">
+<c:choose>
+    <c:when test="${selectorAsignarM2 == null}">
+        Debe Seleccionar un filtro para listar la muestra asignada.
+    </c:when>
+    <c:otherwise>
+        <c:if test="${idFuenteMuestra == 2 || idFuenteMuestra == 1}">
+            <c:if test="${idFuenteMuestra == 2}">    
                 <div id="tablax" style="z-index: 1;">
                     <br>
                     <h4>Muestra Generada Para la Fuente Seleccionada</h4>
@@ -116,30 +116,30 @@
                     <p><strong>Total Estudiantes: ${iterador}</strong></p>
                 </div>
             </c:if>
-        </c:otherwise>
-    </c:choose>
-</c:if>
-<c:if test="${idFuenteMuestra != 2 && idFuenteMuestra != 1}">
-    <div id="tablax" style="z-index: 1;">
-        <br>
-        <h4>Muestra Generada Para la Fuente Seleccionada</h4>
-        <br>
-        <table class="table table-striped table-bordered table-condensed">
-            <thead>
-            <th>Fuente</th>
-            <th>Password</th>
-            </thead>
-            <tbody>
-                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
-                    <tr>
-                        <td>${item[1]}${item[2]}</td>
-                        <td>${item[3]}</td>
-                    </tr>
-                    <c:set var="iterador" value="${iter.index + 1}" />
-                </c:forEach>
-            </tbody>
-        </table>
-        <p><strong>Total: ${iterador}</strong></p>
-    </div>
-</c:if>
+        </c:if>
+        <c:if test="${idFuenteMuestra != 2 && idFuenteMuestra != 1}">
+            <div id="tablax" style="z-index: 1;">
+                <br>
+                <h4>Muestra Generada Para la Fuente Seleccionada</h4>
+                <br>
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <th>Fuente</th>
+                    <th>Password</th>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
+                            <tr>
+                                <td>${item[0]}${item[1]}</td>
+                                <td>${item[2]}</td>
+                            </tr>
+                            <c:set var="iterador" value="${iter.index + 1}" />
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <p><strong>Total: ${iterador}</strong></p>
+            </div>
+        </c:if>
+    </c:otherwise>
+</c:choose>
 

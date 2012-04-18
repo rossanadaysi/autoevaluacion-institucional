@@ -1,1 +1,1 @@
-Select programa.nombre, ROUND((count(*)*0.2),0), programa.id from docente inner join programa on docente.programa_id = programa.id inner join persona on docente.persona_id = persona.id  where docente.tipo <> 'aleatorioDocente' group by docente.programa_id order by programa.nombre
+select persona.nombre, persona.apellido, persona.password from "+tabla+" inner join "+tabla1+" on "+tabla+"."+tabla1+"_id = "+tabla1+".id inner join persona on "+tabla1+".persona_id = persona.id where "+tabla+".muestra_id = 1 order by "+tabla+".id
