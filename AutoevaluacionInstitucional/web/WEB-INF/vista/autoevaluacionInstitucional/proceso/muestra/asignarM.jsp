@@ -12,6 +12,7 @@
         $("#select5 option:eq(0)").attr("selected", "selected");
         $("#select6 option:eq(0)").attr("selected", "selected");
         $("#select7 option:eq(0)").attr("selected", "selected");
+        $("#select8 option:eq(0)").attr("selected", "selected");
             
         $.ajax({
             type: 'POST',
@@ -28,6 +29,7 @@
                 
                 $("#select3 option:eq(0)").attr("selected", "selected");
                 $("#select4 option:eq(0)").attr("selected", "selected");
+                $("#select8 option:eq(0)").attr("selected", "selected");
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
@@ -62,6 +64,7 @@
         $("#filtro1").hide();
         $("#filtro2").hide();
         $("#filtro3").hide();
+        $("#filtro4").hide();
         $("#botonGenerarMuestra").hide();
         $("#botonCalcularMuestra2").hide();
         $("#botonCalcularMuestra").show();
@@ -77,6 +80,7 @@
             $("#filtro1").hide();
             $("#filtro2").hide();
             $("#filtro3").hide();
+            $("#filtro4").hide();
         }
         else{
          
@@ -97,6 +101,7 @@
         $("#filtro1").hide();
         $("#filtro2").hide();
         $("#filtro3").hide();
+        $("#filtro4").hide();
             
         if($("#select2 option:selected").val() == "--"){
             $("#resultados2").hide();
@@ -107,6 +112,7 @@
             $("#filtro1").hide();
             $("#filtro2").hide();
             $("#filtro3").hide();
+            $("#filtro4").hide();
         }
         else{
             $.ajax({
@@ -154,6 +160,7 @@
             $("#filtro1").hide();
             $("#filtro2").hide();
             $("#filtro3").hide();
+            $("#filtro4").hide();
             $("#resultadoAlert").hide();
             $("#configuracionFormula").hide();
            
@@ -165,6 +172,7 @@
             $("#select5 option:eq(0)").attr("selected", "selected");
             $("#select6 option:eq(0)").attr("selected", "selected");
             $("#select7 option:eq(0)").attr("selected", "selected");
+            $("#select8 option:eq(0)").attr("selected", "selected"); 
             $("#configuracionFormula").hide();
                 
             $("#resultados2").hide();
@@ -176,6 +184,7 @@
             $("#filtro2").hide();
             $("#filtro1").hide();
             $("#filtro3").hide();
+            $("#filtro4").hide();
             $("#resultadoAlert").hide();
             $.ajax({
                 type: 'POST',
@@ -201,7 +210,6 @@
     
     function presionSubmitFiltro()
     {     
-        alert("hola");
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
@@ -258,6 +266,7 @@
         $("#filtro").hide(); 
         $("#filtro2").hide(); 
         $("#filtro3").hide();
+        $("#filtro4").hide();
         $("#resultados3").hide(); 
         $("#resultados4").hide();
         $("#select2 option:eq(0)").attr("selected", "selected");
@@ -404,13 +413,13 @@
                             <tr>
                                 <td>
                                     <select  class="span3" id="select8" name="programas4" onchange="presionSubmitFiltro()">
-                                        <option value="--">Seleccione Programa</option>
+                                        <option value="--">Seleccione Opción</option>
                                         <option value="Todos">Todos</option>
                                     </select>
                                 </td>
                             </tr>
                         </table>
-                        <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                        <div style="width: 500px;"><p>Seleccione una opción para ver la muestra asignada.</p></div>
                     </div>
 
                     <div  id="resultados2"></div>

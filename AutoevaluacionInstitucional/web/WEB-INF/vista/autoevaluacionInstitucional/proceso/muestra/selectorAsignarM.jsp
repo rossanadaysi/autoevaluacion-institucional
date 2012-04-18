@@ -4,15 +4,23 @@
     $(document).ready(function() {      
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
+        $("#select8 option:eq(0)").attr("selected", "selected");
         if(${aux_asignarM == 1}){
             $("#resultadoAlert").show();
             if(${idFuenteMuestra == 1}){
                 $("#filtro3").hide();
+                $("#filtro4").hide();
                 $("#filtro").show();
             }
-            if(${idFuenteMuestra == 2}){
+            else if(${idFuenteMuestra == 2}){
                 $("#filtro").hide();
+                $("#filtro4").hide();
                 $("#filtro3").show();
+            }
+            else{
+                $("#filtro").hide();
+                $("#filtro3").hide();
+                $("#filtro4").show();
             }
         }else{
             $("#formula").show();

@@ -575,8 +575,6 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("selectorAsignarMuestra2AI")) {
 
-                System.out.println("Entra!!");
-
                 HttpSession session = request.getSession();
                 sqlController conSql = new sqlController();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
@@ -649,7 +647,7 @@ public class formController extends HttpServlet {
                 } else {
                     String idP = request.getParameter("programas4");
                     if (!idP.equals("--")) {
-                        sql = "select persona.nombre, persona.apellido, persona.password from " + tabla1 + " inner join " + tabla + " on " + tabla1 + "." + tabla + "_id = " + tabla + ".id inner join persona on " + tabla + ".persona_id = persona.id where " + tabla1 + ".muestra_id = " + idMuestra + " order by " + tabla + ".id";
+                        sql = "select persona.nombre, persona.apellido, persona.password from " + tabla + " inner join " + tabla1 + " on " + tabla + "." + tabla1 + "_id = " + tabla1 + ".id inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla + ".muestra_id = 1 order by " + tabla + ".id";
                         System.out.println("sql8: " + sql);
                     }
                 }
@@ -658,6 +656,7 @@ public class formController extends HttpServlet {
 
                 Result rs = conSql.CargarSql2(sql, bd);
                 session.setAttribute("selectorAsignarM2", rs);
+
             } else if (request.getParameter(
                     "action").equals("generarMuestra")) {
 
@@ -840,6 +839,7 @@ public class formController extends HttpServlet {
                                 String pass = PasswordGenerator.getPassword(
                                         PasswordGenerator.MINUSCULAS
                                         + PasswordGenerator.MAYUSCULAS
+                                        + PasswordGenerator.NUMEROS
                                         + PasswordGenerator.ESPECIALES, 6);
 
                                 String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + j + "', 'Fuente'  , '" + tabla1 + "', '" + pass + "', '" + aux + "')";

@@ -25,7 +25,6 @@
     <div class="accordion-body collapse" id="collapseOne" style="height: 0px; z-index:2;background-color: #FFFFFF;">
         <div class="accordion-inner">
             <c:if test="${muestraCalculada != null}">
-                Estudiante / Docente
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Programa</th>
@@ -56,7 +55,6 @@
                 </table>   
             </c:if>
             <c:if test="${muestraCalculada == null}">
-                Otras Fuentes
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Muestra Calculada</th>
