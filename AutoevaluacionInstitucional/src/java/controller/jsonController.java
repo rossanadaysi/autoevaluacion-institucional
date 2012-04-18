@@ -208,9 +208,6 @@ public class jsonController extends HttpServlet {
                 }
 
             }
-
-
-
             if (request.getParameter("ejecucion").equals("listarProcesos")) {
 
                 ProgramaJpaController conPrograma = new ProgramaJpaController();
@@ -220,7 +217,7 @@ public class jsonController extends HttpServlet {
 
                 List<Proceso> listProceso = conProceso.findProcesoEntities();
 
-               
+
                 int cont = listProceso.size();
                 int i = 0;
 
@@ -256,10 +253,6 @@ public class jsonController extends HttpServlet {
                         }
                     }
                 }
-
-
-
-
                 try {
                     out.println("[" + aux3 + "]");
                     System.out.println("[" + aux3 + "]");
@@ -269,9 +262,6 @@ public class jsonController extends HttpServlet {
 
 
             }
-
-
-
         } finally {
             out.close();
         }

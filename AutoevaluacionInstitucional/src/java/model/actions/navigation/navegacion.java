@@ -31,14 +31,14 @@ public class navegacion implements Action {
         ProgramaJpaController conPrograma = new ProgramaJpaController();
         PrivilegioJpaController conPivilegio = new PrivilegioJpaController();
         RepresentanteJpaController conRepresentante = new RepresentanteJpaController();
-        FactorJpaController conFactor = new FactorJpaController(); 
-        IndicadorJpaController conIndicador = new IndicadorJpaController(); 
-        CaracteristicaJpaController conCaracteristica = new CaracteristicaJpaController(); 
-        PreguntaJpaController conPregunta = new PreguntaJpaController(); 
-        EncuestaJpaController conEncuesta = new EncuestaJpaController(); 
-        
+        FactorJpaController conFactor = new FactorJpaController();
+        IndicadorJpaController conIndicador = new IndicadorJpaController();
+        CaracteristicaJpaController conCaracteristica = new CaracteristicaJpaController();
+        PreguntaJpaController conPregunta = new PreguntaJpaController();
+        EncuestaJpaController conEncuesta = new EncuestaJpaController();
+
         String path = request.getParameter("action");
-       
+
         if (path.equals("CrearProcesoAI")) {
             path = "autoevaluacionInstitucional/proceso/crear";
         } else if (path.equals("detalleProcesoAI")) {
@@ -60,8 +60,11 @@ public class navegacion implements Action {
         } else if (path.equals("indexCC")) {
             path = "comiteCentral/index";
         } else if (path.equals("listarRepresentante")) {
+            path = "cautoevaluacionInstitucional/proceso/listarP";
+        } else if (path.equals("listarProceso")) {
             path = "comiteCentral/representante/listar";
             session.setAttribute("listrepresentantes", conRepresentante.findRepresentanteEntities());
+
         } else if (path.equals("crearRepresentante")) {
             session.setAttribute("programas", conPrograma.findProgramaEntities());
             session.setAttribute("privilegios", conPivilegio.findPrivilegioEntities());
@@ -77,10 +80,10 @@ public class navegacion implements Action {
         } else if (path.equals("listarCaracteristicasCC")) {
             session.setAttribute("listcaracteristicas", conCaracteristica.findCaracteristicaEntities());
             path = "comiteCentral/caracteristica/listar";
-        }else if (path.equals("listarPreguntasCC")) {
+        } else if (path.equals("listarPreguntasCC")) {
             session.setAttribute("listpreguntas", conPregunta.findPreguntaEntities());
             path = "comiteCentral/pregunta/listar";
-        }else if (path.equals("listarEncuestasCC")) {
+        } else if (path.equals("listarEncuestasCC")) {
             session.setAttribute("listencuestas", conEncuesta.findEncuestaEntities());
             path = "comiteCentral/encuesta/listar";
         }
