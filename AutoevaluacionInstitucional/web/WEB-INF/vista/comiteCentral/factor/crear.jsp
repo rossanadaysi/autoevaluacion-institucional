@@ -13,7 +13,7 @@
             submitHandler: function(){
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/formController2?action=crearFactorAI",
+                    url: "<%=request.getContextPath()%>/formController2?action=crearFactorCC",
                     data: $("#formCrearFact").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarFactores"
@@ -92,7 +92,7 @@
                                     <li>
                                         <strong>${row.nombre}</strong><br/> 
                                         <span class="fcbkitem_text">${row.descripcion}</span>
-                                        <input name="${row.nombre}" type="hidden" value="0"/>
+                                        <input name="C${row.id}" type="hidden" value="0"/>
                                     </li>
                                 </c:forEach>
                             </ul>
