@@ -97,7 +97,6 @@
                                     <option value="${row.id}">${row.nombre}</option>
                                 </c:forEach>
                             </select>                
-                                            
                         </div>
                     </div>
                     <div class="control-group">

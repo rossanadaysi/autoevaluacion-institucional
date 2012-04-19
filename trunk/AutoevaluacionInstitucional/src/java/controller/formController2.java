@@ -32,8 +32,11 @@ import javax.servlet.http.HttpSession;
  */
 public class formController2 extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -44,7 +47,7 @@ public class formController2 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            if (request.getParameter("action").equals("crearFactorAI")) {
+            if (request.getParameter("action").equals("crearFactorCC")) {
                 HttpSession session = request.getSession();
                 Factor fa = new Factor();
                 FactorJpaController conFa = new FactorJpaController();
@@ -55,7 +58,7 @@ public class formController2 extends HttpServlet {
                 List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
                 List<Caracteristica> aux = new ArrayList<Caracteristica>();
                 for (int i = 0; i < listadeCaracteristicas.size(); i++) {
-                    if (request.getParameter(listadeCaracteristicas.get(i).getNombre()).equals("1")) {
+                    if (request.getParameter("C" + listadeCaracteristicas.get(i).getId()).equals("1")) {
                         aux.add(listadeCaracteristicas.get(i));
 
                     }
@@ -63,9 +66,9 @@ public class formController2 extends HttpServlet {
                 fa.setCaracteristicaList(aux);
                 conFa.create(fa);
             }
-            
-             if (request.getParameter("action").equals("editarFactorCC")) {
-             HttpSession session = request.getSession();
+
+            if (request.getParameter("action").equals("editarFactorCC")) {
+                HttpSession session = request.getSession();
                 String idF = request.getParameter("idF");
                 FactorJpaController conFa = new FactorJpaController();
                 Factor fa = conFa.findFactor(Integer.parseInt(idF));
@@ -91,11 +94,43 @@ public class formController2 extends HttpServlet {
                 } catch (Exception ex) {
                     Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
-             
-             }
-            
-            if (request.getParameter("action").equals("crearCaracteristicaAI")) {
+
+
+            }
+
+
+            if (request.getParameter("action").equals("editarIndicadorCC")) {
+                HttpSession session = request.getSession();
+                String idI = request.getParameter("idI");
+                IndicadorJpaController conIndi = new IndicadorJpaController();
+                Indicador in = conIndi.findIndicador(Integer.parseInt(idI));
+                PreguntaJpaController conPre = new PreguntaJpaController();
+                in.setNombre(request.getParameter("nombre"));
+                in.setDescripcion(request.getParameter("descripcion"));
+
+                List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
+                List<Pregunta> aux = new ArrayList<Pregunta>();
+                for (int i = 0; i < listadePreguntas.size(); i++) {
+                    if (request.getParameter(listadePreguntas.get(i).getPregunta()).equals("1")) {
+                        aux.add(listadePreguntas.get(i));
+
+                    }
+                }
+                in.setPreguntaList(aux);
+                try {
+                    conIndi.edit(in);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+            }
+
+            if (request.getParameter("action").equals("crearCaracteristicaCC")) {
                 HttpSession session = request.getSession();
                 Caracteristica ca = new Caracteristica();
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
@@ -118,6 +153,28 @@ public class formController2 extends HttpServlet {
                 conCa.create(ca);
             }
 
+            if (request.getParameter("action").equals("crearIndicadorCC")) {
+                HttpSession session = request.getSession();
+                Indicador in = new Indicador();
+                IndicadorJpaController conIn = new IndicadorJpaController();
+                PreguntaJpaController conPre = new PreguntaJpaController();
+                in.setNombre(request.getParameter("nombre"));
+                in.setDescripcion(request.getParameter("descripcion"));
+                CaracteristicaJpaController conCa = new CaracteristicaJpaController();
+                Caracteristica ca = conCa.findCaracteristica(Integer.parseInt(request.getParameter("caracteristica")));
+                in.setCaracteristicaId(ca);
+
+                List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
+                List<Pregunta> aux = new ArrayList<Pregunta>();
+                for (int i = 0; i < listadePreguntas.size(); i++) {
+                    if (request.getParameter("P"+listadePreguntas.get(i).getId()).equals("1")) {
+                        aux.add(listadePreguntas.get(i));
+
+                    }
+                }
+                in.setPreguntaList(aux);
+                conIn.create(in);
+            }
 
             if (request.getParameter("action").equals("crearPreguntaCC")) {
                 HttpSession session = request.getSession();
@@ -134,7 +191,7 @@ public class formController2 extends HttpServlet {
 
                 session.setAttribute("listpreguntas", conPre.findPreguntaEntities());
             }
-            
+
             if (request.getParameter("action").equals("editarPreguntaCC")) {
                 HttpSession session = request.getSession();
                 String idP = request.getParameter("idP");
@@ -165,8 +222,10 @@ public class formController2 extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -178,8 +237,10 @@ public class formController2 extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
+    /**
+     * Handles the HTTP
+     * <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -191,8 +252,9 @@ public class formController2 extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

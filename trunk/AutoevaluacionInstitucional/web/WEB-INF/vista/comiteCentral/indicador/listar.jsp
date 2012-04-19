@@ -12,6 +12,7 @@
                         <thead>
                         <th>Nombre</th>
                         <th>Descripci&oacute;n</th>
+                        <th></th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listindicadores}" var="row" varStatus="iter">
@@ -21,6 +22,10 @@
                                     </td>
                                     <td>
                                         <c:out value="${row.descripcion}"/>
+                                    </td>
+                                    <td class="action icon16">
+                                        <a title="Editar" href="#editarIndicador&${row.id}" class="edit"></a>
+                                        <a title="Eliminar" class="delete" href=""></a>
                                     </td>
                                 </tr>
                             </c:forEach>
