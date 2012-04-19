@@ -9,7 +9,7 @@
         <div class="span10">
             <br/>
             <fieldset>
-                <legend>Listado de  Procesos</legend>
+                <legend>Detalle de  Procesos</legend>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Descripción</th>
@@ -18,7 +18,7 @@
                     <th>Programa</th>
                     </thead>
                     <tbody>
-                        <c:forEach items="${listProceso}" var="row" varStatus="iter">
+                        <c:forEach items="${detailProceso}" var="row" varStatus="iter">
                             <tr>  
                                 <td>   
                                     <c:out value="${row.descripcion}"/>

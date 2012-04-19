@@ -73,9 +73,7 @@ function presionSubmit(va, idc)
                                 }); //fin $.ajax
             
                             } 
-    
-    
-                        });
+                            });
         
         
         
