@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.sql.Result;
 
 /**
  *
@@ -45,7 +47,7 @@ public class jsonController extends HttpServlet {
         try {
             String aux3 = "";
 
-            if (request.getParameter("ejecucion").equals("indexAI")) {
+            if (request.getParameter("ejecucion").equals("detalleProceso")) {
 
                 ProgramaJpaController conPrograma = new ProgramaJpaController();
                 ProcesoJpaController conProceso = new ProcesoJpaController();
@@ -53,11 +55,10 @@ public class jsonController extends HttpServlet {
                 session.setAttribute("programa", programa);
 
                 List<Proceso> listProceso = conProceso.findProcesoEntities();
+                List<Proceso> listProceso2 = new ArrayList<Proceso>();
 
                 int aux = 0;
-                int cont = listProceso.size();
                 int i = 0;
-
 
                 for (Proceso proceso : listProceso) {
                     i++;
@@ -70,82 +71,20 @@ public class jsonController extends HttpServlet {
                             // System.out.println("hay proceso en ejecucion");
                             String nombreBd = programa.getNombre() + proceso.getId();
                             session.setAttribute("bd", nombreBd);
-
-                            try {
-
-                                out.println(
-                                        "[ "
-                                        + "{"
-                                        + " \"id\": \"" + proceso.getId() + "\" ,"
-                                        + " \"fechaInicio\": \"" + proceso.getFechainicio() + "\" ,"
-                                        + " \"fechaCierre\": \"" + proceso.getFechacierre() + "\" ,"
-                                        + " \"descripcion\": \"" + proceso.getDescripcion() + "\" ,"
-                                        + " \"programa\": \"" + proceso.getProgramaId().getNombre() + "\""
-                                        + "}"
-                                        + "]");
-                            } finally {
-                                out.close();
-                            }
-
-
+                            listProceso2.add(proceso);
                         }
                     }
+                    session.setAttribute("detailProceso", listProceso2);
                 }
-
-
-
-
             } else if (request.getParameter("ejecucion").equals("listarPonderacionFactor")) {
-                ResultSet rs = null;
+                Result rs = null;
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 int idProceso = proceso.getId();
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
                 String aux4 = "";
-                rs = conSql.CargarSql("Select factor.`id`, factor.nombre, ponderacionfactor.ponderacion, ponderacionfactor.justificacion from ponderacionfactor inner join factor on ponderacionfactor.`factor_id` = factor.`id` where proceso_id = " + idProceso + "", bd);
-                try {
-                    while (rs.next()) {
-
-                        if (rs.isLast()) {
-                            String aux5 = ""
-                                    + "{"
-                                    + " \"id\": \"" + rs.getString(1) + "\" ,"
-                                    + " \"factor\": \"" + rs.getString(2) + "\" ,"
-                                    + " \"ponderacion\": \"" + rs.getString(3) + "\" ,"
-                                    + " \"justificacion\": \"" + rs.getString(4) + "\" "
-                                    + "}"
-                                    + "";
-
-                            aux4 = aux4 + aux5;
-
-                        } else {
-                            String aux5 = ""
-                                    + "{"
-                                    + " \"id\": \"" + rs.getString(1) + "\" ,"
-                                    + " \"factor\": \"" + rs.getString(2) + "\" ,"
-                                    + " \"ponderacion\": \"" + rs.getString(3) + "\" ,"
-                                    + " \"justificacion\": \"" + rs.getString(4) + "\" "
-                                    + "},"
-                                    + "";
-                            aux4 = aux4 + aux5;
-                        }
-
-
-                    }
-
-                    try {
-                        out.println("[" + aux4 + "]");
-                        System.out.println("[" + aux4 + "]");
-                    } finally {
-                        out.close();
-                    }
-
-
-
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(jsonController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                rs = conSql.CargarSql2("Select factor.`id`, factor.nombre, ponderacionfactor.ponderacion, ponderacionfactor.justificacion from ponderacionfactor inner join factor on ponderacionfactor.`factor_id` = factor.`id` where proceso_id = " + idProceso + "", bd);
+                session.setAttribute("listPonderacionFactores", rs);
 
             } else if (request.getParameter("ejecucion").equals("listarPonderacionCaracteristica")) {
 
@@ -212,55 +151,27 @@ public class jsonController extends HttpServlet {
 
                 ProgramaJpaController conPrograma = new ProgramaJpaController();
                 ProcesoJpaController conProceso = new ProcesoJpaController();
-                Programa programa = conPrograma.findPrograma(1);
-                session.setAttribute("programa", programa);
+
+                Programa programa = (Programa) session.getAttribute("programa");
 
                 List<Proceso> listProceso = conProceso.findProcesoEntities();
+                List<Proceso> listProceso2 = new ArrayList<Proceso>();
 
 
-                int cont = listProceso.size();
                 int i = 0;
 
+                System.out.println(listProceso.size());
 
                 for (Proceso proceso : listProceso) {
                     i++;
-                    if (proceso.getProgramaId().getId() == programa.getId()) {
-
-                        if (i == cont) {
-                            String aux5 = ""
-                                    + "{"
-                                    + " \"id\": \"" + proceso.getId() + "\" ,"
-                                    + " \"fechaInicio\": \"" + proceso.getFechainicio() + "\" ,"
-                                    + " \"fechaCierre\": \"" + proceso.getFechacierre() + "\" ,"
-                                    + " \"descripcion\": \"" + proceso.getDescripcion() + "\" ,"
-                                    + " \"programa\": \"" + proceso.getProgramaId().getNombre() + "\""
-                                    + "}"
-                                    + "";
-
-                            aux3 = aux3 + aux5;
-
-                        } else {
-                            String aux5 = ""
-                                    + "{"
-                                    + " \"id\": \"" + proceso.getId() + "\" ,"
-                                    + " \"fechaInicio\": \"" + proceso.getFechainicio() + "\" ,"
-                                    + " \"fechaCierre\": \"" + proceso.getFechacierre() + "\" ,"
-                                    + " \"descripcion\": \"" + proceso.getDescripcion() + "\" ,"
-                                    + " \"programa\": \"" + proceso.getProgramaId().getNombre() + "\""
-                                    + "},"
-                                    + "";
-                            aux3 = aux3 + aux5;
-                        }
+                    int id1 = proceso.getProgramaId().getId();
+                    int id2 = programa.getId();
+                    if (id1 == id2) {
+                        listProceso2.add(proceso);
                     }
                 }
-                try {
-                    out.println("[" + aux3 + "]");
-                    System.out.println("[" + aux3 + "]");
-                } finally {
-                    out.close();
-                }
 
-
+                session.setAttribute("listProceso", listProceso2);
             }
         } finally {
             out.close();

@@ -12,10 +12,9 @@
                             <div class="alert alert-info">
                                 <a data-dismiss="alert" class="close">×</a>
                                 <strong>Información!</strong>
-                                El proceso ya fue creado.
+                                El proceso ya fue creado.   <a href="<%=request.getContextPath()%>/#detalleProceso">Detalle del Proceso Creado</a>
                             </div>
                         </div>
-                        <a href="<%=request.getContextPath()%>/#detalleProceso">Detalle del Proceso Creado</a>
                         <br>
                     </c:if>
                     <div class="control-group">
@@ -25,13 +24,13 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="fechaI" class="control-label">fecha de Inicio</label>
+                        <label for="fechaI" class="control-label">Fecha de inicio</label>
                         <div class="controls">
-                            <span id="fechaI" class="input-xlarge uneditable-input">Proceso en Configuraci&oacute;n</span>
+                            <span id="fechaI" class="input-xlarge uneditable-input">Proceso en configuraci&oacute;n</span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="descripcion" class="control-label">Descripcion</label>
+                        <label for="descripcion" class="control-label">Descripción</label>
                         <div class="controls">
                             <c:if test="${aux_index2 == 0}">
                                 <textarea rows="3" name="descripcion" class="input-xlarge {required:true}"></textarea>

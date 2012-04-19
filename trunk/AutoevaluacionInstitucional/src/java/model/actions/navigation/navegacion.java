@@ -59,12 +59,15 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/muestra/muestraCalculada";
         } else if (path.equals("indexCC")) {
             path = "comiteCentral/index";
-        } else if (path.equals("listarRepresentante")) {
-            path = "cautoevaluacionInstitucional/proceso/listarP";
         } else if (path.equals("listarProceso")) {
+            path = "autoevaluacionInstitucional/proceso/listarP";
+        } else if (path.equals("listarPonderacionFactor")) {
+            path = "autoevaluacionInstitucional/proceso/ponderacion/listarF";
+        }  if (path.equals("detalleProceso")) {
+            path = "autoevaluacionInstitucional/proceso/detalleP";
+        } else if (path.equals("listarRepresentante")) {
             path = "comiteCentral/representante/listar";
             session.setAttribute("listrepresentantes", conRepresentante.findRepresentanteEntities());
-
         } else if (path.equals("crearRepresentante")) {
             session.setAttribute("programas", conPrograma.findProgramaEntities());
             session.setAttribute("privilegios", conPivilegio.findPrivilegioEntities());

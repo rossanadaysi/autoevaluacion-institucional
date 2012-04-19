@@ -181,7 +181,7 @@
                         <div class="alert alert-info">
                             <a data-dismiss="alert" class="close">×</a>
                             <strong>Información!</strong>
-                            La ponderación de factores ya ha sido asignada.
+                            La ponderación de factores ya ha sido asignada. <a href="<%=request.getContextPath()%>/#listarPonderacionFactor">Detalle de Ponderación de Factores Asignada.</a>
                         </div>
 
                         <div class="alert alert-block alert-error" style="display:none" id="PonderacionFactores">
@@ -190,11 +190,7 @@
                             <p>La suma de la ponderacion de los factores debe ser 100.</p>
                             <a class="btn btn-danger" data-dismiss="alert" href="#">Cerrar</a>
                         </div>
-
-
-                        <a href="<%=request.getContextPath()%>/#listarPonderacionFactor">Detalle de Ponderación de Factores Asignada.</a>
                         <br>
-
                         <table class="table table-striped">
                             <thead>
                                 <tr>
