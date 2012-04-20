@@ -14,7 +14,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/formController2?action=crearCaracteristicaAI",
-                    data: $("#formCrearCarac").serialize(),
+                    data: $("#formEditarCarac").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarCaracteristicas"
                     } //fin success
@@ -118,7 +118,7 @@
                                             <li>
                                                 <strong>${item.nombre}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.descripcion}</span>
-                                                <input name="${item.nombre}" type="hidden" value="0"/>
+                                                <input name="I${item.id}" type="hidden" value="0"/>
                                             </li>
 
                                         </c:when>
@@ -126,7 +126,7 @@
                                             <li>
                                                 <strong>${item.nombre}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.descripcion}</span>
-                                                <input name="${item.nombre}" type="hidden" checked="checked" value="0"/>
+                                                <input name="I${item.id}" type="hidden" checked="checked" value="0"/>
                                             </li>
                                         </c:otherwise>
                                     </c:choose>
@@ -135,7 +135,7 @@
                             
                         </div>
                     </div>    
-
+                        <input name="idC" type="hidden" value="${caracteristica.getId()}">
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>

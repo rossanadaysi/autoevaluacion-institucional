@@ -79,7 +79,7 @@ public class formController2 extends HttpServlet {
                 List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
                 List<Caracteristica> aux = new ArrayList<Caracteristica>();
                 for (int i = 0; i < listadeCaracteristicas.size(); i++) {
-                    if (request.getParameter(listadeCaracteristicas.get(i).getNombre()).equals("1")) {
+                    if (request.getParameter("C"+listadeCaracteristicas.get(i).getId()).equals("1")) {
                         aux.add(listadeCaracteristicas.get(i));
 
                     }
@@ -103,15 +103,18 @@ public class formController2 extends HttpServlet {
                 HttpSession session = request.getSession();
                 String idI = request.getParameter("idI");
                 IndicadorJpaController conIndi = new IndicadorJpaController();
+                CaracteristicaJpaController conCarac = new CaracteristicaJpaController();
                 Indicador in = conIndi.findIndicador(Integer.parseInt(idI));
                 PreguntaJpaController conPre = new PreguntaJpaController();
                 in.setNombre(request.getParameter("nombre"));
                 in.setDescripcion(request.getParameter("descripcion"));
-
+                String car = request.getParameter("caracteristica");
+                Caracteristica c = conCarac.findCaracteristica(Integer.parseInt(car));
+                in.setCaracteristicaId(c);
                 List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
                 List<Pregunta> aux = new ArrayList<Pregunta>();
                 for (int i = 0; i < listadePreguntas.size(); i++) {
-                    if (request.getParameter(listadePreguntas.get(i).getPregunta()).equals("1")) {
+                    if (request.getParameter("P"+listadePreguntas.get(i).getId()).equals("1")) {
                         aux.add(listadePreguntas.get(i));
 
                     }

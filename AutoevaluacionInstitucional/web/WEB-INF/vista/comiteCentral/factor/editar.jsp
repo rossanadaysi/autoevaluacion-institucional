@@ -96,7 +96,7 @@
                                             <li>
                                                 <strong>${item.nombre}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.descripcion}</span>
-                                                <input name="${item.nombre}" type="hidden" value="0"/>
+                                                <input name="C${item.id}" type="hidden" value="0"/>
                                             </li>
 
                                         </c:when>
@@ -104,7 +104,7 @@
                                             <li>
                                                 <strong>${item.nombre}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.descripcion}</span>
-                                                <input name="${item.nombre}" type="hidden" checked="checked" value="0"/>
+                                                <input name="C${item.id}" type="hidden" checked="checked" value="0"/>
                                             </li>
                                         </c:otherwise>
                                     </c:choose>
