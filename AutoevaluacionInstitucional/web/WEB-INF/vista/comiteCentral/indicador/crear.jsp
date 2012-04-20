@@ -78,7 +78,7 @@
                     <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
-                        <input type="text" id="nombre" class="input-xxlarge {required:true}" value=""/>
+                        <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value=""/>
                         </div>
                     </div>
                         

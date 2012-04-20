@@ -154,7 +154,6 @@ public class formController2 extends HttpServlet {
             }
 
             if (request.getParameter("action").equals("crearIndicadorCC")) {
-                HttpSession session = request.getSession();
                 Indicador in = new Indicador();
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 PreguntaJpaController conPre = new PreguntaJpaController();
