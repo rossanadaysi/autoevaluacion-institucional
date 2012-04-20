@@ -13,8 +13,11 @@
             submitHandler: function(){
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/formController2?action=editarIndicadorAI",
+                    url: "<%=request.getContextPath()%>/formController2?action=editarIndicadorCC",
                     data: $("#formEditarIndic").serialize(),
+                    error: function(){
+                        console.log("ocurrio un error");
+                    },
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarIndicadores"
                     } //fin success
@@ -33,7 +36,7 @@
                     <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
-                        <input type="text" id="nombre" class="input-xxlarge {required:true}" value="${indicador.getNombre()}"/>
+                        <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value="${indicador.getNombre()}"/>
                         </div>
                     </div>
                         
@@ -88,6 +91,7 @@
                             </ul>
                         </div>
                     </div>   
+                        <input name="idI" type="hidden" value="${indicador.getId()}">
                         <div class="form-actions">
                             <button class="btn btn-primary" type="submit">Guardar cambios</button>
                             <button class="btn" type="reset">Cancelar</button>
