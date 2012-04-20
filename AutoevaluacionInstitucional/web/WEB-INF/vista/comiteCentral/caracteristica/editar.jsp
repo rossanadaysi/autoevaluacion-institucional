@@ -13,7 +13,7 @@
             submitHandler: function(){
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/formController2?action=crearCaracteristicaAI",
+                    url: "<%=request.getContextPath()%>/formController2?action=EditarCaracteristicaCC",
                     data: $("#formEditarCarac").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarCaracteristicas"

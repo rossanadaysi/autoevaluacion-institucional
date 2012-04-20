@@ -133,8 +133,42 @@ public class formController2 extends HttpServlet {
 
             }
 
-            if (request.getParameter("action").equals("crearCaracteristicaCC")) {
+            
+            if (request.getParameter("action").equals("editarCaracteristicaCC")) {
                 HttpSession session = request.getSession();
+                String idC = request.getParameter("idC");
+                CaracteristicaJpaController conCara = new CaracteristicaJpaController();
+                FactorJpaController conFac = new FactorJpaController();
+                Caracteristica ca = conCara.findCaracteristica(Integer.parseInt(idC));
+                IndicadorJpaController conIndi = new IndicadorJpaController();
+                ca.setNombre(request.getParameter("nombre"));
+                ca.setDescripcion(request.getParameter("descripcion"));
+                String fac = request.getParameter("factor");
+                Factor f = conFac.findFactor(Integer.parseInt(fac));
+                ca.setFactorId(f);
+                List<Indicador> listadeIndicadores = conIndi.findIndicadorEntities();
+                List<Indicador> aux = new ArrayList<Indicador>();
+                for (int i = 0; i < listadeIndicadores.size(); i++) {
+                    if (request.getParameter("I"+listadeIndicadores.get(i).getId()).equals("1")) {
+                        aux.add(listadeIndicadores.get(i));
+
+                    }
+                }
+                ca.setIndicadorList(aux);
+                try {
+                    conCara.edit(ca);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+            }
+
+            if (request.getParameter("action").equals("crearCaracteristicaCC")) {
                 Caracteristica ca = new Caracteristica();
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 IndicadorJpaController conIn = new IndicadorJpaController();
@@ -147,7 +181,7 @@ public class formController2 extends HttpServlet {
                 List<Indicador> listadeIndicadores = conIn.findIndicadorEntities();
                 List<Indicador> aux = new ArrayList<Indicador>();
                 for (int i = 0; i < listadeIndicadores.size(); i++) {
-                    if (request.getParameter(listadeIndicadores.get(i).getNombre()).equals("1")) {
+                    if (request.getParameter("I"+listadeIndicadores.get(i).getId()).equals("1")) {
                         aux.add(listadeIndicadores.get(i));
 
                     }
