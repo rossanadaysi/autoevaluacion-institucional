@@ -9,7 +9,7 @@
         <div class="span10">
             <br/>
             <fieldset>
-                <legend>Detalle de  Procesos</legend>
+                <legend>Detalle de Proceso</legend>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Descripción</th>

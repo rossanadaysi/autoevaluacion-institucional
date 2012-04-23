@@ -1087,67 +1087,83 @@ public class formController extends HttpServlet {
                     "action").equals("IniciarProcesoAI")) {
 
                 HttpSession session = request.getSession();
+                String bd = (String) session.getAttribute("bd");
+                sqlController conSql = new sqlController();
                 Proceso p = (Proceso) session.getAttribute("proceso");
+                int idProceso = p.getId();
                 ProcesoJpaController pc = new ProcesoJpaController();
                 Date d = new Date();
                 String date = String.valueOf(d);
                 p.setFechainicio(date);
-                /*
-                 * int f = (Integer) session.getAttribute("auxAsignarF");
-                 *
-                 * if (f == 0) { System.out.println("Debe asignar la podenracion
-                 * de los factores."); session.setAttribute("aux_IniciarP", 0);
-                 * } int c = (Integer) session.getAttribute("auxAsignarC");
-                 * System.out.println("cccccccccccccccc" +c); if (c == 0) {
-                 * System.out.println("Debe asignar la podenracion de los
-                 * caracteristicas."); session.setAttribute("aux_IniciarP", 0);
-                 * }
-                 *
-                 *
-                 *
-                 *
-                 *
-                 * //valida asig encuesta String bd = (String)
-                 * session.getAttribute("bd"); sqlController conSql = new
-                 * sqlController(); Proceso proceso = (Proceso)
-                 * session.getAttribute("proceso"); int idProceso =
-                 * proceso.getId(); int count = 0; int count2 = 0;
-                 *
-                 * ResultSet rs2 = conSql.CargarSql("Select id from fuente",
-                 * bd); try { while (rs2.next()) { count2++; Result rs = null;
-                 * String sql = "Select* from asignacionencuesta where
-                 * proceso_id = " + idProceso + " and fuente_id = " +
-                 * rs2.getString(1); rs = conSql.CargarSql2(sql, bd); if
-                 * (rs.getRowCount() != 0) { count++; } } } catch (SQLException
-                 * ex) {
-                 * Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
-                 * null, ex); }
-                 *
-                 * int e = 0; System.out.println("()" + count + "-" + count2);
-                 * if (count == count2) { e = 1;
-                 *
-                 * } else { System.out.println("Debe asignar las Encuestas.");
-                 * session.setAttribute("aux_IniciarP", 0); }
-                 *
-                 *
-                 *
-                 *
-                 * if (f != 0 && c != 0 && e != 0) {
-                 */
-                try {
-                    pc.edit(p);
 
-
-                } catch (entity.controller.exceptions.NonexistentEntityException ex) {
-                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                // valida ponderacion factores
+                int f = 0;
+                Result rs3 = null;
+                String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + " order by factor.id";
+                rs3 = conSql.CargarSql2(sql, bd);
+                if (rs3.getRowCount() > 0) {
+                    System.out.println("si hay ponderacion de factores");
+                    f = 1;
+                } else {
+                    System.out.println("Debe asignar la ponderacion de factores");
+                    session.setAttribute("aux_IniciarP", 0);
                 }
 
-                session.setAttribute("aux2_index2", 0);
-                session.setAttribute("estadoProceso", 1);
+                // valida ponderacion caracteristicas
+                int c = 0;
+                Result rs4 = null;
+                sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre, nivelimportancia from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + " order by caracteristica.id";
+                rs4 = conSql.CargarSql2(sql, bd);
+
+                if (rs4.getRowCount() > 0) {
+                    System.out.println("si hay ponderacion de caracteristicas");
+                    c = 1;
+                } else {
+                    System.out.println("Debe asignar la ponderacion de caracteristicas");
+                    session.setAttribute("aux_IniciarP", 0);
+                }
+
+                //  valida asig encuesta
+                int count = 0;
+                int count2 = 0;
+
+                ResultSet rs2 = conSql.CargarSql("Select id from fuente", bd);
+                try {
+                    while (rs2.next()) {
+                        count2++;
+                        Result rs = null;
+                        sql = "Select* from asignacionencuesta where proceso_id = " + idProceso + " and fuente_id = "
+                                + rs2.getString(1);
+                        rs = conSql.CargarSql2(sql, bd);
+                        if (rs.getRowCount() != 0) {
+                            count++;
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
+                            null, ex);
+                }
+
+                int e = 0;
+                if (count != 0) {
+                    e = 1;
+                } else {
+                    System.out.println("Debe asignar las Encuestas.");
+                    session.setAttribute("aux_IniciarP", 0);
+                }
+
+                if (f != 0 && c != 0 && e != 0) {
+                    try {
+                        pc.edit(p);
+                    } catch (entity.controller.exceptions.NonexistentEntityException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    session.setAttribute("aux2_index2", 0);
+                    session.setAttribute("estadoProceso", 1);
+                }
             }
-            //  }
         } finally {
             out.close();
         }

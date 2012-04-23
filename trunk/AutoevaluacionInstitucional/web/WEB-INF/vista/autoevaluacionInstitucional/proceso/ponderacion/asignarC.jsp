@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
-function presionSubmit(va, idc)
+    function presionSubmit(va, idc)
     {
         var a = "#"+va;
         var b = $("#select1 option:selected").val();
@@ -55,31 +55,20 @@ function presionSubmit(va, idc)
         $("#formPondeCara").validate({
             
             submitHandler: function(){
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
-                                    data: $("#formPondeCara").serialize(),
-                                    success: function(){
-                                                                            
-                                        $('#myModalC').modal(); 
-                                        $('#myModalC').on('hidden', function () {
-                                            location = "<%=request.getContextPath()%>/#PonderacionCaracteristicas";
-                                                        
-                                                                                    
-                                        })
-                                             
-                                    } //fin success
-                                            
-                                }); //fin $.ajax
-            
-                            } 
-                            });
-        
-        
-        
-                    });
- 
-           
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionCaracteristicaAIp",
+                    data: $("#formPondeCara").serialize(),
+                    success: function(){                                                
+                        $('#myModalC').modal(); 
+                        $('#myModalC').on('hidden', function () {
+                            location = "<%=request.getContextPath()%>/#listarPonderacionCaracteristica";
+                        })
+                    } //fin success
+                }); //fin $.ajax
+            } 
+        });
+    });
 </script>
 <c:if test="${auxAsignarC == 0}">
     <br id="PonderacionCaracteristicas">
@@ -195,7 +184,7 @@ function presionSubmit(va, idc)
                                 <a data-dismiss="alert" class="close">×</a>
                                 <strong>Información!</strong>
                                 La ponderación de caracteristicas ya ha sido actualizada.
-                                <a href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica">Ver Detalle de Ponderación de Características Asignada.</a>
+                                <a href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica"> Ver Detalle de Ponderación de Características Asignada.</a>
                             </div>
                         </div>  <!--alert-->
                         <br>

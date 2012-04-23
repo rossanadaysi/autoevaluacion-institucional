@@ -10,12 +10,8 @@ import entity.controller.ProcesoJpaController;
 import entity.controller.ProgramaJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +73,7 @@ public class jsonController extends HttpServlet {
                     session.setAttribute("detailProceso", listProceso2);
                 }
             } else if (request.getParameter("ejecucion").equals("listarPonderacionFactor")) {
+
                 Result rs = null;
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 int idProceso = proceso.getId();
@@ -93,58 +90,13 @@ public class jsonController extends HttpServlet {
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
                 String aux4 = "";
-
-
-                ResultSet rs = conSql.CargarSql("Select caracteristica.id,"
+                Result rs = conSql.CargarSql2("Select caracteristica.id,"
                         + " caracteristica.nombre, ponderacioncaracteristica.ponderacion,"
-                        + " ponderacioncaracteristica.justificacion from"
+                        + " ponderacioncaracteristica.justificacion, ponderacioncaracteristica.nivelimportancia from"
                         + " ponderacioncaracteristica inner join caracteristica on"
                         + " ponderacioncaracteristica.`caracteristica_id` ="
                         + " caracteristica.`id` where proceso_id = " + idProceso + "", bd);
-
-                try {
-                    while (rs.next()) {
-
-                        if (rs.isLast()) {
-                            String aux5 = ""
-                                    + "{"
-                                    + " \"id\": \"" + rs.getString(1) + "\" ,"
-                                    + " \"caracteristica\": \"" + rs.getString(2) + "\" ,"
-                                    + " \"ponderacion\": \"" + rs.getString(3) + "\" ,"
-                                    + " \"justificacion\": \"" + rs.getString(4) + "\" "
-                                    + "}"
-                                    + "";
-
-                            aux4 = aux4 + aux5;
-
-                        } else {
-                            String aux5 = ""
-                                    + "{"
-                                    + " \"id\": \"" + rs.getString(1) + "\" ,"
-                                    + " \"caracteristica\": \"" + rs.getString(2) + "\" ,"
-                                    + " \"ponderacion\": \"" + rs.getString(3) + "\" ,"
-                                    + " \"justificacion\": \"" + rs.getString(4) + "\" "
-                                    + "},"
-                                    + "";
-                            aux4 = aux4 + aux5;
-                        }
-
-
-                    }
-
-                    try {
-                        out.println("[" + aux4 + "]");
-                        System.out.println("[" + aux4 + "]");
-                    } finally {
-                        out.close();
-                    }
-
-
-
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(jsonController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                session.setAttribute("listPonderacionCaracteristica", rs);
 
             }
             if (request.getParameter("ejecucion").equals("listarProcesos")) {
