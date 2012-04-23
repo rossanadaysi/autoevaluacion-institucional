@@ -42,8 +42,7 @@ public class PonderacionFactorAI implements Action {
 
         if (rs2.getRowCount() > 0) {
             session.setAttribute("auxAsignarF", 1);
-            System.out.println("si hay ponderacion de factores");
-            session.setAttribute("pondeFactores", rs2);
+           session.setAttribute("pondeFactores", rs2);
             session.setAttribute("factores", rs);
         } else {
             session.setAttribute("auxAsignarF", 0);
@@ -51,8 +50,7 @@ public class PonderacionFactorAI implements Action {
 
             session.setAttribute("factores", rs);
             conSql.cerrarConexion();
-            System.out.println("no hay ponderacion de factores");
-
+        
         }
 
         conSql.cerrarConexion();

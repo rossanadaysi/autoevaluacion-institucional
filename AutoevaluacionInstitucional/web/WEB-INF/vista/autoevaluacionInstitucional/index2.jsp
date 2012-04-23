@@ -304,10 +304,10 @@
                             return false;
                         }
                                                     
-                        if(grid){
+                        /* if(grid){
                             grid.destroy(); 
                         
-                        }
+                        }*/
                                                
            
                         if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos")
@@ -614,20 +614,16 @@
                                     type: "POST", 
                                     url: url3, 
                                     success: function(data) 
-                                    {
-                                        if(${aux_IniciarP} == 0){
-                                            $('#myModalIP').modal(); 
-                                        }else{
-                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                            
-                                            location = "<%=request.getContextPath()%>/#detalleProceso";    
-                                        }                            
-                                                             
+                                    { 
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
+                                            success: function(data){
+                                                $("#center").html(data);
+                                            }
+                                        })                              
                                     } //fin success
                                 }); //fin del $.ajax
-                          
-                                                      
-                       
                             }
                             else if(hash == "#CerrarProceso"){
                                 url3 = url3.replace('#', "formController?action=")+"AI";
@@ -698,400 +694,20 @@
                                 }); //fin $.ajax
                             }
                             if(hash == "#listarPonderacionCaracteristica"){
-                 
-                                $.unsubscribe("set_grid_width");
-                        
-                                if(middleLayout){
-                                    middleLayout.destroy();
-                            
-                                } 
-                                if(innerLayout){
-                                    innerLayout.destroy();
-                            
-                                }
-                        
-                        
-                        
-                                selectedRowIds = [];
-                        
-                
-                                $("div.ui-layout-center").empty();
-                        
-                                var dataView;
-                                var grid;
-                                //  var pager;
-                                //var columnpicker;
-                                var grid_opts={};
-                                var data = [];
-                                var selectedRowIds = [];
-
-
-
-
-
-                                var storyTitleFormatter = function(row, cell, value, columnDef, dataContext) {
-                                    return "<div class='options'><a title='Option' class='rowOption more option'></a></div>"+
-                                        ""+dataContext["programa"]+"";
-
-
-                                };
-            
-            
-                                var columns = [
-                                    {id:"caracteristica", name:"Caracteristica", field:"caracteristica", minWidth:100,  sortable:true },	
-                                    {id:"ponderacion", name:"Ponderacion", field:"ponderacion", minWidth:100, sortable:true },
-                                    {id:"justificacion", name:"Justificacin", field:"justificacion", width:150, sortable:true}
-                
-                                ];
-
-                                var options = {
-                                    editable: false,
-                                    autoEdit: false,
-                                    enableAddRow: false,
-                                    enableCellNavigation: true,
-                                    asyncEditorLoading: false,
-                                    enableColumnReorder: false,
-                                    forceFitColumns: true
-                        
-                                };
-
-                                var sortcol = "caracteristica";
-                                var sortdir = 1;
-                                //var percentCompleteThreshold = 0;
-                                var searchString = "";
-
-                                function myFilter(item) {
-               
-                                    if (searchString != "" && item["caracteristica"].toLowerCase().indexOf(searchString.toLowerCase())==-1 )
-                                        return false;
-
-                                    return true;
-                                }
-
-               
-                                $(".grid-header .ui-icon")
-                                .addClass("ui-state-default ui-corner-all")
-                                .mouseover(function(e) {
-                                    $(e.target).addClass("ui-state-hover")
-                                })
-                                .mouseout(function(e) {
-                                    $(e.target).removeClass("ui-state-hover")
-                                });
-
-
-                    
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: "/AutoevaluacionInstitucional/jsonController?ejecucion=listarPonderacionCaracteristica", 
-                                    dataType: 'json', 
-                            
-                                    success: function(json) 
-                                    {
-                                        $(".ui-layout-center").append("<div class='middle-north'>"
-                                            +"<div class='row wellMio'>"
-                                            +"<div class='span5'>"
-                                            +"<h3>Ponderación de Factores</h3>"
-                                            +"<h4>Detalle de Ponderación</h4>"
-                                            +"</div>"
-                                            +"<div class='pull-right'>"
-                                            +"<form class='form-search'>"
-                                            +"<input type='text' class='input-medium search-query'>"
-                                            +"<button class='btn' type='submit'>Buscar</button>"
-                                            +"</form>"
-                                            +"</div>"
-                                            +"</div>"
-                                            +"</div>"   
-                                            +"<div class='middle-center'>"
-                                            +"<div class='inner-center' style='float:left;'>"
-                                            +"<div id='myGrid'></div></div></div>");
-            
-                                        middleLayout = $('div.ui-layout-center').layout({ 
-                                            north__paneSelector:    ".middle-north"
-                                            ,   north__paneClass:    "ui-layout-pane"
-                                            ,   center__paneSelector:    ".middle-center"
-                                            ,	spacing_open:			8  // ALL panes
-                                            ,	spacing_closed:			8  // ALL panes
-                   
-                                        });
-                
-                                        innerLayout = $('div.middle-center').layout({ 
-                       
-                                            center__paneSelector:    ".inner-center"
-                                            ,	spacing_open:			8  // ALL panes
-                                            ,	spacing_closed:			8  // ALL panes
-                    
-                                            ,   center__onresize: function (name, el, state, opts, Layout) { 
-                                                $.publish("set_grid_height", [state.innerHeight]);
-                                                $.publish("set_grid_width", [state.innerWidth]);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarPonderacionCaracteristica",
+                                    success: function(){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionCaracteristica",
+                                            success: function(data){
+                                                $("#center").html(data);
                                             }
-                 
-                                        });
-                
-                        
-                
-                    
-                
-                                        $.publish("set_grid_height", [middleLayout.state.center.innerHeight]);
-                                        $.publish("set_grid_width", [middleLayout.state.center.innerWidth]);
-		
-		
-                                        setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
-         
-                            
-                                        if(json.length > 0) 
-                                        { for (var i = 0; i < json.length; i++) 
-                                            {
-                                                data[i] = { 
-                                                    id: json[i].id, 
-                                                    caracteristica: json[i].caracteristica, 
-                                                    ponderacion: json[i].ponderacion, 
-                                                    justificacion: json[i].justificacion
-                                            
-                                                }; 
-                                            } 
-                                            dataView = new Slick.Data.DataView();
-                          
-                                            grid = new Slick.Grid($("#myGrid"), dataView.rows, columns, options);
-                                            var fil=[];
-                                            grid.setSelectedRows(fil); 
-                                            // pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
-                                            //columnpicker = new Slick.Controls.ColumnPicker(columns, grid, options);
-                
-                
-                
-                                            $.subscribe("set_grid_height", function (new_height) {
-                                                grid_opts.height = -60;
-                                                $("#myGrid").css('height', grid_opts.height);
-                                                grid.resizeCanvas();
-                                        
-                                            });
-            
-                                            $.subscribe("set_grid_width", function (new_width) {
-                                                grid_opts.width = new_width+20;
-                                                $("#myGrid").css('width', grid_opts.width );
-                                                grid.autosizeColumns();
-                                                //grid.resizeCanvas();
-                                            });
-
-
-            
-
-                                            /*   al cambiar el contenido de una celda
-                                             *   grid.onCellChange = function(row,col,item) {
-             dataView.updateItem(item.id,item);    
-         };
-
-                     grid.onAddNewRow = addItem;
-                                             */  //al presionar teclas
-                                            grid.onKeyDown = function(e) {
-                                    
-                                                var rows = [];
-                                                selectedRowIds = [];
-                                    
-                                                // select all rows on ctrl-a
-                                                if (e.which == 65 && e.ctrlKey)
-                                                {
-                                                    for (var i = 0; i < dataView.rows.length; i++) {
-                                                        rows.push(i);
-                                                        selectedRowIds.push(dataView.rows[i].id);
-                                                    }
-
-                                                    grid.setSelectedRows(rows);
-
-                                                    return true;
-                                                }  
-                                                if(e.which == 27){
-                                                    grid.setSelectedRows(rows);
-                                                    return true;
-                                                }
-                                                return false;
-                                    
-
-                                   
-                                            };
-
-                                            grid.onSelectedRowsChanged = function() {
-                                                selectedRowIds = [];
-                                                var rows = grid.getSelectedRows();
-                                                for (var i = 0, l = rows.length; i < l; i++) {
-                                                    var item = dataView.rows[rows[i]];
-                                                    if (item) selectedRowIds.push(item.id);
-                                                }
-                                            };
-
-                
-                
-                                            grid.onSort = function(sortCol, sortAsc) {
-                                                sortdir = sortAsc ? 1 : -1;
-                                                sortcol = sortCol.field;
-                                         
-                
-                
-                
-                
-                                            };
-
-                                            // wire up model events to drive the grid
-                                            dataView.onRowCountChanged.subscribe(function(args) {
-                                                grid.updateRowCount();
-                                                grid.render();
-                                            });
-
-                                            dataView.onRowsChanged.subscribe(function(rows) {
-                                                grid.removeRows(rows);
-                                                grid.render();
-
-                                                if (selectedRowIds.length > 0)
-                                                {
-                                                    // since how the original data maps onto rows has changed,
-                                                    // the selected rows in the grid need to be updated
-                                                    var selRows = [];
-                                                    for (var i = 0; i < selectedRowIds.length; i++)
-                                                    {
-                                                        var idx = dataView.getRowById(selectedRowIds[i]);
-                                                        if (idx != undefined)
-                                                            selRows.push(idx);
-                                                    }
-
-                                                    grid.setSelectedRows(selRows);
-                                                }
-                                            });
-
-                                            dataView.onPagingInfoChanged.subscribe(function(pagingInfo) {
-                    
-                                                grid.setOptions({enableAddRow:options.enableAddRow});
-                                            });
-                
-                
-                                            $("#txtSearch").keyup(function(e) {
-                                                Slick.GlobalEditorLock.cancelCurrentEdit();
-
-                                                // clear on Esc
-                                                if (e.which == 27)
-                                                    this.value = "";
-
-                                                searchString = this.value;
-                                                dataView.refresh();
-                                            });
-
-
-                                            dataView.beginUpdate();
-                                            dataView.setItems(data);
-                                            dataView.setFilter(myFilter);
-                                            dataView.endUpdate();
-                        
-
-                                            grid.onContextMenu = function (e, row, cell)
-                                            {
-                                                //al dar click derecho sobre el la tabla
-                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
-                                   
-                                                if(selectedRowIds.length <= 1){
-                                                    var rows = [];
-                                                    selectedRowIds = [];
-                                                    rows.push(row);
-                                                    selectedRowIds.push(""+rows[0]);
-                                                    grid.setSelectedRows(rows);
-                                                }
-                                                return true;
-                                            }; 
-                                
-                                            grid.onClick = function (e, row, cell)
-                                            {
-                                                //al dar click derecho sobre el la tabla
-                                                if (!Slick.GlobalEditorLock.commitCurrentEdit()) { return; }
-                                   
-                                                if(selectedRowIds.length <= 1){
-                                                    var rows = [];
-                                                    selectedRowIds = [];
-                                                    rows.push(row);
-                                                    selectedRowIds.push(""+rows[0]);
-                                                    grid.setSelectedRows(rows);
-                                                }
-                                                var ancla = $(".rowOption");
-                                                if(e.target == ancla[0]){
-                                                              
-                                                    $(".slick-cell .options a").jjmenu("click", 
-                                                    // menu items:
-                                                    [ {getByFunction:function(myData) {
-                                                                return [{title:"Asignar Ponderacin ", action:{type:"fn",callback:"(function(){ $('#asignarPonderacion').trigger('click'); })"}},
-                                                                    {title:"Asignar Muestra", action:{type:"fn",callback:"(function(){ $('#asignarMuestra').trigger('click'); })"} },
-                                                                    {title:"Asignar Encuestas" , action:{type:"fn",callback:"(function(){ $('#asignarEncuesta').trigger('click'); })"} },
-                                                                    {title:"Eliminar", action:{type:"fn",callback:"(function(){ alert('Esperando implementacion'); })"}}
-                                                                ];
-                                                            }
-                                                        } 
-                                                    ], 
-                                                    // myReplaces / userData:
-                                                    {   "tbRow":function(){
-                       
-                        
-                                                            var fila = jQuery(triggerElement);
-                                                            var celdas = [];
-                                                            jQuery(fila).parents(".slick-row").children().each(function() {
-                                                                celdas[celdas.length] = jQuery(this).html();
-                                                                                       
-                                                            });
-                                                            if(selectedRowIds.length > 1){
-                                                                celdas[0] ="seleccionados"; 
-                                                            }
-                                                            return celdas;    
-                                                        }
-                    
-                                          
-                                                    }, 
-                                                    // effects:
-                                                    {show:"default", xposition:"left", yposition:"auto"
-                
-                                                    });
-                                               
-                                                    setTimeout(function () { 
-                                                        $(".slick-cell .options a").addClass("hover");
-                                                        $(".slick-cell .options a").parents("div").addClass("hover");
-                                                        $(".slick-cell .options a").trigger("click");
-                                                    }, 200);
-                                                    setTimeout(function () { $(".slick-cell .options a").unbind("click"); }, 2000);
-                                               
-                                                }else{
-                                                    var filadelaTabla =  $(".slick-row");
-                                                    var rowsx =[];
-                                                    if(!$.contains(filadelaTabla[0],e.target)){
-                                                        grid.setSelectedRows(rowsx);
-                                                
-                                                    }
-                                                }
-                                        
-                                            }; 
-                                
-                                
-                                
-                                            $("#myGrid").bind("draginit", function(e,dd) {
-                                                var cell = grid.getCellFromEvent(e);
-                                                if (!cell)
-                                                    return false;
-
-                                                dd.row = cell.row;
-                                                if (!data[dd.row])
-                                                    return false;
-
-                                                if (Slick.GlobalEditorLock.isActive() && !Slick.GlobalEditorLock.cancelCurrentEdit())
-                                                    return false;
-                                            });
-
-                            
-                                            // jjmen(); 
-                  
-                                        } //fin del if
-                       
-                                    }//fin del success
-                                }); //fin del .ajax
-                        
-                        
-                        
-                        
+                                        })
+                                    } //fin success
+                                }); //fin $.ajax
                             }
-                    
-                    
                         } //fin del else
                     }
                 });        

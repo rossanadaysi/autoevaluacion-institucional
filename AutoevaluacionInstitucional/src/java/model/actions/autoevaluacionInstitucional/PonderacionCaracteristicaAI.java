@@ -50,18 +50,14 @@ public class PonderacionCaracteristicaAI implements Action {
 
             if (rs.getRowCount() > 0) {
                 session.setAttribute("auxAsignarC", 1);
-                System.out.println("si hay ponderacion de caracteristicas");
-                session.setAttribute("pondeCaracteristicas", rs);
+                 session.setAttribute("pondeCaracteristicas", rs);
                 session.setAttribute("caracteristicas", rs2);
             } else {
                 session.setAttribute("auxAsignarC", 0);
-                System.out.println("no hay ponderacion de caracteristicas");
-
-
+               
                 session.setAttribute("caracteristicas", rs2);
                 conSql.cerrarConexion();
-                System.out.println("no hay ponderacion de caracteristicas");
-            }
+                  }
         } else {
             System.out.println("negativo");
             session.setAttribute("auxAsignarC1", 0);
