@@ -113,6 +113,9 @@ public class formController2 extends HttpServlet {
                 in.setCaracteristicaId(c);
                 List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
                 List<Pregunta> aux = new ArrayList<Pregunta>();
+                
+                
+                
                 for (int i = 0; i < listadePreguntas.size(); i++) {
                     if (request.getParameter("P"+listadePreguntas.get(i).getId()).equals("1")) {
                         aux.add(listadePreguntas.get(i));
@@ -238,6 +241,9 @@ public class formController2 extends HttpServlet {
                 pre.setTipo(request.getParameter("tipo"));
                 if (request.getParameter("indicador") != null && (!request.getParameter("indicador").equals("-1"))) {
                     pre.setIndicadorId(conIn.findIndicador(Integer.parseInt(request.getParameter("indicador"))));
+                }else{
+                System.out.println("jajajajja"+request.getParameter("indicador"));    
+                pre.setIndicadorId(null);
                 }
                 try {
                     conPre.edit(pre);
