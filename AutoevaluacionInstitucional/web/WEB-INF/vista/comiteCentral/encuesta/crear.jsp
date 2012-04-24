@@ -16,7 +16,7 @@
                     
 
                     <div class="control-group">
-                        <label for="descripcion" class="control-label">Descripcion</label>
+                        <label for="descripcion" class="control-label">Objetivo</label>
                         <div class="controls">
                         <textarea rows="3" name="descripcion" id="descripcion" class="input-xxlarge {required:true}"></textarea>
                         </div>

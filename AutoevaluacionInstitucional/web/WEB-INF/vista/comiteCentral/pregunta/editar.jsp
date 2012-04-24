@@ -18,7 +18,7 @@
                     url: "<%=request.getContextPath()%>/formController2?action=editarPreguntaCC",
                     data: $("#formEditarPreg").serialize(),
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#editarPregunta&"+${pregunta.getId()+1}
+                        location = "<%=request.getContextPath()%>/#listarPreguntas"
                     } //fin success
                 }); //fin $.ajax    
             }

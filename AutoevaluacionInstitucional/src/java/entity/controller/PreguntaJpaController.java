@@ -204,6 +204,20 @@ public class PreguntaJpaController implements Serializable {
             em.close();
         }
     }
+    
+    private List<Pregunta> findPreguntaEntities(Indicador in) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Pregunta.class));
+            Query q = em.createQuery(cq);
+           q.setParameter("indicador",in);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 
     public Pregunta findPregunta(Integer id) {
         EntityManager em = getEntityManager();
