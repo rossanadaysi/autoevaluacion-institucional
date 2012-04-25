@@ -16,7 +16,11 @@ import entity.controller.RepresentanteJpaController;
 import entity.controller.RepresentantehasprivilegioJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -110,7 +114,7 @@ public class loginController extends HttpServlet {
         Persona persona = new Persona();
 
         try {
-            
+
             persona = conPersona.findPersona(un);
 
             System.out.println("Procesando..");
@@ -151,6 +155,8 @@ public class loginController extends HttpServlet {
 
                                     for (Proceso proceso : listProceso) {
                                         if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
+                                            session.setAttribute("aux_IniciarP", 0);
+
                                             session.setAttribute("proceso", proceso);
                                             aux = 1;
                                             session.setAttribute("aux_index2", aux);
@@ -161,15 +167,11 @@ public class loginController extends HttpServlet {
                                             String nombreBd = programa.getNombre() + proceso.getId();
                                             session.setAttribute("bd", nombreBd);
                                             int aux1;
-
-
-
                                             int idProceso = proceso.getId();
 
                                             Result rs2 = null;
                                             String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
                                             rs2 = conSql.CargarSql2(sql, nombreBd);
-
 
                                             if (rs2.getRowCount() > 0) {
                                                 session.setAttribute("auxAsignarF", 1);
@@ -179,7 +181,6 @@ public class loginController extends HttpServlet {
                                             sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + "";
                                             rs2 = conSql.CargarSql2(sql, nombreBd);
 
-
                                             if (rs2.getRowCount() > 0) {
                                                 session.setAttribute("auxAsignarC", 1);
                                             }
@@ -188,6 +189,16 @@ public class loginController extends HttpServlet {
                                             if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
                                                 aux1 = 1;
                                                 session.setAttribute("aux2_index2", aux1);
+                                            }
+
+                                            ResultSet rs3 = conSql.CargarSql("select id from proceso where id = " + idProceso + " and fechainicio = 'Proceso en Configuración.'", nombreBd);
+                                            try {
+                                                if (rs3.next()) {
+                                                    session.setAttribute("aux_IniciarP", 1);
+                                                    System.out.println("Proceso en configuración.");
+                                                }
+                                            } catch (SQLException ex) {
+                                                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
                                             }
                                         }
                                     }

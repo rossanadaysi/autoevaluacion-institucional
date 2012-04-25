@@ -1,1 +1,1 @@
-select persona.nombre, persona.apellido, persona.password from "+tabla+" inner join "+tabla1+" on "+tabla+"."+tabla1+"_id = "+tabla1+".id inner join persona on "+tabla1+".persona_id = persona.id where "+tabla+".muestra_id = 1 order by "+tabla+".id
+select id from proceso where id = 8 and fechainicio = 'Proceso en Configuración.'
