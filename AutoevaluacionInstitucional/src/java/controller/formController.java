@@ -1146,6 +1146,7 @@ public class formController extends HttpServlet {
 
                 int e = 0;
                 if (count != 0) {
+
                     e = 1;
                 } else {
                     System.out.println("Debe asignar las Encuestas.");
@@ -1155,6 +1156,7 @@ public class formController extends HttpServlet {
                 if (f != 0 && c != 0 && e != 0) {
                     try {
                         pc.edit(p);
+                        session.setAttribute("aux_IniciarP", 1);
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {

@@ -4,24 +4,25 @@
 
     $(document).ready(function() {
         $("ul.nav-list li a").click(function(event){
-                console.log("clickl");
-                $(".nav li").removeClass("active");
-                $(this).parent().siblings().removeClass("active");
-                $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
-                $(this).parent().addClass("active");
-                $(this).children("i").addClass("icon-white");
-                location = $(this).attr("href");
-            })
-       });
+            console.log("clickl");
+            $(".nav li").removeClass("active");
+            $(this).parent().siblings().removeClass("active");
+            $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
+            $(this).parent().addClass("active");
+            $(this).children("i").addClass("icon-white");
+            location = $(this).attr("href");
+        })
+    });
  
            
 </script>
 <ul class="nav nav-list">  
     <c:choose>
         <c:when test="${aux_index2 == 1}">
-            <li class="nav-header">Proceso en Ejecución</li>
+
             <c:choose>
                 <c:when test="${aux2_index2 == 1}">
+                    <li class="nav-header">Proceso en configuración</li>
                     <li><a href="<%=request.getContextPath()%>/#CrearProceso"><i class="icon-th"></i> Detalle Proceso</a></li>
                     <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#PonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                     <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
@@ -30,6 +31,7 @@
                     <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                 </c:when>
                 <c:otherwise>
+                    <li class="nav-header">Proceso en ejecución</li>
                     <li><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-th"></i> Detalle Proceso</a></li>
                     <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#listarPonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                     <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
