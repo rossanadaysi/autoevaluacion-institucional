@@ -339,7 +339,6 @@ public class formController extends HttpServlet {
                         session.setAttribute("aux_asignarE", 1);
                     } else {
                         System.out.println("no hay asignacion de encuestas!!!!!");
-
                         session.setAttribute("aux_asignarE", 0);
                     }
                 } catch (Error ex) {
@@ -1156,12 +1155,12 @@ public class formController extends HttpServlet {
                 if (f != 0 && c != 0 && e != 0) {
                     try {
                         pc.edit(p);
-                        session.setAttribute("aux_IniciarP", 1);
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    session.setAttribute("aux_IniciarP", 1);
                     session.setAttribute("aux2_index2", 0);
                     session.setAttribute("estadoProceso", 1);
                 }

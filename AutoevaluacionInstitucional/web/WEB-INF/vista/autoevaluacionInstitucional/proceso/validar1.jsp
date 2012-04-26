@@ -5,7 +5,9 @@
             location = "<%=request.getContextPath()%>/#detalleProceso"; 
         }else{
             $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-            location = "<%=request.getContextPath()%>/#detalleProceso";    
+            location = "<%=request.getContextPath()%>/#detalleProceso";     
+    
         }
-    })            
+    }) 
+    
 </script>

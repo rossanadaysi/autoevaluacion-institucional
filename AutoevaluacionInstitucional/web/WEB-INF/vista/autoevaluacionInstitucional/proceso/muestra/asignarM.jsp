@@ -295,6 +295,13 @@
                                 <option value="${item2[0]}">${item2[1]}</option>
                             </c:forEach>
                         </select>
+                        <div id="infoMuestra" style="display: none" class="span9">
+                            <div class="alert alert-error">
+                                <a class="close">×</a>
+                                <strong>Información!</strong>
+                                La muestra no fue asignada para la fuente seleccionada durante el proceso de configuración del Proceso en ejecución.
+                            </div>
+                        </div>
                         <div id="resultadoAlert" style="display: none">
                             <div class="alert alert-info" i style="width: 450px;">
                                 <a class="close">×</a>

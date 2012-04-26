@@ -6,21 +6,25 @@
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select8 option:eq(0)").attr("selected", "selected");
         if(${aux_asignarM == 1}){
-            $("#resultadoAlert").show();
-            if(${idFuenteMuestra == 1}){
-                $("#filtro3").hide();
-                $("#filtro4").hide();
-                $("#filtro").show();
-            }
-            else if(${idFuenteMuestra == 2}){
-                $("#filtro").hide();
-                $("#filtro4").hide();
-                $("#filtro3").show();
-            }
-            else{
-                $("#filtro").hide();
-                $("#filtro3").hide();
-                $("#filtro4").show();
+            if(${aux_IniciarP == 0}){
+                $("#resultadoAlert").show();
+                if(${idFuenteMuestra == 1}){
+                    $("#filtro3").hide();
+                    $("#filtro4").hide();
+                    $("#filtro").show();
+                }
+                else if(${idFuenteMuestra == 2}){
+                    $("#filtro").hide();
+                    $("#filtro4").hide();
+                    $("#filtro3").show();
+                }
+                else{
+                    $("#filtro").hide();
+                    $("#filtro3").hide();
+                    $("#filtro4").show();
+                }
+            }else{
+                $("#infoMuestra").show();
             }
         }else{
             $("#formula").show();

@@ -248,7 +248,15 @@
            
         </script>
         <script type="text/javascript">
-            
+           
+          
+          
+          
+          
+          
+          
+          
+          
             $(function()
             {
                 $(window).hashchange(function(){
@@ -607,24 +615,14 @@
                                     } //fin success
                                 }); //fin del $.ajax
                             }
+                            
+                          
+    
                             else if(hash == "#IniciarProceso"){
-                                url3 = url3.replace('#', "formController?action=")+"AI";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    { 
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
-                                            success: function(data){
-                                                $("#center").html(data);
-                                            }
-                                        })                              
-                                    } //fin success
-                                }); //fin del $.ajax
-                            }
+                                $('#myModalIP2').modal();
+                              
+                              
+                            }  
                             else if(hash == "#CerrarProceso"){
                                 url3 = url3.replace('#', "formController?action=")+"AI";
                                 $("div.ui-layout-center").empty();
@@ -713,6 +711,29 @@
                 });        
             });  //fin del function   
                     
+                        
+            $('#myModalIP2b1').click(function(){
+                url3 = url3.replace('#', "formController?action=")+"AI";
+                $("div.ui-layout-center").empty();
+                $.ajax({ 
+                    type: "POST", 
+                    url: url3, 
+                    success: function(data) 
+                    { 
+                        $.ajax({
+                            type: 'POST',
+                            url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
+                            success: function(data){
+                                $("#center").html(data);
+                            }
+                        })                              
+                    } //fin success
+                }); //fin del $.ajax    });
+            });
+            $('#myModalIP2b2').click(function(){
+                alert("hey");
+                location = "<%=request.getContextPath()%>/#detalleProceso"; 
+            });
             //setTimeout(function () { $.jstree._focused().select_node("#detalle"); }, 1000);
           
         </script> 
@@ -811,27 +832,32 @@
                                         <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#PonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
                                         <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                         <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacion Encuestas</a></li>
+                                        <li class="divider"></li>
                                         <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
                                     </c:when>
                                     <c:otherwise>
                                         <li class="nav-header">Proceso en ejecución</li>
+                                        <li class="divider"></li>
+                                        <li class="nav-header">Información del Proceso</li>
                                         <li><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-th"></i> Detalle Proceso</a></li>
                                         <li><a id="ponderacionFact" href="<%=request.getContextPath()%>/#listarPonderacionFactor"><i class="icon-tag"></i> Ponderacion Factores</a></li>
                                         <li><a id="ponderacionCara" href="<%=request.getContextPath()%>/#listarPonderacionCaracteristica"><i class="icon-tags"></i> Ponderacion Caracteristicas</a></li>
-                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                         <li><a id="asignarEncuesta"  href="<%=request.getContextPath()%>/#AsignacionEncuestas"><i class="icon-question-sign"></i> Asignacion Encuestas</a></li>
-                                        <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
-                                    </c:otherwise>
-                                </c:choose>
-                                <li class="nav-header">Procesos Anteriores</li>
-                                <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
-                            </c:when>
-                            <c:otherwise>
-                                <li class="nav-header">Procesos</li>
-                                <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
-                                <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
-                            </c:otherwise>
-                        </c:choose>
+                                        <li class="nav-header">Configuración del Proceso</li>
+                                        <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <li class="nav-header">Procesos Anteriores</li>
+                                    <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="nav-header">Procesos</li>
+                                    <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
+                                    <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
+                                </c:otherwise>
+                            </c:choose>
                     </ul>
 
                 </div>
@@ -953,7 +979,23 @@
             <div class="modal-footer">
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
             </div>
-        </div><!--/ModalIP-->
+        </div>
+        <div class="modal hide fade" id="myModalIP2">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
+                <br>
+                    <p>Esta seguro que desea ejecutar el Proceso?. Tenga en cuenta que sólo la asignación de muestra será editable al ejecutar el proceso.</p>
+            </div>
+            <div class="modal-footer">
+                <a id="myModalIP2b2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>
+                <a id="myModalIP2b1" class="btn btn-primary" data-dismiss="modal" href="#">Iniciar Proceso</a>
+            </div>
+        </div>
+        <!--/ModalIP-->
         <div class="modal hide fade" id="myModalC1">
             <div class="modal-header">
                 <a data-dismiss="modal" class="close">×</a>

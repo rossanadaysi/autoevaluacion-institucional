@@ -62,28 +62,37 @@
         </c:if>
     </c:if>
     <c:if test="${aux_IniciarP == 1}">
-        <table class="table table-striped table-bordered table-condensed">
-            <thead>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
-            </thead>
-            <tbody>
-            <tbody>
-                <c:forEach items="${encuestas.rowsByIndex}" var="item" varStatus="iter">
-                    <c:forEach items="${encuestasSeleccionadas.rowsByIndex}" var="item2" varStatus="iter2">
-                        <c:if test="${item[0] == item2[3]}">
-                            <tr>
-                                <td>${item[1]}</td>
-                                <td>${item[2]}</td>
-                                <td>${item[5]}</td>
-                            </tr>
-                        </c:if>
-                    </c:forEach>   
-                </c:forEach>
-            </tbody>
-            </tbody>
-        </table>   
+        <c:if test="${aux_asignarE == 1}">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                </thead>
+                <tbody>
+                <tbody>
+                    <c:forEach items="${encuestas.rowsByIndex}" var="item" varStatus="iter">
+                        <c:forEach items="${encuestasSeleccionadas.rowsByIndex}" var="item2" varStatus="iter2">
+                            <c:if test="${item[0] == item2[3]}">
+                                <tr>
+                                    <td>${item[1]}</td>
+                                    <td>${item[2]}</td>
+                                    <td>${item[5]}</td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>   
+                    </c:forEach>
+                </tbody>
+                </tbody>
+            </table>   
+        </c:if>
+        <c:if test="${aux_asignarE == 0}">
+            <div class="alert alert-error">
+                <a class="close">×</a>
+                <strong>Información!</strong>
+                Niguna encuesta ha sido asignada para la fuente seleccionada durante el proceso de configuración del Proceso en ejecución.
+            </div>
+        </c:if>
     </c:if>
 </div>
 <br><br>
