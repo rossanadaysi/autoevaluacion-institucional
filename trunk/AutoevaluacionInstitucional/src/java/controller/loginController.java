@@ -189,12 +189,13 @@ public class loginController extends HttpServlet {
                                             if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
                                                 aux1 = 1;
                                                 session.setAttribute("aux2_index2", aux1);
+                                                session.setAttribute("aux_IniciarP", 0);
                                             }
 
-                                            ResultSet rs3 = conSql.CargarSql("select id from proceso where id = " + idProceso + " and fechainicio = 'Proceso en Configuración.'", nombreBd);
+                                            ResultSet rs3 = conSql.CargarSql("select id from proceso where id = " + proceso.getId() + " and fechainicio = 'Proceso en Configuración.'", nombreBd);
                                             try {
                                                 if (rs3.next()) {
-                                                    session.setAttribute("aux_IniciarP", 1);
+                                                    session.setAttribute("aux_IniciarP", 0);
                                                     System.out.println("Proceso en configuración.");
                                                 }
                                             } catch (SQLException ex) {
