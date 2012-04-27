@@ -91,7 +91,7 @@
                     <div class="control-group">
                         <label for="factor" class="control-label">Asignar Factor</label>
                         <div class="controls">
-                            <select class="{required:true}" id="factores" name="factores">
+                            <select id="factor" name="factor">
                                 <option></option>
                                 <c:forEach items="${listfactores}" var="row" varStatus="iter">
                                     <option value="${row.id}">${row.nombre}</option>
