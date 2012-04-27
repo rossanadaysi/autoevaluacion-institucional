@@ -13,7 +13,7 @@
             submitHandler: function(){
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/formController2?action=EditarCaracteristicaCC",
+                    url: "<%=request.getContextPath()%>/formController2?action=editarCaracteristicaCC",
                     data: $("#formEditarCarac").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarCaracteristicas"
@@ -91,7 +91,7 @@
                     <div class="control-group">
                         <label for="factor" class="control-label">Asignar Factor</label>
                         <div class="controls">
-                            <select class="{required:true}" id="factores" name="factores">
+                            <select id="factor" name="factor">
                                 <option></option>
                                 <c:forEach items="${listfactores}" var="row" varStatus="iter">
                                     <c:choose>
