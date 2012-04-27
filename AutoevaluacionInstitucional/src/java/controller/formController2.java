@@ -4,19 +4,15 @@
  */
 package controller;
 
-import entity.Caracteristica;
-import entity.Factor;
-import entity.Indicador;
-import entity.Pregunta;
-import entity.controller.CaracteristicaJpaController;
-import entity.controller.FactorJpaController;
-import entity.controller.IndicadorJpaController;
-import entity.controller.PreguntaJpaController;
+import entity.*;
+import entity.controller.*;
 import entity.controller.exceptions.IllegalOrphanException;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +43,55 @@ public class formController2 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+
+            if (request.getParameter("action").equals("crearEncuestaCC")) {
+
+                Encuesta en = new Encuesta();
+                EncuestaJpaController conEn = new EncuestaJpaController();
+                PreguntaJpaController conPre = new PreguntaJpaController();
+                en.setNombre(request.getParameter("nombre"));
+                en.setDescripcion(request.getParameter("objetivo"));
+                en.setInstrucciones(request.getParameter("instrucciones"));
+                en.setMensaje("mensaje");
+                Date fecha = new java.util.Date();
+                en.setFecha(fecha);
+                conEn.create(en);
+            }
+
+            if (request.getParameter("action").equals("editarEncuestaCC")) {
+
+                String idE = request.getParameter("idE");
+                EncuestaJpaController conEn = new EncuestaJpaController();
+                Encuesta en = conEn.findEncuesta(Integer.parseInt(idE));
+                PreguntaJpaController conPre = new PreguntaJpaController();
+                en.setNombre(request.getParameter("nombre"));
+                en.setDescripcion(request.getParameter("objetivo"));
+                en.setInstrucciones(request.getParameter("instrucciones"));
+                en.setMensaje("mensaje");
+
+                List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
+                List<Encuestahaspregunta> aux = new ArrayList<Encuestahaspregunta>();
+                for (int i = 0; i < listadePreguntas.size(); i++) {
+                    if (request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")) {
+                        Encuestahaspregunta aux1 = new Encuestahaspregunta();
+                        aux1.setEncuestaId(en);
+                        aux1.setPreguntaId(listadePreguntas.get(i));
+                        aux.add(aux1);
+
+                    }
+                }
+                en.setEncuestahaspreguntaList(aux);
+                try {
+                    conEn.edit(en);
+                } catch (IllegalOrphanException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(formController2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
             if (request.getParameter("action").equals("crearFactorCC")) {
                 HttpSession session = request.getSession();
                 Factor fa = new Factor();
@@ -79,7 +124,7 @@ public class formController2 extends HttpServlet {
                 List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
                 List<Caracteristica> aux = new ArrayList<Caracteristica>();
                 for (int i = 0; i < listadeCaracteristicas.size(); i++) {
-                    if (request.getParameter("C"+listadeCaracteristicas.get(i).getId()).equals("1")) {
+                    if (request.getParameter("C" + listadeCaracteristicas.get(i).getId()).equals("1")) {
                         aux.add(listadeCaracteristicas.get(i));
 
                     }
@@ -109,19 +154,19 @@ public class formController2 extends HttpServlet {
                 in.setNombre(request.getParameter("nombre"));
                 in.setDescripcion(request.getParameter("descripcion"));
                 String car = request.getParameter("caracteristica");
-                if(car!=null && !car.equals("")){
-                Caracteristica ca = conCarac.findCaracteristica(Integer.parseInt(car));
-                in.setCaracteristicaId(ca);
-                }else{
+                if (car != null && !car.equals("")) {
+                    Caracteristica ca = conCarac.findCaracteristica(Integer.parseInt(car));
+                    in.setCaracteristicaId(ca);
+                } else {
                     in.setCaracteristicaId(null);
                 }
                 List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
                 List<Pregunta> aux = new ArrayList<Pregunta>();
-                
-                
-                
+
+
+
                 for (int i = 0; i < listadePreguntas.size(); i++) {
-                    if (request.getParameter("P"+listadePreguntas.get(i).getId()).equals("1")) {
+                    if (request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")) {
                         aux.add(listadePreguntas.get(i));
 
                     }
@@ -140,7 +185,7 @@ public class formController2 extends HttpServlet {
 
             }
 
-            
+
             if (request.getParameter("action").equals("editarCaracteristicaCC")) {
                 HttpSession session = request.getSession();
                 String idC = request.getParameter("idC");
@@ -151,16 +196,16 @@ public class formController2 extends HttpServlet {
                 ca.setNombre(request.getParameter("nombre"));
                 ca.setDescripcion(request.getParameter("descripcion"));
                 String fac = request.getParameter("factor");
-                if(fac!=null && !fac.equals("")){
-                Factor f = conFac.findFactor(Integer.parseInt(fac));
-                ca.setFactorId(f);
-                }else{
+                if (fac != null && !fac.equals("")) {
+                    Factor f = conFac.findFactor(Integer.parseInt(fac));
+                    ca.setFactorId(f);
+                } else {
                     ca.setFactorId(null);
                 }
                 List<Indicador> listadeIndicadores = conIndi.findIndicadorEntities();
                 List<Indicador> aux = new ArrayList<Indicador>();
                 for (int i = 0; i < listadeIndicadores.size(); i++) {
-                    if (request.getParameter("I"+listadeIndicadores.get(i).getId()).equals("1")) {
+                    if (request.getParameter("I" + listadeIndicadores.get(i).getId()).equals("1")) {
                         aux.add(listadeIndicadores.get(i));
 
                     }
@@ -187,18 +232,18 @@ public class formController2 extends HttpServlet {
                 ca.setDescripcion(request.getParameter("descripcion"));
                 FactorJpaController conFa = new FactorJpaController();
                 String fac = (String) request.getParameter("factor");
-                if(fac!=null && !fac.equals("")){
-                Factor fa = conFa.findFactor(Integer.parseInt(fac));
-                ca.setFactorId(fa);
-                }else{
+                if (fac != null && !fac.equals("")) {
+                    Factor fa = conFa.findFactor(Integer.parseInt(fac));
+                    ca.setFactorId(fa);
+                } else {
                     ca.setFactorId(null);
                 }
-                
+
 
                 List<Indicador> listadeIndicadores = conIn.findIndicadorEntities();
                 List<Indicador> aux = new ArrayList<Indicador>();
                 for (int i = 0; i < listadeIndicadores.size(); i++) {
-                    if (request.getParameter("I"+listadeIndicadores.get(i).getId()).equals("1")) {
+                    if (request.getParameter("I" + listadeIndicadores.get(i).getId()).equals("1")) {
                         aux.add(listadeIndicadores.get(i));
 
                     }
@@ -215,17 +260,17 @@ public class formController2 extends HttpServlet {
                 in.setDescripcion(request.getParameter("descripcion"));
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 String car = request.getParameter("caracteristica");
-                if(car!=null && !car.equals("")){
-                Caracteristica ca = conCa.findCaracteristica(Integer.parseInt(car));
-                in.setCaracteristicaId(ca);
-                }else{
+                if (car != null && !car.equals("")) {
+                    Caracteristica ca = conCa.findCaracteristica(Integer.parseInt(car));
+                    in.setCaracteristicaId(ca);
+                } else {
                     in.setCaracteristicaId(null);
                 }
-                
+
                 List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
                 List<Pregunta> aux = new ArrayList<Pregunta>();
                 for (int i = 0; i < listadePreguntas.size(); i++) {
-                    if (request.getParameter("P"+listadePreguntas.get(i).getId()).equals("1")) {
+                    if (request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")) {
                         aux.add(listadePreguntas.get(i));
 
                     }
@@ -241,17 +286,17 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 p.setPregunta(request.getParameter("pregunta"));
                 p.setTipo(request.getParameter("tipo"));
-                
+
                 String ind = request.getParameter("indicador");
-                
-                if(ind!=null && !ind.equals("")){
-                Indicador in = conIn.findIndicador(Integer.parseInt(ind));
-                p.setIndicadorId(in);
-                }else{
+
+                if (ind != null && !ind.equals("")) {
+                    Indicador in = conIn.findIndicador(Integer.parseInt(ind));
+                    p.setIndicadorId(in);
+                } else {
                     p.setIndicadorId(null);
                 }
-                
-                
+
+
 
                 conPre.create(p);
 
@@ -267,11 +312,11 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 pre.setTipo(request.getParameter("tipo"));
                 String ind = request.getParameter("indicador");
-                
-                if(ind!=null && !ind.equals("")){
-                Indicador in = conIn.findIndicador(Integer.parseInt(ind));
-                pre.setIndicadorId(in);
-                }else{
+
+                if (ind != null && !ind.equals("")) {
+                    Indicador in = conIn.findIndicador(Integer.parseInt(ind));
+                    pre.setIndicadorId(in);
+                } else {
                     pre.setIndicadorId(null);
                 }
                 try {

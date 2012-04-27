@@ -4,6 +4,7 @@
  */
 package entity.controller;
 
+import connection.jpaConnection;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -23,13 +24,11 @@ import javax.persistence.EntityManagerFactory;
  */
 public class EncuestahaspreguntaJpaController implements Serializable {
 
-    public EncuestahaspreguntaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public EncuestahaspreguntaJpaController() {
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return jpaConnection.getEntityManager();
     }
 
     public void create(Encuestahaspregunta encuestahaspregunta) {
@@ -180,6 +179,26 @@ public class EncuestahaspreguntaJpaController implements Serializable {
         }
     }
 
+    public Encuestahaspregunta findEncuestahaspregunta(Integer idp, Integer ide) {
+        EntityManager em = getEntityManager();
+        try {
+            Pregunta p = em.find(Pregunta.class, idp);
+            Encuesta e = em.find(Encuesta.class, ide);
+            Query q = em.createQuery("SELECT ep FROM Encuestahaspregunta ep WHERE ep.encuestaId=:enc and ep.preguntaId=:pre");
+            q.setParameter("pre", p);
+            q.setParameter("enc", e);
+            List<Encuestahaspregunta> lis = q.getResultList();
+            if (lis.size() > 0) {
+                return lis.get(0);
+            } else {
+                return null;
+            }
+
+        } finally {
+            em.close();
+        }
+    }
+
     public int getEncuestahaspreguntaCount() {
         EntityManager em = getEntityManager();
         try {
@@ -192,5 +211,4 @@ public class EncuestahaspreguntaJpaController implements Serializable {
             em.close();
         }
     }
-    
 }
