@@ -64,8 +64,8 @@
                     <div class="control-group">
                         <label for="indicador" class="control-label">Asignar Indicador</label>
                         <div class="controls">
-                            <select class="{required:true}" id="indicador" name="indicador">
-                                <option value="-1"></option>
+                            <select id="indicador" name="indicador">
+                                <option></option>
                                 <c:forEach items="${listindicadores}" var="row" varStatus="iter">
                                 <c:choose>
                                         <c:when test="${pregunta.getIndicadorId()!= row}">
