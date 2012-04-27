@@ -50,7 +50,7 @@
                        <div class="control-group">
                         <label for="caracteristica" class="control-label">Asignar Caracteristica</label>
                         <div class="controls">
-                            <select class="{required:true}" id="caracteristica" name="caracteristica">
+                            <select id="caracteristica" name="caracteristica">
                                 <option></option>
                                 <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
                                     <c:choose>
