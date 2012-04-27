@@ -11,7 +11,8 @@
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Objetivo</th>
+                        <th></th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listencuestas}" var="row" varStatus="iter">
@@ -21,6 +22,10 @@
                                     </td>
                                     <td>
                                         <c:out value="${row.descripcion}"/>
+                                    </td>
+                                    <td class="action icon16">
+                                        <a title="Editar" href="#editarEncuesta&${row.id}" class="edit"></a>
+                                        <a title="Eliminar" class="delete" href=""></a>
                                     </td>
                                 </tr>
                             </c:forEach>

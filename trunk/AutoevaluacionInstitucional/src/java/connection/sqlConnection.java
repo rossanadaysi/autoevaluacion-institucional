@@ -8,7 +8,6 @@ package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -79,7 +78,8 @@ public class sqlConnection {
             System.err.println(error);
             ste = e.getStackTrace();
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al Conectarse a la Bd./n" + "Verificar Datos Ingresados");
+            System.out.println("Error al Conectarse a la Bd./n" + "Verificar Datos Ingresados");
+            
         }
     }
 

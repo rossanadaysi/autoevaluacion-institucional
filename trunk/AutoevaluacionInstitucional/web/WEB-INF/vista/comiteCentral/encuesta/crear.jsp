@@ -78,15 +78,15 @@
                     <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
-                            <input type="text" id="nombre" class="input-xlarge" value=""/>
-                        </div>
+                            <input type="text" id="nombre" name="nombre" class="input-xlarge" value=""/>
+                         </div>
                     </div>
                     
 
                     <div class="control-group">
-                        <label for="descripcion" class="control-label">Objetivo</label>
+                        <label for="objetivo" class="control-label">Objetivo</label>
                         <div class="controls">
-                        <textarea rows="3" name="descripcion" id="descripcion" class="input-xxlarge {required:true}"></textarea>
+                        <textarea rows="3" name="objetivo" id="objetivo" class="input-xxlarge {required:true}"></textarea>
                         </div>
                     </div>
                     <div class="control-group">
@@ -95,21 +95,6 @@
                         <textarea rows="3" name="instrucciones" id="instrucciones" class="input-xxlarge {required:true}"></textarea>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <label for="descripcion" class="control-label">Asignar Preguntas</label>
-                        <div class="controls">
-                            <ul id="fcbklist">
-                                <c:forEach items="${listpreguntas}" var="row" varStatus="iter">
-                                    <li>
-                                        <strong>${row.pregunta}</strong><br/> 
-                                        <span class="fcbkitem_text">${row.tipo}</span>
-                                        <input name="P${row.id}" type="hidden" value="0"/>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </div>
-                    </div>   
-
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Crear Encuesta</button>
                         <button class="btn" type="reset">Cancelar</button>

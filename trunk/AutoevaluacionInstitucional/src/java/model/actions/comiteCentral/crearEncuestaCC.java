@@ -19,9 +19,6 @@ public class crearEncuestaCC implements Action{
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        PreguntaJpaController conPregunta = new PreguntaJpaController(); 
-        HttpSession session = request.getSession();
-        session.setAttribute("listpreguntas", conPregunta.findPreguntaEntities());        
         String url = "/WEB-INF/vista/comiteCentral/encuesta/crear.jsp";
         return url;
     }
