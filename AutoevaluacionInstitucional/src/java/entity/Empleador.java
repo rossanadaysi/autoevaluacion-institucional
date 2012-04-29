@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 @Entity
 @Table(name = "empleador")
@@ -32,12 +32,12 @@ public class Empleador implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadorId")
     private List<Muestraempleador> muestraempleadorList;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @JoinColumn(name = "sectorempresarial_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Sectorempresarial sectorempresarialId;
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Persona personaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -74,20 +74,20 @@ public class Empleador implements Serializable {
         this.muestraempleadorList = muestraempleadorList;
     }
 
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
-    }
-
     public Sectorempresarial getSectorempresarialId() {
         return sectorempresarialId;
     }
 
     public void setSectorempresarialId(Sectorempresarial sectorempresarialId) {
         this.sectorempresarialId = sectorempresarialId;
+    }
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
     public Fuente getFuenteId() {

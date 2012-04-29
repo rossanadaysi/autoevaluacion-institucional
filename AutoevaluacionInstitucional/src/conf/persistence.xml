@@ -51,6 +51,14 @@
     <class>entity.Empleador</class>
     <class>entity.Sectorempresarial</class>
     <class>entity.Docente</class>
+    <class>entity.Muestraestudiante</class>
+    <class>entity.Muestraempleador</class>
+    <class>entity.Ponderacioncaracteristica</class>
+    <class>entity.Muestraagencia</class>
+    <class>entity.Muestraadministrativo</class>
+    <class>entity.Muestraegresado</class>
+    <class>entity.Muestradocente</class>
+    <class>entity.Ponderacionfactor</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/autoevaluacion"/>

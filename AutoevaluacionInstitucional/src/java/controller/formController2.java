@@ -70,17 +70,14 @@ public class formController2 extends HttpServlet {
                 en.setMensaje("mensaje");
 
                 List<Pregunta> listadePreguntas = conPre.findPreguntaEntities();
-                List<Encuestahaspregunta> aux = new ArrayList<Encuestahaspregunta>();
+                List<Pregunta> aux = new ArrayList<Pregunta>();
                 for (int i = 0; i < listadePreguntas.size(); i++) {
-                    if (request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")) {
-                        Encuestahaspregunta aux1 = new Encuestahaspregunta();
-                        aux1.setEncuestaId(en);
-                        aux1.setPreguntaId(listadePreguntas.get(i));
-                        aux.add(aux1);
-
+                    Pregunta pregunta = listadePreguntas.get(i);
+                    if(request.getParameter("P" + listadePreguntas.get(i).getId()).equals("1")){
+                      aux.add(pregunta);
                     }
                 }
-                en.setEncuestahaspreguntaList(aux);
+                en.setPreguntaList(aux);    
                 try {
                     conEn.edit(en);
                 } catch (IllegalOrphanException ex) {
@@ -286,7 +283,7 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 p.setPregunta(request.getParameter("pregunta"));
                 p.setTipo(request.getParameter("tipo"));
-
+                
                 String ind = request.getParameter("indicador");
 
                 if (ind != null && !ind.equals("")) {

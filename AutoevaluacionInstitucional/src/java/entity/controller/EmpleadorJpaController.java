@@ -19,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class EmpleadorJpaController implements Serializable {
 
@@ -40,15 +40,15 @@ public class EmpleadorJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Persona personaId = empleador.getPersonaId();
-            if (personaId != null) {
-                personaId = em.getReference(personaId.getClass(), personaId.getId());
-                empleador.setPersonaId(personaId);
-            }
             Sectorempresarial sectorempresarialId = empleador.getSectorempresarialId();
             if (sectorempresarialId != null) {
                 sectorempresarialId = em.getReference(sectorempresarialId.getClass(), sectorempresarialId.getId());
                 empleador.setSectorempresarialId(sectorempresarialId);
+            }
+            Persona personaId = empleador.getPersonaId();
+            if (personaId != null) {
+                personaId = em.getReference(personaId.getClass(), personaId.getId());
+                empleador.setPersonaId(personaId);
             }
             Fuente fuenteId = empleador.getFuenteId();
             if (fuenteId != null) {
@@ -62,13 +62,13 @@ public class EmpleadorJpaController implements Serializable {
             }
             empleador.setMuestraempleadorList(attachedMuestraempleadorList);
             em.persist(empleador);
-            if (personaId != null) {
-                personaId.getEmpleadorList().add(empleador);
-                personaId = em.merge(personaId);
-            }
             if (sectorempresarialId != null) {
                 sectorempresarialId.getEmpleadorList().add(empleador);
                 sectorempresarialId = em.merge(sectorempresarialId);
+            }
+            if (personaId != null) {
+                personaId.getEmpleadorList().add(empleador);
+                personaId = em.merge(personaId);
             }
             if (fuenteId != null) {
                 fuenteId.getEmpleadorList().add(empleador);
@@ -97,10 +97,10 @@ public class EmpleadorJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Empleador persistentEmpleador = em.find(Empleador.class, empleador.getId());
-            Persona personaIdOld = persistentEmpleador.getPersonaId();
-            Persona personaIdNew = empleador.getPersonaId();
             Sectorempresarial sectorempresarialIdOld = persistentEmpleador.getSectorempresarialId();
             Sectorempresarial sectorempresarialIdNew = empleador.getSectorempresarialId();
+            Persona personaIdOld = persistentEmpleador.getPersonaId();
+            Persona personaIdNew = empleador.getPersonaId();
             Fuente fuenteIdOld = persistentEmpleador.getFuenteId();
             Fuente fuenteIdNew = empleador.getFuenteId();
             List<Muestraempleador> muestraempleadorListOld = persistentEmpleador.getMuestraempleadorList();
@@ -117,13 +117,13 @@ public class EmpleadorJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (personaIdNew != null) {
-                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-                empleador.setPersonaId(personaIdNew);
-            }
             if (sectorempresarialIdNew != null) {
                 sectorempresarialIdNew = em.getReference(sectorempresarialIdNew.getClass(), sectorempresarialIdNew.getId());
                 empleador.setSectorempresarialId(sectorempresarialIdNew);
+            }
+            if (personaIdNew != null) {
+                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+                empleador.setPersonaId(personaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
@@ -137,14 +137,6 @@ public class EmpleadorJpaController implements Serializable {
             muestraempleadorListNew = attachedMuestraempleadorListNew;
             empleador.setMuestraempleadorList(muestraempleadorListNew);
             empleador = em.merge(empleador);
-            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-                personaIdOld.getEmpleadorList().remove(empleador);
-                personaIdOld = em.merge(personaIdOld);
-            }
-            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-                personaIdNew.getEmpleadorList().add(empleador);
-                personaIdNew = em.merge(personaIdNew);
-            }
             if (sectorempresarialIdOld != null && !sectorempresarialIdOld.equals(sectorempresarialIdNew)) {
                 sectorempresarialIdOld.getEmpleadorList().remove(empleador);
                 sectorempresarialIdOld = em.merge(sectorempresarialIdOld);
@@ -152,6 +144,14 @@ public class EmpleadorJpaController implements Serializable {
             if (sectorempresarialIdNew != null && !sectorempresarialIdNew.equals(sectorempresarialIdOld)) {
                 sectorempresarialIdNew.getEmpleadorList().add(empleador);
                 sectorempresarialIdNew = em.merge(sectorempresarialIdNew);
+            }
+            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+                personaIdOld.getEmpleadorList().remove(empleador);
+                personaIdOld = em.merge(personaIdOld);
+            }
+            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+                personaIdNew.getEmpleadorList().add(empleador);
+                personaIdNew = em.merge(personaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getEmpleadorList().remove(empleador);
@@ -212,15 +212,15 @@ public class EmpleadorJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Persona personaId = empleador.getPersonaId();
-            if (personaId != null) {
-                personaId.getEmpleadorList().remove(empleador);
-                personaId = em.merge(personaId);
-            }
             Sectorempresarial sectorempresarialId = empleador.getSectorempresarialId();
             if (sectorempresarialId != null) {
                 sectorempresarialId.getEmpleadorList().remove(empleador);
                 sectorempresarialId = em.merge(sectorempresarialId);
+            }
+            Persona personaId = empleador.getPersonaId();
+            if (personaId != null) {
+                personaId.getEmpleadorList().remove(empleador);
+                personaId = em.merge(personaId);
             }
             Fuente fuenteId = empleador.getFuenteId();
             if (fuenteId != null) {

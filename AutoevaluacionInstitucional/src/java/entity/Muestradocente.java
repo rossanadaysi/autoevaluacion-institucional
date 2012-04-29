@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 @Entity
 @Table(name = "muestradocente")
@@ -25,12 +25,12 @@ public class Muestradocente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "docente_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Docente docenteId;
     @JoinColumn(name = "muestra_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestra muestraId;
+    @JoinColumn(name = "docente_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Docente docenteId;
 
     public Muestradocente() {
     }
@@ -47,20 +47,20 @@ public class Muestradocente implements Serializable {
         this.id = id;
     }
 
-    public Docente getDocenteId() {
-        return docenteId;
-    }
-
-    public void setDocenteId(Docente docenteId) {
-        this.docenteId = docenteId;
-    }
-
     public Muestra getMuestraId() {
         return muestraId;
     }
 
     public void setMuestraId(Muestra muestraId) {
         this.muestraId = muestraId;
+    }
+
+    public Docente getDocenteId() {
+        return docenteId;
+    }
+
+    public void setDocenteId(Docente docenteId) {
+        this.docenteId = docenteId;
     }
 
     @Override

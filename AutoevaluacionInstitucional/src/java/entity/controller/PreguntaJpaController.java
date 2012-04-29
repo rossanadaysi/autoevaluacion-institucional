@@ -11,9 +11,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entity.Indicador;
-import entity.Encuestahaspregunta;
+import entity.Encuesta;
 import entity.Pregunta;
-import entity.controller.exceptions.IllegalOrphanException;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class PreguntaJpaController implements Serializable {
 
@@ -34,8 +33,8 @@ public class PreguntaJpaController implements Serializable {
     }
 
     public void create(Pregunta pregunta) {
-        if (pregunta.getEncuestahaspreguntaList() == null) {
-            pregunta.setEncuestahaspreguntaList(new ArrayList<Encuestahaspregunta>());
+        if (pregunta.getEncuestaList() == null) {
+            pregunta.setEncuestaList(new ArrayList<Encuesta>());
         }
         EntityManager em = null;
         try {
@@ -46,25 +45,20 @@ public class PreguntaJpaController implements Serializable {
                 indicadorId = em.getReference(indicadorId.getClass(), indicadorId.getId());
                 pregunta.setIndicadorId(indicadorId);
             }
-            List<Encuestahaspregunta> attachedEncuestahaspreguntaList = new ArrayList<Encuestahaspregunta>();
-            for (Encuestahaspregunta encuestahaspreguntaListEncuestahaspreguntaToAttach : pregunta.getEncuestahaspreguntaList()) {
-                encuestahaspreguntaListEncuestahaspreguntaToAttach = em.getReference(encuestahaspreguntaListEncuestahaspreguntaToAttach.getClass(), encuestahaspreguntaListEncuestahaspreguntaToAttach.getId());
-                attachedEncuestahaspreguntaList.add(encuestahaspreguntaListEncuestahaspreguntaToAttach);
+            List<Encuesta> attachedEncuestaList = new ArrayList<Encuesta>();
+            for (Encuesta encuestaListEncuestaToAttach : pregunta.getEncuestaList()) {
+                encuestaListEncuestaToAttach = em.getReference(encuestaListEncuestaToAttach.getClass(), encuestaListEncuestaToAttach.getId());
+                attachedEncuestaList.add(encuestaListEncuestaToAttach);
             }
-            pregunta.setEncuestahaspreguntaList(attachedEncuestahaspreguntaList);
+            pregunta.setEncuestaList(attachedEncuestaList);
             em.persist(pregunta);
             if (indicadorId != null) {
                 indicadorId.getPreguntaList().add(pregunta);
                 indicadorId = em.merge(indicadorId);
             }
-            for (Encuestahaspregunta encuestahaspreguntaListEncuestahaspregunta : pregunta.getEncuestahaspreguntaList()) {
-                Pregunta oldPreguntaIdOfEncuestahaspreguntaListEncuestahaspregunta = encuestahaspreguntaListEncuestahaspregunta.getPreguntaId();
-                encuestahaspreguntaListEncuestahaspregunta.setPreguntaId(pregunta);
-                encuestahaspreguntaListEncuestahaspregunta = em.merge(encuestahaspreguntaListEncuestahaspregunta);
-                if (oldPreguntaIdOfEncuestahaspreguntaListEncuestahaspregunta != null) {
-                    oldPreguntaIdOfEncuestahaspreguntaListEncuestahaspregunta.getEncuestahaspreguntaList().remove(encuestahaspreguntaListEncuestahaspregunta);
-                    oldPreguntaIdOfEncuestahaspreguntaListEncuestahaspregunta = em.merge(oldPreguntaIdOfEncuestahaspreguntaListEncuestahaspregunta);
-                }
+            for (Encuesta encuestaListEncuesta : pregunta.getEncuestaList()) {
+                encuestaListEncuesta.getPreguntaList().add(pregunta);
+                encuestaListEncuesta = em.merge(encuestaListEncuesta);
             }
             em.getTransaction().commit();
         } finally {
@@ -74,7 +68,7 @@ public class PreguntaJpaController implements Serializable {
         }
     }
 
-    public void edit(Pregunta pregunta) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Pregunta pregunta) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -82,31 +76,19 @@ public class PreguntaJpaController implements Serializable {
             Pregunta persistentPregunta = em.find(Pregunta.class, pregunta.getId());
             Indicador indicadorIdOld = persistentPregunta.getIndicadorId();
             Indicador indicadorIdNew = pregunta.getIndicadorId();
-            List<Encuestahaspregunta> encuestahaspreguntaListOld = persistentPregunta.getEncuestahaspreguntaList();
-            List<Encuestahaspregunta> encuestahaspreguntaListNew = pregunta.getEncuestahaspreguntaList();
-            List<String> illegalOrphanMessages = null;
-            for (Encuestahaspregunta encuestahaspreguntaListOldEncuestahaspregunta : encuestahaspreguntaListOld) {
-                if (!encuestahaspreguntaListNew.contains(encuestahaspreguntaListOldEncuestahaspregunta)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Encuestahaspregunta " + encuestahaspreguntaListOldEncuestahaspregunta + " since its preguntaId field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
+            List<Encuesta> encuestaListOld = persistentPregunta.getEncuestaList();
+            List<Encuesta> encuestaListNew = pregunta.getEncuestaList();
             if (indicadorIdNew != null) {
                 indicadorIdNew = em.getReference(indicadorIdNew.getClass(), indicadorIdNew.getId());
                 pregunta.setIndicadorId(indicadorIdNew);
             }
-            List<Encuestahaspregunta> attachedEncuestahaspreguntaListNew = new ArrayList<Encuestahaspregunta>();
-            for (Encuestahaspregunta encuestahaspreguntaListNewEncuestahaspreguntaToAttach : encuestahaspreguntaListNew) {
-                encuestahaspreguntaListNewEncuestahaspreguntaToAttach = em.getReference(encuestahaspreguntaListNewEncuestahaspreguntaToAttach.getClass(), encuestahaspreguntaListNewEncuestahaspreguntaToAttach.getId());
-                attachedEncuestahaspreguntaListNew.add(encuestahaspreguntaListNewEncuestahaspreguntaToAttach);
+            List<Encuesta> attachedEncuestaListNew = new ArrayList<Encuesta>();
+            for (Encuesta encuestaListNewEncuestaToAttach : encuestaListNew) {
+                encuestaListNewEncuestaToAttach = em.getReference(encuestaListNewEncuestaToAttach.getClass(), encuestaListNewEncuestaToAttach.getId());
+                attachedEncuestaListNew.add(encuestaListNewEncuestaToAttach);
             }
-            encuestahaspreguntaListNew = attachedEncuestahaspreguntaListNew;
-            pregunta.setEncuestahaspreguntaList(encuestahaspreguntaListNew);
+            encuestaListNew = attachedEncuestaListNew;
+            pregunta.setEncuestaList(encuestaListNew);
             pregunta = em.merge(pregunta);
             if (indicadorIdOld != null && !indicadorIdOld.equals(indicadorIdNew)) {
                 indicadorIdOld.getPreguntaList().remove(pregunta);
@@ -116,15 +98,16 @@ public class PreguntaJpaController implements Serializable {
                 indicadorIdNew.getPreguntaList().add(pregunta);
                 indicadorIdNew = em.merge(indicadorIdNew);
             }
-            for (Encuestahaspregunta encuestahaspreguntaListNewEncuestahaspregunta : encuestahaspreguntaListNew) {
-                if (!encuestahaspreguntaListOld.contains(encuestahaspreguntaListNewEncuestahaspregunta)) {
-                    Pregunta oldPreguntaIdOfEncuestahaspreguntaListNewEncuestahaspregunta = encuestahaspreguntaListNewEncuestahaspregunta.getPreguntaId();
-                    encuestahaspreguntaListNewEncuestahaspregunta.setPreguntaId(pregunta);
-                    encuestahaspreguntaListNewEncuestahaspregunta = em.merge(encuestahaspreguntaListNewEncuestahaspregunta);
-                    if (oldPreguntaIdOfEncuestahaspreguntaListNewEncuestahaspregunta != null && !oldPreguntaIdOfEncuestahaspreguntaListNewEncuestahaspregunta.equals(pregunta)) {
-                        oldPreguntaIdOfEncuestahaspreguntaListNewEncuestahaspregunta.getEncuestahaspreguntaList().remove(encuestahaspreguntaListNewEncuestahaspregunta);
-                        oldPreguntaIdOfEncuestahaspreguntaListNewEncuestahaspregunta = em.merge(oldPreguntaIdOfEncuestahaspreguntaListNewEncuestahaspregunta);
-                    }
+            for (Encuesta encuestaListOldEncuesta : encuestaListOld) {
+                if (!encuestaListNew.contains(encuestaListOldEncuesta)) {
+                    encuestaListOldEncuesta.getPreguntaList().remove(pregunta);
+                    encuestaListOldEncuesta = em.merge(encuestaListOldEncuesta);
+                }
+            }
+            for (Encuesta encuestaListNewEncuesta : encuestaListNew) {
+                if (!encuestaListOld.contains(encuestaListNewEncuesta)) {
+                    encuestaListNewEncuesta.getPreguntaList().add(pregunta);
+                    encuestaListNewEncuesta = em.merge(encuestaListNewEncuesta);
                 }
             }
             em.getTransaction().commit();
@@ -144,7 +127,7 @@ public class PreguntaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -156,21 +139,15 @@ public class PreguntaJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The pregunta with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Encuestahaspregunta> encuestahaspreguntaListOrphanCheck = pregunta.getEncuestahaspreguntaList();
-            for (Encuestahaspregunta encuestahaspreguntaListOrphanCheckEncuestahaspregunta : encuestahaspreguntaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Pregunta (" + pregunta + ") cannot be destroyed since the Encuestahaspregunta " + encuestahaspreguntaListOrphanCheckEncuestahaspregunta + " in its encuestahaspreguntaList field has a non-nullable preguntaId field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             Indicador indicadorId = pregunta.getIndicadorId();
             if (indicadorId != null) {
                 indicadorId.getPreguntaList().remove(pregunta);
                 indicadorId = em.merge(indicadorId);
+            }
+            List<Encuesta> encuestaList = pregunta.getEncuestaList();
+            for (Encuesta encuestaListEncuesta : encuestaList) {
+                encuestaListEncuesta.getPreguntaList().remove(pregunta);
+                encuestaListEncuesta = em.merge(encuestaListEncuesta);
             }
             em.remove(pregunta);
             em.getTransaction().commit();

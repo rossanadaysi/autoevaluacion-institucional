@@ -6,7 +6,6 @@ package model.actions.comiteCentral;
 
 import entity.Encuesta;
 import entity.controller.EncuestaJpaController;
-import entity.controller.EncuestahaspreguntaJpaController;
 import entity.controller.PreguntaJpaController;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -25,14 +24,12 @@ public class EditarEncuestaCC implements Action{
         
         EncuestaJpaController conEncuesta = new EncuestaJpaController(); 
         PreguntaJpaController conPregunta = new PreguntaJpaController(); 
-        EncuestahaspreguntaJpaController conEP = new EncuestahaspreguntaJpaController(); 
         HttpSession session = request.getSession();
         String idencuesta = request.getParameter("idE");
         
         
         Encuesta e =  conEncuesta.findEncuesta(Integer.parseInt(idencuesta));
         session.setAttribute("encuesta",e);
-        session.setAttribute("EP",conEP);
         session.setAttribute("listpreguntas", conPregunta.findPreguntaEntities());
         
         

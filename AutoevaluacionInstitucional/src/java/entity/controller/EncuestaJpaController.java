@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Encuestahaspregunta;
+import entity.Pregunta;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Asignacionencuesta;
@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class EncuestaJpaController implements Serializable {
 
@@ -34,8 +34,8 @@ public class EncuestaJpaController implements Serializable {
     }
 
     public void create(Encuesta encuesta) {
-        if (encuesta.getEncuestahaspreguntaList() == null) {
-            encuesta.setEncuestahaspreguntaList(new ArrayList<Encuestahaspregunta>());
+        if (encuesta.getPreguntaList() == null) {
+            encuesta.setPreguntaList(new ArrayList<Pregunta>());
         }
         if (encuesta.getAsignacionencuestaList() == null) {
             encuesta.setAsignacionencuestaList(new ArrayList<Asignacionencuesta>());
@@ -44,12 +44,12 @@ public class EncuestaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Encuestahaspregunta> attachedEncuestahaspreguntaList = new ArrayList<Encuestahaspregunta>();
-            for (Encuestahaspregunta encuestahaspreguntaListEncuestahaspreguntaToAttach : encuesta.getEncuestahaspreguntaList()) {
-                encuestahaspreguntaListEncuestahaspreguntaToAttach = em.getReference(encuestahaspreguntaListEncuestahaspreguntaToAttach.getClass(), encuestahaspreguntaListEncuestahaspreguntaToAttach.getId());
-                attachedEncuestahaspreguntaList.add(encuestahaspreguntaListEncuestahaspreguntaToAttach);
+            List<Pregunta> attachedPreguntaList = new ArrayList<Pregunta>();
+            for (Pregunta preguntaListPreguntaToAttach : encuesta.getPreguntaList()) {
+                preguntaListPreguntaToAttach = em.getReference(preguntaListPreguntaToAttach.getClass(), preguntaListPreguntaToAttach.getId());
+                attachedPreguntaList.add(preguntaListPreguntaToAttach);
             }
-            encuesta.setEncuestahaspreguntaList(attachedEncuestahaspreguntaList);
+            encuesta.setPreguntaList(attachedPreguntaList);
             List<Asignacionencuesta> attachedAsignacionencuestaList = new ArrayList<Asignacionencuesta>();
             for (Asignacionencuesta asignacionencuestaListAsignacionencuestaToAttach : encuesta.getAsignacionencuestaList()) {
                 asignacionencuestaListAsignacionencuestaToAttach = em.getReference(asignacionencuestaListAsignacionencuestaToAttach.getClass(), asignacionencuestaListAsignacionencuestaToAttach.getId());
@@ -57,14 +57,9 @@ public class EncuestaJpaController implements Serializable {
             }
             encuesta.setAsignacionencuestaList(attachedAsignacionencuestaList);
             em.persist(encuesta);
-            for (Encuestahaspregunta encuestahaspreguntaListEncuestahaspregunta : encuesta.getEncuestahaspreguntaList()) {
-                Encuesta oldEncuestaIdOfEncuestahaspreguntaListEncuestahaspregunta = encuestahaspreguntaListEncuestahaspregunta.getEncuestaId();
-                encuestahaspreguntaListEncuestahaspregunta.setEncuestaId(encuesta);
-                encuestahaspreguntaListEncuestahaspregunta = em.merge(encuestahaspreguntaListEncuestahaspregunta);
-                if (oldEncuestaIdOfEncuestahaspreguntaListEncuestahaspregunta != null) {
-                    oldEncuestaIdOfEncuestahaspreguntaListEncuestahaspregunta.getEncuestahaspreguntaList().remove(encuestahaspreguntaListEncuestahaspregunta);
-                    oldEncuestaIdOfEncuestahaspreguntaListEncuestahaspregunta = em.merge(oldEncuestaIdOfEncuestahaspreguntaListEncuestahaspregunta);
-                }
+            for (Pregunta preguntaListPregunta : encuesta.getPreguntaList()) {
+                preguntaListPregunta.getEncuestaList().add(encuesta);
+                preguntaListPregunta = em.merge(preguntaListPregunta);
             }
             for (Asignacionencuesta asignacionencuestaListAsignacionencuesta : encuesta.getAsignacionencuestaList()) {
                 Encuesta oldEncuestaIdOfAsignacionencuestaListAsignacionencuesta = asignacionencuestaListAsignacionencuesta.getEncuestaId();
@@ -89,19 +84,11 @@ public class EncuestaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Encuesta persistentEncuesta = em.find(Encuesta.class, encuesta.getId());
-            List<Encuestahaspregunta> encuestahaspreguntaListOld = persistentEncuesta.getEncuestahaspreguntaList();
-            List<Encuestahaspregunta> encuestahaspreguntaListNew = encuesta.getEncuestahaspreguntaList();
+            List<Pregunta> preguntaListOld = persistentEncuesta.getPreguntaList();
+            List<Pregunta> preguntaListNew = encuesta.getPreguntaList();
             List<Asignacionencuesta> asignacionencuestaListOld = persistentEncuesta.getAsignacionencuestaList();
             List<Asignacionencuesta> asignacionencuestaListNew = encuesta.getAsignacionencuestaList();
             List<String> illegalOrphanMessages = null;
-            for (Encuestahaspregunta encuestahaspreguntaListOldEncuestahaspregunta : encuestahaspreguntaListOld) {
-                if (!encuestahaspreguntaListNew.contains(encuestahaspreguntaListOldEncuestahaspregunta)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Encuestahaspregunta " + encuestahaspreguntaListOldEncuestahaspregunta + " since its encuestaId field is not nullable.");
-                }
-            }
             for (Asignacionencuesta asignacionencuestaListOldAsignacionencuesta : asignacionencuestaListOld) {
                 if (!asignacionencuestaListNew.contains(asignacionencuestaListOldAsignacionencuesta)) {
                     if (illegalOrphanMessages == null) {
@@ -113,13 +100,13 @@ public class EncuestaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Encuestahaspregunta> attachedEncuestahaspreguntaListNew = new ArrayList<Encuestahaspregunta>();
-            for (Encuestahaspregunta encuestahaspreguntaListNewEncuestahaspreguntaToAttach : encuestahaspreguntaListNew) {
-                encuestahaspreguntaListNewEncuestahaspreguntaToAttach = em.getReference(encuestahaspreguntaListNewEncuestahaspreguntaToAttach.getClass(), encuestahaspreguntaListNewEncuestahaspreguntaToAttach.getId());
-                attachedEncuestahaspreguntaListNew.add(encuestahaspreguntaListNewEncuestahaspreguntaToAttach);
+            List<Pregunta> attachedPreguntaListNew = new ArrayList<Pregunta>();
+            for (Pregunta preguntaListNewPreguntaToAttach : preguntaListNew) {
+                preguntaListNewPreguntaToAttach = em.getReference(preguntaListNewPreguntaToAttach.getClass(), preguntaListNewPreguntaToAttach.getId());
+                attachedPreguntaListNew.add(preguntaListNewPreguntaToAttach);
             }
-            encuestahaspreguntaListNew = attachedEncuestahaspreguntaListNew;
-            encuesta.setEncuestahaspreguntaList(encuestahaspreguntaListNew);
+            preguntaListNew = attachedPreguntaListNew;
+            encuesta.setPreguntaList(preguntaListNew);
             List<Asignacionencuesta> attachedAsignacionencuestaListNew = new ArrayList<Asignacionencuesta>();
             for (Asignacionencuesta asignacionencuestaListNewAsignacionencuestaToAttach : asignacionencuestaListNew) {
                 asignacionencuestaListNewAsignacionencuestaToAttach = em.getReference(asignacionencuestaListNewAsignacionencuestaToAttach.getClass(), asignacionencuestaListNewAsignacionencuestaToAttach.getId());
@@ -128,15 +115,16 @@ public class EncuestaJpaController implements Serializable {
             asignacionencuestaListNew = attachedAsignacionencuestaListNew;
             encuesta.setAsignacionencuestaList(asignacionencuestaListNew);
             encuesta = em.merge(encuesta);
-            for (Encuestahaspregunta encuestahaspreguntaListNewEncuestahaspregunta : encuestahaspreguntaListNew) {
-                if (!encuestahaspreguntaListOld.contains(encuestahaspreguntaListNewEncuestahaspregunta)) {
-                    Encuesta oldEncuestaIdOfEncuestahaspreguntaListNewEncuestahaspregunta = encuestahaspreguntaListNewEncuestahaspregunta.getEncuestaId();
-                    encuestahaspreguntaListNewEncuestahaspregunta.setEncuestaId(encuesta);
-                    encuestahaspreguntaListNewEncuestahaspregunta = em.merge(encuestahaspreguntaListNewEncuestahaspregunta);
-                    if (oldEncuestaIdOfEncuestahaspreguntaListNewEncuestahaspregunta != null && !oldEncuestaIdOfEncuestahaspreguntaListNewEncuestahaspregunta.equals(encuesta)) {
-                        oldEncuestaIdOfEncuestahaspreguntaListNewEncuestahaspregunta.getEncuestahaspreguntaList().remove(encuestahaspreguntaListNewEncuestahaspregunta);
-                        oldEncuestaIdOfEncuestahaspreguntaListNewEncuestahaspregunta = em.merge(oldEncuestaIdOfEncuestahaspreguntaListNewEncuestahaspregunta);
-                    }
+            for (Pregunta preguntaListOldPregunta : preguntaListOld) {
+                if (!preguntaListNew.contains(preguntaListOldPregunta)) {
+                    preguntaListOldPregunta.getEncuestaList().remove(encuesta);
+                    preguntaListOldPregunta = em.merge(preguntaListOldPregunta);
+                }
+            }
+            for (Pregunta preguntaListNewPregunta : preguntaListNew) {
+                if (!preguntaListOld.contains(preguntaListNewPregunta)) {
+                    preguntaListNewPregunta.getEncuestaList().add(encuesta);
+                    preguntaListNewPregunta = em.merge(preguntaListNewPregunta);
                 }
             }
             for (Asignacionencuesta asignacionencuestaListNewAsignacionencuesta : asignacionencuestaListNew) {
@@ -180,13 +168,6 @@ public class EncuestaJpaController implements Serializable {
                 throw new NonexistentEntityException("The encuesta with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Encuestahaspregunta> encuestahaspreguntaListOrphanCheck = encuesta.getEncuestahaspreguntaList();
-            for (Encuestahaspregunta encuestahaspreguntaListOrphanCheckEncuestahaspregunta : encuestahaspreguntaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Encuesta (" + encuesta + ") cannot be destroyed since the Encuestahaspregunta " + encuestahaspreguntaListOrphanCheckEncuestahaspregunta + " in its encuestahaspreguntaList field has a non-nullable encuestaId field.");
-            }
             List<Asignacionencuesta> asignacionencuestaListOrphanCheck = encuesta.getAsignacionencuestaList();
             for (Asignacionencuesta asignacionencuestaListOrphanCheckAsignacionencuesta : asignacionencuestaListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -196,6 +177,11 @@ public class EncuestaJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Pregunta> preguntaList = encuesta.getPreguntaList();
+            for (Pregunta preguntaListPregunta : preguntaList) {
+                preguntaListPregunta.getEncuestaList().remove(encuesta);
+                preguntaListPregunta = em.merge(preguntaListPregunta);
             }
             em.remove(encuesta);
             em.getTransaction().commit();

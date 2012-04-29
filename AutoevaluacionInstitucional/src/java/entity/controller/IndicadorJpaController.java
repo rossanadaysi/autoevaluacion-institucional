@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class IndicadorJpaController implements Serializable {
 
@@ -31,7 +31,6 @@ public class IndicadorJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return jpaConnection.getEntityManager();
     }
-
 
     public void create(Indicador indicador) {
         if (indicador.getPreguntaList() == null) {
