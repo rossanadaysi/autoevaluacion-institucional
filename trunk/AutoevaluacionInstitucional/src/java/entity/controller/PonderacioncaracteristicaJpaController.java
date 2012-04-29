@@ -9,9 +9,9 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entity.Proceso;
 import entity.Caracteristica;
 import entity.Ponderacioncaracteristica;
-import entity.Proceso;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -19,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class PonderacioncaracteristicaJpaController implements Serializable {
 
@@ -37,24 +37,24 @@ public class PonderacioncaracteristicaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Caracteristica caracteristicaId = ponderacioncaracteristica.getCaracteristicaId();
-            if (caracteristicaId != null) {
-                caracteristicaId = em.getReference(caracteristicaId.getClass(), caracteristicaId.getId());
-                ponderacioncaracteristica.setCaracteristicaId(caracteristicaId);
-            }
             Proceso procesoId = ponderacioncaracteristica.getProcesoId();
             if (procesoId != null) {
                 procesoId = em.getReference(procesoId.getClass(), procesoId.getId());
                 ponderacioncaracteristica.setProcesoId(procesoId);
             }
-            em.persist(ponderacioncaracteristica);
+            Caracteristica caracteristicaId = ponderacioncaracteristica.getCaracteristicaId();
             if (caracteristicaId != null) {
-                caracteristicaId.getPonderacioncaracteristicaList().add(ponderacioncaracteristica);
-                caracteristicaId = em.merge(caracteristicaId);
+                caracteristicaId = em.getReference(caracteristicaId.getClass(), caracteristicaId.getId());
+                ponderacioncaracteristica.setCaracteristicaId(caracteristicaId);
             }
+            em.persist(ponderacioncaracteristica);
             if (procesoId != null) {
                 procesoId.getPonderacioncaracteristicaList().add(ponderacioncaracteristica);
                 procesoId = em.merge(procesoId);
+            }
+            if (caracteristicaId != null) {
+                caracteristicaId.getPonderacioncaracteristicaList().add(ponderacioncaracteristica);
+                caracteristicaId = em.merge(caracteristicaId);
             }
             em.getTransaction().commit();
         } finally {
@@ -70,27 +70,19 @@ public class PonderacioncaracteristicaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Ponderacioncaracteristica persistentPonderacioncaracteristica = em.find(Ponderacioncaracteristica.class, ponderacioncaracteristica.getId());
-            Caracteristica caracteristicaIdOld = persistentPonderacioncaracteristica.getCaracteristicaId();
-            Caracteristica caracteristicaIdNew = ponderacioncaracteristica.getCaracteristicaId();
             Proceso procesoIdOld = persistentPonderacioncaracteristica.getProcesoId();
             Proceso procesoIdNew = ponderacioncaracteristica.getProcesoId();
-            if (caracteristicaIdNew != null) {
-                caracteristicaIdNew = em.getReference(caracteristicaIdNew.getClass(), caracteristicaIdNew.getId());
-                ponderacioncaracteristica.setCaracteristicaId(caracteristicaIdNew);
-            }
+            Caracteristica caracteristicaIdOld = persistentPonderacioncaracteristica.getCaracteristicaId();
+            Caracteristica caracteristicaIdNew = ponderacioncaracteristica.getCaracteristicaId();
             if (procesoIdNew != null) {
                 procesoIdNew = em.getReference(procesoIdNew.getClass(), procesoIdNew.getId());
                 ponderacioncaracteristica.setProcesoId(procesoIdNew);
             }
+            if (caracteristicaIdNew != null) {
+                caracteristicaIdNew = em.getReference(caracteristicaIdNew.getClass(), caracteristicaIdNew.getId());
+                ponderacioncaracteristica.setCaracteristicaId(caracteristicaIdNew);
+            }
             ponderacioncaracteristica = em.merge(ponderacioncaracteristica);
-            if (caracteristicaIdOld != null && !caracteristicaIdOld.equals(caracteristicaIdNew)) {
-                caracteristicaIdOld.getPonderacioncaracteristicaList().remove(ponderacioncaracteristica);
-                caracteristicaIdOld = em.merge(caracteristicaIdOld);
-            }
-            if (caracteristicaIdNew != null && !caracteristicaIdNew.equals(caracteristicaIdOld)) {
-                caracteristicaIdNew.getPonderacioncaracteristicaList().add(ponderacioncaracteristica);
-                caracteristicaIdNew = em.merge(caracteristicaIdNew);
-            }
             if (procesoIdOld != null && !procesoIdOld.equals(procesoIdNew)) {
                 procesoIdOld.getPonderacioncaracteristicaList().remove(ponderacioncaracteristica);
                 procesoIdOld = em.merge(procesoIdOld);
@@ -98,6 +90,14 @@ public class PonderacioncaracteristicaJpaController implements Serializable {
             if (procesoIdNew != null && !procesoIdNew.equals(procesoIdOld)) {
                 procesoIdNew.getPonderacioncaracteristicaList().add(ponderacioncaracteristica);
                 procesoIdNew = em.merge(procesoIdNew);
+            }
+            if (caracteristicaIdOld != null && !caracteristicaIdOld.equals(caracteristicaIdNew)) {
+                caracteristicaIdOld.getPonderacioncaracteristicaList().remove(ponderacioncaracteristica);
+                caracteristicaIdOld = em.merge(caracteristicaIdOld);
+            }
+            if (caracteristicaIdNew != null && !caracteristicaIdNew.equals(caracteristicaIdOld)) {
+                caracteristicaIdNew.getPonderacioncaracteristicaList().add(ponderacioncaracteristica);
+                caracteristicaIdNew = em.merge(caracteristicaIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -128,15 +128,15 @@ public class PonderacioncaracteristicaJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ponderacioncaracteristica with id " + id + " no longer exists.", enfe);
             }
-            Caracteristica caracteristicaId = ponderacioncaracteristica.getCaracteristicaId();
-            if (caracteristicaId != null) {
-                caracteristicaId.getPonderacioncaracteristicaList().remove(ponderacioncaracteristica);
-                caracteristicaId = em.merge(caracteristicaId);
-            }
             Proceso procesoId = ponderacioncaracteristica.getProcesoId();
             if (procesoId != null) {
                 procesoId.getPonderacioncaracteristicaList().remove(ponderacioncaracteristica);
                 procesoId = em.merge(procesoId);
+            }
+            Caracteristica caracteristicaId = ponderacioncaracteristica.getCaracteristicaId();
+            if (caracteristicaId != null) {
+                caracteristicaId.getPonderacioncaracteristicaList().remove(ponderacioncaracteristica);
+                caracteristicaId = em.merge(caracteristicaId);
             }
             em.remove(ponderacioncaracteristica);
             em.getTransaction().commit();

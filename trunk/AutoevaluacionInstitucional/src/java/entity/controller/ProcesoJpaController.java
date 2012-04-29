@@ -20,7 +20,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class ProcesoJpaController implements Serializable {
 
@@ -30,7 +30,6 @@ public class ProcesoJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return jpaConnection.getEntityManager();
     }
-
 
     public void create(Proceso proceso) {
         if (proceso.getPonderacioncaracteristicaList() == null) {

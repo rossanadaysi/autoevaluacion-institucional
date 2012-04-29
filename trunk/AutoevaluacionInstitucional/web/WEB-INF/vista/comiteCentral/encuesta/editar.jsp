@@ -16,7 +16,7 @@
                     url: "<%=request.getContextPath()%>/formController2?action=editarEncuestaCC",
                     data: $("#formEditarEncu").serialize(),
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarFactores"
+                        location = "<%=request.getContextPath()%>/#listarEncuestas"
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -47,21 +47,60 @@
                 }
             }
         }
+        var seleccionados=[];
+        elem = $("#fcbklist");
+        $.each(elem.children("li").children(".fcbklist_item"), function(i, obj){
+            obj = $(obj);
+            if (obj.hasClass("itemselected")) {
+                seleccionados.push(obj.find("[type=hidden]").attr("randid"));
+            }
+                
+        })
+        
+        
         $("button[type='reset']").click(function(){
+           
             elem = $("#fcbklist");
             $.each(elem.children("li").children(".fcbklist_item"), function(i, obj){
                 obj = $(obj);
-                
-                if (obj.hasClass("itemselected")) {
-                    obj.find("input:hidden").val("0");
-                    $("#view_selected_count").text(parseInt($("#view_selected_count").text(), 10) - 1);
-                    obj.parents("li").removeAttr("addedid");
-                    removeValue(obj);
+                var encontrado = false;
+                for (var i = 0; i < seleccionados.length && !encontrado; i++)
+                {
+                    if(obj.find("[type=hidden]").attr("randid") == seleccionados[i]){
+                        encontrado=true;
+                      
+                    }
+                    
                 }
-                obj.removeClass("itemselected");
-                obj.parents("li").removeClass("liselected");
+                if(!encontrado){
+                    if (obj.hasClass("itemselected")) {
+                        obj.find("input:hidden").val("0");
+                        $("#view_selected_count").text(parseInt($("#view_selected_count").text(), 10) - 1);
+                        obj.parents("li").removeAttr("addedid");
+                        //removeValue(obj);
+                        obj.removeClass("itemselected");
+                        obj.parents("li").removeClass("liselected");
+                    }
+                        
+                }else{
+                    if (!obj.hasClass("itemselected")) {
+                        obj.find("input:hidden").val("1");
+                        $("#view_selected_count").text(parseInt($("#view_selected_count").text(), 10) + 1);
+                        obj.parents("li").attr("addedid","tester");
+                        obj.addClass("itemselected");
+                        obj.parents("li").addClass("liselected");
+                    }
+                    
+                }
+                    
+                
+                
+                
             })
         })
+        
+        
+        
     
     });         
 </script>
@@ -98,11 +137,11 @@
                             <ul id="fcbklist">
                                 <c:forEach items="${listpreguntas}" var="item" varStatus="iter">
                                     <c:choose>
-                                        <c:when test="${EP.findEncuestahaspregunta(item.id,encuesta.getId())!= null}">
+                                        <c:when test="${item.encuestaList.contains(encuesta)}">
                                             <li>
                                                 <strong>${item.pregunta}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.tipo}</span>
-                                                <input name="P${item.id}" type="hidden" checked="checked" value="0"/>
+                                                <input name="P${item.id}" type="hidden" checked="checked" value="1"/>
                                             </li>
                                         </c:when>
                                         <c:otherwise>

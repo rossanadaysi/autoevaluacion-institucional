@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 @Entity
 @Table(name = "pregunta")
@@ -35,8 +35,8 @@ public class Pregunta implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo")
     private String tipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
-    private List<Encuestahaspregunta> encuestahaspreguntaList;
+    @ManyToMany(mappedBy = "preguntaList")
+    private List<Encuesta> encuestaList;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
     @ManyToOne
     private Indicador indicadorId;
@@ -79,12 +79,12 @@ public class Pregunta implements Serializable {
     }
 
     @XmlTransient
-    public List<Encuestahaspregunta> getEncuestahaspreguntaList() {
-        return encuestahaspreguntaList;
+    public List<Encuesta> getEncuestaList() {
+        return encuestaList;
     }
 
-    public void setEncuestahaspreguntaList(List<Encuestahaspregunta> encuestahaspreguntaList) {
-        this.encuestahaspreguntaList = encuestahaspreguntaList;
+    public void setEncuestaList(List<Encuesta> encuestaList) {
+        this.encuestaList = encuestaList;
     }
 
     public Indicador getIndicadorId() {

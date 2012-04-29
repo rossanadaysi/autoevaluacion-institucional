@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 @Entity
 @Table(name = "muestraegresado")
@@ -25,12 +25,12 @@ public class Muestraegresado implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "egresado_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Egresado egresadoId;
     @JoinColumn(name = "muestra_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestra muestraId;
+    @JoinColumn(name = "egresado_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Egresado egresadoId;
 
     public Muestraegresado() {
     }
@@ -47,20 +47,20 @@ public class Muestraegresado implements Serializable {
         this.id = id;
     }
 
-    public Egresado getEgresadoId() {
-        return egresadoId;
-    }
-
-    public void setEgresadoId(Egresado egresadoId) {
-        this.egresadoId = egresadoId;
-    }
-
     public Muestra getMuestraId() {
         return muestraId;
     }
 
     public void setMuestraId(Muestra muestraId) {
         this.muestraId = muestraId;
+    }
+
+    public Egresado getEgresadoId() {
+        return egresadoId;
+    }
+
+    public void setEgresadoId(Egresado egresadoId) {
+        this.egresadoId = egresadoId;
     }
 
     @Override

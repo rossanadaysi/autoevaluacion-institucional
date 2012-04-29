@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class CaracteristicaJpaController implements Serializable {
 
@@ -33,7 +33,6 @@ public class CaracteristicaJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return jpaConnection.getEntityManager();
     }
-
 
     public void create(Caracteristica caracteristica) {
         if (caracteristica.getPonderacioncaracteristicaList() == null) {
@@ -97,7 +96,6 @@ public class CaracteristicaJpaController implements Serializable {
     public void edit(Caracteristica caracteristica) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            
             em = getEntityManager();
             em.getTransaction().begin();
             Caracteristica persistentCaracteristica = em.find(Caracteristica.class, caracteristica.getId());

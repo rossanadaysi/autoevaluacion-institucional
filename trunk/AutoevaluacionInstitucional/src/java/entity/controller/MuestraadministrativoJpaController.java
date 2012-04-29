@@ -9,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Administrativo;
 import entity.Muestra;
+import entity.Administrativo;
 import entity.Muestraadministrativo;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -19,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 public class MuestraadministrativoJpaController implements Serializable {
 
@@ -37,24 +37,24 @@ public class MuestraadministrativoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Administrativo administrativoId = muestraadministrativo.getAdministrativoId();
-            if (administrativoId != null) {
-                administrativoId = em.getReference(administrativoId.getClass(), administrativoId.getId());
-                muestraadministrativo.setAdministrativoId(administrativoId);
-            }
             Muestra muestraId = muestraadministrativo.getMuestraId();
             if (muestraId != null) {
                 muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
                 muestraadministrativo.setMuestraId(muestraId);
             }
-            em.persist(muestraadministrativo);
+            Administrativo administrativoId = muestraadministrativo.getAdministrativoId();
             if (administrativoId != null) {
-                administrativoId.getMuestraadministrativoList().add(muestraadministrativo);
-                administrativoId = em.merge(administrativoId);
+                administrativoId = em.getReference(administrativoId.getClass(), administrativoId.getId());
+                muestraadministrativo.setAdministrativoId(administrativoId);
             }
+            em.persist(muestraadministrativo);
             if (muestraId != null) {
                 muestraId.getMuestraadministrativoList().add(muestraadministrativo);
                 muestraId = em.merge(muestraId);
+            }
+            if (administrativoId != null) {
+                administrativoId.getMuestraadministrativoList().add(muestraadministrativo);
+                administrativoId = em.merge(administrativoId);
             }
             em.getTransaction().commit();
         } finally {
@@ -70,27 +70,19 @@ public class MuestraadministrativoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestraadministrativo persistentMuestraadministrativo = em.find(Muestraadministrativo.class, muestraadministrativo.getId());
-            Administrativo administrativoIdOld = persistentMuestraadministrativo.getAdministrativoId();
-            Administrativo administrativoIdNew = muestraadministrativo.getAdministrativoId();
             Muestra muestraIdOld = persistentMuestraadministrativo.getMuestraId();
             Muestra muestraIdNew = muestraadministrativo.getMuestraId();
-            if (administrativoIdNew != null) {
-                administrativoIdNew = em.getReference(administrativoIdNew.getClass(), administrativoIdNew.getId());
-                muestraadministrativo.setAdministrativoId(administrativoIdNew);
-            }
+            Administrativo administrativoIdOld = persistentMuestraadministrativo.getAdministrativoId();
+            Administrativo administrativoIdNew = muestraadministrativo.getAdministrativoId();
             if (muestraIdNew != null) {
                 muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
                 muestraadministrativo.setMuestraId(muestraIdNew);
             }
+            if (administrativoIdNew != null) {
+                administrativoIdNew = em.getReference(administrativoIdNew.getClass(), administrativoIdNew.getId());
+                muestraadministrativo.setAdministrativoId(administrativoIdNew);
+            }
             muestraadministrativo = em.merge(muestraadministrativo);
-            if (administrativoIdOld != null && !administrativoIdOld.equals(administrativoIdNew)) {
-                administrativoIdOld.getMuestraadministrativoList().remove(muestraadministrativo);
-                administrativoIdOld = em.merge(administrativoIdOld);
-            }
-            if (administrativoIdNew != null && !administrativoIdNew.equals(administrativoIdOld)) {
-                administrativoIdNew.getMuestraadministrativoList().add(muestraadministrativo);
-                administrativoIdNew = em.merge(administrativoIdNew);
-            }
             if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
                 muestraIdOld.getMuestraadministrativoList().remove(muestraadministrativo);
                 muestraIdOld = em.merge(muestraIdOld);
@@ -98,6 +90,14 @@ public class MuestraadministrativoJpaController implements Serializable {
             if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
                 muestraIdNew.getMuestraadministrativoList().add(muestraadministrativo);
                 muestraIdNew = em.merge(muestraIdNew);
+            }
+            if (administrativoIdOld != null && !administrativoIdOld.equals(administrativoIdNew)) {
+                administrativoIdOld.getMuestraadministrativoList().remove(muestraadministrativo);
+                administrativoIdOld = em.merge(administrativoIdOld);
+            }
+            if (administrativoIdNew != null && !administrativoIdNew.equals(administrativoIdOld)) {
+                administrativoIdNew.getMuestraadministrativoList().add(muestraadministrativo);
+                administrativoIdNew = em.merge(administrativoIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -128,15 +128,15 @@ public class MuestraadministrativoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestraadministrativo with id " + id + " no longer exists.", enfe);
             }
-            Administrativo administrativoId = muestraadministrativo.getAdministrativoId();
-            if (administrativoId != null) {
-                administrativoId.getMuestraadministrativoList().remove(muestraadministrativo);
-                administrativoId = em.merge(administrativoId);
-            }
             Muestra muestraId = muestraadministrativo.getMuestraId();
             if (muestraId != null) {
                 muestraId.getMuestraadministrativoList().remove(muestraadministrativo);
                 muestraId = em.merge(muestraId);
+            }
+            Administrativo administrativoId = muestraadministrativo.getAdministrativoId();
+            if (administrativoId != null) {
+                administrativoId.getMuestraadministrativoList().remove(muestraadministrativo);
+                administrativoId = em.merge(administrativoId);
             }
             em.remove(muestraadministrativo);
             em.getTransaction().commit();
