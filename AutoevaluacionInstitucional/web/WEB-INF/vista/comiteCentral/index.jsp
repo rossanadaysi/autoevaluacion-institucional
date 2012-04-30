@@ -70,6 +70,7 @@
            
             var myLayout, innerLayout, middleLayout;
             $(document).ready( function() {
+                location ="/AutoevaluacionInstitucional/#inicio";
                                     
                 myLayout = $('body').layout({
                     //	enable showOverflow on west-pane so CSS popups will overlap north pane
@@ -112,7 +113,7 @@
             $(function(){
             
                 $(window).hashchange(function(){
-                      var hash = location.hash;
+                    var hash = location.hash;
                 
                     if(hash=="#CerrarSesion"){
                         $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion', function(data) {
@@ -124,292 +125,292 @@
                     
                     if(hash == "#crearFactor"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
                           
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
-                        if(hash.indexOf("#editarFactor")!=-1){
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                            url3 = url3.replace('#editarFactor', "ControllerCC?action=editarFactorCC");
-                            url3 = url3.replace('&', "&idF=");
+                    if(hash.indexOf("#editarFactor")!=-1){
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#editarFactor', "ControllerCC?action=editarFactorCC");
+                        url3 = url3.replace('&', "&idF=");
                             
-                            $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                             
                             
-                   }
+                    }
                    
                    
                    
-                        if(hash.indexOf("#editarEncuesta")!=-1){
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                            url3 = url3.replace('#editarEncuesta', "ControllerCC?action=editarEncuestaCC");
-                            url3 = url3.replace('&', "&idE=");
+                    if(hash.indexOf("#editarEncuesta")!=-1){
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#editarEncuesta', "ControllerCC?action=editarEncuestaCC");
+                        url3 = url3.replace('&', "&idE=");
                             
-                            $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                             
                             
-                   }
+                    }
                    
                    
-                   if(hash.indexOf("#editarPregunta")!=-1){
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                            url3 = url3.replace('#editarPregunta', "ControllerCC?action=editarPreguntaCC");
-                            url3 = url3.replace('&', "&idP=");
+                    if(hash.indexOf("#editarPregunta")!=-1){
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#editarPregunta', "ControllerCC?action=editarPreguntaCC");
+                        url3 = url3.replace('&', "&idP=");
                             
-                            $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                             
                             
-                   }
+                    }
                    
                                       
                     if(hash == "#crearCaracteristica"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash.indexOf("#editarCaracteristica")!=-1){
                         var url3 = "<%=request.getContextPath()%>/"+hash;
-                            url3 = url3.replace('#editarCaracteristica', "ControllerCC?action=editarCaracteristicaCC");
-                            url3 = url3.replace('&', "&idC=");
+                        url3 = url3.replace('#editarCaracteristica', "ControllerCC?action=editarCaracteristicaCC");
+                        url3 = url3.replace('&', "&idC=");
                             
-                            $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                             
                     }
                     
                     if(hash.indexOf("#editarIndicador")!=-1){
                         var url3 = "<%=request.getContextPath()%>/"+hash;
-                            url3 = url3.replace('#editarIndicador', "ControllerCC?action=editarIndicadorCC");
-                            url3 = url3.replace('&', "&idI=");
+                        url3 = url3.replace('#editarIndicador', "ControllerCC?action=editarIndicadorCC");
+                        url3 = url3.replace('&', "&idI=");
                             
-                            $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").hide();
-                                    },
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
-                                        $("div.ui-layout-center").show(100);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                             
                     }
                     
                     if(hash == "#crearIndicador"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#crearEncuesta"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#listarFactores"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").html(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").html(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#listarPreguntas"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#listarEncuestas"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#listarIndicadores"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#listarCaracteristicas"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                     if(hash == "#crearPregunta"){
                             
-                            var url3 = "<%=request.getContextPath()%>/"+hash;
-                             url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("div.ui-layout-center").append(data);
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
                                         
-                                    } //fin success
-                                }); //fin del $.ajax
+                            } //fin success
+                        }); //fin del $.ajax
                          
                     }
                 
-            });//fin hashchange
+                });//fin hashchange
             });//fin function
         </script>
 
@@ -472,7 +473,7 @@
                 <div id="menu" style="padding: 8px 0pt;" class="well">
                     <ul class="nav nav-list">  
                         <li class="nav-header">Modelo de Autoevaluaci&oacute;n</li>
-                        
+
                         <div id="accordion1" class="accordion">
                             <div class="accordion-group">
                                 <div class="accordion-heading">
@@ -548,25 +549,42 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </ul>
                 </div>
             </div>
         </div><!--/West-->
-        
+
         <div class="modal hide fade" id="myModalElimF">
             <div class="modal-body">
-                ¿Esta usted seguro de que desea eliminar este Factor?
+                ¿Esta usted seguro que desea eliminar este factor?
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary" data-dismiss="modal" href="#eliminarFactor">Si</a>
                 <a class="btn" data-dismiss="modal" href="#">Cancelar</a>
             </div>
         </div><!--/ModalElimF-->
-        
+        <div class="modal hide fade" id="myModalElimC">
+            <div class="modal-body">
+                ¿Esta usted seguro que desea eliminar esta caracteristica?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#eliminarCaracteristica">Si</a>
+                <a class="btn" data-dismiss="modal" href="#">Cancelar</a>
+            </div>
+        </div><!--/ModalElimC-->
+        <div class="modal hide fade" id="myModalElimI">
+            <div class="modal-body">
+                ¿Esta usted seguro que desea eliminar este indicador?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#eliminarIndicador">Si</a>
+                <a class="btn" data-dismiss="modal" href="#">Cancelar</a>
+            </div>
+        </div><!--/ModalElimI-->
         <div class="modal hide fade" id="myModalElimP">
             <div class="modal-body">
-                ¿Esta usted seguro de que desea eliminar esta pregunta?
+                ¿Esta usted seguro que desea eliminar esta pregunta?
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary" data-dismiss="modal" href="#eliminarPregunta">Si</a>
