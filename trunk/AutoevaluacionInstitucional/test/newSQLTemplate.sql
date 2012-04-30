@@ -1,1 +1,1 @@
-select id from proceso where id = 8 and fechainicio = 'Proceso en Configuración.'
+select caracteristica.id from caracteristica where caracteristica.factor_id = (select caracteristica.factor_id from caracteristica where caracteristica.id = 1)
