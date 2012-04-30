@@ -1158,6 +1158,7 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("IniciarProcesoAI")) {
 
+         
                 HttpSession session = request.getSession();
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
