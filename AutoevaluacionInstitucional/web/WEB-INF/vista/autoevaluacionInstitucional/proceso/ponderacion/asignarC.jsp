@@ -11,7 +11,9 @@
             url: "<%=request.getContextPath()%>/formController?action=cargarPonde",
             data: $("#formPondeCara").serialize() + "&idc=" + idc,
             success: function(){
-                $(a).load("<%=request.getContextPath()%>/ControllerAI?action=ponderacionAjax");
+              
+                 console.log(jaja);
+                
             } //fin success
                                             
         }); //fin */

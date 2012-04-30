@@ -212,10 +212,8 @@ public class formController extends HttpServlet {
                         try {
                             while (rs1.next()) {
                                 String s = rs1.getString(1);
-                                System.out.println("suma: " + s);
                                 suma = Double.parseDouble(s);
                                 String p = rs1.getString(2);
-                                System.out.println("ponderacionF:" + p);
                                 ponfa = Double.parseDouble(p);
                             }
                         } catch (SQLException ex) {
@@ -223,7 +221,6 @@ public class formController extends HttpServlet {
                         }
 
                         double a = (100 * ponde) / suma;
-                        System.out.println("a> " + a);
                         double b = ((ponfa * a) / 100);
 
                         double r;
@@ -279,35 +276,46 @@ public class formController extends HttpServlet {
                 String ponderacion = request.getParameter("ponderacion" + id);
                 double ponde = Double.parseDouble(ponderacion);
 
-                System.out.println(id);
-                System.out.println(ponde);
+
                 double suma = 0;
                 double ponfa = 0;
 
                 ResultSet rsa = conSql.CargarSql("select caracteristica.id from caracteristica where caracteristica.factor_id = (select caracteristica.factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
                 try {
-                    int i=0;
-                    List lista = new ArrayList(); 
+                    int i = 0;
+                    List lista = new ArrayList();
+                    int nivelImportancia = 0;
+
                     while (rsa.next()) {
                         i++;
                         int id2 = Integer.parseInt(rsa.getString(1));
 
 
 
-                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id2 + "')", bd);
+                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion, ponderacioncaracteristica.nivelimportancia from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id2 + "') and caracteristica.id <> '" + id2 + "'", bd);
                         try {
                             while (rs1.next()) {
                                 String s = rs1.getString(1);
                                 suma = Double.parseDouble(s);
                                 String p = rs1.getString(2);
                                 ponfa = Double.parseDouble(p);
+                                nivelImportancia = Integer.parseInt(rs1.getString(3));
+
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                        double a = (100 * ponde) / suma;
-                        System.out.println("a> " + a);
+
+
+                        if (Integer.parseInt(id)
+                                == id2) {
+                            nivelImportancia = (int) ponde;
+                        }
+
+                       
+                        suma = suma + ponde;
+                        double a = (100 * nivelImportancia) / suma;
                         double b = ((ponfa * a) / 100);
 
                         double r;
@@ -319,13 +327,12 @@ public class formController extends HttpServlet {
                         // setScale is immutable
                         bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
                         r = bde.doubleValue();
-                        System.out.println("r: " + r);
 
-                        String [] PondyIdc = new String[2]; 
-                        PondyIdc[0]= ""+r;
-                        PondyIdc[1]= id;
+                        String[] PondyIdc = new String[2];
+                        PondyIdc[0] = "" + r;
+                        PondyIdc[1] = "" + id2;
                         lista.add(PondyIdc);
-                        
+
                         //  conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);
                     }
                     session.setAttribute("ListPondyIdc", lista);
