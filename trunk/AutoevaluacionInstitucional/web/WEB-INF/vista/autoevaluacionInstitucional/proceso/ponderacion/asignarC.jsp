@@ -12,7 +12,7 @@
             data: $("#formPondeCara").serialize() + "&idc=" + idc,
             success: function(){
               
-                 console.log(jaja);
+                console.log(jaja);
                 
             } //fin success
                                             
@@ -120,16 +120,24 @@
                                         <td>
                                             <select class="span1 {required:true}" id="ponderacion${row[0]}" name="ponderacion${row[0]}">
                                                 <option value=""></option>
-                                                <option value="0">0</option>
                                                 <option value="1">1</option>
+                                                <option value="1.5">1.5</option>
                                                 <option value="2">2</option>
+                                                <option value="2.5">2.5</option>
                                                 <option value="3">3</option>
+                                                <option value="3.5">3.5</option>
                                                 <option value="4">4</option>
+                                                <option value="4.5">4.5</option>
                                                 <option value="5">5</option>
+                                                <option value="5.5">5.5</option>
                                                 <option value="6">6</option>
+                                                <option value="6.5">6.5</option>
                                                 <option value="7">7</option>
+                                                <option value="7.5">7.5</option>
                                                 <option value="8">8</option>
+                                                <option value="8.5">8.5</option>
                                                 <option value="9">9</option>
+                                                <option value="9.5">9.5</option>
                                                 <option value="10">10</option>
                                             </select>
                                             <input type="hidden"  value="${row[0]}" name="id${row[0]}">
@@ -211,94 +219,18 @@
                                         </td>
                                         <td>
                                             <select id="select1" onchange="presionSubmit(this.name, ${row2[4]}) " class="span1" name="ponderacion${row2[4]}">
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 0}">
-                                                        <option selected="selected" value="0">0</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="0">0</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 1}">
-                                                        <option selected="selected" value="1">1</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="1">1</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 2}">
-                                                        <option selected="selected" value="2">2</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="2">2</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 3}">
-                                                        <option selected="selected" value="3">3</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="3">3</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 4}">
-                                                        <option selected="selected" value="4">4</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="4">4</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 5}">
-                                                        <option selected="selected" value="5">5</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="5">5</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 6}">
-                                                        <option selected="selected" value="6">6</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="6">6</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 7}">
-                                                        <option selected="selected" value="7">7</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="7">7</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 8}">
-                                                        <option selected="selected" value="8">8</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="8">8</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 9}">
-                                                        <option selected="selected" value="9">9</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="9">9</option>
-                                                    </c:otherwise>
-                                                </c:choose>  
-                                                <c:choose>
-                                                    <c:when test="${row2[6] == 10}">
-                                                        <option selected="selected" value="10">10</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="10">10</option>
-                                                    </c:otherwise>
-                                                </c:choose>  
+                                                <c:forTokens var="token" items="1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10" delims=",">
+                                                    <c:choose>
+                                                        <c:when test="${row2[6]} == ${token} ">
+                                                            <option selected="selected" value="${token}">${token}</option>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value="${token}">${token}</option>
+                                                        </c:otherwise>    
+                                                    </c:choose>
+                                                </c:forTokens>
+
+
                                             </select>
                                             <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
                                         </td>
