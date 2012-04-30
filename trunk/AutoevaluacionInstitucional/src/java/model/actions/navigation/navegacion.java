@@ -94,6 +94,9 @@ public class navegacion implements Action {
             session.setAttribute("listencuestas", conEncuesta.findEncuestaEntities());
             path = "comiteCentral/encuesta/listar";
         }
+         else if (path.equals("indexF")) {
+            path = "fuente/index";
+        }
 
 
         String url = "/WEB-INF/vista/" + path + ".jsp";

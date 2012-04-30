@@ -42,9 +42,6 @@ public class fontControllerCC extends HttpServlet {
 
 
         try {
-
-
-
             ResourceBundle rb = ResourceBundle.getBundle("/properties/actions2");
             String action = request.getParameter("action");
             String clase = null;

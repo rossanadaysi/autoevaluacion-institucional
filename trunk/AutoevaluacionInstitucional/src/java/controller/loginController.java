@@ -4,10 +4,7 @@
  */
 package controller;
 
-import entity.Persona;
-import entity.Proceso;
-import entity.Programa;
-import entity.Representante;
+import entity.*;
 import entity.controller.PersonaJpaController;
 import entity.controller.PrivilegioJpaController;
 import entity.controller.ProcesoJpaController;
@@ -230,9 +227,30 @@ public class loginController extends HttpServlet {
 
                         }
                     } else {
-                        out.println(1);
-                        System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
-                        session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                        if (tipo.equals("Estudiantes")) {
+                           
+                            List<Estudiante> est = persona.getEstudianteList();
+                            if (est.size() > 0) {
+                                out.println(0);
+                                session.setAttribute("tipoLogin", "Fuente");
+                                session.setAttribute("listEstudiante", est);
+
+                            } else {
+                                out.println(1);
+                                System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
+                                session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                            }
+
+
+
+                        } else {
+                            out.println(1);
+                            System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
+                            session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                        }
+
+
+
 
                     }
                 } else {

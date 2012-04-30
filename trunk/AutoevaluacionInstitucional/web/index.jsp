@@ -16,6 +16,11 @@
                 if (aux.equals("Comite Central")) {
                     RequestDispatcher rd = request.getRequestDispatcher("/ControllerCC?action=indexCC");
                     rd.forward(request, response);
+                } else {
+                    if (aux.equals("Fuente")) {
+                        RequestDispatcher rd = request.getRequestDispatcher("/ControllerF?action=indexF");
+                        rd.forward(request, response);
+                    }
                 }
             }
 
@@ -405,7 +410,12 @@
                                             <select id="tipo" name="tipo" class="span3">
                                                 <option>Autoevaluacion Institucional</option>
                                                 <option>Comite Central</option>
-                                                <option>Otros</option>
+                                                <optgroup label="Fuentes">
+                                                    <option>Estudiantes</option>
+                                                    <option>Docentes</option>
+                                                    <option>Administrativos</option>
+                                                </optgroup>
+
                                             </select>
                                             <button type="submit" class="btn btn-primary btn-large" name="submit_login">Ingresar</button>
 

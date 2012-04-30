@@ -1,5 +1,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+    $(function(){
+        var actual = "";
+        $("a.delete").click(function(e){
+            e.preventDefault();
+            actual = $(this).attr("id"); 
+            $('#myModalElimC').modal();
+            
+        })
+    })
+ </script> 
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
