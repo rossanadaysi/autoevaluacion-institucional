@@ -10,12 +10,14 @@ import entity.Programa;
 import entity.controller.ProcesoJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -113,6 +115,52 @@ public class formController extends HttpServlet {
 
 
                             conSql.UpdateSql("UPDATE `ponderacionfactor` SET `ponderacion` = '" + ponderacion + "',`justificacion` = '" + justificacion + "' WHERE `ponderacionfactor`.`id` ='" + idPonderacion + "'", bd);
+                        }
+
+                        if (session.getAttribute("auxAsignarC").equals(1)) {
+
+                            ResultSet rsx = conSql.CargarSql("Select* from ponderacioncaracteristica WHERE proceso_id = '" + idProceso + "'", bd);
+
+                            try {
+                                while (rsx.next()) {
+
+                                    int ponde = Integer.parseInt(rsx.getString(2));
+                                    double suma = 0;
+                                    double ponfa = 0;
+
+                                    ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + rsx.getString(1) + "')", bd);
+                                    try {
+                                        while (rs1.next()) {
+                                            String s = rs1.getString(1);
+                                            suma = Double.parseDouble(s);
+                                            String p = rs1.getString(2);
+                                            ponfa = Double.parseDouble(p);
+                                        }
+                                    } catch (SQLException ex) {
+                                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+
+                                    double a = (100 * ponde) / suma;
+                                    System.out.println("a> " + a);
+                                    double b = ((ponfa * a) / 100);
+
+                                    double r;
+
+
+                                    int decimalPlaces = 2;
+                                    BigDecimal bde = new BigDecimal(b);
+
+// setScale is immutable
+                                    bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                                    r = bde.doubleValue();
+
+
+                                    conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`id` = '" + rsx.getString(1) + "'", bd);
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
                         }
 
                     }
@@ -236,36 +284,54 @@ public class formController extends HttpServlet {
                 double suma = 0;
                 double ponfa = 0;
 
-                ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
+                ResultSet rsa = conSql.CargarSql("select caracteristica.id from caracteristica where caracteristica.factor_id = (select caracteristica.factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
                 try {
-                    while (rs1.next()) {
-                        String s = rs1.getString(1);
-                        suma = Double.parseDouble(s);
-                        String p = rs1.getString(2);
-                        ponfa = Double.parseDouble(p);
+                    int i=0;
+                    List lista = new ArrayList(); 
+                    while (rsa.next()) {
+                        i++;
+                        int id2 = Integer.parseInt(rsa.getString(1));
+
+
+
+                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id2 + "')", bd);
+                        try {
+                            while (rs1.next()) {
+                                String s = rs1.getString(1);
+                                suma = Double.parseDouble(s);
+                                String p = rs1.getString(2);
+                                ponfa = Double.parseDouble(p);
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        double a = (100 * ponde) / suma;
+                        System.out.println("a> " + a);
+                        double b = ((ponfa * a) / 100);
+
+                        double r;
+
+
+                        int decimalPlaces = 2;
+                        BigDecimal bde = new BigDecimal(b);
+
+                        // setScale is immutable
+                        bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                        r = bde.doubleValue();
+                        System.out.println("r: " + r);
+
+                        String [] PondyIdc = new String[2]; 
+                        PondyIdc[0]= ""+r;
+                        PondyIdc[1]= id;
+                        lista.add(PondyIdc);
+                        
+                        //  conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);
                     }
+                    session.setAttribute("ListPondyIdc", lista);
                 } catch (SQLException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                double a = (100 * ponde) / suma;
-                System.out.println("a> " + a);
-                double b = ((ponfa * a) / 100);
-
-                double r;
-
-
-                int decimalPlaces = 2;
-                BigDecimal bde = new BigDecimal(b);
-
-// setScale is immutable
-                bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-                r = bde.doubleValue();
-                System.out.println("r: " + r);
-                session.setAttribute("pondec", r);
-                session.setAttribute("idc", id);
-                //  conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);
-
 
             } else if (request.getParameter(
                     "action").equals("asignarEncuestasAIp")) {
