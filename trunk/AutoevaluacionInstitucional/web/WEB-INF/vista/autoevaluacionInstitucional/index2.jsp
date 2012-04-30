@@ -248,17 +248,62 @@
            
         </script>
         <script type="text/javascript">
-           
-          
-          
-          
-          
-          
-          
-          
-          
+                     
             $(function()
             {
+                
+                //CERRAR PROCESO
+                $('#myModalCP2b1').click(function(){
+         
+                    $("div.ui-layout-center").empty();
+                    $.ajax({ 
+                        type: "POST", 
+                        url: "<%=request.getContextPath()%>/formController?action=CerrarProcesoAI", 
+                        success: function(data) 
+                        { 
+                            $.ajax({
+                                type: 'POST',
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
+                                success: function(data){
+                                    $("#center").html(data);
+                                }
+                            })                              
+                        } //fin success
+                    }); //fin del $.ajax    });
+                });
+                
+                $('#myModalCP2b2').click(function(){
+                    location = "<%=request.getContextPath()%>/#detalleProceso"; 
+                });
+            
+             
+                
+                //INICIAR PROCESO
+                $('#myModalIP2b1').click(function(){
+         
+                    $("div.ui-layout-center").empty();
+                    $.ajax({ 
+                        type: "POST", 
+                        url: "<%=request.getContextPath()%>/formController?action=IniciarProcesoAI", 
+                        success: function(data) 
+                        { 
+                            $.ajax({
+                                type: 'POST',
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
+                                success: function(data){
+                                    $("#center").html(data);
+                                }
+                            })                              
+                        } //fin success
+                    }); //fin del $.ajax    });
+                });
+                
+                $('#myModalIP2b2').click(function(){
+                    location = "<%=request.getContextPath()%>/#detalleProceso"; 
+                });
+            
+            
+            
                 $(window).hashchange(function(){
                       
                     var hash = location.hash;
@@ -624,6 +669,8 @@
                               
                             }  
                             else if(hash == "#CerrarProceso"){
+                                $('#myModalCP2').modal();
+                              
                                 url3 = url3.replace('#', "formController?action=")+"AI";
                                 $("div.ui-layout-center").empty();
                                 $.ajax({ 
@@ -708,32 +755,12 @@
                             }
                         } //fin del else
                     }
-                });        
+                });  
+             
             });  //fin del function   
                     
                         
-            $('#myModalIP2b1').click(function(){
-                url3 = url3.replace('#', "formController?action=")+"AI";
-                $("div.ui-layout-center").empty();
-                $.ajax({ 
-                    type: "POST", 
-                    url: url3, 
-                    success: function(data) 
-                    { 
-                        $.ajax({
-                            type: 'POST',
-                            url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
-                            success: function(data){
-                                $("#center").html(data);
-                            }
-                        })                              
-                    } //fin success
-                }); //fin del $.ajax    });
-            });
-            $('#myModalIP2b2').click(function(){
-                alert("hey");
-                location = "<%=request.getContextPath()%>/#detalleProceso"; 
-            });
+           
             //setTimeout(function () { $.jstree._focused().select_node("#detalle"); }, 1000);
           
         </script> 
@@ -995,6 +1022,27 @@
                 <a id="myModalIP2b1" class="btn btn-primary" data-dismiss="modal" href="#">Iniciar Proceso</a>
             </div>
         </div>
+
+
+
+        <div class="modal hide fade" id="myModalCP2">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
+                <br>
+                    <p>Esta seguro que desea finalizar el Proceso?. Tenga en cuenta que esta acción no se podrá deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <a id="myModalCP2b2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>
+                <a id="myModalCP2b1" class="btn btn-primary" data-dismiss="modal" href="#">Finalizar Proceso</a>
+            </div>
+        </div>
+
+
+
         <!--/ModalIP-->
         <div class="modal hide fade" id="myModalC1">
             <div class="modal-header">
