@@ -11,19 +11,8 @@
         })   
             
         $("a[href='#eliminarPregunta']").click(function(){
-            $.ajax({  
-                type: "POST", 
-                url: url3, 
-                beforeSend :function(){
-                    $("div.ui-layout-center").empty();
-                },
-                success: function(data) 
-                {
-                    $("div.ui-layout-center").append(data);
-                    
-                                        
-                } //fin success
-            }); //fin del $.ajax
+            alert("jajajaja");
+           
         });
     })
 </script>
