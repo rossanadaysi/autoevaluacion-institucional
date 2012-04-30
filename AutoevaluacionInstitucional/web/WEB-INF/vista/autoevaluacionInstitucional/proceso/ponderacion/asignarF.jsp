@@ -122,7 +122,7 @@
                                             <input type="hidden"  value="${row[0]}" name="id${row[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="justificacion${row[0]}" rows="3" class="span5 {required:true}"></textarea>
+                                            <textarea name="justificacion${row[0]}" rows="4" class="span5 {required:true}"></textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
@@ -220,7 +220,7 @@
                                         </td>
 
                                         <td>
-                                            <textarea name="justificacion${row2[4]}" rows="3" class="span5 {required:true}">${row2[2]}</textarea>
+                                            <textarea name="justificacion${row2[4]}" rows="4" class="span5 {required:true}">${row2[2]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}"/>
