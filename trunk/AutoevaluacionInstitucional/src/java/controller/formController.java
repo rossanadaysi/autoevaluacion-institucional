@@ -191,7 +191,7 @@ public class formController extends HttpServlet {
 
 
 
-                        conSql.UpdateSql("INSERT INTO `ponderacioncaracteristica` (`id`, `nivelimportancia`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES (NULL, '" + ponderacion + "', '" + 0 + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
+                        conSql.UpdateSql("INSERT INTO `ponderacioncaracteristica` (`id`, `nivelimportancia`, `ponderacion`, `justificacion`, `proceso_id`, `caracteristica_id`) VALUES (NULL, '" + ponde + "', '" + 0 + "', '" + justificacion + "', '" + idProceso + "', '" + id + "');", bd);
 
 
 
@@ -290,8 +290,8 @@ public class formController extends HttpServlet {
                 try {
                     int i = 0;
                     List lista = new ArrayList();
-                    int nivelImportancia = 0;
-
+                    float nivelImportancia = 0;
+                    String aux4="{ \"datos\":[";
                     while (rsa.next()) {
                         i++;
                         int id2 = Integer.parseInt(rsa.getString(1));
@@ -305,7 +305,7 @@ public class formController extends HttpServlet {
                                 suma = Double.parseDouble(s);
                                 String p = rs1.getString(2);
                                 ponfa = Double.parseDouble(p);
-                                nivelImportancia = Integer.parseInt(rs1.getString(3));
+                                nivelImportancia = Float.parseFloat(rs1.getString(3));
 
                             }
                         } catch (SQLException ex) {
@@ -314,9 +314,8 @@ public class formController extends HttpServlet {
 
 
 
-                        if (Integer.parseInt(id)
-                                == id2) {
-                            nivelImportancia = (int) ponde;
+                        if (Integer.parseInt(id) == id2) {
+                            nivelImportancia = (float) ponde;
                         }
 
 
@@ -333,15 +332,33 @@ public class formController extends HttpServlet {
                         // setScale is immutable
                         bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
                         r = bde.doubleValue();
+                        
+                           if (rsa.isLast()) {
+                            String aux5 = ""
+                                    + "{"
+                                    + " \"Pond\": \"" + r + "\" ,"
+                                    + " \"Idc\": \"" + id2 + "\" "
+                                    + "}"
+                                    + "";
 
-                        String[] PondyIdc = new String[2];
-                        PondyIdc[0] = "" + r;
-                        PondyIdc[1] = "" + id2;
-                        lista.add(PondyIdc);
+                            aux4 += aux5+"]}" ;
+                           }else{
+                           String aux5 = ""
+                                    + "{"
+                                    + " \"Pond\": \"" + r + "\" ,"
+                                    + " \"Idc\": \"" + id2 + "\""
+                                    + "},"
+                                    + "";
+                            aux4 += aux5;
+                        
+                           }
+                        
+                        
+                        
 
                         //  conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);
                     }
-                    session.setAttribute("ListPondyIdc", lista);
+                    out.println("[" + aux4 + "]");
                 } catch (SQLException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }

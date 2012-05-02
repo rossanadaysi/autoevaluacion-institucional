@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Oscar
+ * @author Ususario
  */
 public class PrivilegioJpaController implements Serializable {
 

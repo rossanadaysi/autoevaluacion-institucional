@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Oscar
+ * @author Ususario
  */
 @Entity
 @Table(name = "muestradirector")

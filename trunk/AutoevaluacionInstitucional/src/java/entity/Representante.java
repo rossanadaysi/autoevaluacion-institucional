@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Oscar
+ * @author Ususario
  */
 @Entity
 @Table(name = "representante")
