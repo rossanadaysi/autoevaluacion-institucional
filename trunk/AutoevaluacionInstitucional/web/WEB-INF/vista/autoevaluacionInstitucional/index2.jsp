@@ -1002,7 +1002,7 @@
                 <h3>Atención!</h3>
             </div>
             <div class="modal-body">
-                <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
+                <h4>Finalizar Proceso de Autoevaluación Institucional.</h4>
                 <br>
                     <p>Esta seguro que desea finalizar el Proceso?. Tenga en cuenta que esta acción no se podrá deshacer.</p>
             </div>

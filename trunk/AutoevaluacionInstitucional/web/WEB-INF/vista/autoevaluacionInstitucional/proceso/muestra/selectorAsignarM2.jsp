@@ -64,7 +64,6 @@
         <c:if test="${idFuenteMuestra == 2 || idFuenteMuestra == 1}">
             <c:if test="${idFuenteMuestra == 2}">    
                 <div id="tablax" style="z-index: 1;">
-                    <br>
                     <h4>Muestra Generada Para la Fuente Seleccionada</h4>
                     <br>
                     <table class="table table-striped table-bordered table-condensed">
@@ -119,7 +118,6 @@
         </c:if>
         <c:if test="${idFuenteMuestra != 2 && idFuenteMuestra != 1}">
             <div id="tablax" style="z-index: 1;">
-                <br>
                 <h4>Muestra Generada Para la Fuente Seleccionada</h4>
                 <br>
                 <table class="table table-striped table-bordered table-condensed">
