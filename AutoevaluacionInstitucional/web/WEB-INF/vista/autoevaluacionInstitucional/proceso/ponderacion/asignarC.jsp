@@ -229,8 +229,6 @@
                                                         </c:otherwise>    
                                                     </c:choose>
                                                 </c:forTokens>
-
-
                                             </select>
                                             <input type="hidden"  value="${row2[4]}" name="id${row2[4]}">
                                         </td>
