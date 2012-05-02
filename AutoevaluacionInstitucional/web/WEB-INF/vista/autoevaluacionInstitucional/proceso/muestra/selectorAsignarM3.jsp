@@ -4,7 +4,7 @@
 <script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() { 
-        $.fcbkListSelection("#fcbklist","600","50","3");     
+        $.fcbkListSelection("#fcbklist", "1000","50","6");     
     });
     $("#botonActualizarMuestra").click(function(){
 
@@ -101,5 +101,5 @@
     </div>
 </c:if>
 <c:if test="${aux_selectorAsignarM3 == 0}">
-    <p>Debe seleccionar un programa y un semestre.</p>
+    <p class="help-block">Debe seleccionar un programa y un semestre.</p>
 </c:if>

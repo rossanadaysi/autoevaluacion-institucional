@@ -235,7 +235,7 @@
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
-                $("#resultados4").html("<div class='alert alert-info' id='cargando' style='width: 221px;'>"
+                $("#resultados4").html("<div class='alert alert-info' id='cargando' class='span10'>"
                     +"<a class='close'>×</a>"
                     +"<img src='<%=request.getContextPath()%>/css/images/wait.gif' style='float:center; padding: 1px 10px 0 0;'>"
                     +"Cargando..."
@@ -286,15 +286,30 @@
         <div class="span10">
             <form  id="formAsigMue" method="post">
                 <fieldset>
-                    <legend>Asignación de Muestra</legend>
-                    <div class="span5" style="border: 1px solid #FFF;">
-                        <p>Fuente</p>
-                        <select class="span3" id="select" name="fuente" onchange="presionSubmitFuente()">
-                            <option value="--">Seleccione una Fuente</option>
-                            <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
-                                <option value="${item2[0]}">${item2[1]}</option>
-                            </c:forEach>
-                        </select>
+                    <legend>
+                        Asignación de Muestra
+                    </legend>
+                    <div  style="border: 1px solid #FFF;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="span8">
+                                        <p>Fuente</p>
+                                        <select class="span3" id="select" name="fuente" onchange="presionSubmitFuente()">
+                                            <option value="--">Seleccione una Fuente</option>
+                                            <c:forEach items="${fuentes.rowsByIndex}" var="item2" varStatus="iter">
+                                                <option value="${item2[0]}">${item2[1]}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                    <td class="span6" valign="top">
+                                        <div class="span6">
+                                            <div  class="span6" id="resultados3" class="accordion" style="position: absolute;"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <div id="infoMuestra" style="display: none" class="span9">
                             <div class="alert alert-error">
                                 <a class="close">×</a>
@@ -303,7 +318,7 @@
                             </div>
                         </div>
                         <div id="resultadoAlert" style="display: none">
-                            <div class="alert alert-info" i style="width: 450px;">
+                            <div class="alert alert-info">
                                 <a class="close">×</a>
                                 <strong>Información!</strong>
                                 La muestra ya ha sido asignada para la fuente seleccionada.
@@ -331,7 +346,7 @@
                             <br>
                             <br>
                         </div>
-                        <div class="alert alert-info" id="cargando" style="display: none; width: 221px;">
+                        <div class="alert alert-info" id="cargando" style="display: none;" class="span10">
                             <a class="close">×</a>
                             <img src="<%=request.getContextPath()%>/css/images/wait.gif" style="float:left; padding: 1px 10px 0 0;">
                             Generando Muestra...
@@ -365,7 +380,8 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div style=""><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                            <div style=""><p class="help-block">Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                            <br>
                         </div>
                         <div id="filtro2" style="display: none;">
                             <p>Filtros</p>
@@ -396,7 +412,8 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                            <div style="width: 500px;"><p class="help-block">Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                            <br>
                         </div>
                         <div id="filtro3" style="display: none;">
                             <p>Filtros</p>
@@ -412,7 +429,8 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div style="width: 500px;"><p>Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                            <div style="width: 500px;"><p class="help-block">Seleccione un programa para ver la muestra asignada al mismo.</p></div>
+                            <br>
                         </div>
                         <div id="filtro4" style="display: none;">
                             <p>Filtros</p>
@@ -426,16 +444,13 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div style="width: 500px;"><p>Seleccione una opción para ver la muestra asignada.</p></div>
+                            <div style="width: 500px;"><p class="help-block">Seleccione una opción para ver la muestra asignada.</p></div>
+                            <br>
                         </div>
-
                         <div  id="resultados2"></div>
                         <div  class="span10">
                             <div id="resultados4" class="accordion" style="margin-left: -30px;"></div> 
                         </div>
-                    </div>
-                    <div  class="span4">
-                        <div  id="resultados3" class="accordion" style="position: absolute;"></div>
                     </div>
                 </fieldset>
             </form>

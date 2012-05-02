@@ -58,7 +58,7 @@
 </script>
 <c:choose>
     <c:when test="${selectorAsignarM2 == null}">
-        Debe Seleccionar un filtro para listar la muestra asignada.
+        <p class="help-block">Debe Seleccionar un filtro para listar la muestra asignada.</p>
     </c:when>
     <c:otherwise>
         <c:if test="${idFuenteMuestra == 2 || idFuenteMuestra == 1}">

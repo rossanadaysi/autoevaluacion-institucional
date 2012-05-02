@@ -208,7 +208,7 @@ public class formController extends HttpServlet {
                         double suma = 0;
                         double ponfa = 0;
 
-                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
+                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id + "') group by ponderacioncaracteristica.id", bd);
                         try {
                             while (rs1.next()) {
                                 String s = rs1.getString(1);
@@ -313,7 +313,7 @@ public class formController extends HttpServlet {
                             nivelImportancia = (int) ponde;
                         }
 
-                       
+
                         suma = suma + ponde;
                         double a = (100 * nivelImportancia) / suma;
                         double b = ((ponfa * a) / 100);
@@ -421,7 +421,7 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("asignarMuestraAIp")) {
 
-                System.out.println("entro");
+                
                 HttpSession session = request.getSession();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 Asignacionencuesta ae = new Asignacionencuesta();
@@ -431,8 +431,7 @@ public class formController extends HttpServlet {
 
                 String idFuente = request.getParameter("fuente");
 
-                System.out.println("idfuentexxx : " + idFuente);
-
+                
                 int id = Integer.valueOf(idFuente);
 
 
@@ -1158,7 +1157,7 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("IniciarProcesoAI")) {
 
-         
+
                 HttpSession session = request.getSession();
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
@@ -1226,18 +1225,102 @@ public class formController extends HttpServlet {
                     session.setAttribute("aux_IniciarP", 0);
                 }
 
-                if (f != 0 && c != 0 && e != 0) {
+                //valida asig muestra
+
+                int count3 = 0;
+                int count4 = 0;
+                int count5 = 0;
+                int laid = 0;
+
+                int m = 0;
+
+                ResultSet rs6 = conSql.CargarSql("Select id from muestra where proceso_id = '" + idProceso + "'", bd);
+                try {
+                    while (rs6.next()) {
+                        count5 = 1;
+                        laid = Integer.parseInt(rs6.getString(1));
+                        ResultSet rs5 = conSql.CargarSql("Select id from fuente", bd);
+                        try {
+                            while (rs5.next()) {
+                                int id = Integer.parseInt(rs5.getString(1));
+                                String tabla = "";
+                                String tabla1 = "";
+
+                                //Estatico
+                                if (id == 1) {
+                                    tabla = "muestraestudiante";
+                                    tabla1 = "estudiante";
+                                } else if (id == 2) {
+                                    tabla = "muestradocente";
+                                    tabla1 = "docente";
+                                } else if (id == 3) {
+                                    tabla = "muestraadministrativo";
+                                    tabla1 = "administrativo";
+                                } else if (id == 4) {
+                                    tabla = "muestradirector";
+                                    tabla1 = "directorprograma";
+                                } else if (id == 5) {
+                                    tabla = "muestraegresado";
+                                    tabla1 = "egresado";
+                                } else if (id == 6) {
+                                    tabla = "muestraempleador";
+                                    tabla1 = "empleador";
+                                } else if (id == 7) {
+                                    tabla = "muestraagencia";
+                                    tabla1 = "agenciagubernamental";
+                                }
+
+
+                                Result rs = null;
+
+                                sql = "Select* from " + tabla + " where muestra_id = " + laid;
+
+
+                                rs = conSql.CargarSql2(sql, bd);
+
+                                if (rs.getRowCount() != 0) {
+                                    count3++;
+                                }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
+                                    null, ex);
+                        }
+
+                        if (count3 != 0) {
+                            m = 1;
+                            System.out.println("Si hay asignacion de Muestra.");
+
+                        } else {
+                            System.out.println("Debe asignar las Muestra.");
+                            session.setAttribute("aux_IniciarP", 0);
+                        }
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                if (count5 == 0) {
+                    System.out.println("Debe asignar las Muestra.");
+                    session.setAttribute("aux_IniciarP", 0);
+                }
+
+                if (f != 0 && c != 0 && e != 0 && m != 0) {
                     try {
                         pc.edit(p);
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
-                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
+                                null, ex);
                     } catch (Exception ex) {
-                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
+                                null, ex);
                     }
                     session.setAttribute("aux_IniciarP", 1);
                     session.setAttribute("aux2_index2", 0);
                     session.setAttribute("estadoProceso", 1);
                 }
+
             }
         } finally {
             out.close();
