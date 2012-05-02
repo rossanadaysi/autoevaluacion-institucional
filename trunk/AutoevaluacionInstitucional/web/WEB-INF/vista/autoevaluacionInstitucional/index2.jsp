@@ -254,22 +254,19 @@
                 
                 //CERRAR PROCESO
                 $('#myModalCP2b1').click(function(){
-         
+                   
                     $("div.ui-layout-center").empty();
                     $.ajax({ 
                         type: "POST", 
-                        url: "<%=request.getContextPath()%>/formController?action=CerrarProcesoAI", 
+                        url: "<%=request.getContextPath()%>/formController?action=CerrarProcesoAI",
                         success: function(data) 
-                        { 
-                            $.ajax({
-                                type: 'POST',
-                                url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
-                                success: function(data){
-                                    $("#center").html(data);
-                                }
-                            })                              
+                        {
+                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                                            
+                            location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                                                             
                         } //fin success
-                    }); //fin del $.ajax    });
+                    }); //fin del $.ajax*/
                 });
                 
                 $('#myModalCP2b2').click(function(){
@@ -646,44 +643,18 @@
                                                                 location = '/AutoevaluacionInstitucional/';
                                                             }, 200);
                                                         });
-                                                                                
-                                                                                                                                                                                     
                                                     } //fin success
                                                 }); //fin $.ajax   
                                             }   
                                         });
-                                        
-                                        
-                                        
-                                        
-                                        
                                     } //fin success
                                 }); //fin del $.ajax
                             }
-                            
-                          
-    
                             else if(hash == "#IniciarProceso"){
                                 $('#myModalIP2').modal();
-                              
-                              
                             }  
                             else if(hash == "#CerrarProceso"){
                                 $('#myModalCP2').modal();
-                              
-                                url3 = url3.replace('#', "formController?action=")+"AI";
-                                $("div.ui-layout-center").empty();
-                                $.ajax({ 
-                                    type: "POST", 
-                                    url: url3, 
-                                    success: function(data) 
-                                    {
-                                        $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
-                                                                            
-                                        location = "<%=request.getContextPath()%>/#listarProcesos";                                
-                                                             
-                                    } //fin success
-                                }); //fin del $.ajax
                             }
                             else {
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";

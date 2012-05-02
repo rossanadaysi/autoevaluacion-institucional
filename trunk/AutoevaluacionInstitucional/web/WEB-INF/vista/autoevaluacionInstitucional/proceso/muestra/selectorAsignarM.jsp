@@ -12,6 +12,7 @@
                     $("#filtro3").hide();
                     $("#filtro4").hide();
                     $("#filtro").show();
+                    
                 }
                 else if(${idFuenteMuestra == 2}){
                     $("#filtro").hide();
@@ -24,15 +25,41 @@
                     $("#filtro4").show();
                 }
             }else{
-                $("#infoMuestra").show();
+                $("#resultadoAlert").show();
+                if(${idFuenteMuestra == 1}){
+                    $("#filtro3").hide();
+                    $("#filtro4").hide();
+                    $("#filtro").show();
+                    
+                }
+                else if(${idFuenteMuestra == 2}){
+                    $("#filtro").hide();
+                    $("#filtro4").hide();
+                    $("#filtro3").show();
+                }
+                else{
+                    $("#filtro").hide();
+                    $("#filtro3").hide();
+                    $("#filtro4").show();
+                }
+                $("#resultadoAlert").hide();
+                $("#formula").hide();
+                $("#botonNuevaMuestra").hide();
             }
         }else{
-            $("#formula").show();
-            $("option[rel=popover]")
-            .popover()
-            .click(function(e) {
-                e.preventDefault()      
-            })
+            if(${aux_IniciarP == 1}){
+                $("#resultadoAlert").hide();
+                $("#formula").hide();
+                $("#botonNuevaMuestra").hide();
+                $("#infoMuestra").show();
+            }else{
+                $("#formula").show();
+                $("option[rel=popover]")
+                .popover()
+                .click(function(e) {
+                    e.preventDefault()      
+                })
+            }
         }
     });
 </script>
