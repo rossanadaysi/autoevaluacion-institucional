@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `caracteristica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(500) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `factor_id` int(11) NOT NULL,
+  `factor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_caracteristica_factor1` (`factor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `directorprograma` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `persona_id` varchar(25) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `docente` (
   KEY `fk_docente_fuente1` (`fuente_id`),
   KEY `fk_docente_programa1` (`programa_id`),
   KEY `fk_docente_persona1` (`persona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33158624 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `egresado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `persona_id` varchar(25) NOT NULL,
@@ -86,15 +86,14 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
   `mensaje` varchar(500) DEFAULT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `encuestahaspregunta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `encuesta_id` int(11) NOT NULL,
   `pregunta_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`encuesta_id`,`pregunta_id`),
   KEY `fk_encuestahaspregunta_encuesta1` (`encuesta_id`),
   KEY `fk_encuestahaspregunta_pregunta1` (`pregunta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `estudiante` (
   `id` varchar(25) NOT NULL,
   `semestre` varchar(45) NOT NULL,
@@ -113,28 +112,41 @@ CREATE TABLE IF NOT EXISTS `factor` (
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `facultad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `fuente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `indicador` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
-  `caracteristica_id` int(11) NOT NULL,
+  `caracteristica_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_indicador_caracteristica1` (`caracteristica_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `instrumento` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `instrumentohasindicador` (
+  `instrumento_id` int(11) NOT NULL,
+  `indicador_id` int(11) NOT NULL,
+  PRIMARY KEY (`instrumento_id`,`indicador_id`),
+  KEY `fk_instrumento_has_indicador_indicador1` (`indicador_id`),
+  KEY `fk_instrumento_has_indicador_instrumento1` (`instrumento_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `muestra` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `formula` varchar(500) DEFAULT NULL,
@@ -198,6 +210,15 @@ CREATE TABLE IF NOT EXISTS `muestraestudiante` (
   KEY `fk_muestraestudiante_muestra1` (`muestra_id`),
   KEY `fk_muestraestudiante_estudiante1` (`estudiante_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `numericadocumental` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(500) NOT NULL,
+  `accion` varchar(500) NOT NULL,
+  `responsable` varchar(500) NOT NULL,
+  `indicador_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_numericadocumental_indicador1` (`indicador_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `persona` (
   `id` varchar(25) NOT NULL,
   `nombre` varchar(255) NOT NULL,
@@ -208,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `ponderacioncaracteristica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nivelimportancia` int(11) NOT NULL,
+  `nivelimportancia` float NOT NULL,
   `ponderacion` double NOT NULL,
   `justificacion` varchar(500) NOT NULL,
   `proceso_id` int(11) NOT NULL,
@@ -231,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `pregunta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pregunta` varchar(500) NOT NULL,
   `tipo` varchar(45) NOT NULL,
-  `indicador_id` int(11) NOT NULL,
+  `indicador_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pregunta_indicador1` (`indicador_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -259,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `programa` (
   PRIMARY KEY (`id`),
   KEY `fk_programa_facultad1` (`facultad_id`),
   KEY `fk_programa_sede1` (`sede_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1002 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `representante` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rol` varchar(45) NOT NULL,
@@ -268,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `representante` (
   PRIMARY KEY (`id`),
   KEY `fk_representante_programa1` (`programa_id`),
   KEY `fk_representante_persona1` (`persona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `representantehasprivilegio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `representante_id` int(11) NOT NULL,
@@ -330,6 +351,9 @@ ALTER TABLE `estudiante`
   ADD CONSTRAINT `fk_estudiante_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `indicador`
   ADD CONSTRAINT `fk_indicador_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `instrumentohasindicador`
+  ADD CONSTRAINT `fk_instrumento_has_indicador_instrumento1` FOREIGN KEY (`instrumento_id`) REFERENCES `instrumento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_instrumento_has_indicador_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `muestra`
   ADD CONSTRAINT `fk_muestra_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `muestraadministrativo`
@@ -353,6 +377,8 @@ ALTER TABLE `muestraempleador`
 ALTER TABLE `muestraestudiante`
   ADD CONSTRAINT `fk_muestraestudiante_muestra1` FOREIGN KEY (`muestra_id`) REFERENCES `muestra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_muestraestudiante_estudiante1` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `numericadocumental`
+  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `ponderacioncaracteristica`
   ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

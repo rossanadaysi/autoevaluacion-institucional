@@ -10,7 +10,6 @@ import entity.Programa;
 import entity.controller.ProcesoJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -188,7 +187,7 @@ public class formController extends HttpServlet {
                         String id = request.getParameter("id" + i);
                         String ponderacion = request.getParameter("ponderacion" + i);
                         String justificacion = request.getParameter("justificacion" + i);
-                        int ponde = Integer.parseInt(ponderacion);
+                        float ponde = Float.parseFloat(ponderacion);
 
 
 
@@ -208,20 +207,26 @@ public class formController extends HttpServlet {
                         double suma = 0;
                         double ponfa = 0;
 
-                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id + "') group by ponderacioncaracteristica.id", bd);
+                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
                         try {
                             while (rs1.next()) {
                                 String s = rs1.getString(1);
+                                System.out.println("ID CARACTERISTICA: " + i);
                                 suma = Double.parseDouble(s);
+                                System.out.println("SUMA: " + suma);
                                 String p = rs1.getString(2);
                                 ponfa = Double.parseDouble(p);
+                                System.out.println("PONDERACION FACTOR: " + ponfa);
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
+                        System.out.println("NIVEL DE IMPORTANCIA: " + ponde);
                         double a = (100 * ponde) / suma;
+                        System.out.println("A: " + a);
                         double b = ((ponfa * a) / 100);
+                        System.out.println("B: " + b);
 
                         double r;
 
@@ -233,6 +238,7 @@ public class formController extends HttpServlet {
                         bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
                         r = bde.doubleValue();
 
+                        System.out.println("PONDERACION CARACTERISTICA: " + r);
                         conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);
 
 
@@ -421,7 +427,7 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("asignarMuestraAIp")) {
 
-                
+
                 HttpSession session = request.getSession();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 Asignacionencuesta ae = new Asignacionencuesta();
@@ -431,7 +437,7 @@ public class formController extends HttpServlet {
 
                 String idFuente = request.getParameter("fuente");
 
-                
+
                 int id = Integer.valueOf(idFuente);
 
 
