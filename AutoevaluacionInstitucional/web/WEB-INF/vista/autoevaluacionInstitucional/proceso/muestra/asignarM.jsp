@@ -235,7 +235,7 @@
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
             beforeSend:function(){
-                $("#resultados4").html("<div class='alert alert-info' id='cargando' class='span10'>"
+                $("#resultados4").html("<div class='alert alert-info' id='cargando'>"
                     +"<a class='close'>×</a>"
                     +"<img src='<%=request.getContextPath()%>/css/images/wait.gif' style='float:center; padding: 1px 10px 0 0;'>"
                     +"Cargando..."
@@ -310,8 +310,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div id="infoMuestra" style="display: none" class="span9">
-                            <div class="alert alert-error">
+                        <div id="infoMuestra" style="display: none">
+                            <div class="alert alert-error" >
                                 <a class="close">×</a>
                                 <strong>Información!</strong>
                                 La muestra no fue asignada para la fuente seleccionada durante el proceso de configuración del Proceso en ejecución.
