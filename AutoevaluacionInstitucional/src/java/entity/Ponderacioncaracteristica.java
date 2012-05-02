@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Oscar
+ * @author Ususario
  */
 @Entity
 @Table(name = "ponderacioncaracteristica")
@@ -30,7 +30,7 @@ public class Ponderacioncaracteristica implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "nivelimportancia")
-    private int nivelimportancia;
+    private float nivelimportancia;
     @Basic(optional = false)
     @Column(name = "ponderacion")
     private double ponderacion;
@@ -51,7 +51,7 @@ public class Ponderacioncaracteristica implements Serializable {
         this.id = id;
     }
 
-    public Ponderacioncaracteristica(Integer id, int nivelimportancia, double ponderacion, String justificacion) {
+    public Ponderacioncaracteristica(Integer id, float nivelimportancia, double ponderacion, String justificacion) {
         this.id = id;
         this.nivelimportancia = nivelimportancia;
         this.ponderacion = ponderacion;
@@ -66,11 +66,11 @@ public class Ponderacioncaracteristica implements Serializable {
         this.id = id;
     }
 
-    public int getNivelimportancia() {
+    public float getNivelimportancia() {
         return nivelimportancia;
     }
 
-    public void setNivelimportancia(int nivelimportancia) {
+    public void setNivelimportancia(float nivelimportancia) {
         this.nivelimportancia = nivelimportancia;
     }
 

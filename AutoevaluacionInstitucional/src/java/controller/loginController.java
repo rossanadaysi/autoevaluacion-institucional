@@ -228,13 +228,33 @@ public class loginController extends HttpServlet {
                         }
                     } else {
                         if (tipo.equals("Estudiantes")) {
-                           
+
                             List<Estudiante> est = persona.getEstudianteList();
                             if (est.size() > 0) {
                                 out.println(0);
                                 session.setAttribute("tipoLogin", "Fuente");
                                 session.setAttribute("listEstudiante", est);
 
+                                ProgramaJpaController conPrograma2 = new ProgramaJpaController();
+                                ProcesoJpaController conProceso2 = new ProcesoJpaController();
+                                Programa programa2 = conPrograma2.findPrograma(1);
+                                session.setAttribute("programa2", programa2);
+
+
+                                List<Proceso> listProceso2 = conProceso2.findProcesoEntities();
+
+                                int aux = 0;
+
+                                for (Proceso proceso2 : listProceso2) {
+                                    if (proceso2.getFechacierre() == null && proceso2.getProgramaId().getId() == programa2.getId()) {
+                                        String nombreBd2 = programa2.getNombre() + proceso2.getId();
+                                        session.setAttribute("bd2", nombreBd2);
+
+                                        Result rs3 = null;
+                                        String sql2 = "";
+                                        rs3 = conSql.CargarSql2(sql2, nombreBd2);
+                                    }
+                                }
                             } else {
                                 out.println(1);
                                 System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
