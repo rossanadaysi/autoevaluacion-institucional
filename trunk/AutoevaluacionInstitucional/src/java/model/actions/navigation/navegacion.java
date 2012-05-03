@@ -97,6 +97,9 @@ public class navegacion implements Action {
          else if (path.equals("indexF")) {
             path = "fuente/index";
         }
+         else if (path.equals("responderEnc")) {
+            path = "fuente/responderEncuesta";
+        }
 
 
         String url = "/WEB-INF/vista/" + path + ".jsp";
