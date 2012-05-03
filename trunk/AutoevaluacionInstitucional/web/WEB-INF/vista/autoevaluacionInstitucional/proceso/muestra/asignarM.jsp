@@ -130,9 +130,6 @@
                             $("#resultados3").show();
                             $("#resultados2").hide()
                             $("#enlace").show();
-                            $("#botonGenerarMuestra").show();
-                            $("#botonCalcularMuestra2").show();
-                            $("#botonCalcularMuestra").hide();
                         }
                     })
                 
@@ -161,6 +158,7 @@
             $("#filtro3").hide();
             $("#filtro4").hide();
             $("#resultadoAlert").hide();
+            $("#infoMuestra").hide();
             $("#configuracionFormula").hide();
            
         }
@@ -185,6 +183,7 @@
             $("#filtro3").hide();
             $("#filtro4").hide();
             $("#resultadoAlert").hide();
+            $("#infoMuestra").hide();
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
@@ -343,6 +342,7 @@
                             <button style="display: none" id="botonCalcularMuestra2" class="btn btn-secundary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
                             <button id="botonCalcularMuestra" class="btn btn-primary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
                             <button id="botonConfigurarFormula" class="btn btn-secundary" onclick="presionSubmitConfigurarFormula()" type="button">Configurar Parametros de Fórmula</button>
+                            <p class="help-block">Utilize la opción de configurar parámetro de fórmula si desea generar una muestra de usuarios aleatorios a partir de un tamaño de población ingresado.</p>
                             <br>
                             <br>
                         </div>

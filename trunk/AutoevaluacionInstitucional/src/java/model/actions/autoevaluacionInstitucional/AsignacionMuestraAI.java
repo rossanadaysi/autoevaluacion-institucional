@@ -46,11 +46,11 @@ public class AsignacionMuestraAI implements Action {
         rs3 = conSql.CargarSql(sql2, bd);
         try {
 
-
             while (rs3.next()) {
                 ayu = 1;
                 idMuestra = Integer.parseInt(rs3.getString(1));
                 session.setAttribute("idMuestra", idMuestra);
+                System.out.println("ID MUESTRAAA : " + idMuestra);
             }
 
         } catch (SQLException ex) {

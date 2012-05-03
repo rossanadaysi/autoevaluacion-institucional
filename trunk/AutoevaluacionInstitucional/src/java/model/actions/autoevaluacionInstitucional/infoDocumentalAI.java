@@ -32,11 +32,13 @@ public class infoDocumentalAI implements Action {
 
 
         Result rs2 = null;
-        String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + " order by factor.id";
+        
+        //Cambiar proceso
+        String sql = "Select indicador.id, indicador.nombre, numericadocumental.nombre, numericadocumental.accion, numericadocumental.responsable from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id where indicador.id = (select indicador_id from instrumentohasindicador WHERE  instrumento_id = 1)";
         rs2 = conSql.CargarSql2(sql, bd);
 
         Result rs = null;
-        rs = conSql.CargarSql2("Select* from factor order by factor.id", bd);
+        rs = conSql.CargarSql2("Select* from indicador order by factor.id", bd);
         session.setAttribute("auxAsignarF1", 1);
 
 

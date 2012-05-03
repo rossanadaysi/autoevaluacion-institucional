@@ -14,6 +14,17 @@
             $("a[href='#collapseOne']  i").addClass("icon-arrow-up");
             
         }); 
+                  
+       
+        if(${muestraCalculada == null} && ${muestraIndividual != null}){
+          
+            $("#botonGenerarMuestra").show();
+            $("#botonCalcularMuestra2").show();
+            $("#botonCalcularMuestra").hide();    
+          
+        }
+        
+        
     });
 </script>
 <div class="accordion-group">
