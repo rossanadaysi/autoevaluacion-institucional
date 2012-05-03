@@ -1026,7 +1026,8 @@ table {
 .table-bordered th + th,
 .table-bordered td + td,
 .table-bordered th + td,
-.table-bordered td + th {
+.table-bordered td + th, 
+.table-bordered td {
   border-left: 1px solid #ddd;
 }
 .table-bordered thead:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child td {

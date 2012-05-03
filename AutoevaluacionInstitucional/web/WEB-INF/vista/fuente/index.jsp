@@ -74,7 +74,7 @@
                                     
                 myLayout = $('body').layout({
                     //	enable showOverflow on west-pane so CSS popups will overlap north pane
-                        center__paneSelector:  ".ui-layout-center"
+                    center__paneSelector:  ".ui-layout-center"
                     ,   north__paneClass:    "ui-layout-pane"
                     ,   closable:				true	// pane can open & close
 
@@ -118,8 +118,34 @@
                                                         
                     }
                     
-                
+                     if(hash.indexOf("#responderEncuesta")!=-1){
+                        var url3 = "<%=request.getContextPath()%>/"+hash;
+                        url3 = url3.replace('#responderEncuesta', "ControllerF?action=responderEnc");
+                        url3 = url3.replace('&', "&idE=");
+                            
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
+                                        
+                            } //fin success
+                        }); //fin del $.ajax
+                            
+                            
+                    }
+                    
                 });//fin hashchange
+               
+               
+                          
+            
             });//fin function
         </script>
 
@@ -173,9 +199,44 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
-            
- 
+            <div class="container">  
+                <div class="row">
+                    <div class="span8">
+                        <br/>
+                        <h2>Listado de  Encuestas Disponibles</h2>
+                        <c:choose>
+                            <c:when test="${listaEncuestasDisponibles.size() != 0}">
 
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <th>Encuesta</th>
+                                        <th>Programa</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listaEncuestasDisponibles}" var="row" varStatus="iter">
+                                            <tr>    
+                                                <td>   
+                                                    <c:out value="${row.nombre}"/>
+                                                </td>
+                                                <td>
+                                                    <c:out value="${proceso.programaId.nombre}"/>
+                                                </td>
+                                                <td class="action">
+                                                    <a title="Responder Encuesta" href="#responderEncuesta&${row.id}">Responder encuesta</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                No Existen Encuestas Disponibles.
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </div>
         </div><!--/Center-->
     </body>
 </html> 
