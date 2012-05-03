@@ -71,10 +71,8 @@ public class formController extends HttpServlet {
                     contador = contador + ponderacion;
                 }
                 if (contador != 100.0) {
-                    System.out.println("Distinto de 100");
                     session.setAttribute("auxAsignarF1", 0);
                 } else {
-                    System.out.println("igual a 100");
                     session.setAttribute("auxAsignarF1", 1);
 
                     if (session.getAttribute("auxAsignarF").equals(0)) {
@@ -102,11 +100,15 @@ public class formController extends HttpServlet {
                             String justificacion = request.getParameter("justificacion" + i);
                             int idPonderacion = 0;
 
+                            double ponfa = Double.parseDouble(ponderacion);
+
+
+
+
                             rs = conSql.CargarSql("Select id from ponderacionfactor where ponderacionfactor.proceso_id = '" + idProceso + "' and ponderacionfactor.factor_id = '" + id + "'", bd);
                             try {
                                 while (rs.next()) {
                                     idPonderacion = Integer.parseInt(rs.getString(1));
-                                    System.out.println(idPonderacion);
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,54 +116,52 @@ public class formController extends HttpServlet {
 
 
                             conSql.UpdateSql("UPDATE `ponderacionfactor` SET `ponderacion` = '" + ponderacion + "',`justificacion` = '" + justificacion + "' WHERE `ponderacionfactor`.`id` ='" + idPonderacion + "'", bd);
-                        }
 
-                        if (session.getAttribute("auxAsignarC").equals(1)) {
 
-                            ResultSet rsx = conSql.CargarSql("Select* from ponderacioncaracteristica WHERE proceso_id = '" + idProceso + "'", bd);
+                            if (session.getAttribute("auxAsignarC").equals(1)) {
 
-                            try {
-                                while (rsx.next()) {
 
-                                    int ponde = Integer.parseInt(rsx.getString(2));
-                                    double suma = 0;
-                                    double ponfa = 0;
+                                ResultSet rsx = conSql.CargarSql("Select* from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.`caracteristica_id` = caracteristica.id WHERE proceso_id = '" + idProceso + "' and caracteristica.factor_id = '" + id + "'", bd);
 
-                                    ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + rsx.getString(1) + "')", bd);
-                                    try {
-                                        while (rs1.next()) {
-                                            String s = rs1.getString(1);
-                                            suma = Double.parseDouble(s);
-                                            String p = rs1.getString(2);
-                                            ponfa = Double.parseDouble(p);
+                                try {
+                                    while (rsx.next()) {
+
+
+
+                                        Double ponde = Double.parseDouble(rsx.getString(2));
+                                        double suma = 0;
+
+                                        ResultSet rs1 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia) from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + rsx.getString(6) + "')", bd);
+                                        try {
+                                            while (rs1.next()) {
+                                                String s = rs1.getString(1);
+                                                suma = Double.parseDouble(s);
+                                            }
+                                        } catch (SQLException ex) {
+                                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                    } catch (SQLException ex) {
-                                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
 
-                                    double a = (100 * ponde) / suma;
-                                    System.out.println("a> " + a);
-                                    double b = ((ponfa * a) / 100);
-
-                                    double r;
+                                        double a = (100 * ponde) / suma;
+                                        double b = ((ponfa * a) / 100);
+                                        double r;
 
 
-                                    int decimalPlaces = 2;
-                                    BigDecimal bde = new BigDecimal(b);
+                                        int decimalPlaces = 2;
+                                        BigDecimal bde = new BigDecimal(b);
 
 // setScale is immutable
-                                    bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-                                    r = bde.doubleValue();
+                                        bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
+                                        r = bde.doubleValue();
 
 
-                                    conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`id` = '" + rsx.getString(1) + "'", bd);
+                                        conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`caracteristica_id` = '" + rsx.getString(6) + "'", bd);
+                                    }
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                            } catch (SQLException ex) {
-                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+
                             }
-
-                        }
-
+                        }//for
                     }
                 }
 
@@ -180,9 +180,7 @@ public class formController extends HttpServlet {
                 int idProceso = proceso.getId();
 
                 session.setAttribute("idproceso", idproceso);
-                System.out.println("ok");
                 if (session.getAttribute("auxAsignarC").equals(0)) {
-                    System.out.println("count " + numRows);
                     for (int i = 1; i <= numRows; i++) {
                         String id = request.getParameter("id" + i);
                         String ponderacion = request.getParameter("ponderacion" + i);
@@ -211,22 +209,16 @@ public class formController extends HttpServlet {
                         try {
                             while (rs1.next()) {
                                 String s = rs1.getString(1);
-                                System.out.println("ID CARACTERISTICA: " + i);
                                 suma = Double.parseDouble(s);
-                                System.out.println("SUMA: " + suma);
                                 String p = rs1.getString(2);
                                 ponfa = Double.parseDouble(p);
-                                System.out.println("PONDERACION FACTOR: " + ponfa);
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                        System.out.println("NIVEL DE IMPORTANCIA: " + ponde);
                         double a = (100 * ponde) / suma;
-                        System.out.println("A: " + a);
                         double b = ((ponfa * a) / 100);
-                        System.out.println("B: " + b);
 
                         double r;
 
@@ -237,8 +229,6 @@ public class formController extends HttpServlet {
 // setScale is immutable
                         bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
                         r = bde.doubleValue();
-
-                        System.out.println("PONDERACION CARACTERISTICA: " + r);
                         conSql.UpdateSql("UPDATE `ponderacioncaracteristica` SET `ponderacion` = '" + r + "' WHERE `ponderacioncaracteristica`.`proceso_id` = '" + idProceso + "' and `ponderacioncaracteristica`.`caracteristica_id` = '" + id + "'", bd);
 
 
@@ -286,41 +276,43 @@ public class formController extends HttpServlet {
                 double suma = 0;
                 double ponfa = 0;
 
-                ResultSet rsa = conSql.CargarSql("select caracteristica.id from caracteristica where caracteristica.factor_id = (select caracteristica.factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
-               ResultSet rsa2 = conSql.CargarSql("SELECT SUM(ponderacioncaracteristica.nivelimportancia),ponderacionfactor.ponderacion, ponderacioncaracteristica.nivelimportancia from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor.factor_id WHERE ponderacioncaracteristica.proceso_id = '" + idProceso + "' and caracteristica.factor_id = (SELECT factor_id from caracteristica where caracteristica.id = '" + id + "') and caracteristica.id <> '" + id + "'", bd);
-               
-               
-               while(rsa2.next()){
-                String sponfa = rsa2.getString(2);
-                 ponfa = Double.parseDouble(sponfa);
-               }
+
+                //ResultSet rsa = conSql.CargarSql("select caracteristica.id from caracteristica where caracteristica.factor_id = (select caracteristica.factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
+                ResultSet rsa2 = conSql.CargarSql("select caracteristica.id, ponderacionfactor.ponderacion from caracteristica inner join ponderacionfactor on caracteristica.factor_id = ponderacionfactor . id where caracteristica.factor_id = (select caracteristica.factor_id from caracteristica where caracteristica.id = '" + id + "')", bd);
+
                 try {
-                    
-                    int i = 0;
+
                     List<Double> pondera = new ArrayList<Double>();
                     List<Integer> Ids = new ArrayList<Integer>();
                     List<Double> nivelImportancia = new ArrayList<Double>();
                     String aux4 = "{ \"datos\":[";
-                   
 
-                    while (rsa.next()) {
-                        
-                        Ids.add(Integer.parseInt(rsa.getString(1)));
-                        String aux1 = request.getParameter("ponderacion2" + rsa.getString(1));
+
+                    while (rsa2.next()) {
+
+                        String sponfa = rsa2.getString(2);
+                        ponfa = Double.parseDouble(sponfa);
+
+                        Ids.add(Integer.parseInt(rsa2.getString(1)));
+
+                        String aux1 = request.getParameter("ponderacion2" + rsa2.getString(1));
                         Double au = Double.parseDouble(aux1);
                         pondera.add(au);
-                        String aux2 = request.getParameter("ponderacion" + rsa.getString(1));
+
+                        String aux2 = request.getParameter("ponderacion" + rsa2.getString(1));
                         Double au2 = Double.parseDouble(aux2);
                         nivelImportancia.add(au2);
 
-
                     }
+
                     for (int j = 0; j < nivelImportancia.size(); j++) {
                         suma += nivelImportancia.get(j);
 
                     }
-                    System.out.println("suma:"+suma);
+
+
                     for (int k = 0; k < nivelImportancia.size(); k++) {
+
                         double a = (100 * nivelImportancia.get(k)) / suma;
                         double b = ((ponfa * a) / 100);
 
@@ -333,33 +325,32 @@ public class formController extends HttpServlet {
                         // setScale is immutable
                         bde = bde.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
                         r = bde.doubleValue();
-                        
-                        
-                        if (k+1==nivelImportancia.size()) {
-                            String aux5 = "" 
-                                    + "{" 
-                                    + " \"Pond\": \"" + r + "\" ," 
-                                    + " \"Idc\": \""+ Ids.get(k) 
-                                    + "\" " + "}" 
-                                    +"";
-                     
-                                aux4 += aux5+"]}" ; 
-                        }
-                        else{
-                            String aux5 = "" 
-                                    + "{" 
-                                    + "\"Pond\": \"" + r + "\" ," + " \"Idc\": \"" + Ids.get(k) 
+
+
+                        if (k + 1 == nivelImportancia.size()) {
+                            String aux5 = ""
+                                    + "{"
+                                    + " \"Pond\": \"" + r + "\" ,"
+                                    + " \"Idc\": \"" + Ids.get(k)
+                                    + "\" " + "}"
+                                    + "";
+
+                            aux4 += aux5 + "]}";
+                        } else {
+                            String aux5 = ""
+                                    + "{"
+                                    + "\"Pond\": \"" + r + "\" ," + " \"Idc\": \"" + Ids.get(k)
                                     + "\""
-                                    + "}," 
+                                    + "},"
                                     + "";
                             aux4 += aux5;
-                     
-                      }
+
+                        }
 
                     }
 
 
-                    
+
                     out.println("[" + aux4 + "]");
                 } catch (SQLException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -743,7 +734,7 @@ public class formController extends HttpServlet {
                 } else {
                     String idP = request.getParameter("programas4");
                     if (!idP.equals("--")) {
-                        sql = "select persona.nombre, persona.apellido, persona.password from " + tabla + " inner join " + tabla1 + " on " + tabla + "." + tabla1 + "_id = " + tabla1 + ".id inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla + ".muestra_id = 1 order by " + tabla + ".id";
+                        sql = "select persona.nombre, persona.apellido, persona.password from " + tabla + " inner join " + tabla1 + " on " + tabla + "." + tabla1 + "_id = " + tabla1 + ".id inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla + ".muestra_id = " + idMuestra + " order by " + tabla + ".id";
                         System.out.println("sql8: " + sql);
                     }
                 }
@@ -1347,7 +1338,7 @@ public class formController extends HttpServlet {
                 }
 
             }
-        } catch (SQLException ex) {
+        } catch (Error ex) {
             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             out.close();
