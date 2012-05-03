@@ -7,11 +7,11 @@
 </style>
 <div class="container">  
             <br/>
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <td rowspan="3"><img src="<%=request.getContextPath()%>/css/images/escudo.png" title="Universidad de Cartagena"></td>
-                        <td style="background-color: #f5bd34;">UNIVERSIDAD DE CARTAGENA</td>
+                        <td rowspan="3"><img src="<%=request.getContextPath()%>/css/images/escudo.png" title="Universidad de Cartagena" ></td>
+                        <td>UNIVERSIDAD DE CARTAGENA</td>
                         <td>CÓDIGO: FO-DO/AA-002</td>
                     </tr>
                     <tr>
@@ -19,7 +19,7 @@
                         <td>VERSION:00</td>
                     </tr>
                     <tr>
-                        <td style="background-color:#f5bd34;">xxx</td>
+                        <td>xxx</td>
                         <td>FECHA:18/04/2012</td>
                     </tr>
                 </tbody>
