@@ -3,9 +3,7 @@
 <script type="text/javascript" language="JavaScript">
     function presionSubmit(va, idc)
     {
-        var a = "#"+va;
-        var b = $("#select1 option:selected").val();
-       
+             console.log("idc:"+idc);
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=cargarPonde",
