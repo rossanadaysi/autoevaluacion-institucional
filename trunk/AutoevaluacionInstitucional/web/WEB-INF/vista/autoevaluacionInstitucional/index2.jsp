@@ -570,6 +570,21 @@
                        
 
                             }
+                            else if(hash == "#infoDocumental"){
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                             
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    { 
+                                        $("div.ui-layout-center").append(data);
+                                        //{offset:80}   
+                                    } //fin success
+                                }); //fin del $.ajax
+                                                        
+                            }
                             else if(hash == "#CrearProceso"){
                                 var a = 0;
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";
