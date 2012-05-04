@@ -1168,6 +1168,7 @@ public class formController extends HttpServlet {
                 session.setAttribute("aux_index2", 0);
                 System.out.println("modificado");
                 session.setAttribute("estadoProceso", 2);
+                session.setAttribute("aux_IniciarP", 2);
 
 
             } else if (request.getParameter(

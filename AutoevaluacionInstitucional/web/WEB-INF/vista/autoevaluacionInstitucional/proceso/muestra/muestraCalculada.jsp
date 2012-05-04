@@ -16,7 +16,7 @@
         }); 
                   
        
-        if(${muestraCalculada == null} && ${muestraIndividual != null}){
+        if(${muestraCalculada != null} || ${muestraIndividual != null}){
           
             $("#botonGenerarMuestra").show();
             $("#botonCalcularMuestra2").show();
