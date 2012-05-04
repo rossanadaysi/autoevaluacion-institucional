@@ -104,11 +104,11 @@ public class loginController extends HttpServlet {
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
 
-        
+
 
         try {
 
-        Persona  persona = conPersona.findPersona(un);
+            Persona persona = conPersona.findPersona(un);
 
             System.out.println("Procesando..");
             if (persona != null) {
@@ -130,6 +130,7 @@ public class loginController extends HttpServlet {
                                     session.setAttribute("auxAsignarC", 0);
                                     session.setAttribute("aux_IniciarP", 0);
                                     session.setAttribute("auxAsignarC1", 0);
+                                    session.setAttribute("auxInfoDocumental", 0);
 
                                     // menu = 1;
                                     //session.setAttribute("auxIndex2", menu);
@@ -178,6 +179,18 @@ public class loginController extends HttpServlet {
                                                 session.setAttribute("auxAsignarC", 1);
                                             }
 
+
+                                            rs2 = null;
+
+                                            //Cambiar proceso
+                                            sql = "select indicador.id, indicador.nombre, numericadocumental.evaluacion, numericadocumental.nombre, numericadocumental.accion, numericadocumental.responsable from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + proceso.getId() + "'";
+                                            rs2 = conSql.CargarSql2(sql, nombreBd);
+
+                                          
+                                            
+                                            if (rs2!= null) {
+                                                session.setAttribute("auxInfoDocumental", 1);
+                                            }
 
                                             if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
                                                 aux1 = 1;
@@ -246,25 +259,25 @@ public class loginController extends HttpServlet {
                                         session.setAttribute("proceso", proceso2);
                                         String nombreBd2 = programa2.getNombre() + proceso2.getId();
                                         session.setAttribute("bd2", nombreBd2);
-                                        String idFuenteEstudiante="1";
+                                        String idFuenteEstudiante = "1";
                                         ResultSet rs3 = null;
                                         String sql2 = "SELECT asignacionencuesta. *"
-                                        +" FROM asignacionencuesta"
-                                        +" INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
-                                        +" INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
-                                        +" INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
-                                        +" INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
-                                        +" INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
-                                        +" WHERE persona.id = "+persona.getId()+""
-                                        +" AND proceso.`FECHACIERRE` IS NULL"
-                                        +" AND asignacionencuesta.fuente_id="+idFuenteEstudiante+"";
-                                        
-                                        
+                                                + " FROM asignacionencuesta"
+                                                + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                                + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                                + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
+                                                + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
+                                                + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
+                                                + " WHERE persona.id = " + persona.getId() + ""
+                                                + " AND proceso.`FECHACIERRE` IS NULL"
+                                                + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + "";
+
+
                                         rs3 = conSql.CargarSql(sql2, nombreBd2);
                                         EncuestaJpaController conEn = new EncuestaJpaController();
                                         List<Encuesta> le = new ArrayList<Encuesta>();
                                         try {
-                                            while(rs3.next()){
+                                            while (rs3.next()) {
                                                 Encuesta e = conEn.findEncuesta(Integer.parseInt(rs3.getString(3)));
                                                 le.add(e);
                                             }
@@ -272,10 +285,10 @@ public class loginController extends HttpServlet {
                                         } catch (SQLException ex) {
                                             Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                        
-                                        
-                                        
-                                        
+
+
+
+
                                     }
                                 }
                             } else {

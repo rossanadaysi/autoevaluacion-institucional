@@ -32,25 +32,23 @@ public class infoDocumentalAI implements Action {
 
 
         Result rs2 = null;
-        
+
         //Cambiar proceso
-        String sql = "Select indicador.id, indicador.nombre, numericadocumental.nombre, numericadocumental.accion, numericadocumental.responsable from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id where indicador.id = (select indicador_id from instrumentohasindicador WHERE  instrumento_id = 1)";
+        String sql = "select indicador.id, indicador.nombre, numericadocumental.evaluacion, numericadocumental.nombre, numericadocumental.accion, numericadocumental.responsable from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + idProceso + "'";
         rs2 = conSql.CargarSql2(sql, bd);
 
         Result rs = null;
-        rs = conSql.CargarSql2("Select* from indicador order by factor.id", bd);
-        session.setAttribute("auxAsignarF1", 1);
+        rs = conSql.CargarSql2("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 order by indicador.id", bd);
+        session.setAttribute("auxInfoDocumental", 1);
 
 
         if (rs2.getRowCount() > 0) {
-            session.setAttribute("auxAsignarF", 1);
-            session.setAttribute("pondeFactores", rs2);
-            session.setAttribute("factores", rs);
+            session.setAttribute("auxInfoDocumental", 1);
+            session.setAttribute("evaluarcionDocumental", rs2);
+            session.setAttribute("indicadoresDocumental", rs);
         } else {
-            session.setAttribute("auxAsignarF", 0);
-
-
-            session.setAttribute("factores", rs);
+            session.setAttribute("auxInfoDocumental", 0);
+            session.setAttribute("indicadoresDocumental", rs);
             conSql.cerrarConexion();
 
         }

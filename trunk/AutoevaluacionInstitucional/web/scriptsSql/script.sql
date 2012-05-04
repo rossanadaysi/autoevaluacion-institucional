@@ -78,6 +78,19 @@ CREATE TABLE IF NOT EXISTS `empleador` (
   KEY `fk_empleador_sectorempresarial1` (`sectorempresarial_id`),
   KEY `fk_empleador_persona1` (`persona_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `encabezado` (
+  `id` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `persona_id` varchar(25) NOT NULL,
+  `proceso_id` int(11) NOT NULL,
+  `encuesta_id` int(11) NOT NULL,
+  `fuente_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_encabezado_persona1` (`persona_id`),
+  KEY `fk_encabezado_proceso1` (`proceso_id`),
+  KEY `fk_encabezado_encuesta1` (`encuesta_id`),
+  KEY `fk_encabezado_fuente1` (`fuente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `encuesta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -212,12 +225,15 @@ CREATE TABLE IF NOT EXISTS `muestraestudiante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `numericadocumental` (
   `id` int(11) NOT NULL,
+  `evaluacion` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
   `accion` varchar(500) NOT NULL,
   `responsable` varchar(500) NOT NULL,
   `indicador_id` int(11) NOT NULL,
+  `proceso_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_numericadocumental_indicador1` (`indicador_id`)
+  KEY `fk_numericadocumental_indicador1` (`indicador_id`),
+  KEY `fk_numericadocumental_proceso1` (`proceso_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE IF NOT EXISTS `persona` (
   `id` varchar(25) NOT NULL,
@@ -342,6 +358,11 @@ ALTER TABLE `empleador`
   ADD CONSTRAINT `fk_empleador_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_empleador_sectorempresarial1` FOREIGN KEY (`sectorempresarial_id`) REFERENCES `sectorempresarial` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_empleador_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `encabezado`
+  ADD CONSTRAINT `fk_encabezado_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_encabezado_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_encabezado_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `encuestahaspregunta`
   ADD CONSTRAINT `fk_encuestahaspregunta_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encuestahaspregunta_pregunta1` FOREIGN KEY (`pregunta_id`) REFERENCES `pregunta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -378,7 +399,8 @@ ALTER TABLE `muestraestudiante`
   ADD CONSTRAINT `fk_muestraestudiante_muestra1` FOREIGN KEY (`muestra_id`) REFERENCES `muestra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_muestraestudiante_estudiante1` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `numericadocumental`
-  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `ponderacioncaracteristica`
   ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
