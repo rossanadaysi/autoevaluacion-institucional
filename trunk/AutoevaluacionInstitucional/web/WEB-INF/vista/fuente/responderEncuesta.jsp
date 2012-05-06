@@ -1,17 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.pagination.js"></script>
 <script type="text/javascript">
     var itemsxpagina=10;
     function pageselectCallback(page_index, jq){
-        var num_entries = $("#preguntas tr").length;
+         var num_entries = $("#preguntas tr").length;
         for(var i=0;i<num_entries;i++)
         {
-            $('#hiddenresult div.result:eq('+i+')').css("display", "none");
+            $('#preguntas tr:eq('+i+')').css("display", "none");
         }
         var max_elem = Math.min((page_index+1) * itemsxpagina, num_entries);
         for(var i=page_index*itemsxpagina;i<max_elem;i++)
         {
-            $('#hiddenresult div.result:eq('+i+')').css("display", "block");
+            $('#preguntas tr:eq('+i+')').css("display", "block");
                      
         }  
         return false;
@@ -19,20 +20,20 @@
 
     function initPagination() {
         // count entries inside the hidden content
-        var num_entries = jQuery('#hiddenresult div.result').length;
+        var num_entries = jQuery('#preguntas tr').length;
                 
         // Create content inside pagination element
-        $("#Pagination").pagination(num_entries, {
+        $(".pagination").pagination(num_entries, {
             callback: pageselectCallback,
             items_per_page:itemsxpagina,
             num_display_entries:4,
             num_edge_entries:2,
-            prev_text:"Anterior",
-            next_text:"Siguiente"
+            prev_text:"«",
+            next_text:"»"
         });
     }
     $(document).ready(function(){
-        initPagination();
+       initPagination();
     });
 
 </script>
@@ -82,7 +83,7 @@
         <tbody>
 
 
-            <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
+          <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
                 <c:choose>
                     <c:when test="${pregunta.tipo != 'Elegir 1-5'}">
                         <tr>
@@ -120,17 +121,6 @@
     </table>
 
     <div class="pagination">
-        <ul>
-            <li><a href="#">Prev</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <c:forEach items="${encuesta.preguntaList}" varStatus="status">
-                <c:choose>
-                    <c:when test="${status.count % 10 == 0}">
-                        <li><a href="#">${status.count/10}</a></li>
-                    </c:when>
-                </c:choose>
-            </c:forEach>
-            <li><a href="#">Next</a></li>
-        </ul>
+        
     </div>
 </div>
