@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.pagination.js"></script>
 <script type="text/javascript">
-    var itemsxpagina=10;
+    var itemsxpagina=5;
     function pageselectCallback(page_index, jq){
          var num_entries = $("#preguntas tr").length;
         for(var i=0;i<num_entries;i++)
@@ -12,7 +12,7 @@
         var max_elem = Math.min((page_index+1) * itemsxpagina, num_entries);
         for(var i=page_index*itemsxpagina;i<max_elem;i++)
         {
-            $('#preguntas tr:eq('+i+')').css("display", "block");
+            $('#preguntas tr:eq('+i+')').css("display", "table-row");
                      
         }  
         return false;
@@ -79,7 +79,7 @@
             <p id="insp" style="text-align: justify;"></p>
         </div>
     </div>
-    <table id="preguntas" class="table table-striped table-condensed">
+            <table id="preguntas" class="table table-striped table-condensed" style="width: 100%;">
         <tbody>
 
 
