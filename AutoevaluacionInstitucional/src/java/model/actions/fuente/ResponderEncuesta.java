@@ -21,8 +21,7 @@ public class ResponderEncuesta implements Action {
 
 
         session.setAttribute("encuesta", conEnc.findEncuesta(Integer.parseInt(idencuesta)));
-        
-        String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
+       String url = "/WEB-INF/vista/fuente/responderEncuesta.jsp";
         return url;
     }
 }
