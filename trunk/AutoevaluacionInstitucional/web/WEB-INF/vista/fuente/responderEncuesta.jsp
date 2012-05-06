@@ -119,8 +119,17 @@
             </c:forEach>        
         </tbody>
     </table>
-
-    <div class="pagination">
-        
-    </div>
+            <div class="row"> 
+                <div class="span8">
+                    <div class="pagination"></div>
+                </div>
+                <div class="span4">
+                    <div style="text-align: right;margin-top: 18px;">
+                        <button class="btn" type="reset">Guardar</button>
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+                </div>
+                
+            </div>
+    
 </div>
