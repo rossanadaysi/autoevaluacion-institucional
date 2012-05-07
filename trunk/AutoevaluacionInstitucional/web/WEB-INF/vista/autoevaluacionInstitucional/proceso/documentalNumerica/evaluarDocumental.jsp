@@ -7,11 +7,11 @@
             <div class="span10">
                 <form id="formInfoDoc" class="form-horizontal" method="post">
                     <fieldset>
-                        <legend>Evaluar Información Documental</legend>
+                        <legend>Evaluar información documental</legend>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Códdigo</th>
+                                    <th>Código</th>
                                     <th>Indicador</th>
                                     <th>Evaluación</th>
                                     <th>Nombre del documento donde está ubicado</th>
@@ -29,14 +29,14 @@
                                             <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
-                                            <select class="span1"  name="evaluacionDoc${row2[0]}">
+                                            <select class="span1"  name="evaluacionDoc${row[0]}">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
                                             </select>
-                                            <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
+                                            <input type="hidden"  value="${row[0]}" name="idIndicadorDoc${row[0]}">
                                         </td>
                                         <td>
                                             <textarea name="nombreDocumento${row[0]}" rows="4" class="span2"></textarea>
@@ -69,17 +69,17 @@
             <div class="span10">
                 <form id="formInfoDoc" class="form-horizontal" method="post">
                     <fieldset>
-                        <legend>Evaluar Información Documental</legend>
+                        <legend>Evaluar información documental</legend>
                         <div class="alert alert-info">
                             <a data-dismiss="alert" class="close">×</a>
                             <strong>Información!</strong>
-                            La evaluación de información documental ya ha sido asignada. <a href="<%=request.getContextPath()%>/#listarPonderacionFactor">Detalle de Información Documental Evaluada.</a>
+                            La evaluación de información documental ya ha sido asignada. <a href="<%=request.getContextPath()%>/#listarEvaluarDoc">Detalle de información documental Evaluada.</a>
                         </div>
                         <br>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Códdigo</th>
+                                    <th>Código</th>
                                     <th>Indicador</th>
                                     <th>Evaluación</th>
                                     <th>Nombre del documento donde está ubicado</th>
@@ -97,7 +97,7 @@
                                             <c:out value="${row2[1]}"/>
                                         </td>
                                         <td>
-                                            <select  class="span1" name="valuacionDoc${row2[0]}">
+                                            <select  class="span1" name="evaluacionDoc${row2[0]}">
                                                 <c:choose>
                                                     <c:when test="${row2[2] == 1.0}">
                                                         <option selected="selected" value="1.0">1.0</option>
@@ -142,13 +142,13 @@
                                             <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span5">${row2[3]}</textarea>
+                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span5">${row2[4]}</textarea>
+                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[4]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span5">${row2[5]}</textarea>
+                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}"/>
@@ -157,7 +157,7 @@
                         </table>
                         <input type="hidden" name="count" id="count" value="${iterador}">
                         <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Actualizar Ponderación</button>
+                            <button class="btn btn-primary" type="submit">Actualizar Evaluación</button>
                             <button class="btn" type="reset">Cancelar</button>
                         </div>
                     </fieldset>
