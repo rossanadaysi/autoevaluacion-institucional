@@ -580,10 +580,24 @@
                                     success: function(data) 
                                     { 
                                         $("div.ui-layout-center").append(data);
+                                        
+                                        $("#formInfoDoc").submit(function(event){
+                                            event.preventDefault();
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: "<%=request.getContextPath()%>/formController?action=evaluarInfoDocumentalAI",
+                                                data: $("#formInfoDoc").serialize(),
+                                                success: function(){
+                                                   /* $('#myModalF').modal();
+                                                    $('#myModalF').on('hidden', function () {
+                                                        location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
+                                                    })    */          
+                                                } //fin success
+                                            }); //fin $.ajax
+                                        }); //fin submit
                                         //{offset:80}   
                                     } //fin success
-                                }); //fin del $.ajax
-                                                        
+                                }); //fin del $.ajax                 
                             }
                             else if(hash == "#CrearProceso"){
                                 var a = 0;

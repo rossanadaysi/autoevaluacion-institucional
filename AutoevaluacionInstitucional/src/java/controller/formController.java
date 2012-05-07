@@ -1338,7 +1338,57 @@ public class formController extends HttpServlet {
                     session.setAttribute("estadoProceso", 1);
                 }
 
+
+            } else if (request.getParameter(
+                    "action").equals("evaluarInfoDocumentalAI")) {
+
+                HttpSession session = request.getSession();
+                sqlController conSql = new sqlController();
+
+                int numRows = Integer.parseInt(request.getParameter("count"));
+                ResultSet rs = null;
+                String bd = (String) session.getAttribute("bd");
+                int idProceso = (Integer) session.getAttribute("idproceso");
+
+                if (session.getAttribute("auxInfoDocumental").equals(0)) {
+
+                    for (int i = 1; i <= numRows; i++) {
+                        String id = request.getParameter("idIndicadorDoc" + i);
+                        String evaluacion = request.getParameter("evaluacionDoc" + i);
+                        String nombreDoc = request.getParameter("nombreDocumento" + i);
+                        String accion = request.getParameter("accionDocumento" + i);
+                        String responsable = request.getParameter("responsableDocumento" + i);
+
+                        conSql.UpdateSql("INSERT INTO `institucional9`.`numericadocumental` (`id`, `evaluacion`, `nombre`, `accion`, `responsable`, `indicador_id`, `proceso_id`) VALUES (NULL, '" + evaluacion + "', '" + nombreDoc + "', '" + accion + "', '" + responsable + "', '" + id + "', '" + idProceso + "')", bd);
+                    }
+
+                    session.setAttribute("auxInfoDocumental", 1);
+
+                } else {
+
+                    for (int i = 1; i <= numRows; i++) {
+                        String id = request.getParameter("idIndicadorDoc" + i);
+                        String evaluacion = request.getParameter("evaluacionDoc" + i);
+                        String nombreDoc = request.getParameter("nombreDocumento" + i);
+                        String accion = request.getParameter("accionDocumento" + i);
+                        String responsable = request.getParameter("responsableDocumento" + i);
+                        int idNumDoc = 0;
+
+                        rs = conSql.CargarSql("Select id from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.indicador_id = '" + id + "'", bd);
+                        try {
+                            while (rs.next()) {
+                                idNumDoc = Integer.parseInt(rs.getString(1));
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        conSql.UpdateSql("UPDATE `numericadocumental` SET `evaluacion` = '" + evaluacion + "',`nombre` = '" + nombreDoc + "',`accion` = '" + accion + "',`responsable` = '" + responsable + "' WHERE `numericadocumental`.`id` ='" + idNumDoc + "'", bd);
+
+                    }
+                }
             }
+
         } catch (Error ex) {
             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

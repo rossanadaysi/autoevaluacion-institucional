@@ -29,7 +29,7 @@
                                             <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
-                                            <select class="span1"  name="valuacionDoc${row2[0]}">
+                                            <select class="span1"  name="evaluacionDoc${row2[0]}">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
