@@ -2,16 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Oscar
- */
+
 @Entity
 @Table(name = "asignacionencuesta")
 @XmlRootElement
@@ -25,15 +23,15 @@ public class Asignacionencuesta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
-    @JoinColumn(name = "fuente_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Fuente fuenteId;
     @JoinColumn(name = "encuesta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Encuesta encuestaId;
+    @JoinColumn(name = "fuente_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Fuente fuenteId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
 
     public Asignacionencuesta() {
     }
@@ -50,12 +48,12 @@ public class Asignacionencuesta implements Serializable {
         this.id = id;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
+    public Encuesta getEncuestaId() {
+        return encuestaId;
     }
 
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
+    public void setEncuestaId(Encuesta encuestaId) {
+        this.encuestaId = encuestaId;
     }
 
     public Fuente getFuenteId() {
@@ -66,12 +64,12 @@ public class Asignacionencuesta implements Serializable {
         this.fuenteId = fuenteId;
     }
 
-    public Encuesta getEncuestaId() {
-        return encuestaId;
+    public Proceso getProcesoId() {
+        return procesoId;
     }
 
-    public void setEncuestaId(Encuesta encuestaId) {
-        this.encuestaId = encuestaId;
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
     }
 
     @Override
@@ -98,5 +96,5 @@ public class Asignacionencuesta implements Serializable {
     public String toString() {
         return "entity.Asignacionencuesta[ id=" + id + " ]";
     }
-    
+
 }

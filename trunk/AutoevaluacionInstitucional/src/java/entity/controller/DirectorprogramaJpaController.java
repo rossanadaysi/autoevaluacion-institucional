@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import entity.*;
@@ -17,10 +18,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class DirectorprogramaJpaController implements Serializable {
 
     public DirectorprogramaJpaController(EntityManagerFactory emf) {
@@ -40,15 +38,15 @@ public class DirectorprogramaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Programa programaId = directorprograma.getProgramaId();
-            if (programaId != null) {
-                programaId = em.getReference(programaId.getClass(), programaId.getId());
-                directorprograma.setProgramaId(programaId);
-            }
             Persona personaId = directorprograma.getPersonaId();
             if (personaId != null) {
                 personaId = em.getReference(personaId.getClass(), personaId.getId());
                 directorprograma.setPersonaId(personaId);
+            }
+            Programa programaId = directorprograma.getProgramaId();
+            if (programaId != null) {
+                programaId = em.getReference(programaId.getClass(), programaId.getId());
+                directorprograma.setProgramaId(programaId);
             }
             Fuente fuenteId = directorprograma.getFuenteId();
             if (fuenteId != null) {
@@ -62,13 +60,13 @@ public class DirectorprogramaJpaController implements Serializable {
             }
             directorprograma.setMuestradirectorList(attachedMuestradirectorList);
             em.persist(directorprograma);
-            if (programaId != null) {
-                programaId.getDirectorprogramaList().add(directorprograma);
-                programaId = em.merge(programaId);
-            }
             if (personaId != null) {
                 personaId.getDirectorprogramaList().add(directorprograma);
                 personaId = em.merge(personaId);
+            }
+            if (programaId != null) {
+                programaId.getDirectorprogramaList().add(directorprograma);
+                programaId = em.merge(programaId);
             }
             if (fuenteId != null) {
                 fuenteId.getDirectorprogramaList().add(directorprograma);
@@ -97,10 +95,10 @@ public class DirectorprogramaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Directorprograma persistentDirectorprograma = em.find(Directorprograma.class, directorprograma.getId());
-            Programa programaIdOld = persistentDirectorprograma.getProgramaId();
-            Programa programaIdNew = directorprograma.getProgramaId();
             Persona personaIdOld = persistentDirectorprograma.getPersonaId();
             Persona personaIdNew = directorprograma.getPersonaId();
+            Programa programaIdOld = persistentDirectorprograma.getProgramaId();
+            Programa programaIdNew = directorprograma.getProgramaId();
             Fuente fuenteIdOld = persistentDirectorprograma.getFuenteId();
             Fuente fuenteIdNew = directorprograma.getFuenteId();
             List<Muestradirector> muestradirectorListOld = persistentDirectorprograma.getMuestradirectorList();
@@ -117,13 +115,13 @@ public class DirectorprogramaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (programaIdNew != null) {
-                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
-                directorprograma.setProgramaId(programaIdNew);
-            }
             if (personaIdNew != null) {
                 personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
                 directorprograma.setPersonaId(personaIdNew);
+            }
+            if (programaIdNew != null) {
+                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
+                directorprograma.setProgramaId(programaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
@@ -137,14 +135,6 @@ public class DirectorprogramaJpaController implements Serializable {
             muestradirectorListNew = attachedMuestradirectorListNew;
             directorprograma.setMuestradirectorList(muestradirectorListNew);
             directorprograma = em.merge(directorprograma);
-            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
-                programaIdOld.getDirectorprogramaList().remove(directorprograma);
-                programaIdOld = em.merge(programaIdOld);
-            }
-            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
-                programaIdNew.getDirectorprogramaList().add(directorprograma);
-                programaIdNew = em.merge(programaIdNew);
-            }
             if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
                 personaIdOld.getDirectorprogramaList().remove(directorprograma);
                 personaIdOld = em.merge(personaIdOld);
@@ -152,6 +142,14 @@ public class DirectorprogramaJpaController implements Serializable {
             if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
                 personaIdNew.getDirectorprogramaList().add(directorprograma);
                 personaIdNew = em.merge(personaIdNew);
+            }
+            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
+                programaIdOld.getDirectorprogramaList().remove(directorprograma);
+                programaIdOld = em.merge(programaIdOld);
+            }
+            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
+                programaIdNew.getDirectorprogramaList().add(directorprograma);
+                programaIdNew = em.merge(programaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getDirectorprogramaList().remove(directorprograma);
@@ -212,15 +210,15 @@ public class DirectorprogramaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Programa programaId = directorprograma.getProgramaId();
-            if (programaId != null) {
-                programaId.getDirectorprogramaList().remove(directorprograma);
-                programaId = em.merge(programaId);
-            }
             Persona personaId = directorprograma.getPersonaId();
             if (personaId != null) {
                 personaId.getDirectorprogramaList().remove(directorprograma);
                 personaId = em.merge(personaId);
+            }
+            Programa programaId = directorprograma.getProgramaId();
+            if (programaId != null) {
+                programaId.getDirectorprogramaList().remove(directorprograma);
+                programaId = em.merge(programaId);
             }
             Fuente fuenteId = directorprograma.getFuenteId();
             if (fuenteId != null) {
@@ -281,5 +279,5 @@ public class DirectorprogramaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
@@ -10,10 +11,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Ususario
- */
+
 @Entity
 @Table(name = "proceso")
 @XmlRootElement
@@ -45,6 +43,10 @@ public class Proceso implements Serializable {
     private List<Ponderacionfactor> ponderacionfactorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
     private List<Asignacionencuesta> asignacionencuestaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Encabezado> encabezadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesoId")
+    private List<Numericadocumental> numericadocumentalList;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Programa programaId;
@@ -129,6 +131,24 @@ public class Proceso implements Serializable {
         this.asignacionencuestaList = asignacionencuestaList;
     }
 
+    @XmlTransient
+    public List<Encabezado> getEncabezadoList() {
+        return encabezadoList;
+    }
+
+    public void setEncabezadoList(List<Encabezado> encabezadoList) {
+        this.encabezadoList = encabezadoList;
+    }
+
+    @XmlTransient
+    public List<Numericadocumental> getNumericadocumentalList() {
+        return numericadocumentalList;
+    }
+
+    public void setNumericadocumentalList(List<Numericadocumental> numericadocumentalList) {
+        this.numericadocumentalList = numericadocumentalList;
+    }
+
     public Programa getProgramaId() {
         return programaId;
     }
@@ -161,5 +181,5 @@ public class Proceso implements Serializable {
     public String toString() {
         return "entity.Proceso[ id=" + id + " ]";
     }
-    
+
 }

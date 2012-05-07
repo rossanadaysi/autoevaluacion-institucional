@@ -13,14 +13,14 @@ import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
-@Table(name = "caracteristica")
+@Table(name = "instrumento")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Caracteristica.findAll", query = "SELECT c FROM Caracteristica c"),
-    @NamedQuery(name = "Caracteristica.findById", query = "SELECT c FROM Caracteristica c WHERE c.id = :id"),
-    @NamedQuery(name = "Caracteristica.findByNombre", query = "SELECT c FROM Caracteristica c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Caracteristica.findByDescripcion", query = "SELECT c FROM Caracteristica c WHERE c.descripcion = :descripcion")})
-public class Caracteristica implements Serializable {
+    @NamedQuery(name = "Instrumento.findAll", query = "SELECT i FROM Instrumento i"),
+    @NamedQuery(name = "Instrumento.findById", query = "SELECT i FROM Instrumento i WHERE i.id = :id"),
+    @NamedQuery(name = "Instrumento.findByNombre", query = "SELECT i FROM Instrumento i WHERE i.nombre = :nombre"),
+    @NamedQuery(name = "Instrumento.findByDescripcion", query = "SELECT i FROM Instrumento i WHERE i.descripcion = :descripcion")})
+public class Instrumento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,22 +32,20 @@ public class Caracteristica implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
-    private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
-    @OneToMany(mappedBy = "caracteristicaId")
+    @JoinTable(name = "instrumentohasindicador", joinColumns = {
+        @JoinColumn(name = "instrumento_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
+    @ManyToMany
     private List<Indicador> indicadorList;
-    @JoinColumn(name = "factor_id", referencedColumnName = "id")
-    @ManyToOne
-    private Factor factorId;
 
-    public Caracteristica() {
+    public Instrumento() {
     }
 
-    public Caracteristica(Integer id) {
+    public Instrumento(Integer id) {
         this.id = id;
     }
 
-    public Caracteristica(Integer id, String nombre) {
+    public Instrumento(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -77,29 +75,12 @@ public class Caracteristica implements Serializable {
     }
 
     @XmlTransient
-    public List<Ponderacioncaracteristica> getPonderacioncaracteristicaList() {
-        return ponderacioncaracteristicaList;
-    }
-
-    public void setPonderacioncaracteristicaList(List<Ponderacioncaracteristica> ponderacioncaracteristicaList) {
-        this.ponderacioncaracteristicaList = ponderacioncaracteristicaList;
-    }
-
-    @XmlTransient
     public List<Indicador> getIndicadorList() {
         return indicadorList;
     }
 
     public void setIndicadorList(List<Indicador> indicadorList) {
         this.indicadorList = indicadorList;
-    }
-
-    public Factor getFactorId() {
-        return factorId;
-    }
-
-    public void setFactorId(Factor factorId) {
-        this.factorId = factorId;
     }
 
     @Override
@@ -112,10 +93,10 @@ public class Caracteristica implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Caracteristica)) {
+        if (!(object instanceof Instrumento)) {
             return false;
         }
-        Caracteristica other = (Caracteristica) object;
+        Instrumento other = (Instrumento) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -124,7 +105,7 @@ public class Caracteristica implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Caracteristica[ id=" + id + " ]";
+        return "entity.Instrumento[ id=" + id + " ]";
     }
 
 }

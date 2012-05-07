@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import connection.jpaConnection;
@@ -13,16 +14,15 @@ import javax.persistence.criteria.Root;
 import entity.Indicador;
 import entity.Encuesta;
 import entity.Pregunta;
-import entity.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
+import entity.Resultadoevaluacion;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class PreguntaJpaController implements Serializable {
 
     public PreguntaJpaController() {
@@ -35,6 +35,9 @@ public class PreguntaJpaController implements Serializable {
     public void create(Pregunta pregunta) {
         if (pregunta.getEncuestaList() == null) {
             pregunta.setEncuestaList(new ArrayList<Encuesta>());
+        }
+        if (pregunta.getResultadoevaluacionList() == null) {
+            pregunta.setResultadoevaluacionList(new ArrayList<Resultadoevaluacion>());
         }
         EntityManager em = null;
         try {
@@ -51,6 +54,12 @@ public class PreguntaJpaController implements Serializable {
                 attachedEncuestaList.add(encuestaListEncuestaToAttach);
             }
             pregunta.setEncuestaList(attachedEncuestaList);
+            List<Resultadoevaluacion> attachedResultadoevaluacionList = new ArrayList<Resultadoevaluacion>();
+            for (Resultadoevaluacion resultadoevaluacionListResultadoevaluacionToAttach : pregunta.getResultadoevaluacionList()) {
+                resultadoevaluacionListResultadoevaluacionToAttach = em.getReference(resultadoevaluacionListResultadoevaluacionToAttach.getClass(), resultadoevaluacionListResultadoevaluacionToAttach.getIdResultadoEvaluacion());
+                attachedResultadoevaluacionList.add(resultadoevaluacionListResultadoevaluacionToAttach);
+            }
+            pregunta.setResultadoevaluacionList(attachedResultadoevaluacionList);
             em.persist(pregunta);
             if (indicadorId != null) {
                 indicadorId.getPreguntaList().add(pregunta);
@@ -60,6 +69,15 @@ public class PreguntaJpaController implements Serializable {
                 encuestaListEncuesta.getPreguntaList().add(pregunta);
                 encuestaListEncuesta = em.merge(encuestaListEncuesta);
             }
+            for (Resultadoevaluacion resultadoevaluacionListResultadoevaluacion : pregunta.getResultadoevaluacionList()) {
+                Pregunta oldPreguntaIdOfResultadoevaluacionListResultadoevaluacion = resultadoevaluacionListResultadoevaluacion.getPreguntaId();
+                resultadoevaluacionListResultadoevaluacion.setPreguntaId(pregunta);
+                resultadoevaluacionListResultadoevaluacion = em.merge(resultadoevaluacionListResultadoevaluacion);
+                if (oldPreguntaIdOfResultadoevaluacionListResultadoevaluacion != null) {
+                    oldPreguntaIdOfResultadoevaluacionListResultadoevaluacion.getResultadoevaluacionList().remove(resultadoevaluacionListResultadoevaluacion);
+                    oldPreguntaIdOfResultadoevaluacionListResultadoevaluacion = em.merge(oldPreguntaIdOfResultadoevaluacionListResultadoevaluacion);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -68,7 +86,7 @@ public class PreguntaJpaController implements Serializable {
         }
     }
 
-    public void edit(Pregunta pregunta) throws NonexistentEntityException, Exception {
+    public void edit(Pregunta pregunta) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,6 +96,20 @@ public class PreguntaJpaController implements Serializable {
             Indicador indicadorIdNew = pregunta.getIndicadorId();
             List<Encuesta> encuestaListOld = persistentPregunta.getEncuestaList();
             List<Encuesta> encuestaListNew = pregunta.getEncuestaList();
+            List<Resultadoevaluacion> resultadoevaluacionListOld = persistentPregunta.getResultadoevaluacionList();
+            List<Resultadoevaluacion> resultadoevaluacionListNew = pregunta.getResultadoevaluacionList();
+            List<String> illegalOrphanMessages = null;
+            for (Resultadoevaluacion resultadoevaluacionListOldResultadoevaluacion : resultadoevaluacionListOld) {
+                if (!resultadoevaluacionListNew.contains(resultadoevaluacionListOldResultadoevaluacion)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Resultadoevaluacion " + resultadoevaluacionListOldResultadoevaluacion + " since its preguntaId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (indicadorIdNew != null) {
                 indicadorIdNew = em.getReference(indicadorIdNew.getClass(), indicadorIdNew.getId());
                 pregunta.setIndicadorId(indicadorIdNew);
@@ -89,6 +121,13 @@ public class PreguntaJpaController implements Serializable {
             }
             encuestaListNew = attachedEncuestaListNew;
             pregunta.setEncuestaList(encuestaListNew);
+            List<Resultadoevaluacion> attachedResultadoevaluacionListNew = new ArrayList<Resultadoevaluacion>();
+            for (Resultadoevaluacion resultadoevaluacionListNewResultadoevaluacionToAttach : resultadoevaluacionListNew) {
+                resultadoevaluacionListNewResultadoevaluacionToAttach = em.getReference(resultadoevaluacionListNewResultadoevaluacionToAttach.getClass(), resultadoevaluacionListNewResultadoevaluacionToAttach.getIdResultadoEvaluacion());
+                attachedResultadoevaluacionListNew.add(resultadoevaluacionListNewResultadoevaluacionToAttach);
+            }
+            resultadoevaluacionListNew = attachedResultadoevaluacionListNew;
+            pregunta.setResultadoevaluacionList(resultadoevaluacionListNew);
             pregunta = em.merge(pregunta);
             if (indicadorIdOld != null && !indicadorIdOld.equals(indicadorIdNew)) {
                 indicadorIdOld.getPreguntaList().remove(pregunta);
@@ -110,6 +149,17 @@ public class PreguntaJpaController implements Serializable {
                     encuestaListNewEncuesta = em.merge(encuestaListNewEncuesta);
                 }
             }
+            for (Resultadoevaluacion resultadoevaluacionListNewResultadoevaluacion : resultadoevaluacionListNew) {
+                if (!resultadoevaluacionListOld.contains(resultadoevaluacionListNewResultadoevaluacion)) {
+                    Pregunta oldPreguntaIdOfResultadoevaluacionListNewResultadoevaluacion = resultadoevaluacionListNewResultadoevaluacion.getPreguntaId();
+                    resultadoevaluacionListNewResultadoevaluacion.setPreguntaId(pregunta);
+                    resultadoevaluacionListNewResultadoevaluacion = em.merge(resultadoevaluacionListNewResultadoevaluacion);
+                    if (oldPreguntaIdOfResultadoevaluacionListNewResultadoevaluacion != null && !oldPreguntaIdOfResultadoevaluacionListNewResultadoevaluacion.equals(pregunta)) {
+                        oldPreguntaIdOfResultadoevaluacionListNewResultadoevaluacion.getResultadoevaluacionList().remove(resultadoevaluacionListNewResultadoevaluacion);
+                        oldPreguntaIdOfResultadoevaluacionListNewResultadoevaluacion = em.merge(oldPreguntaIdOfResultadoevaluacionListNewResultadoevaluacion);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -127,7 +177,7 @@ public class PreguntaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -138,6 +188,17 @@ public class PreguntaJpaController implements Serializable {
                 pregunta.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The pregunta with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Resultadoevaluacion> resultadoevaluacionListOrphanCheck = pregunta.getResultadoevaluacionList();
+            for (Resultadoevaluacion resultadoevaluacionListOrphanCheckResultadoevaluacion : resultadoevaluacionListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Pregunta (" + pregunta + ") cannot be destroyed since the Resultadoevaluacion " + resultadoevaluacionListOrphanCheckResultadoevaluacion + " in its resultadoevaluacionList field has a non-nullable preguntaId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Indicador indicadorId = pregunta.getIndicadorId();
             if (indicadorId != null) {
@@ -203,5 +264,5 @@ public class PreguntaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

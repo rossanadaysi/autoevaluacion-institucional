@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import entity.*;
@@ -17,10 +18,7 @@ import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class FuenteJpaController implements Serializable {
 
     public FuenteJpaController(EntityManagerFactory emf) {
@@ -44,6 +42,9 @@ public class FuenteJpaController implements Serializable {
         }
         if (fuente.getAsignacionencuestaList() == null) {
             fuente.setAsignacionencuestaList(new ArrayList<Asignacionencuesta>());
+        }
+        if (fuente.getEncabezadoList() == null) {
+            fuente.setEncabezadoList(new ArrayList<Encabezado>());
         }
         if (fuente.getEgresadoList() == null) {
             fuente.setEgresadoList(new ArrayList<Egresado>());
@@ -85,6 +86,12 @@ public class FuenteJpaController implements Serializable {
                 attachedAsignacionencuestaList.add(asignacionencuestaListAsignacionencuestaToAttach);
             }
             fuente.setAsignacionencuestaList(attachedAsignacionencuestaList);
+            List<Encabezado> attachedEncabezadoList = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListEncabezadoToAttach : fuente.getEncabezadoList()) {
+                encabezadoListEncabezadoToAttach = em.getReference(encabezadoListEncabezadoToAttach.getClass(), encabezadoListEncabezadoToAttach.getId());
+                attachedEncabezadoList.add(encabezadoListEncabezadoToAttach);
+            }
+            fuente.setEncabezadoList(attachedEncabezadoList);
             List<Egresado> attachedEgresadoList = new ArrayList<Egresado>();
             for (Egresado egresadoListEgresadoToAttach : fuente.getEgresadoList()) {
                 egresadoListEgresadoToAttach = em.getReference(egresadoListEgresadoToAttach.getClass(), egresadoListEgresadoToAttach.getId());
@@ -146,6 +153,15 @@ public class FuenteJpaController implements Serializable {
                     oldFuenteIdOfAsignacionencuestaListAsignacionencuesta = em.merge(oldFuenteIdOfAsignacionencuestaListAsignacionencuesta);
                 }
             }
+            for (Encabezado encabezadoListEncabezado : fuente.getEncabezadoList()) {
+                Fuente oldFuenteIdOfEncabezadoListEncabezado = encabezadoListEncabezado.getFuenteId();
+                encabezadoListEncabezado.setFuenteId(fuente);
+                encabezadoListEncabezado = em.merge(encabezadoListEncabezado);
+                if (oldFuenteIdOfEncabezadoListEncabezado != null) {
+                    oldFuenteIdOfEncabezadoListEncabezado.getEncabezadoList().remove(encabezadoListEncabezado);
+                    oldFuenteIdOfEncabezadoListEncabezado = em.merge(oldFuenteIdOfEncabezadoListEncabezado);
+                }
+            }
             for (Egresado egresadoListEgresado : fuente.getEgresadoList()) {
                 Fuente oldFuenteIdOfEgresadoListEgresado = egresadoListEgresado.getFuenteId();
                 egresadoListEgresado.setFuenteId(fuente);
@@ -204,6 +220,8 @@ public class FuenteJpaController implements Serializable {
             List<Directorprograma> directorprogramaListNew = fuente.getDirectorprogramaList();
             List<Asignacionencuesta> asignacionencuestaListOld = persistentFuente.getAsignacionencuestaList();
             List<Asignacionencuesta> asignacionencuestaListNew = fuente.getAsignacionencuestaList();
+            List<Encabezado> encabezadoListOld = persistentFuente.getEncabezadoList();
+            List<Encabezado> encabezadoListNew = fuente.getEncabezadoList();
             List<Egresado> egresadoListOld = persistentFuente.getEgresadoList();
             List<Egresado> egresadoListNew = fuente.getEgresadoList();
             List<Agenciagubernamental> agenciagubernamentalListOld = persistentFuente.getAgenciagubernamentalList();
@@ -243,6 +261,14 @@ public class FuenteJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Asignacionencuesta " + asignacionencuestaListOldAsignacionencuesta + " since its fuenteId field is not nullable.");
+                }
+            }
+            for (Encabezado encabezadoListOldEncabezado : encabezadoListOld) {
+                if (!encabezadoListNew.contains(encabezadoListOldEncabezado)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Encabezado " + encabezadoListOldEncabezado + " since its fuenteId field is not nullable.");
                 }
             }
             for (Egresado egresadoListOldEgresado : egresadoListOld) {
@@ -308,6 +334,13 @@ public class FuenteJpaController implements Serializable {
             }
             asignacionencuestaListNew = attachedAsignacionencuestaListNew;
             fuente.setAsignacionencuestaList(asignacionencuestaListNew);
+            List<Encabezado> attachedEncabezadoListNew = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListNewEncabezadoToAttach : encabezadoListNew) {
+                encabezadoListNewEncabezadoToAttach = em.getReference(encabezadoListNewEncabezadoToAttach.getClass(), encabezadoListNewEncabezadoToAttach.getId());
+                attachedEncabezadoListNew.add(encabezadoListNewEncabezadoToAttach);
+            }
+            encabezadoListNew = attachedEncabezadoListNew;
+            fuente.setEncabezadoList(encabezadoListNew);
             List<Egresado> attachedEgresadoListNew = new ArrayList<Egresado>();
             for (Egresado egresadoListNewEgresadoToAttach : egresadoListNew) {
                 egresadoListNewEgresadoToAttach = em.getReference(egresadoListNewEgresadoToAttach.getClass(), egresadoListNewEgresadoToAttach.getId());
@@ -378,6 +411,17 @@ public class FuenteJpaController implements Serializable {
                     if (oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta != null && !oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta.equals(fuente)) {
                         oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta.getAsignacionencuestaList().remove(asignacionencuestaListNewAsignacionencuesta);
                         oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta = em.merge(oldFuenteIdOfAsignacionencuestaListNewAsignacionencuesta);
+                    }
+                }
+            }
+            for (Encabezado encabezadoListNewEncabezado : encabezadoListNew) {
+                if (!encabezadoListOld.contains(encabezadoListNewEncabezado)) {
+                    Fuente oldFuenteIdOfEncabezadoListNewEncabezado = encabezadoListNewEncabezado.getFuenteId();
+                    encabezadoListNewEncabezado.setFuenteId(fuente);
+                    encabezadoListNewEncabezado = em.merge(encabezadoListNewEncabezado);
+                    if (oldFuenteIdOfEncabezadoListNewEncabezado != null && !oldFuenteIdOfEncabezadoListNewEncabezado.equals(fuente)) {
+                        oldFuenteIdOfEncabezadoListNewEncabezado.getEncabezadoList().remove(encabezadoListNewEncabezado);
+                        oldFuenteIdOfEncabezadoListNewEncabezado = em.merge(oldFuenteIdOfEncabezadoListNewEncabezado);
                     }
                 }
             }
@@ -483,6 +527,13 @@ public class FuenteJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Fuente (" + fuente + ") cannot be destroyed since the Asignacionencuesta " + asignacionencuestaListOrphanCheckAsignacionencuesta + " in its asignacionencuestaList field has a non-nullable fuenteId field.");
             }
+            List<Encabezado> encabezadoListOrphanCheck = fuente.getEncabezadoList();
+            for (Encabezado encabezadoListOrphanCheckEncabezado : encabezadoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Fuente (" + fuente + ") cannot be destroyed since the Encabezado " + encabezadoListOrphanCheckEncabezado + " in its encabezadoList field has a non-nullable fuenteId field.");
+            }
             List<Egresado> egresadoListOrphanCheck = fuente.getEgresadoList();
             for (Egresado egresadoListOrphanCheckEgresado : egresadoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -568,5 +619,5 @@ public class FuenteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

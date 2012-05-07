@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import connection.jpaConnection;
@@ -18,10 +19,7 @@ import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class ProcesoJpaController implements Serializable {
 
      public ProcesoJpaController() {
@@ -43,6 +41,12 @@ public class ProcesoJpaController implements Serializable {
         }
         if (proceso.getAsignacionencuestaList() == null) {
             proceso.setAsignacionencuestaList(new ArrayList<Asignacionencuesta>());
+        }
+        if (proceso.getEncabezadoList() == null) {
+            proceso.setEncabezadoList(new ArrayList<Encabezado>());
+        }
+        if (proceso.getNumericadocumentalList() == null) {
+            proceso.setNumericadocumentalList(new ArrayList<Numericadocumental>());
         }
         EntityManager em = null;
         try {
@@ -77,6 +81,18 @@ public class ProcesoJpaController implements Serializable {
                 attachedAsignacionencuestaList.add(asignacionencuestaListAsignacionencuestaToAttach);
             }
             proceso.setAsignacionencuestaList(attachedAsignacionencuestaList);
+            List<Encabezado> attachedEncabezadoList = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListEncabezadoToAttach : proceso.getEncabezadoList()) {
+                encabezadoListEncabezadoToAttach = em.getReference(encabezadoListEncabezadoToAttach.getClass(), encabezadoListEncabezadoToAttach.getId());
+                attachedEncabezadoList.add(encabezadoListEncabezadoToAttach);
+            }
+            proceso.setEncabezadoList(attachedEncabezadoList);
+            List<Numericadocumental> attachedNumericadocumentalList = new ArrayList<Numericadocumental>();
+            for (Numericadocumental numericadocumentalListNumericadocumentalToAttach : proceso.getNumericadocumentalList()) {
+                numericadocumentalListNumericadocumentalToAttach = em.getReference(numericadocumentalListNumericadocumentalToAttach.getClass(), numericadocumentalListNumericadocumentalToAttach.getId());
+                attachedNumericadocumentalList.add(numericadocumentalListNumericadocumentalToAttach);
+            }
+            proceso.setNumericadocumentalList(attachedNumericadocumentalList);
             em.persist(proceso);
             if (programaId != null) {
                 programaId.getProcesoList().add(proceso);
@@ -118,6 +134,24 @@ public class ProcesoJpaController implements Serializable {
                     oldProcesoIdOfAsignacionencuestaListAsignacionencuesta = em.merge(oldProcesoIdOfAsignacionencuestaListAsignacionencuesta);
                 }
             }
+            for (Encabezado encabezadoListEncabezado : proceso.getEncabezadoList()) {
+                Proceso oldProcesoIdOfEncabezadoListEncabezado = encabezadoListEncabezado.getProcesoId();
+                encabezadoListEncabezado.setProcesoId(proceso);
+                encabezadoListEncabezado = em.merge(encabezadoListEncabezado);
+                if (oldProcesoIdOfEncabezadoListEncabezado != null) {
+                    oldProcesoIdOfEncabezadoListEncabezado.getEncabezadoList().remove(encabezadoListEncabezado);
+                    oldProcesoIdOfEncabezadoListEncabezado = em.merge(oldProcesoIdOfEncabezadoListEncabezado);
+                }
+            }
+            for (Numericadocumental numericadocumentalListNumericadocumental : proceso.getNumericadocumentalList()) {
+                Proceso oldProcesoIdOfNumericadocumentalListNumericadocumental = numericadocumentalListNumericadocumental.getProcesoId();
+                numericadocumentalListNumericadocumental.setProcesoId(proceso);
+                numericadocumentalListNumericadocumental = em.merge(numericadocumentalListNumericadocumental);
+                if (oldProcesoIdOfNumericadocumentalListNumericadocumental != null) {
+                    oldProcesoIdOfNumericadocumentalListNumericadocumental.getNumericadocumentalList().remove(numericadocumentalListNumericadocumental);
+                    oldProcesoIdOfNumericadocumentalListNumericadocumental = em.merge(oldProcesoIdOfNumericadocumentalListNumericadocumental);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -142,6 +176,10 @@ public class ProcesoJpaController implements Serializable {
             List<Ponderacionfactor> ponderacionfactorListNew = proceso.getPonderacionfactorList();
             List<Asignacionencuesta> asignacionencuestaListOld = persistentProceso.getAsignacionencuestaList();
             List<Asignacionencuesta> asignacionencuestaListNew = proceso.getAsignacionencuestaList();
+            List<Encabezado> encabezadoListOld = persistentProceso.getEncabezadoList();
+            List<Encabezado> encabezadoListNew = proceso.getEncabezadoList();
+            List<Numericadocumental> numericadocumentalListOld = persistentProceso.getNumericadocumentalList();
+            List<Numericadocumental> numericadocumentalListNew = proceso.getNumericadocumentalList();
             List<String> illegalOrphanMessages = null;
             for (Ponderacioncaracteristica ponderacioncaracteristicaListOldPonderacioncaracteristica : ponderacioncaracteristicaListOld) {
                 if (!ponderacioncaracteristicaListNew.contains(ponderacioncaracteristicaListOldPonderacioncaracteristica)) {
@@ -173,6 +211,22 @@ public class ProcesoJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Asignacionencuesta " + asignacionencuestaListOldAsignacionencuesta + " since its procesoId field is not nullable.");
+                }
+            }
+            for (Encabezado encabezadoListOldEncabezado : encabezadoListOld) {
+                if (!encabezadoListNew.contains(encabezadoListOldEncabezado)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Encabezado " + encabezadoListOldEncabezado + " since its procesoId field is not nullable.");
+                }
+            }
+            for (Numericadocumental numericadocumentalListOldNumericadocumental : numericadocumentalListOld) {
+                if (!numericadocumentalListNew.contains(numericadocumentalListOldNumericadocumental)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Numericadocumental " + numericadocumentalListOldNumericadocumental + " since its procesoId field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -210,6 +264,20 @@ public class ProcesoJpaController implements Serializable {
             }
             asignacionencuestaListNew = attachedAsignacionencuestaListNew;
             proceso.setAsignacionencuestaList(asignacionencuestaListNew);
+            List<Encabezado> attachedEncabezadoListNew = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListNewEncabezadoToAttach : encabezadoListNew) {
+                encabezadoListNewEncabezadoToAttach = em.getReference(encabezadoListNewEncabezadoToAttach.getClass(), encabezadoListNewEncabezadoToAttach.getId());
+                attachedEncabezadoListNew.add(encabezadoListNewEncabezadoToAttach);
+            }
+            encabezadoListNew = attachedEncabezadoListNew;
+            proceso.setEncabezadoList(encabezadoListNew);
+            List<Numericadocumental> attachedNumericadocumentalListNew = new ArrayList<Numericadocumental>();
+            for (Numericadocumental numericadocumentalListNewNumericadocumentalToAttach : numericadocumentalListNew) {
+                numericadocumentalListNewNumericadocumentalToAttach = em.getReference(numericadocumentalListNewNumericadocumentalToAttach.getClass(), numericadocumentalListNewNumericadocumentalToAttach.getId());
+                attachedNumericadocumentalListNew.add(numericadocumentalListNewNumericadocumentalToAttach);
+            }
+            numericadocumentalListNew = attachedNumericadocumentalListNew;
+            proceso.setNumericadocumentalList(numericadocumentalListNew);
             proceso = em.merge(proceso);
             if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
                 programaIdOld.getProcesoList().remove(proceso);
@@ -260,6 +328,28 @@ public class ProcesoJpaController implements Serializable {
                     if (oldProcesoIdOfAsignacionencuestaListNewAsignacionencuesta != null && !oldProcesoIdOfAsignacionencuestaListNewAsignacionencuesta.equals(proceso)) {
                         oldProcesoIdOfAsignacionencuestaListNewAsignacionencuesta.getAsignacionencuestaList().remove(asignacionencuestaListNewAsignacionencuesta);
                         oldProcesoIdOfAsignacionencuestaListNewAsignacionencuesta = em.merge(oldProcesoIdOfAsignacionencuestaListNewAsignacionencuesta);
+                    }
+                }
+            }
+            for (Encabezado encabezadoListNewEncabezado : encabezadoListNew) {
+                if (!encabezadoListOld.contains(encabezadoListNewEncabezado)) {
+                    Proceso oldProcesoIdOfEncabezadoListNewEncabezado = encabezadoListNewEncabezado.getProcesoId();
+                    encabezadoListNewEncabezado.setProcesoId(proceso);
+                    encabezadoListNewEncabezado = em.merge(encabezadoListNewEncabezado);
+                    if (oldProcesoIdOfEncabezadoListNewEncabezado != null && !oldProcesoIdOfEncabezadoListNewEncabezado.equals(proceso)) {
+                        oldProcesoIdOfEncabezadoListNewEncabezado.getEncabezadoList().remove(encabezadoListNewEncabezado);
+                        oldProcesoIdOfEncabezadoListNewEncabezado = em.merge(oldProcesoIdOfEncabezadoListNewEncabezado);
+                    }
+                }
+            }
+            for (Numericadocumental numericadocumentalListNewNumericadocumental : numericadocumentalListNew) {
+                if (!numericadocumentalListOld.contains(numericadocumentalListNewNumericadocumental)) {
+                    Proceso oldProcesoIdOfNumericadocumentalListNewNumericadocumental = numericadocumentalListNewNumericadocumental.getProcesoId();
+                    numericadocumentalListNewNumericadocumental.setProcesoId(proceso);
+                    numericadocumentalListNewNumericadocumental = em.merge(numericadocumentalListNewNumericadocumental);
+                    if (oldProcesoIdOfNumericadocumentalListNewNumericadocumental != null && !oldProcesoIdOfNumericadocumentalListNewNumericadocumental.equals(proceso)) {
+                        oldProcesoIdOfNumericadocumentalListNewNumericadocumental.getNumericadocumentalList().remove(numericadocumentalListNewNumericadocumental);
+                        oldProcesoIdOfNumericadocumentalListNewNumericadocumental = em.merge(oldProcesoIdOfNumericadocumentalListNewNumericadocumental);
                     }
                 }
             }
@@ -320,6 +410,20 @@ public class ProcesoJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Proceso (" + proceso + ") cannot be destroyed since the Asignacionencuesta " + asignacionencuestaListOrphanCheckAsignacionencuesta + " in its asignacionencuestaList field has a non-nullable procesoId field.");
+            }
+            List<Encabezado> encabezadoListOrphanCheck = proceso.getEncabezadoList();
+            for (Encabezado encabezadoListOrphanCheckEncabezado : encabezadoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Proceso (" + proceso + ") cannot be destroyed since the Encabezado " + encabezadoListOrphanCheckEncabezado + " in its encabezadoList field has a non-nullable procesoId field.");
+            }
+            List<Numericadocumental> numericadocumentalListOrphanCheck = proceso.getNumericadocumentalList();
+            for (Numericadocumental numericadocumentalListOrphanCheckNumericadocumental : numericadocumentalListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Proceso (" + proceso + ") cannot be destroyed since the Numericadocumental " + numericadocumentalListOrphanCheckNumericadocumental + " in its numericadocumentalList field has a non-nullable procesoId field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -383,5 +487,5 @@ public class ProcesoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

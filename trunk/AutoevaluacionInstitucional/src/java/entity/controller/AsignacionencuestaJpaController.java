@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import entity.Asignacionencuesta;
@@ -10,18 +11,15 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Proceso;
-import entity.Fuente;
 import entity.Encuesta;
+import entity.Fuente;
+import entity.Proceso;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class AsignacionencuestaJpaController implements Serializable {
 
     public AsignacionencuestaJpaController(EntityManagerFactory emf) {
@@ -38,33 +36,33 @@ public class AsignacionencuestaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Proceso procesoId = asignacionencuesta.getProcesoId();
-            if (procesoId != null) {
-                procesoId = em.getReference(procesoId.getClass(), procesoId.getId());
-                asignacionencuesta.setProcesoId(procesoId);
+            Encuesta encuestaId = asignacionencuesta.getEncuestaId();
+            if (encuestaId != null) {
+                encuestaId = em.getReference(encuestaId.getClass(), encuestaId.getId());
+                asignacionencuesta.setEncuestaId(encuestaId);
             }
             Fuente fuenteId = asignacionencuesta.getFuenteId();
             if (fuenteId != null) {
                 fuenteId = em.getReference(fuenteId.getClass(), fuenteId.getId());
                 asignacionencuesta.setFuenteId(fuenteId);
             }
-            Encuesta encuestaId = asignacionencuesta.getEncuestaId();
-            if (encuestaId != null) {
-                encuestaId = em.getReference(encuestaId.getClass(), encuestaId.getId());
-                asignacionencuesta.setEncuestaId(encuestaId);
+            Proceso procesoId = asignacionencuesta.getProcesoId();
+            if (procesoId != null) {
+                procesoId = em.getReference(procesoId.getClass(), procesoId.getId());
+                asignacionencuesta.setProcesoId(procesoId);
             }
             em.persist(asignacionencuesta);
-            if (procesoId != null) {
-                procesoId.getAsignacionencuestaList().add(asignacionencuesta);
-                procesoId = em.merge(procesoId);
+            if (encuestaId != null) {
+                encuestaId.getAsignacionencuestaList().add(asignacionencuesta);
+                encuestaId = em.merge(encuestaId);
             }
             if (fuenteId != null) {
                 fuenteId.getAsignacionencuestaList().add(asignacionencuesta);
                 fuenteId = em.merge(fuenteId);
             }
-            if (encuestaId != null) {
-                encuestaId.getAsignacionencuestaList().add(asignacionencuesta);
-                encuestaId = em.merge(encuestaId);
+            if (procesoId != null) {
+                procesoId.getAsignacionencuestaList().add(asignacionencuesta);
+                procesoId = em.merge(procesoId);
             }
             em.getTransaction().commit();
         } finally {
@@ -80,32 +78,32 @@ public class AsignacionencuestaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Asignacionencuesta persistentAsignacionencuesta = em.find(Asignacionencuesta.class, asignacionencuesta.getId());
-            Proceso procesoIdOld = persistentAsignacionencuesta.getProcesoId();
-            Proceso procesoIdNew = asignacionencuesta.getProcesoId();
-            Fuente fuenteIdOld = persistentAsignacionencuesta.getFuenteId();
-            Fuente fuenteIdNew = asignacionencuesta.getFuenteId();
             Encuesta encuestaIdOld = persistentAsignacionencuesta.getEncuestaId();
             Encuesta encuestaIdNew = asignacionencuesta.getEncuestaId();
-            if (procesoIdNew != null) {
-                procesoIdNew = em.getReference(procesoIdNew.getClass(), procesoIdNew.getId());
-                asignacionencuesta.setProcesoId(procesoIdNew);
+            Fuente fuenteIdOld = persistentAsignacionencuesta.getFuenteId();
+            Fuente fuenteIdNew = asignacionencuesta.getFuenteId();
+            Proceso procesoIdOld = persistentAsignacionencuesta.getProcesoId();
+            Proceso procesoIdNew = asignacionencuesta.getProcesoId();
+            if (encuestaIdNew != null) {
+                encuestaIdNew = em.getReference(encuestaIdNew.getClass(), encuestaIdNew.getId());
+                asignacionencuesta.setEncuestaId(encuestaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
                 asignacionencuesta.setFuenteId(fuenteIdNew);
             }
-            if (encuestaIdNew != null) {
-                encuestaIdNew = em.getReference(encuestaIdNew.getClass(), encuestaIdNew.getId());
-                asignacionencuesta.setEncuestaId(encuestaIdNew);
+            if (procesoIdNew != null) {
+                procesoIdNew = em.getReference(procesoIdNew.getClass(), procesoIdNew.getId());
+                asignacionencuesta.setProcesoId(procesoIdNew);
             }
             asignacionencuesta = em.merge(asignacionencuesta);
-            if (procesoIdOld != null && !procesoIdOld.equals(procesoIdNew)) {
-                procesoIdOld.getAsignacionencuestaList().remove(asignacionencuesta);
-                procesoIdOld = em.merge(procesoIdOld);
+            if (encuestaIdOld != null && !encuestaIdOld.equals(encuestaIdNew)) {
+                encuestaIdOld.getAsignacionencuestaList().remove(asignacionencuesta);
+                encuestaIdOld = em.merge(encuestaIdOld);
             }
-            if (procesoIdNew != null && !procesoIdNew.equals(procesoIdOld)) {
-                procesoIdNew.getAsignacionencuestaList().add(asignacionencuesta);
-                procesoIdNew = em.merge(procesoIdNew);
+            if (encuestaIdNew != null && !encuestaIdNew.equals(encuestaIdOld)) {
+                encuestaIdNew.getAsignacionencuestaList().add(asignacionencuesta);
+                encuestaIdNew = em.merge(encuestaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getAsignacionencuestaList().remove(asignacionencuesta);
@@ -115,13 +113,13 @@ public class AsignacionencuestaJpaController implements Serializable {
                 fuenteIdNew.getAsignacionencuestaList().add(asignacionencuesta);
                 fuenteIdNew = em.merge(fuenteIdNew);
             }
-            if (encuestaIdOld != null && !encuestaIdOld.equals(encuestaIdNew)) {
-                encuestaIdOld.getAsignacionencuestaList().remove(asignacionencuesta);
-                encuestaIdOld = em.merge(encuestaIdOld);
+            if (procesoIdOld != null && !procesoIdOld.equals(procesoIdNew)) {
+                procesoIdOld.getAsignacionencuestaList().remove(asignacionencuesta);
+                procesoIdOld = em.merge(procesoIdOld);
             }
-            if (encuestaIdNew != null && !encuestaIdNew.equals(encuestaIdOld)) {
-                encuestaIdNew.getAsignacionencuestaList().add(asignacionencuesta);
-                encuestaIdNew = em.merge(encuestaIdNew);
+            if (procesoIdNew != null && !procesoIdNew.equals(procesoIdOld)) {
+                procesoIdNew.getAsignacionencuestaList().add(asignacionencuesta);
+                procesoIdNew = em.merge(procesoIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -152,20 +150,20 @@ public class AsignacionencuestaJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The asignacionencuesta with id " + id + " no longer exists.", enfe);
             }
-            Proceso procesoId = asignacionencuesta.getProcesoId();
-            if (procesoId != null) {
-                procesoId.getAsignacionencuestaList().remove(asignacionencuesta);
-                procesoId = em.merge(procesoId);
+            Encuesta encuestaId = asignacionencuesta.getEncuestaId();
+            if (encuestaId != null) {
+                encuestaId.getAsignacionencuestaList().remove(asignacionencuesta);
+                encuestaId = em.merge(encuestaId);
             }
             Fuente fuenteId = asignacionencuesta.getFuenteId();
             if (fuenteId != null) {
                 fuenteId.getAsignacionencuestaList().remove(asignacionencuesta);
                 fuenteId = em.merge(fuenteId);
             }
-            Encuesta encuestaId = asignacionencuesta.getEncuestaId();
-            if (encuestaId != null) {
-                encuestaId.getAsignacionencuestaList().remove(asignacionencuesta);
-                encuestaId = em.merge(encuestaId);
+            Proceso procesoId = asignacionencuesta.getProcesoId();
+            if (procesoId != null) {
+                procesoId.getAsignacionencuestaList().remove(asignacionencuesta);
+                procesoId = em.merge(procesoId);
             }
             em.remove(asignacionencuesta);
             em.getTransaction().commit();
@@ -221,5 +219,5 @@ public class AsignacionencuestaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

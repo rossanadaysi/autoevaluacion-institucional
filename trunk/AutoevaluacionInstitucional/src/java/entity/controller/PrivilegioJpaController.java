@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import connection.jpaConnection;
@@ -19,10 +20,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class PrivilegioJpaController implements Serializable {
 
     public PrivilegioJpaController() {
@@ -197,5 +195,5 @@ public class PrivilegioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

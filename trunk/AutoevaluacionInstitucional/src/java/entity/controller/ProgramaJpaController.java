@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import connection.jpaConnection;
@@ -18,10 +19,7 @@ import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class ProgramaJpaController implements Serializable {
 
     public ProgramaJpaController() {
@@ -566,5 +564,5 @@ public class ProgramaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

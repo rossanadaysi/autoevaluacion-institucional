@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import java.io.Serializable;
@@ -9,18 +10,15 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Proceso;
 import entity.Factor;
 import entity.Ponderacionfactor;
+import entity.Proceso;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class PonderacionfactorJpaController implements Serializable {
 
     public PonderacionfactorJpaController(EntityManagerFactory emf) {
@@ -37,24 +35,24 @@ public class PonderacionfactorJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Proceso procesoId = ponderacionfactor.getProcesoId();
-            if (procesoId != null) {
-                procesoId = em.getReference(procesoId.getClass(), procesoId.getId());
-                ponderacionfactor.setProcesoId(procesoId);
-            }
             Factor factorId = ponderacionfactor.getFactorId();
             if (factorId != null) {
                 factorId = em.getReference(factorId.getClass(), factorId.getId());
                 ponderacionfactor.setFactorId(factorId);
             }
-            em.persist(ponderacionfactor);
+            Proceso procesoId = ponderacionfactor.getProcesoId();
             if (procesoId != null) {
-                procesoId.getPonderacionfactorList().add(ponderacionfactor);
-                procesoId = em.merge(procesoId);
+                procesoId = em.getReference(procesoId.getClass(), procesoId.getId());
+                ponderacionfactor.setProcesoId(procesoId);
             }
+            em.persist(ponderacionfactor);
             if (factorId != null) {
                 factorId.getPonderacionfactorList().add(ponderacionfactor);
                 factorId = em.merge(factorId);
+            }
+            if (procesoId != null) {
+                procesoId.getPonderacionfactorList().add(ponderacionfactor);
+                procesoId = em.merge(procesoId);
             }
             em.getTransaction().commit();
         } finally {
@@ -70,27 +68,19 @@ public class PonderacionfactorJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Ponderacionfactor persistentPonderacionfactor = em.find(Ponderacionfactor.class, ponderacionfactor.getId());
-            Proceso procesoIdOld = persistentPonderacionfactor.getProcesoId();
-            Proceso procesoIdNew = ponderacionfactor.getProcesoId();
             Factor factorIdOld = persistentPonderacionfactor.getFactorId();
             Factor factorIdNew = ponderacionfactor.getFactorId();
-            if (procesoIdNew != null) {
-                procesoIdNew = em.getReference(procesoIdNew.getClass(), procesoIdNew.getId());
-                ponderacionfactor.setProcesoId(procesoIdNew);
-            }
+            Proceso procesoIdOld = persistentPonderacionfactor.getProcesoId();
+            Proceso procesoIdNew = ponderacionfactor.getProcesoId();
             if (factorIdNew != null) {
                 factorIdNew = em.getReference(factorIdNew.getClass(), factorIdNew.getId());
                 ponderacionfactor.setFactorId(factorIdNew);
             }
+            if (procesoIdNew != null) {
+                procesoIdNew = em.getReference(procesoIdNew.getClass(), procesoIdNew.getId());
+                ponderacionfactor.setProcesoId(procesoIdNew);
+            }
             ponderacionfactor = em.merge(ponderacionfactor);
-            if (procesoIdOld != null && !procesoIdOld.equals(procesoIdNew)) {
-                procesoIdOld.getPonderacionfactorList().remove(ponderacionfactor);
-                procesoIdOld = em.merge(procesoIdOld);
-            }
-            if (procesoIdNew != null && !procesoIdNew.equals(procesoIdOld)) {
-                procesoIdNew.getPonderacionfactorList().add(ponderacionfactor);
-                procesoIdNew = em.merge(procesoIdNew);
-            }
             if (factorIdOld != null && !factorIdOld.equals(factorIdNew)) {
                 factorIdOld.getPonderacionfactorList().remove(ponderacionfactor);
                 factorIdOld = em.merge(factorIdOld);
@@ -98,6 +88,14 @@ public class PonderacionfactorJpaController implements Serializable {
             if (factorIdNew != null && !factorIdNew.equals(factorIdOld)) {
                 factorIdNew.getPonderacionfactorList().add(ponderacionfactor);
                 factorIdNew = em.merge(factorIdNew);
+            }
+            if (procesoIdOld != null && !procesoIdOld.equals(procesoIdNew)) {
+                procesoIdOld.getPonderacionfactorList().remove(ponderacionfactor);
+                procesoIdOld = em.merge(procesoIdOld);
+            }
+            if (procesoIdNew != null && !procesoIdNew.equals(procesoIdOld)) {
+                procesoIdNew.getPonderacionfactorList().add(ponderacionfactor);
+                procesoIdNew = em.merge(procesoIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -128,15 +126,15 @@ public class PonderacionfactorJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ponderacionfactor with id " + id + " no longer exists.", enfe);
             }
-            Proceso procesoId = ponderacionfactor.getProcesoId();
-            if (procesoId != null) {
-                procesoId.getPonderacionfactorList().remove(ponderacionfactor);
-                procesoId = em.merge(procesoId);
-            }
             Factor factorId = ponderacionfactor.getFactorId();
             if (factorId != null) {
                 factorId.getPonderacionfactorList().remove(ponderacionfactor);
                 factorId = em.merge(factorId);
+            }
+            Proceso procesoId = ponderacionfactor.getProcesoId();
+            if (procesoId != null) {
+                procesoId.getPonderacionfactorList().remove(ponderacionfactor);
+                procesoId = em.merge(procesoId);
             }
             em.remove(ponderacionfactor);
             em.getTransaction().commit();
@@ -192,5 +190,5 @@ public class PonderacionfactorJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
