@@ -65,6 +65,10 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/ponderacion/listarF";
         } else if (path.equals("listarPonderacionCaracteristica")) {
             path = "autoevaluacionInstitucional/proceso/ponderacion/listarC";
+        } else if (path.equals("listarEvaluarDoc")) {
+            path = "autoevaluacionInstitucional/proceso/documentalNumerica/listarEvaluarDoc";
+        } else if (path.equals("listarEvaluarNum")) {
+            path = "autoevaluacionInstitucional/proceso/documentalNumerica/listarEvaluarNum";
         } else if (path.equals("detalleProceso")) {
             path = "autoevaluacionInstitucional/proceso/detalleP";
         } else if (path.equals("validar1")) {
@@ -93,11 +97,10 @@ public class navegacion implements Action {
         } else if (path.equals("listarEncuestasCC")) {
             session.setAttribute("listencuestas", conEncuesta.findEncuestaEntities());
             path = "comiteCentral/encuesta/listar";
-        }
-         else if (path.equals("indexF")) {
+        } else if (path.equals("indexF")) {
             path = "fuente/index";
         }
-         
+
 
 
         String url = "/WEB-INF/vista/" + path + ".jsp";

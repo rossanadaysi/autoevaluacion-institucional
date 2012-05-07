@@ -360,7 +360,7 @@
                         }*/
                                                
            
-                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos")
+                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum")
                         {
                         
                             $.unsubscribe("set_grid_width");
@@ -588,10 +588,39 @@
                                                 url: "<%=request.getContextPath()%>/formController?action=evaluarInfoDocumentalAI",
                                                 data: $("#formInfoDoc").serialize(),
                                                 success: function(){
-                                                   /* $('#myModalF').modal();
-                                                    $('#myModalF').on('hidden', function () {
-                                                        location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
-                                                    })    */          
+                                                    $('#myModalID').modal();
+                                                    $('#myModalID').on('hidden', function () {
+                                                        location = "<%=request.getContextPath()%>/#listarEvaluarDoc";
+                                                    })             
+                                                } //fin success
+                                            }); //fin $.ajax
+                                        }); //fin submit
+                                        //{offset:80}   
+                                    } //fin success
+                                }); //fin del $.ajax                 
+                            }
+                            else if(hash == "#infoNumerica"){
+                                url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                             
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    { 
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                        $("#formInfoNum").submit(function(event){
+                                            event.preventDefault();
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: "<%=request.getContextPath()%>/formController?action=evaluarInfoNumericaAI",
+                                                data: $("#formInfoNum").serialize(),
+                                                success: function(){
+                                                    $('#myModalIN').modal();
+                                                    $('#myModalIN').on('hidden', function () {
+                                                        location = "<%=request.getContextPath()%>/#listarEvaluarNum";
+                                                    })             
                                                 } //fin success
                                             }); //fin $.ajax
                                         }); //fin submit
@@ -753,6 +782,36 @@
                                     } //fin success
                                 }); //fin $.ajax
                             }
+                             if(hash == "#listarEvaluarDoc"){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarEvaluarDoc",
+                                    success: function(){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarDoc",
+                                            success: function(data){
+                                                $("#center").html(data);
+                                            }
+                                        })
+                                    } //fin success
+                                }); //fin $.ajax
+                            }
+                            if(hash == "#listarEvaluarNum"){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarEvaluarNum",
+                                    success: function(){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarNum",
+                                            success: function(data){
+                                                $("#center").html(data);
+                                            }
+                                        })
+                                    } //fin success
+                                }); //fin $.ajax
+                            }
                         } //fin del else
                     }
                 });  
@@ -873,7 +932,7 @@
                                         <li class="nav-header">Configuración del Proceso</li>
                                         <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                         <li><a  id="infoDocumental"  href="<%=request.getContextPath()%>/#infoDocumental"><i class="icon-glass"></i> Información Documental</a></li>
-                                        <li><a  id="infoNumerica"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Información Numérica</a></li>
+                                        <li><a  id="infoNumerica"  href="<%=request.getContextPath()%>/#infoNumerica"><i class="icon-glass"></i> Información Numérica</a></li>
                                         <li class="divider"></li>
                                         <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a>
                                         </c:otherwise>
@@ -1060,5 +1119,36 @@
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
             </div>
         </div><!--/ModalC1-->
+
+        <!--/ModalID-->
+        <div class="modal hide fade" id="myModalID">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Evaluación información documental.</h4>
+                <br>
+                    <p>La información documental se ha evaluado satisfactoriamente .</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
+        
+        <div class="modal hide fade" id="myModalIN">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Evaluación información numérica.</h4>
+                <br>
+                    <p>La información numérica se ha evaluado satisfactoriamente .</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
     </body>
 </html> 
