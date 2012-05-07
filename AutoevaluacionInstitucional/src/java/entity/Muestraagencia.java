@@ -2,16 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Ususario
- */
+
 @Entity
 @Table(name = "muestraagencia")
 @XmlRootElement
@@ -87,5 +85,5 @@ public class Muestraagencia implements Serializable {
     public String toString() {
         return "entity.Muestraagencia[ id=" + id + " ]";
     }
-    
+
 }

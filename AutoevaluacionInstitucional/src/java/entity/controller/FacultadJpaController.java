@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import entity.Facultad;
@@ -17,10 +18,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class FacultadJpaController implements Serializable {
 
     public FacultadJpaController(EntityManagerFactory emf) {
@@ -185,5 +183,5 @@ public class FacultadJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import connection.jpaConnection;
@@ -19,10 +20,7 @@ import entity.controller.exceptions.PreexistingEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class PersonaJpaController implements Serializable {
 
     public PersonaJpaController() {
@@ -41,6 +39,9 @@ public class PersonaJpaController implements Serializable {
         }
         if (persona.getDirectorprogramaList() == null) {
             persona.setDirectorprogramaList(new ArrayList<Directorprograma>());
+        }
+        if (persona.getEncabezadoList() == null) {
+            persona.setEncabezadoList(new ArrayList<Encabezado>());
         }
         if (persona.getEgresadoList() == null) {
             persona.setEgresadoList(new ArrayList<Egresado>());
@@ -79,6 +80,12 @@ public class PersonaJpaController implements Serializable {
                 attachedDirectorprogramaList.add(directorprogramaListDirectorprogramaToAttach);
             }
             persona.setDirectorprogramaList(attachedDirectorprogramaList);
+            List<Encabezado> attachedEncabezadoList = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListEncabezadoToAttach : persona.getEncabezadoList()) {
+                encabezadoListEncabezadoToAttach = em.getReference(encabezadoListEncabezadoToAttach.getClass(), encabezadoListEncabezadoToAttach.getId());
+                attachedEncabezadoList.add(encabezadoListEncabezadoToAttach);
+            }
+            persona.setEncabezadoList(attachedEncabezadoList);
             List<Egresado> attachedEgresadoList = new ArrayList<Egresado>();
             for (Egresado egresadoListEgresadoToAttach : persona.getEgresadoList()) {
                 egresadoListEgresadoToAttach = em.getReference(egresadoListEgresadoToAttach.getClass(), egresadoListEgresadoToAttach.getId());
@@ -135,6 +142,15 @@ public class PersonaJpaController implements Serializable {
                 if (oldPersonaIdOfDirectorprogramaListDirectorprograma != null) {
                     oldPersonaIdOfDirectorprogramaListDirectorprograma.getDirectorprogramaList().remove(directorprogramaListDirectorprograma);
                     oldPersonaIdOfDirectorprogramaListDirectorprograma = em.merge(oldPersonaIdOfDirectorprogramaListDirectorprograma);
+                }
+            }
+            for (Encabezado encabezadoListEncabezado : persona.getEncabezadoList()) {
+                Persona oldPersonaIdOfEncabezadoListEncabezado = encabezadoListEncabezado.getPersonaId();
+                encabezadoListEncabezado.setPersonaId(persona);
+                encabezadoListEncabezado = em.merge(encabezadoListEncabezado);
+                if (oldPersonaIdOfEncabezadoListEncabezado != null) {
+                    oldPersonaIdOfEncabezadoListEncabezado.getEncabezadoList().remove(encabezadoListEncabezado);
+                    oldPersonaIdOfEncabezadoListEncabezado = em.merge(oldPersonaIdOfEncabezadoListEncabezado);
                 }
             }
             for (Egresado egresadoListEgresado : persona.getEgresadoList()) {
@@ -207,6 +223,8 @@ public class PersonaJpaController implements Serializable {
             List<Estudiante> estudianteListNew = persona.getEstudianteList();
             List<Directorprograma> directorprogramaListOld = persistentPersona.getDirectorprogramaList();
             List<Directorprograma> directorprogramaListNew = persona.getDirectorprogramaList();
+            List<Encabezado> encabezadoListOld = persistentPersona.getEncabezadoList();
+            List<Encabezado> encabezadoListNew = persona.getEncabezadoList();
             List<Egresado> egresadoListOld = persistentPersona.getEgresadoList();
             List<Egresado> egresadoListNew = persona.getEgresadoList();
             List<Representante> representanteListOld = persistentPersona.getRepresentanteList();
@@ -240,6 +258,14 @@ public class PersonaJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Directorprograma " + directorprogramaListOldDirectorprograma + " since its personaId field is not nullable.");
+                }
+            }
+            for (Encabezado encabezadoListOldEncabezado : encabezadoListOld) {
+                if (!encabezadoListNew.contains(encabezadoListOldEncabezado)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Encabezado " + encabezadoListOldEncabezado + " since its personaId field is not nullable.");
                 }
             }
             for (Egresado egresadoListOldEgresado : egresadoListOld) {
@@ -306,6 +332,13 @@ public class PersonaJpaController implements Serializable {
             }
             directorprogramaListNew = attachedDirectorprogramaListNew;
             persona.setDirectorprogramaList(directorprogramaListNew);
+            List<Encabezado> attachedEncabezadoListNew = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListNewEncabezadoToAttach : encabezadoListNew) {
+                encabezadoListNewEncabezadoToAttach = em.getReference(encabezadoListNewEncabezadoToAttach.getClass(), encabezadoListNewEncabezadoToAttach.getId());
+                attachedEncabezadoListNew.add(encabezadoListNewEncabezadoToAttach);
+            }
+            encabezadoListNew = attachedEncabezadoListNew;
+            persona.setEncabezadoList(encabezadoListNew);
             List<Egresado> attachedEgresadoListNew = new ArrayList<Egresado>();
             for (Egresado egresadoListNewEgresadoToAttach : egresadoListNew) {
                 egresadoListNewEgresadoToAttach = em.getReference(egresadoListNewEgresadoToAttach.getClass(), egresadoListNewEgresadoToAttach.getId());
@@ -372,6 +405,17 @@ public class PersonaJpaController implements Serializable {
                     if (oldPersonaIdOfDirectorprogramaListNewDirectorprograma != null && !oldPersonaIdOfDirectorprogramaListNewDirectorprograma.equals(persona)) {
                         oldPersonaIdOfDirectorprogramaListNewDirectorprograma.getDirectorprogramaList().remove(directorprogramaListNewDirectorprograma);
                         oldPersonaIdOfDirectorprogramaListNewDirectorprograma = em.merge(oldPersonaIdOfDirectorprogramaListNewDirectorprograma);
+                    }
+                }
+            }
+            for (Encabezado encabezadoListNewEncabezado : encabezadoListNew) {
+                if (!encabezadoListOld.contains(encabezadoListNewEncabezado)) {
+                    Persona oldPersonaIdOfEncabezadoListNewEncabezado = encabezadoListNewEncabezado.getPersonaId();
+                    encabezadoListNewEncabezado.setPersonaId(persona);
+                    encabezadoListNewEncabezado = em.merge(encabezadoListNewEncabezado);
+                    if (oldPersonaIdOfEncabezadoListNewEncabezado != null && !oldPersonaIdOfEncabezadoListNewEncabezado.equals(persona)) {
+                        oldPersonaIdOfEncabezadoListNewEncabezado.getEncabezadoList().remove(encabezadoListNewEncabezado);
+                        oldPersonaIdOfEncabezadoListNewEncabezado = em.merge(oldPersonaIdOfEncabezadoListNewEncabezado);
                     }
                 }
             }
@@ -481,6 +525,13 @@ public class PersonaJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Directorprograma " + directorprogramaListOrphanCheckDirectorprograma + " in its directorprogramaList field has a non-nullable personaId field.");
             }
+            List<Encabezado> encabezadoListOrphanCheck = persona.getEncabezadoList();
+            for (Encabezado encabezadoListOrphanCheckEncabezado : encabezadoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Encabezado " + encabezadoListOrphanCheckEncabezado + " in its encabezadoList field has a non-nullable personaId field.");
+            }
             List<Egresado> egresadoListOrphanCheck = persona.getEgresadoList();
             for (Egresado egresadoListOrphanCheckEgresado : egresadoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -573,5 +624,5 @@ public class PersonaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

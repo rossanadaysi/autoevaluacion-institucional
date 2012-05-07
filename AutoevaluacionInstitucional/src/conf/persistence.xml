@@ -59,6 +59,10 @@
     <class>entity.Muestraegresado</class>
     <class>entity.Muestradocente</class>
     <class>entity.Ponderacionfactor</class>
+    <class>entity.Numericadocumental</class>
+    <class>entity.Instrumento</class>
+    <class>entity.Resultadoevaluacion</class>
+    <class>entity.Encabezado</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/autoevaluacion"/>

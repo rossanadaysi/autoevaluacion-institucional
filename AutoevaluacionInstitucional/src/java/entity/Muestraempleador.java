@@ -2,16 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Ususario
- */
+
 @Entity
 @Table(name = "muestraempleador")
 @XmlRootElement
@@ -25,12 +23,12 @@ public class Muestraempleador implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "muestra_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Muestra muestraId;
     @JoinColumn(name = "empleador_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleador empleadorId;
+    @JoinColumn(name = "muestra_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Muestra muestraId;
 
     public Muestraempleador() {
     }
@@ -47,20 +45,20 @@ public class Muestraempleador implements Serializable {
         this.id = id;
     }
 
-    public Muestra getMuestraId() {
-        return muestraId;
-    }
-
-    public void setMuestraId(Muestra muestraId) {
-        this.muestraId = muestraId;
-    }
-
     public Empleador getEmpleadorId() {
         return empleadorId;
     }
 
     public void setEmpleadorId(Empleador empleadorId) {
         this.empleadorId = empleadorId;
+    }
+
+    public Muestra getMuestraId() {
+        return muestraId;
+    }
+
+    public void setMuestraId(Muestra muestraId) {
+        this.muestraId = muestraId;
     }
 
     @Override
@@ -87,5 +85,5 @@ public class Muestraempleador implements Serializable {
     public String toString() {
         return "entity.Muestraempleador[ id=" + id + " ]";
     }
-    
+
 }

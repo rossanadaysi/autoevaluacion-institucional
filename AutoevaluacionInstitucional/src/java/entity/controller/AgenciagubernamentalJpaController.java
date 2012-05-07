@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import entity.Agenciagubernamental;
@@ -20,10 +21,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class AgenciagubernamentalJpaController implements Serializable {
 
     public AgenciagubernamentalJpaController(EntityManagerFactory emf) {
@@ -256,5 +254,5 @@ public class AgenciagubernamentalJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

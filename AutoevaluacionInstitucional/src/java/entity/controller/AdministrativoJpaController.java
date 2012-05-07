@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import entity.*;
@@ -17,10 +18,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class AdministrativoJpaController implements Serializable {
 
     public AdministrativoJpaController(EntityManagerFactory emf) {
@@ -40,15 +38,15 @@ public class AdministrativoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Programa programaId = administrativo.getProgramaId();
-            if (programaId != null) {
-                programaId = em.getReference(programaId.getClass(), programaId.getId());
-                administrativo.setProgramaId(programaId);
-            }
             Persona personaId = administrativo.getPersonaId();
             if (personaId != null) {
                 personaId = em.getReference(personaId.getClass(), personaId.getId());
                 administrativo.setPersonaId(personaId);
+            }
+            Programa programaId = administrativo.getProgramaId();
+            if (programaId != null) {
+                programaId = em.getReference(programaId.getClass(), programaId.getId());
+                administrativo.setProgramaId(programaId);
             }
             Fuente fuenteId = administrativo.getFuenteId();
             if (fuenteId != null) {
@@ -62,13 +60,13 @@ public class AdministrativoJpaController implements Serializable {
             }
             administrativo.setMuestraadministrativoList(attachedMuestraadministrativoList);
             em.persist(administrativo);
-            if (programaId != null) {
-                programaId.getAdministrativoList().add(administrativo);
-                programaId = em.merge(programaId);
-            }
             if (personaId != null) {
                 personaId.getAdministrativoList().add(administrativo);
                 personaId = em.merge(personaId);
+            }
+            if (programaId != null) {
+                programaId.getAdministrativoList().add(administrativo);
+                programaId = em.merge(programaId);
             }
             if (fuenteId != null) {
                 fuenteId.getAdministrativoList().add(administrativo);
@@ -97,10 +95,10 @@ public class AdministrativoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Administrativo persistentAdministrativo = em.find(Administrativo.class, administrativo.getId());
-            Programa programaIdOld = persistentAdministrativo.getProgramaId();
-            Programa programaIdNew = administrativo.getProgramaId();
             Persona personaIdOld = persistentAdministrativo.getPersonaId();
             Persona personaIdNew = administrativo.getPersonaId();
+            Programa programaIdOld = persistentAdministrativo.getProgramaId();
+            Programa programaIdNew = administrativo.getProgramaId();
             Fuente fuenteIdOld = persistentAdministrativo.getFuenteId();
             Fuente fuenteIdNew = administrativo.getFuenteId();
             List<Muestraadministrativo> muestraadministrativoListOld = persistentAdministrativo.getMuestraadministrativoList();
@@ -117,13 +115,13 @@ public class AdministrativoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (programaIdNew != null) {
-                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
-                administrativo.setProgramaId(programaIdNew);
-            }
             if (personaIdNew != null) {
                 personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
                 administrativo.setPersonaId(personaIdNew);
+            }
+            if (programaIdNew != null) {
+                programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
+                administrativo.setProgramaId(programaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
@@ -137,14 +135,6 @@ public class AdministrativoJpaController implements Serializable {
             muestraadministrativoListNew = attachedMuestraadministrativoListNew;
             administrativo.setMuestraadministrativoList(muestraadministrativoListNew);
             administrativo = em.merge(administrativo);
-            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
-                programaIdOld.getAdministrativoList().remove(administrativo);
-                programaIdOld = em.merge(programaIdOld);
-            }
-            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
-                programaIdNew.getAdministrativoList().add(administrativo);
-                programaIdNew = em.merge(programaIdNew);
-            }
             if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
                 personaIdOld.getAdministrativoList().remove(administrativo);
                 personaIdOld = em.merge(personaIdOld);
@@ -152,6 +142,14 @@ public class AdministrativoJpaController implements Serializable {
             if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
                 personaIdNew.getAdministrativoList().add(administrativo);
                 personaIdNew = em.merge(personaIdNew);
+            }
+            if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
+                programaIdOld.getAdministrativoList().remove(administrativo);
+                programaIdOld = em.merge(programaIdOld);
+            }
+            if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
+                programaIdNew.getAdministrativoList().add(administrativo);
+                programaIdNew = em.merge(programaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getAdministrativoList().remove(administrativo);
@@ -212,15 +210,15 @@ public class AdministrativoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Programa programaId = administrativo.getProgramaId();
-            if (programaId != null) {
-                programaId.getAdministrativoList().remove(administrativo);
-                programaId = em.merge(programaId);
-            }
             Persona personaId = administrativo.getPersonaId();
             if (personaId != null) {
                 personaId.getAdministrativoList().remove(administrativo);
                 personaId = em.merge(personaId);
+            }
+            Programa programaId = administrativo.getProgramaId();
+            if (programaId != null) {
+                programaId.getAdministrativoList().remove(administrativo);
+                programaId = em.merge(programaId);
             }
             Fuente fuenteId = administrativo.getFuenteId();
             if (fuenteId != null) {
@@ -281,5 +279,5 @@ public class AdministrativoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

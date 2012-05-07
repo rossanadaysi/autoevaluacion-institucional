@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import connection.jpaConnection;
@@ -14,16 +15,14 @@ import entity.Pregunta;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Asignacionencuesta;
+import entity.Encabezado;
 import entity.Encuesta;
 import entity.controller.exceptions.IllegalOrphanException;
 import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Oscar
- */
+
 public class EncuestaJpaController implements Serializable {
 
    public EncuestaJpaController() {
@@ -39,6 +38,9 @@ public class EncuestaJpaController implements Serializable {
         }
         if (encuesta.getAsignacionencuestaList() == null) {
             encuesta.setAsignacionencuestaList(new ArrayList<Asignacionencuesta>());
+        }
+        if (encuesta.getEncabezadoList() == null) {
+            encuesta.setEncabezadoList(new ArrayList<Encabezado>());
         }
         EntityManager em = null;
         try {
@@ -56,6 +58,12 @@ public class EncuestaJpaController implements Serializable {
                 attachedAsignacionencuestaList.add(asignacionencuestaListAsignacionencuestaToAttach);
             }
             encuesta.setAsignacionencuestaList(attachedAsignacionencuestaList);
+            List<Encabezado> attachedEncabezadoList = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListEncabezadoToAttach : encuesta.getEncabezadoList()) {
+                encabezadoListEncabezadoToAttach = em.getReference(encabezadoListEncabezadoToAttach.getClass(), encabezadoListEncabezadoToAttach.getId());
+                attachedEncabezadoList.add(encabezadoListEncabezadoToAttach);
+            }
+            encuesta.setEncabezadoList(attachedEncabezadoList);
             em.persist(encuesta);
             for (Pregunta preguntaListPregunta : encuesta.getPreguntaList()) {
                 preguntaListPregunta.getEncuestaList().add(encuesta);
@@ -68,6 +76,15 @@ public class EncuestaJpaController implements Serializable {
                 if (oldEncuestaIdOfAsignacionencuestaListAsignacionencuesta != null) {
                     oldEncuestaIdOfAsignacionencuestaListAsignacionencuesta.getAsignacionencuestaList().remove(asignacionencuestaListAsignacionencuesta);
                     oldEncuestaIdOfAsignacionencuestaListAsignacionencuesta = em.merge(oldEncuestaIdOfAsignacionencuestaListAsignacionencuesta);
+                }
+            }
+            for (Encabezado encabezadoListEncabezado : encuesta.getEncabezadoList()) {
+                Encuesta oldEncuestaIdOfEncabezadoListEncabezado = encabezadoListEncabezado.getEncuestaId();
+                encabezadoListEncabezado.setEncuestaId(encuesta);
+                encabezadoListEncabezado = em.merge(encabezadoListEncabezado);
+                if (oldEncuestaIdOfEncabezadoListEncabezado != null) {
+                    oldEncuestaIdOfEncabezadoListEncabezado.getEncabezadoList().remove(encabezadoListEncabezado);
+                    oldEncuestaIdOfEncabezadoListEncabezado = em.merge(oldEncuestaIdOfEncabezadoListEncabezado);
                 }
             }
             em.getTransaction().commit();
@@ -88,6 +105,8 @@ public class EncuestaJpaController implements Serializable {
             List<Pregunta> preguntaListNew = encuesta.getPreguntaList();
             List<Asignacionencuesta> asignacionencuestaListOld = persistentEncuesta.getAsignacionencuestaList();
             List<Asignacionencuesta> asignacionencuestaListNew = encuesta.getAsignacionencuestaList();
+            List<Encabezado> encabezadoListOld = persistentEncuesta.getEncabezadoList();
+            List<Encabezado> encabezadoListNew = encuesta.getEncabezadoList();
             List<String> illegalOrphanMessages = null;
             for (Asignacionencuesta asignacionencuestaListOldAsignacionencuesta : asignacionencuestaListOld) {
                 if (!asignacionencuestaListNew.contains(asignacionencuestaListOldAsignacionencuesta)) {
@@ -95,6 +114,14 @@ public class EncuestaJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Asignacionencuesta " + asignacionencuestaListOldAsignacionencuesta + " since its encuestaId field is not nullable.");
+                }
+            }
+            for (Encabezado encabezadoListOldEncabezado : encabezadoListOld) {
+                if (!encabezadoListNew.contains(encabezadoListOldEncabezado)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Encabezado " + encabezadoListOldEncabezado + " since its encuestaId field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -114,6 +141,13 @@ public class EncuestaJpaController implements Serializable {
             }
             asignacionencuestaListNew = attachedAsignacionencuestaListNew;
             encuesta.setAsignacionencuestaList(asignacionencuestaListNew);
+            List<Encabezado> attachedEncabezadoListNew = new ArrayList<Encabezado>();
+            for (Encabezado encabezadoListNewEncabezadoToAttach : encabezadoListNew) {
+                encabezadoListNewEncabezadoToAttach = em.getReference(encabezadoListNewEncabezadoToAttach.getClass(), encabezadoListNewEncabezadoToAttach.getId());
+                attachedEncabezadoListNew.add(encabezadoListNewEncabezadoToAttach);
+            }
+            encabezadoListNew = attachedEncabezadoListNew;
+            encuesta.setEncabezadoList(encabezadoListNew);
             encuesta = em.merge(encuesta);
             for (Pregunta preguntaListOldPregunta : preguntaListOld) {
                 if (!preguntaListNew.contains(preguntaListOldPregunta)) {
@@ -135,6 +169,17 @@ public class EncuestaJpaController implements Serializable {
                     if (oldEncuestaIdOfAsignacionencuestaListNewAsignacionencuesta != null && !oldEncuestaIdOfAsignacionencuestaListNewAsignacionencuesta.equals(encuesta)) {
                         oldEncuestaIdOfAsignacionencuestaListNewAsignacionencuesta.getAsignacionencuestaList().remove(asignacionencuestaListNewAsignacionencuesta);
                         oldEncuestaIdOfAsignacionencuestaListNewAsignacionencuesta = em.merge(oldEncuestaIdOfAsignacionencuestaListNewAsignacionencuesta);
+                    }
+                }
+            }
+            for (Encabezado encabezadoListNewEncabezado : encabezadoListNew) {
+                if (!encabezadoListOld.contains(encabezadoListNewEncabezado)) {
+                    Encuesta oldEncuestaIdOfEncabezadoListNewEncabezado = encabezadoListNewEncabezado.getEncuestaId();
+                    encabezadoListNewEncabezado.setEncuestaId(encuesta);
+                    encabezadoListNewEncabezado = em.merge(encabezadoListNewEncabezado);
+                    if (oldEncuestaIdOfEncabezadoListNewEncabezado != null && !oldEncuestaIdOfEncabezadoListNewEncabezado.equals(encuesta)) {
+                        oldEncuestaIdOfEncabezadoListNewEncabezado.getEncabezadoList().remove(encabezadoListNewEncabezado);
+                        oldEncuestaIdOfEncabezadoListNewEncabezado = em.merge(oldEncuestaIdOfEncabezadoListNewEncabezado);
                     }
                 }
             }
@@ -174,6 +219,13 @@ public class EncuestaJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Encuesta (" + encuesta + ") cannot be destroyed since the Asignacionencuesta " + asignacionencuestaListOrphanCheckAsignacionencuesta + " in its asignacionencuestaList field has a non-nullable encuestaId field.");
+            }
+            List<Encabezado> encabezadoListOrphanCheck = encuesta.getEncabezadoList();
+            for (Encabezado encabezadoListOrphanCheckEncabezado : encabezadoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Encuesta (" + encuesta + ") cannot be destroyed since the Encabezado " + encabezadoListOrphanCheckEncabezado + " in its encabezadoList field has a non-nullable encuestaId field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -238,4 +290,4 @@ public class EncuestaJpaController implements Serializable {
         }
     }
 
-    }
+}

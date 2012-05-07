@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
@@ -10,10 +11,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Oscar
- */
+
 @Entity
 @Table(name = "empleador")
 @XmlRootElement
@@ -32,12 +30,12 @@ public class Empleador implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadorId")
     private List<Muestraempleador> muestraempleadorList;
-    @JoinColumn(name = "sectorempresarial_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Sectorempresarial sectorempresarialId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
+    @JoinColumn(name = "sectorempresarial_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Sectorempresarial sectorempresarialId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -74,20 +72,20 @@ public class Empleador implements Serializable {
         this.muestraempleadorList = muestraempleadorList;
     }
 
-    public Sectorempresarial getSectorempresarialId() {
-        return sectorempresarialId;
-    }
-
-    public void setSectorempresarialId(Sectorempresarial sectorempresarialId) {
-        this.sectorempresarialId = sectorempresarialId;
-    }
-
     public Persona getPersonaId() {
         return personaId;
     }
 
     public void setPersonaId(Persona personaId) {
         this.personaId = personaId;
+    }
+
+    public Sectorempresarial getSectorempresarialId() {
+        return sectorempresarialId;
+    }
+
+    public void setSectorempresarialId(Sectorempresarial sectorempresarialId) {
+        this.sectorempresarialId = sectorempresarialId;
     }
 
     public Fuente getFuenteId() {
@@ -122,5 +120,5 @@ public class Empleador implements Serializable {
     public String toString() {
         return "entity.Empleador[ id=" + id + " ]";
     }
-    
+
 }

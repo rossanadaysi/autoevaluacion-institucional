@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import java.io.Serializable;
@@ -9,18 +10,15 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Muestra;
 import entity.Empleador;
+import entity.Muestra;
 import entity.Muestraempleador;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class MuestraempleadorJpaController implements Serializable {
 
     public MuestraempleadorJpaController(EntityManagerFactory emf) {
@@ -37,24 +35,24 @@ public class MuestraempleadorJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Muestra muestraId = muestraempleador.getMuestraId();
-            if (muestraId != null) {
-                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
-                muestraempleador.setMuestraId(muestraId);
-            }
             Empleador empleadorId = muestraempleador.getEmpleadorId();
             if (empleadorId != null) {
                 empleadorId = em.getReference(empleadorId.getClass(), empleadorId.getId());
                 muestraempleador.setEmpleadorId(empleadorId);
             }
-            em.persist(muestraempleador);
+            Muestra muestraId = muestraempleador.getMuestraId();
             if (muestraId != null) {
-                muestraId.getMuestraempleadorList().add(muestraempleador);
-                muestraId = em.merge(muestraId);
+                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
+                muestraempleador.setMuestraId(muestraId);
             }
+            em.persist(muestraempleador);
             if (empleadorId != null) {
                 empleadorId.getMuestraempleadorList().add(muestraempleador);
                 empleadorId = em.merge(empleadorId);
+            }
+            if (muestraId != null) {
+                muestraId.getMuestraempleadorList().add(muestraempleador);
+                muestraId = em.merge(muestraId);
             }
             em.getTransaction().commit();
         } finally {
@@ -70,27 +68,19 @@ public class MuestraempleadorJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestraempleador persistentMuestraempleador = em.find(Muestraempleador.class, muestraempleador.getId());
-            Muestra muestraIdOld = persistentMuestraempleador.getMuestraId();
-            Muestra muestraIdNew = muestraempleador.getMuestraId();
             Empleador empleadorIdOld = persistentMuestraempleador.getEmpleadorId();
             Empleador empleadorIdNew = muestraempleador.getEmpleadorId();
-            if (muestraIdNew != null) {
-                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
-                muestraempleador.setMuestraId(muestraIdNew);
-            }
+            Muestra muestraIdOld = persistentMuestraempleador.getMuestraId();
+            Muestra muestraIdNew = muestraempleador.getMuestraId();
             if (empleadorIdNew != null) {
                 empleadorIdNew = em.getReference(empleadorIdNew.getClass(), empleadorIdNew.getId());
                 muestraempleador.setEmpleadorId(empleadorIdNew);
             }
+            if (muestraIdNew != null) {
+                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
+                muestraempleador.setMuestraId(muestraIdNew);
+            }
             muestraempleador = em.merge(muestraempleador);
-            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
-                muestraIdOld.getMuestraempleadorList().remove(muestraempleador);
-                muestraIdOld = em.merge(muestraIdOld);
-            }
-            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
-                muestraIdNew.getMuestraempleadorList().add(muestraempleador);
-                muestraIdNew = em.merge(muestraIdNew);
-            }
             if (empleadorIdOld != null && !empleadorIdOld.equals(empleadorIdNew)) {
                 empleadorIdOld.getMuestraempleadorList().remove(muestraempleador);
                 empleadorIdOld = em.merge(empleadorIdOld);
@@ -98,6 +88,14 @@ public class MuestraempleadorJpaController implements Serializable {
             if (empleadorIdNew != null && !empleadorIdNew.equals(empleadorIdOld)) {
                 empleadorIdNew.getMuestraempleadorList().add(muestraempleador);
                 empleadorIdNew = em.merge(empleadorIdNew);
+            }
+            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
+                muestraIdOld.getMuestraempleadorList().remove(muestraempleador);
+                muestraIdOld = em.merge(muestraIdOld);
+            }
+            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
+                muestraIdNew.getMuestraempleadorList().add(muestraempleador);
+                muestraIdNew = em.merge(muestraIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -128,15 +126,15 @@ public class MuestraempleadorJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestraempleador with id " + id + " no longer exists.", enfe);
             }
-            Muestra muestraId = muestraempleador.getMuestraId();
-            if (muestraId != null) {
-                muestraId.getMuestraempleadorList().remove(muestraempleador);
-                muestraId = em.merge(muestraId);
-            }
             Empleador empleadorId = muestraempleador.getEmpleadorId();
             if (empleadorId != null) {
                 empleadorId.getMuestraempleadorList().remove(muestraempleador);
                 empleadorId = em.merge(empleadorId);
+            }
+            Muestra muestraId = muestraempleador.getMuestraId();
+            if (muestraId != null) {
+                muestraId.getMuestraempleadorList().remove(muestraempleador);
+                muestraId = em.merge(muestraId);
             }
             em.remove(muestraempleador);
             em.getTransaction().commit();
@@ -192,5 +190,5 @@ public class MuestraempleadorJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

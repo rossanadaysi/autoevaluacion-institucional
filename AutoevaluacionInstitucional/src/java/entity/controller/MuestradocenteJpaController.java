@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity.controller;
 
 import java.io.Serializable;
@@ -9,18 +10,15 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Muestra;
 import entity.Docente;
+import entity.Muestra;
 import entity.Muestradocente;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author Ususario
- */
+
 public class MuestradocenteJpaController implements Serializable {
 
     public MuestradocenteJpaController(EntityManagerFactory emf) {
@@ -37,24 +35,24 @@ public class MuestradocenteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Muestra muestraId = muestradocente.getMuestraId();
-            if (muestraId != null) {
-                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
-                muestradocente.setMuestraId(muestraId);
-            }
             Docente docenteId = muestradocente.getDocenteId();
             if (docenteId != null) {
                 docenteId = em.getReference(docenteId.getClass(), docenteId.getId());
                 muestradocente.setDocenteId(docenteId);
             }
-            em.persist(muestradocente);
+            Muestra muestraId = muestradocente.getMuestraId();
             if (muestraId != null) {
-                muestraId.getMuestradocenteList().add(muestradocente);
-                muestraId = em.merge(muestraId);
+                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
+                muestradocente.setMuestraId(muestraId);
             }
+            em.persist(muestradocente);
             if (docenteId != null) {
                 docenteId.getMuestradocenteList().add(muestradocente);
                 docenteId = em.merge(docenteId);
+            }
+            if (muestraId != null) {
+                muestraId.getMuestradocenteList().add(muestradocente);
+                muestraId = em.merge(muestraId);
             }
             em.getTransaction().commit();
         } finally {
@@ -70,27 +68,19 @@ public class MuestradocenteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestradocente persistentMuestradocente = em.find(Muestradocente.class, muestradocente.getId());
-            Muestra muestraIdOld = persistentMuestradocente.getMuestraId();
-            Muestra muestraIdNew = muestradocente.getMuestraId();
             Docente docenteIdOld = persistentMuestradocente.getDocenteId();
             Docente docenteIdNew = muestradocente.getDocenteId();
-            if (muestraIdNew != null) {
-                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
-                muestradocente.setMuestraId(muestraIdNew);
-            }
+            Muestra muestraIdOld = persistentMuestradocente.getMuestraId();
+            Muestra muestraIdNew = muestradocente.getMuestraId();
             if (docenteIdNew != null) {
                 docenteIdNew = em.getReference(docenteIdNew.getClass(), docenteIdNew.getId());
                 muestradocente.setDocenteId(docenteIdNew);
             }
+            if (muestraIdNew != null) {
+                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
+                muestradocente.setMuestraId(muestraIdNew);
+            }
             muestradocente = em.merge(muestradocente);
-            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
-                muestraIdOld.getMuestradocenteList().remove(muestradocente);
-                muestraIdOld = em.merge(muestraIdOld);
-            }
-            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
-                muestraIdNew.getMuestradocenteList().add(muestradocente);
-                muestraIdNew = em.merge(muestraIdNew);
-            }
             if (docenteIdOld != null && !docenteIdOld.equals(docenteIdNew)) {
                 docenteIdOld.getMuestradocenteList().remove(muestradocente);
                 docenteIdOld = em.merge(docenteIdOld);
@@ -98,6 +88,14 @@ public class MuestradocenteJpaController implements Serializable {
             if (docenteIdNew != null && !docenteIdNew.equals(docenteIdOld)) {
                 docenteIdNew.getMuestradocenteList().add(muestradocente);
                 docenteIdNew = em.merge(docenteIdNew);
+            }
+            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
+                muestraIdOld.getMuestradocenteList().remove(muestradocente);
+                muestraIdOld = em.merge(muestraIdOld);
+            }
+            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
+                muestraIdNew.getMuestradocenteList().add(muestradocente);
+                muestraIdNew = em.merge(muestraIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -128,15 +126,15 @@ public class MuestradocenteJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestradocente with id " + id + " no longer exists.", enfe);
             }
-            Muestra muestraId = muestradocente.getMuestraId();
-            if (muestraId != null) {
-                muestraId.getMuestradocenteList().remove(muestradocente);
-                muestraId = em.merge(muestraId);
-            }
             Docente docenteId = muestradocente.getDocenteId();
             if (docenteId != null) {
                 docenteId.getMuestradocenteList().remove(muestradocente);
                 docenteId = em.merge(docenteId);
+            }
+            Muestra muestraId = muestradocente.getMuestraId();
+            if (muestraId != null) {
+                muestraId.getMuestradocenteList().remove(muestradocente);
+                muestraId = em.merge(muestraId);
             }
             em.remove(muestradocente);
             em.getTransaction().commit();
@@ -192,5 +190,5 @@ public class MuestradocenteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
