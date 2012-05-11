@@ -77,7 +77,7 @@
                 <td>VERSIÓN:00</td>
             </tr>
             <tr>
-                <td style="width: 50%; text-align: center;">${encuesta.nombre}</td>
+                <td style="width: 50%; text-align: center;">${encuesta.rowsByIndex[0][0]}</td>
                 <td>FECHA:18/04/2012</td>
             </tr>
         </tbody>
@@ -86,14 +86,14 @@
     <div class="row">
         <div class="span12">
             <h3>Objetivo:</h3>
-            <p style="text-align: justify;">${encuesta.descripcion}</p>
+            <p style="text-align: justify;">${encuesta.rowsByIndex[0][1]}</p>
         </div>
 
     </div>
     <div class="row">
         <div class="span12">
             <h3>Instrucciones:</h3>
-            <textarea id="ins" style="display: none;" rows="9" class="span8">${encuesta.instrucciones}</textarea>
+            <textarea id="ins" style="display: none;" rows="9" class="span8">${encuesta.rowsByIndex[0][2]}</textarea>
             <p id="insp" style="text-align: justify;"></p>
         </div>
     </div>
@@ -102,14 +102,14 @@
             <tbody>
 
 
-                <c:forEach items="${encuesta.preguntaList}" var="pregunta" varStatus="status">
+                <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status">
                     <c:choose>
-                        <c:when test="${pregunta.tipo != 'Elegir 1-5'}">
+                        <c:when test="${pregunta[2] != 'Elegir 1-5'}">
                             <tr>
                                 <td>${status.count}</td>   
-                                <td><p>${pregunta.pregunta}</p></td>
+                                <td><p>${pregunta[1]}</p></td>
                                 <td>
-                                    <select id="pregunta${pregunta.id}" name="pregunta${pregunta.id}" class="{required:true}">
+                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="{required:true}">
                                         <option></option>  
                                         <option value="Si">Si</option>  
                                         <option value="No">No</option>  
@@ -120,9 +120,9 @@
                         <c:otherwise>
                             <tr>
                                 <td>${status.count}</td>   
-                                <td><p>${pregunta.pregunta}</p></td>
+                                <td><p>${pregunta[1]}</p></td>
                                 <td>
-                                    <select id="pregunta${pregunta.id}" name="pregunta${pregunta.id}" class="{required:true}">
+                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="{required:true}">
                                         <option></option>  
                                         <option value="0">0</option>  
                                         <option value="1">1</option>  

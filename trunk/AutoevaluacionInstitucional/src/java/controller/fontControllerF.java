@@ -52,7 +52,7 @@ public class fontControllerF extends HttpServlet {
             
             String ruta = objeto.procesar(request);
 
-           // System.out.println("action: '" + action + "' procesada.");
+            System.out.println("action: '" + action + "' procesada.");
 
             RequestDispatcher rd = request.getRequestDispatcher(ruta);
 

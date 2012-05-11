@@ -13,7 +13,7 @@
  </script> 
 <div class="hero-unit">
     <div class="row">
-        <div class="span8">
+        <div class="span10">
             <br/>
             <h2>Listado de  Caracteristicas</h2>
             <c:choose>

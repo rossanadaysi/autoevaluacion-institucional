@@ -11,7 +11,7 @@
         })   
             
         $("a[href='#eliminarPregunta']").click(function(){
-            alert("jajajaja");
+           
            
         });
     })
@@ -21,7 +21,7 @@
 
 <div class="hero-unit">
     <div class="row">
-        <div class="span8">
+        <div class="span10">
             <br/>
             <h2>Listado de  Preguntas</h2>
             <c:choose>

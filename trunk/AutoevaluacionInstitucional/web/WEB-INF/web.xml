@@ -39,6 +39,10 @@
         <servlet-name>fontControllerF</servlet-name>
         <servlet-class>controller.fontControllerF</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>formController3</servlet-name>
+        <servlet-class>controller.formController3</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>fontControllerF</servlet-name>
         <url-pattern>/ControllerF</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>formController3</servlet-name>
+        <url-pattern>/formController3</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
