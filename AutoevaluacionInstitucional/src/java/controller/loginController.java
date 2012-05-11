@@ -94,7 +94,7 @@ public class loginController extends HttpServlet {
 
 
         HttpSession session = request.getSession();
-        ProgramaJpaController conPrograma = new ProgramaJpaController();
+        ProgramaJpaController conPrograma;
         PrivilegioJpaController conPivilegio = new PrivilegioJpaController();
         RepresentanteJpaController conRepresentante = new RepresentanteJpaController();
         PersonaJpaController conPersona = new PersonaJpaController();
@@ -186,9 +186,9 @@ public class loginController extends HttpServlet {
                                             sql = "select indicador.id, indicador.nombre, numericadocumental.evaluacion, numericadocumental.nombre, numericadocumental.accion, numericadocumental.responsable from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + proceso.getId() + "'";
                                             rs2 = conSql.CargarSql2(sql, nombreBd);
 
-                                          
-                                            
-                                            if (rs2!= null) {
+
+
+                                            if (rs2 != null) {
                                                 session.setAttribute("auxInfoDocumental", 1);
                                             }
 
@@ -256,13 +256,13 @@ public class loginController extends HttpServlet {
 
                                 for (Proceso proceso2 : listProceso2) {
                                     if (proceso2.getFechacierre() == null && proceso2.getProgramaId().getId() == programa2.getId()) {
-                                        session.setAttribute("proceso", proceso2);
+                                        session.setAttribute("proceso", proceso2); // session------------------------------
                                         String nombreBd2 = programa2.getNombre() + proceso2.getId();
-                                        session.setAttribute("bd2", nombreBd2);
+                                        session.setAttribute("bd", nombreBd2); //session------------------------------------
                                         String idFuenteEstudiante = "1";
-                                        ResultSet rs3 = null;
-                                        String sql2 = "SELECT asignacionencuesta. *"
-                                                + " FROM asignacionencuesta"
+                                        String sql2 = "SELECT encuesta.id , encuesta.nombre"
+                                                + " FROM encuesta"
+                                                + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
                                                 + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
                                                 + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
                                                 + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
@@ -273,21 +273,9 @@ public class loginController extends HttpServlet {
                                                 + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + "";
 
 
-                                        rs3 = conSql.CargarSql(sql2, nombreBd2);
-                                        EncuestaJpaController conEn = new EncuestaJpaController();
-                                        List<Encuesta> le = new ArrayList<Encuesta>();
-                                        try {
-                                            while (rs3.next()) {
-                                                Encuesta e = conEn.findEncuesta(Integer.parseInt(rs3.getString(3)));
-                                                le.add(e);
-                                            }
-                                            session.setAttribute("listaEncuestasDisponibles", le);
-                                        } catch (SQLException ex) {
-                                            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-
-
-
+                                        Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
+                                        session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
+                                        session.setAttribute("idfuente", idFuenteEstudiante);
 
                                     }
                                 }

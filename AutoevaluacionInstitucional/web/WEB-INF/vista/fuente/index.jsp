@@ -205,7 +205,7 @@
                         <br/>
                         <h2>Listado de  Encuestas Disponibles</h2>
                         <c:choose>
-                            <c:when test="${listaEncuestasDisponibles.size() != 0}">
+                            <c:when test="${listaEncuestasDisponibles.getRowCount()>0}">
 
                                 <table class="table table-striped table-bordered table-condensed">
                                     <thead>
@@ -214,16 +214,16 @@
                                         <th></th>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${listaEncuestasDisponibles}" var="row" varStatus="iter">
+                                        <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
                                             <tr>    
                                                 <td>   
-                                                    <c:out value="${row.nombre}"/>
+                                                    <c:out value="${item[1]}"/>
                                                 </td>
                                                 <td>
                                                     <c:out value="${proceso.programaId.nombre}"/>
                                                 </td>
                                                 <td class="action">
-                                                    <a title="Responder Encuesta" href="#responderEncuesta&${row.id}">Responder encuesta</a>
+                                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>

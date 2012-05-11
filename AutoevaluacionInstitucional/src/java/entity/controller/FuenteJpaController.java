@@ -5,6 +5,7 @@
 
 package entity.controller;
 
+import connection.jpaConnection;
 import entity.*;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -21,14 +22,13 @@ import javax.persistence.EntityManagerFactory;
 
 public class FuenteJpaController implements Serializable {
 
-    public FuenteJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public FuenteJpaController() {
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return jpaConnection.getEntityManager();
     }
+
 
     public void create(Fuente fuente) {
         if (fuente.getAdministrativoList() == null) {
