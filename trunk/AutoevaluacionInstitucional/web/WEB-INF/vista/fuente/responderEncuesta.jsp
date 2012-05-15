@@ -4,7 +4,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
 <script type="text/javascript">
-    var itemsxpagina=5;
+    var itemsxpagina=45;
     function pageselectCallback(page_index, jq){
         var num_entries = $("#preguntas tr").length;
         for(var i=0;i<num_entries;i++)
@@ -30,8 +30,10 @@
             items_per_page:itemsxpagina,
             num_display_entries:4,
             num_edge_entries:2,
-            prev_text:"«",
-            next_text:"»"
+            prev_text:"&larr; Anterior",
+            next_text:"Siguiente &rarr;",
+            prev_show_always:false,
+            next_show_always:false
         });
     }
     $(document).ready(function(){
@@ -52,10 +54,10 @@
             submitHandler: function(){
                 $.ajax({
                     type: 'POST', 
-                    url: "<%=request.getContextPath()%>/formController3?action=responderE",
+                url: "<%=request.getContextPath()%>/formController3?action=responderE",
                     data: $("#formResponderE").serialize(),
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarEncuestas"
+                        location = "<%=request.getContextPath()%>/#inicio"
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -109,7 +111,7 @@
                                 <td>${status.count}</td>   
                                 <td><p>${pregunta[1]}</p></td>
                                 <td>
-                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="{required:true}">
+                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
                                         <option></option>  
                                         <option value="Si">Si</option>  
                                         <option value="No">No</option>  
@@ -122,7 +124,7 @@
                                 <td>${status.count}</td>   
                                 <td><p>${pregunta[1]}</p></td>
                                 <td>
-                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="{required:true}">
+                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
                                         <option></option>  
                                         <option value="0">0</option>  
                                         <option value="1">1</option>  

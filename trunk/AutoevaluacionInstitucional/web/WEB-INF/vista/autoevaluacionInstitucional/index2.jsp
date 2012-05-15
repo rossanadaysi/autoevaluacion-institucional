@@ -212,7 +212,6 @@
                     ,   north__paneClass:    "ui-layout-pane"
                     ,   closable:				true	// pane can open & close
 
-
                     //	reference only - these options are NOT required because 'true' is the default
                     ,	closable:				true	// pane can open & close
                     ,	resizable:				false	// when open, pane can be resized 
