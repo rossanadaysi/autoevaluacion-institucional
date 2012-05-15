@@ -21,9 +21,6 @@
         <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/css/docs2.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet"/>
-
-
-
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-ui.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.ba-hashchange.js"></script>
@@ -106,8 +103,11 @@
         </script>
         <script type="text/javascript">
             $(function(){
-            
+                location ="/AutoevaluacionInstitucional/#inicio"; 
                 $(window).hashchange(function(){
+                    
+                    
+                    
                     var hash = location.hash;
                 
                     if(hash=="#CerrarSesion"){
@@ -118,7 +118,25 @@
                                                         
                     }
                     
-                     if(hash.indexOf("#responderEncuesta")!=-1){
+                    if(hash=="#inicio"){
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: "<%=request.getContextPath()%>/ControllerF?action=inicio", 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").hide();
+                            },
+                            success: function(data) 
+                            {
+                                $("div.ui-layout-center").append(data);
+                                $("div.ui-layout-center").show(100);
+                                        
+                            } //fin success
+                        }); //fin del $.ajax
+                    
+                    }
+                    
+                    if(hash.indexOf("#responderEncuesta")!=-1){
                         var url3 = "<%=request.getContextPath()%>/"+hash;
                         url3 = url3.replace('#responderEncuesta', "ControllerF?action=responderEnc");
                         url3 = url3.replace('&', "&idE=");
@@ -170,7 +188,7 @@
                             <ul class="nav pull-right">
                                 <li class="divider-vertical"></li>
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown">${listEstudiante.get(0).personaId.nombre}<b class="caret"></b></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown">${persona.nombre}<b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Perfil</a></li>
                                         <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
@@ -199,44 +217,7 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
-            <div class="container">  
-                <div class="row">
-                    <div class="span8">
-                        <br/>
-                        <h2>Listado de  Encuestas Disponibles</h2>
-                        <c:choose>
-                            <c:when test="${listaEncuestasDisponibles.getRowCount()>0}">
 
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                        <th>Encuesta</th>
-                                        <th>Programa</th>
-                                        <th></th>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
-                                            <tr>    
-                                                <td>   
-                                                    <c:out value="${item[1]}"/>
-                                                </td>
-                                                <td>
-                                                    <c:out value="${proceso.programaId.nombre}"/>
-                                                </td>
-                                                <td class="action">
-                                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:otherwise>
-                                No Existen Encuestas Disponibles.
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-            </div>
         </div><!--/Center-->
     </body>
 </html> 

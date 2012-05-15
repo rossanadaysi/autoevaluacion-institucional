@@ -22,7 +22,7 @@ public class ResponderEncuesta implements Action {
         String bd = (String) session.getAttribute("bd");
         sqlController conSql = new sqlController();
         Result encuesta = null;
-        String sql = "Select encuesta.nombre, encuesta.descripcion, encuesta.instrucciones from encuesta where encuesta.id = " + idencuesta + "";
+        String sql = "Select encuesta.nombre, encuesta.descripcion, encuesta.instrucciones , encuesta.id from encuesta where encuesta.id = " + idencuesta + "";
         encuesta = conSql.CargarSql2(sql, bd);
         session.setAttribute("encuesta", encuesta);
         Result preguntas = null;

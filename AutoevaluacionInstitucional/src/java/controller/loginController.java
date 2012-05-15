@@ -243,6 +243,7 @@ public class loginController extends HttpServlet {
                                 out.println(0);
                                 session.setAttribute("tipoLogin", "Fuente");
                                 session.setAttribute("listEstudiante", est);
+                                session.setAttribute("persona", persona);
 
                                 ProgramaJpaController conPrograma2 = new ProgramaJpaController();
                                 ProcesoJpaController conProceso2 = new ProcesoJpaController();
@@ -270,12 +271,17 @@ public class loginController extends HttpServlet {
                                                 + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
                                                 + " WHERE persona.id = " + persona.getId() + ""
                                                 + " AND proceso.`FECHACIERRE` IS NULL"
-                                                + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + "";
+                                                + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + ""
+                                                + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado) "
+                                                + "";
+                                        
+                                                
 
 
                                         Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
                                         session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
-                                        session.setAttribute("idfuente", idFuenteEstudiante);
+                                        session.setAttribute("idfuente", idFuenteEstudiante); //session---------------------------------
 
                                     }
                                 }

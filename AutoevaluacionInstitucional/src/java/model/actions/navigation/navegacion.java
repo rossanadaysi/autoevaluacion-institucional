@@ -100,6 +100,9 @@ public class navegacion implements Action {
         } else if (path.equals("indexF")) {
             path = "fuente/index";
         }
+         else if (path.equals("inicio")) {
+            path = "fuente/inicio";
+        }
 
 
 

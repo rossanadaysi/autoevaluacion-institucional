@@ -4,6 +4,7 @@
  */
 package controller;
 
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.IDDatatypeValidator;
 import entity.*;
 import entity.controller.EncuestaJpaController;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.sql.Result;
 
 /**
  *
@@ -44,44 +46,79 @@ public class formController3 extends HttpServlet {
         if (request.getParameter("action").equals("responderE")) {
 
             Proceso p = (Proceso) session.getAttribute("proceso");
+            Persona per = (Persona) session.getAttribute("persona");
+            
             String idF =  (String) session.getAttribute("idfuente");
-            List<Estudiante> est = (List<Estudiante>) session.getAttribute("listEstudiante");
-            Persona per = est.get(0).getPersonaId();
-            Encuesta e = (Encuesta) session.getAttribute("encuesta");
+            Result encuesta = (Result) session.getAttribute("encuesta");
+            Result preguntas = (Result) session.getAttribute("preguntas");
+            
             String nombreBd = (String) session.getAttribute("bd");
+            
             sqlController conSql = new sqlController();
-            ResultSet rs3 = null;
+            
             String sql = "INSERT INTO encabezado ("
                     + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
                     + "VALUES ("
-                    + "NULL , '" + new Date() + "', '" + per.getId() + "', '" + p.getId() + "', '" + e.getId() + "', '" + idF + "'"
+                    + "NULL , '" + new Date() + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
                     + ");";
-            rs3 = conSql.CargarSql(sql, nombreBd);
+            conSql.CargarSql(sql, nombreBd);
+            System.out.println("INSERT INTO encabezado ("
+                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
+                    + "VALUES ("
+                    + "NULL , '" + new Date() + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
+                    + ");");    
 
-
-            ResultSet rs4 = null;
+            
             String sql2 = "SELECT `id`"
-                    + "FROM `encabezado`"
-                    + "WHERE `proceso_id` =" + p.getId() + ""
-                    + "AND `encuesta_id` =" + e.getId() + ""
-                    + "AND `fuente_id` =" + idF + ""
-                    + "AND `persona_id` =" + per.getId() + "";
+                    + " FROM `encabezado`"
+                    + " WHERE `proceso_id` =" + p.getId() + ""
+                    + " AND `encuesta_id` =" + encuesta.getRowsByIndex()[0][3] + ""
+                    + " AND `fuente_id` =" + idF + ""
+                    + " AND `persona_id` =" + per.getId() + "";
 
-            rs4 = conSql.CargarSql(sql2, nombreBd);
+            ResultSet rs4 = conSql.CargarSql(sql2, nombreBd);
+            int idEncabezado=0;
             try {
                 while (rs4.next()) {
-                    int idEncabezado = rs4.getInt(1);
+                    idEncabezado = rs4.getInt(1);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(formController3.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            List<Pregunta> listPreguntas = e.getPreguntaList();
-            for (Pregunta pregunta : listPreguntas) {
-                System.out.println("ok");
+            
+           for(int i=0;i< preguntas.getRowCount();i++){
+               String res = request.getParameter("pregunta" + preguntas.getRowsByIndex()[i][0] + "");
+                String sqlResultado = "INSERT INTO resultadoevaluacion ("
+                    + "`idResultadoEvaluacion` ,`respuesta` ,`encabezado_id` ,`pregunta_id` )"
+                    + "VALUES ("
+                    + "NULL , '" + res + "', '" + idEncabezado + "', '" + p.getId() + "'"
+                    + ");";
+                            
+                ResultSet rs5 = conSql.CargarSql(sqlResultado, nombreBd);
+               
             }
+                                                
+                                               
+                                                String sql6 = "SELECT encuesta.id , encuesta.nombre"
+                                                + " FROM encuesta"
+                                                + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                                + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                                + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                                + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
+                                                + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
+                                                + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
+                                                + " WHERE persona.id = " + per.getId() + ""
+                                                + " AND proceso.`FECHACIERRE` IS NULL"
+                                                + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                                + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado) "
+                                                + "";
+                                        
+                                                
 
 
+                                        Result encuestasDisponibles = conSql.CargarSql2(sql6, nombreBd);
+                                        session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles);
 
         }
     }
