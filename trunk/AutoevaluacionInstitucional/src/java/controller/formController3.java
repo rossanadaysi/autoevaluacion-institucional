@@ -9,9 +9,9 @@ import entity.*;
 import entity.controller.EncuestaJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,13 +59,13 @@ public class formController3 extends HttpServlet {
             String sql = "INSERT INTO encabezado ("
                     + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
                     + "VALUES ("
-                    + "NULL , '" + new Date() + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
+                    + "NULL , '" + new Date(1) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
                     + ");";
             conSql.UpdateSql(sql, nombreBd);
             System.out.println("INSERT INTO encabezado ("
                     + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
                     + "VALUES ("
-                    + "NULL , '" + new Date() + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
+                    + "NULL , '" + new Date(1) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
                     + ");");    
 
             
