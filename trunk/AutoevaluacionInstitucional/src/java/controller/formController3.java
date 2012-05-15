@@ -61,7 +61,7 @@ public class formController3 extends HttpServlet {
                     + "VALUES ("
                     + "NULL , '" + new Date() + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
                     + ");";
-            conSql.CargarSql(sql, nombreBd);
+            conSql.UpdateSql(sql, nombreBd);
             System.out.println("INSERT INTO encabezado ("
                     + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
                     + "VALUES ("
@@ -94,7 +94,7 @@ public class formController3 extends HttpServlet {
                     + "NULL , '" + res + "', '" + idEncabezado + "', '" + p.getId() + "'"
                     + ");";
                             
-                ResultSet rs5 = conSql.CargarSql(sqlResultado, nombreBd);
+                conSql.UpdateSql(sqlResultado, nombreBd);
                
             }
                                                 
