@@ -375,7 +375,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" href="#">Autoevaluacion Institucional</a>
+                        <a style="padding-bottom: 3px; padding-top: 6px" class="brand" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="#">Inicio</a></li>
@@ -415,20 +415,16 @@
                                                     <option>Docentes</option>
                                                     <option>Administrativos</option>
                                                 </optgroup>
-
                                             </select>
                                             <button type="submit" class="btn btn-primary btn-large" name="submit_login">Ingresar</button>
-
                                         </form>
                                     </ul>
-
                                 </li>
                             </ul>
                         </div><!-- /.nav-collapse -->
                     </div>
                 </div><!-- /navbar-inner -->
             </div><!-- /navbar -->
-
             <!--div que cierra-->
         </div>
         <div class="ui-layout-south ui-widget-content">
@@ -450,21 +446,19 @@
         </div>
         <div class="ui-layout-center">
             <DIV STYLE="visibility: visible; width: 100%; height: 100%; left: 0px; top: -231px; z-index:2">
-                <IMG STYLE="visibility: visible; width: 100%; height: 100%; left: 0px; top: -231px; z-index:2" SRC="css/images/stage_background.jpg" border=0>
-            </DIV> 
+                <IMG STYLE="visibility: visible; width: 100%; height: 100%; left: 0px; top: -231px; z-index:2" SRC="css/images/siafondoprincipal.png" border=0>
+            </DIV>
             <DIV STYLE=" position: absolute;
                  position: absolute;
                  left: 50%;
                  top: 45%;
-                 height: 350px;
-                 margin-top: -175px;    
-                 width: 350px;
-                 margin-left: -175px;    
+                 height: 118px;
+                 margin-top: -100px;    
+                 width: 336px;
+                 margin-left: 200px;    
                  visibility:visible;
                  z-index:2">
-                <IMG SRC="css/images/seal.gif" border=0>
-                    <p style="color: #000; font-weight: bolder; font-size: 18px; text-align:center;" >Sistema de Autoevaluación Institucional
-                        Universidad de Cartagena</p>
+                <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0>
             </DIV>  
         </div>
     </body>
