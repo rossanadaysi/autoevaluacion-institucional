@@ -217,12 +217,12 @@
                     ,	resizable:				false	// when open, pane can be resized 
                     ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
                         
-                    ,       north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
+                    ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
                     ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
                     ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
                     ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
                     ,	west__spacing_open:	1		// no resizer-bar when open (zero height)
-                    ,       south__paneClass:               "ui-layout-pane"
+                    ,   south__paneClass:               "ui-layout-pane"
                   	
                     ,	west__minSize:			200
                     ,	west__maxSize:			350

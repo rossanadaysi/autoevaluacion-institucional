@@ -52,7 +52,13 @@
 
 
         <style type="text/css">
-
+            .container {
+                float: none;
+                margin-bottom: 0;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 0;
+            }
             .icon_arrow {
                 background-image: url("css/images/flecha.png");
             }
@@ -445,21 +451,62 @@
             </div>
         </div>
         <div class="ui-layout-center">
-            <DIV STYLE="visibility: visible; width: 100%; height: 100%; left: 0px; top: -231px; z-index:2">
-                <IMG STYLE="visibility: visible; width: 100%; height: 100%; left: 0px; top: -231px; z-index:2" SRC="css/images/siafondoprincipal.png" border=0>
-            </DIV>
-            <DIV STYLE=" position: absolute;
-                 position: absolute;
-                 left: 50%;
-                 top: 45%;
-                 height: 118px;
-                 margin-top: -100px;    
-                 width: 336px;
-                 margin-left: 200px;    
-                 visibility:visible;
-                 z-index:2">
-                <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0>
-            </DIV>  
-        </div>
-    </body>
-</html>
+            <div style="height: 70%; background-image: url('css/images/siafondoprincipal.png')" >
+
+            </div>
+            <div style="height: 30%;" class="span9 container ">
+                <ul class="thumbnails">
+                    <li class="span3">
+                        <div class="thumbnail">
+                            <img alt="" src="">
+                                <div class="caption">
+                                    <h5>Experience</h5>
+                                    <p>TweetBeam visualizes Twitter in a unique way. Experience what people around the world are sharing about any topic you care about. Sit back and relax as the Tweets slide in!<br><br></p>
+                                                </div>
+                                                </div>
+                                                </li>
+                                                <li class="span3">
+                                                    <div class="thumbnail">
+                                                        <img alt="" src="">
+                                                            <div class="caption">
+                                                                <h5>For events</h5>
+                                                                <p>Engage with your audience! Use TweetBeam to visualize the conversation around your event.
+                                                                    Pictured above are <a href="http://www.twitter.com/jimcarrey">Jim Carrey</a> and <a href="http://www.twitter.com/eckharttolle">Eckhart Tolle</a> supported by a TweetBeam show.</p>
+                                                                <p style="margin-bottom:0"><small>» <a href="/commercial">About commercial use</a></small></p>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                                <li class="span3">
+                                                    <div class="thumbnail">
+                                                        <img alt="" src="">
+                                                            <div class="caption">
+                                                                <h5>Personal dashboard</h5>
+                                                                <p>Sign in to view a personalized TweetBeam show and to create and manage shows around your own interests or events.</p>
+                                                                <p><a class="btn btn-primary" href="/login">Sign in with Twitter</a></p>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                                </ul>
+                                                </div>
+
+
+
+
+
+
+
+                                                <DIV STYLE=" position: absolute;
+                                                     position: absolute;
+                                                     left: 50%;
+                                                     top: 45%;
+                                                     height: 118px;
+                                                     margin-top: -100px;    
+                                                     width: 336px;
+                                                     margin-left: 200px;    
+                                                     visibility:visible;
+                                                     z-index:2">
+                                                    <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0>
+                                                </DIV>  
+                                                </div>
+                                                </body>
+                                                </html>
