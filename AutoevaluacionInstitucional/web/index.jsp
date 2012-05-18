@@ -52,13 +52,6 @@
 
 
         <style type="text/css">
-            .container {
-                float: none;
-                margin-bottom: 0;
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 0;
-            }
             .icon_arrow {
                 background-image: url("css/images/flecha.png");
             }
@@ -353,7 +346,7 @@
                 
                 });
                 myLayout.allowOverflow('north'); 
- 		
+                 		
                 // ACCORDION - in the East pane - in a 'content-div'
 		
 
@@ -375,12 +368,7 @@
         <div class="ui-layout-north ui-widget-content">
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
-                    <div class="container-fluid" style="width: auto;">
-                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
+                    <div class="container-fluid">
                         <a style="padding-bottom: 3px; padding-top: 6px" class="brand" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
                         <div class="nav-collapse">
                             <ul class="nav">
@@ -392,9 +380,9 @@
                                 <li class="divider-vertical"></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar Sesion <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu" >
 
-                                        <form  id="formulario_login" class="well"  action="" method="post">
+                                        <form  id="formulario_login" class="well"  action="" method="post" style="background-color: #FFFFFF;">
                                             <div class="progress progress-info
                                                  progress-striped active" style="display: none;">
                                                 <div class="bar"
@@ -410,7 +398,7 @@
                                             <input id="codigo" type="text" name="codigo" class="span3 {required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
                                             <label>Contrase&ntilde;a</label>
                                             <input id="pass" type="password" name="pass" class="span3 {required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
-                                            <label><a href="#">Olvidó su contrase&ntilde;a?</a></label>
+                                            <label><a href="#" style="color: #F77F00;">¿Olvidó su contrase&ntilde;a?</a></label>
 
                                             <label>Tipo</label>
                                             <select id="tipo" name="tipo" class="span3">
@@ -422,7 +410,7 @@
                                                     <option>Administrativos</option>
                                                 </optgroup>
                                             </select>
-                                            <button type="submit" class="btn btn-primary btn-large" name="submit_login">Ingresar</button>
+                                            <button type="submit" class="btn" name="submit_login" style="font-weight:700">Iniciar sesi&oacute;n</button>
                                         </form>
                                     </ul>
                                 </li>
@@ -451,62 +439,74 @@
             </div>
         </div>
         <div class="ui-layout-center">
-            <div style="height: 70%; background-image: url('css/images/siafondoprincipal.png')" >
-
+            <div style="height: 68%; background-color: #f77f00;">
+            <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;overflow: visible !important;height: 95%; position: relative; left: 22%; top: 5%">    
+            <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;overflow: visible;height: 17%; position: absolute; right: 15%; top: 13%">    
             </div>
-            <div style="height: 30%;" class="span9 container ">
-                <ul class="thumbnails">
+            <div style="height: 32%;" class="offset2">
+                <ul class="thumbnails" style="margin-top: 10px;">
                     <li class="span3">
-                        <div class="thumbnail">
-                            <img alt="" src="">
-                                <div class="caption">
-                                    <h5>Experience</h5>
-                                    <p>TweetBeam visualizes Twitter in a unique way. Experience what people around the world are sharing about any topic you care about. Sit back and relax as the Tweets slide in!<br><br></p>
-                                                </div>
-                                                </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <img alt="" src="">
-                                                            <div class="caption">
-                                                                <h5>For events</h5>
-                                                                <p>Engage with your audience! Use TweetBeam to visualize the conversation around your event.
-                                                                    Pictured above are <a href="http://www.twitter.com/jimcarrey">Jim Carrey</a> and <a href="http://www.twitter.com/eckharttolle">Eckhart Tolle</a> supported by a TweetBeam show.</p>
-                                                                <p style="margin-bottom:0"><small>» <a href="/commercial">About commercial use</a></small></p>
-                                                            </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <img alt="" src="">
-                                                            <div class="caption">
-                                                                <h5>Personal dashboard</h5>
-                                                                <p>Sign in to view a personalized TweetBeam show and to create and manage shows around your own interests or events.</p>
-                                                                <p><a class="btn btn-primary" href="/login">Sign in with Twitter</a></p>
-                                                            </div>
-                                                    </div>
-                                                </li>
-                                                </ul>
-                                                </div>
+                        <div class="thumbnail" style="box-shadow:none;border: 0;">
+                            <a href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/albums/70_7697778.jpg">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/albums/70_7854374.jpg">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a  href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/albums/70_7774920.jpg">
+                            </a>
+                            <div class="caption">
+                                <h3 style="color: #F77F00;">New Releases</span></h3>
+                                <p><span  class="label">Hear new music from all types of artists and discover something new you'll love.</span></p>
+                                <a href="./javascript.html#buttons" class="btn js-btn" style="text-decoration: none;">Get the javascript »</a>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <li class="span3">
+                        <div class="thumbnail" style="box-shadow:none;border: 0;">
+                            <a href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_playlist70268320.jpg">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%"  src="http://images.grooveshark.com/static/featured/120_playlist69842843.jpg">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a  href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_playlist61212328.jpg">
+                            </a>
+                            <div class="caption">
+                                <h3 style="color: #F77F00;">Playlists and Stations</h3>
+                                <p><span class="label">Listen to artist-curated Playlists or customizable genre radio Stations.</span></p>
+                                <a href="./javascript.html#buttons" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="span3">
+                        <div class="thumbnail" style="box-shadow:none;border: 0;">
+                            <a href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_videoc54752009df2c945.jpg">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%"  src="http://images.grooveshark.com/static/featured/120_video671dcdbad465d91f.jpg">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a  href="#!/music" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_videoDiiGKQFy9ro.jpg">
+                            </a>
+                            <div class="caption">
+                                <h3 style="color: #F77F00;">Videos</h3>
+                                <p><span class="label">Watch featured music videos, recording sessions, and more.</span></p>
+                                <a href="./javascript.html#buttons" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 
-
-
-
-
-
-                                                <DIV STYLE=" position: absolute;
-                                                     position: absolute;
-                                                     left: 50%;
-                                                     top: 45%;
-                                                     height: 118px;
-                                                     margin-top: -100px;    
-                                                     width: 336px;
-                                                     margin-left: 200px;    
-                                                     visibility:visible;
-                                                     z-index:2">
-                                                    <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0>
-                                                </DIV>  
-                                                </div>
-                                                </body>
-                                                </html>
+    </body>
+</html>
