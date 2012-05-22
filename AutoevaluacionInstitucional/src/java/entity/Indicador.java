@@ -32,7 +32,10 @@ public class Indicador implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @ManyToMany(mappedBy = "indicadorList")
+    @JoinTable(name = "instrumentohasindicador", joinColumns = {
+        @JoinColumn(name = "indicador_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "instrumento_id", referencedColumnName = "id")})
+    @ManyToMany
     private List<Instrumento> instrumentoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "indicadorId")
     private List<Numericadocumental> numericadocumentalList;

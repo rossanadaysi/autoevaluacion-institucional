@@ -31,12 +31,12 @@ public class Representante implements Serializable {
     private String rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "representanteId")
     private List<Representantehasprivilegio> representantehasprivilegioList;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @JoinColumn(name = "programa_id", referencedColumnName = "id")
     @ManyToOne
     private Programa programaId;
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Persona personaId;
 
     public Representante() {
     }
@@ -75,20 +75,20 @@ public class Representante implements Serializable {
         this.representantehasprivilegioList = representantehasprivilegioList;
     }
 
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
-    }
-
     public Programa getProgramaId() {
         return programaId;
     }
 
     public void setProgramaId(Programa programaId) {
         this.programaId = programaId;
+    }
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
     @Override

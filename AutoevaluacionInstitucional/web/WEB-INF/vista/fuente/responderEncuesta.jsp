@@ -50,11 +50,26 @@
         $("#insp").append(inst);
         
         
-                $("#formResponderE").validate({
-            submitHandler: function(){
-                $.ajax({
+        $("#guardar").click(function(){
+            $.ajax({
                     type: 'POST', 
-                url: "<%=request.getContextPath()%>/formController3?action=responderE",
+                    url: "<%=request.getContextPath()%>/formController3?action=GuardarE",
+                    data: $("#formResponderE").serialize(),
+                    success: function(){
+                        location = "<%=request.getContextPath()%>/#inicio"
+                    } //fin success
+        });
+        
+        var validator = $("#formResponderE").bind("invalid-form.validate", function() {
+            alert("usted ha dejado de contestar " + validator.numberOfInvalids() + " preguntas, por favor contesterlas todas.");
+        })
+        .validate({
+            ignore: "", 
+                
+            submitHandler: function(){
+                  $.ajax({
+                    type: 'POST', 
+                    url: "<%=request.getContextPath()%>/formController3?action=responderE",
                     data: $("#formResponderE").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#inicio"
@@ -66,6 +81,11 @@
 
     });
 </script>
+<style type="text/css">
+    label.error{
+        color:#B94A48;
+    }
+</style>
 <div class="container">  
     <table class="table table-bordered table-striped" style="font-weight: bold;">
         <tbody>
@@ -146,7 +166,7 @@
             </div>
             <div class="span4">
                 <div style="text-align: right;margin-top: 18px;">
-                    <button class="btn" type="reset">Guardar</button>
+                    <button class="btn" id="guardar" type="button">Guardar</button>
                     <button class="btn btn-primary" type="submit">Enviar</button>
                 </div>
             </div>

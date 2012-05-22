@@ -273,7 +273,7 @@ public class loginController extends HttpServlet {
                                                 + " AND proceso.`FECHACIERRE` IS NULL"
                                                 + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + ""
                                                 + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
-                                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado) "
+                                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
                                                 + "";
                                         
                                                 

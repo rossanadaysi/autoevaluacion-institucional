@@ -32,10 +32,7 @@ public class Instrumento implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinTable(name = "instrumentohasindicador", joinColumns = {
-        @JoinColumn(name = "instrumento_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "instrumentoList")
     private List<Indicador> indicadorList;
 
     public Instrumento() {

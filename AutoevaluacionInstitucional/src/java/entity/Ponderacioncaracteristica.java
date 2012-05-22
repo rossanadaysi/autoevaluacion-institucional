@@ -35,12 +35,12 @@ public class Ponderacioncaracteristica implements Serializable {
     @Basic(optional = false)
     @Column(name = "justificacion")
     private String justificacion;
-    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Caracteristica caracteristicaId;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
+    @JoinColumn(name = "caracteristica_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Caracteristica caracteristicaId;
 
     public Ponderacioncaracteristica() {
     }
@@ -88,20 +88,20 @@ public class Ponderacioncaracteristica implements Serializable {
         this.justificacion = justificacion;
     }
 
-    public Caracteristica getCaracteristicaId() {
-        return caracteristicaId;
-    }
-
-    public void setCaracteristicaId(Caracteristica caracteristicaId) {
-        this.caracteristicaId = caracteristicaId;
-    }
-
     public Proceso getProcesoId() {
         return procesoId;
     }
 
     public void setProcesoId(Proceso procesoId) {
         this.procesoId = procesoId;
+    }
+
+    public Caracteristica getCaracteristicaId() {
+        return caracteristicaId;
+    }
+
+    public void setCaracteristicaId(Caracteristica caracteristicaId) {
+        this.caracteristicaId = caracteristicaId;
     }
 
     @Override

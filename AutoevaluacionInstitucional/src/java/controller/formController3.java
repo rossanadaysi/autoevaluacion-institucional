@@ -55,17 +55,96 @@ public class formController3 extends HttpServlet {
             String nombreBd = (String) session.getAttribute("bd");
             
             sqlController conSql = new sqlController();
-            
+            String estado = "terminado";
             String sql = "INSERT INTO encabezado ("
-                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
+                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`,`estado`)"
                     + "VALUES ("
-                    + "NULL , '" + new Date(new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
+                    + "NULL , '" + new Date(new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "', '" + estado + "'"
                     + ");";
             conSql.UpdateSql(sql, nombreBd);
             System.out.println("INSERT INTO encabezado ("
-                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`)"
+                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`,`estado`)"
                     + "VALUES ("
-                    + "NULL , '" + new Date( new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "'"
+                    + "NULL , '" + new Date(new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "', '" + estado + "'"
+                    + ");");    
+
+            
+            String sql2 = "SELECT `id`"
+                    + " FROM `encabezado`"
+                    + " WHERE `proceso_id` =" + p.getId() + ""
+                    + " AND `encuesta_id` =" + encuesta.getRowsByIndex()[0][3] + ""
+                    + " AND `fuente_id` =" + idF + ""
+                    + " AND `persona_id` =" + per.getId() + "";
+
+            ResultSet rs4 = conSql.CargarSql(sql2, nombreBd);
+            int idEncabezado=0;
+            try {
+                while (rs4.next()) {
+                    idEncabezado = rs4.getInt(1);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(formController3.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+           for(int i=0;i< preguntas.getRowCount();i++){
+               String res = request.getParameter("pregunta" + preguntas.getRowsByIndex()[i][0] + "");
+                String sqlResultado = "INSERT INTO resultadoevaluacion ("
+                    + "`idResultadoEvaluacion` ,`respuesta` ,`encabezado_id` ,`pregunta_id` )"
+                    + "VALUES ("
+                    + "NULL , '" + res + "', '" + idEncabezado + "', '" + p.getId() + "'"
+                    + ");";
+                            
+                conSql.UpdateSql(sqlResultado, nombreBd);
+               
+            }
+                                                
+                                               
+                                                String sql6 = "SELECT encuesta.id , encuesta.nombre"
+                                                + " FROM encuesta"
+                                                + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                                + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                                + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                                + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
+                                                + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
+                                                + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
+                                                + " WHERE persona.id = " + per.getId() + ""
+                                                + " AND proceso.`FECHACIERRE` IS NULL"
+                                                + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                                + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado) "
+                                                + "";
+                                        
+                                                
+
+
+                                        Result encuestasDisponibles = conSql.CargarSql2(sql6, nombreBd);
+                                        session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles);
+
+        }
+        
+        if (request.getParameter("action").equals("guardarE")) {
+
+            Proceso p = (Proceso) session.getAttribute("proceso");
+            Persona per = (Persona) session.getAttribute("persona");
+            
+            String idF =  (String) session.getAttribute("idfuente");
+            Result encuesta = (Result) session.getAttribute("encuesta");
+            Result preguntas = (Result) session.getAttribute("preguntas");
+            
+            String nombreBd = (String) session.getAttribute("bd");
+            
+            sqlController conSql = new sqlController();
+            String estado = "guardado";
+            String sql = "INSERT INTO encabezado ("
+                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`,`estado`)"
+                    + "VALUES ("
+                    + "NULL , '" + new Date(new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "', '" + estado + "'"
+                    + ");";
+            conSql.UpdateSql(sql, nombreBd);
+            System.out.println("INSERT INTO encabezado ("
+                    + "`id` ," + "`fecha` ,`persona_id` ,`proceso_id` ,`encuesta_id` ,`fuente_id`,`estado`)"
+                    + "VALUES ("
+                    + "NULL , '" + new Date(new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "', '" + estado + "'"
                     + ");");    
 
             

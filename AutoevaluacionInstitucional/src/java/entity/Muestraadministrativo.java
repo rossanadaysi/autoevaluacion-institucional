@@ -23,12 +23,12 @@ public class Muestraadministrativo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "administrativo_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Administrativo administrativoId;
     @JoinColumn(name = "muestra_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestra muestraId;
+    @JoinColumn(name = "administrativo_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Administrativo administrativoId;
 
     public Muestraadministrativo() {
     }
@@ -45,20 +45,20 @@ public class Muestraadministrativo implements Serializable {
         this.id = id;
     }
 
-    public Administrativo getAdministrativoId() {
-        return administrativoId;
-    }
-
-    public void setAdministrativoId(Administrativo administrativoId) {
-        this.administrativoId = administrativoId;
-    }
-
     public Muestra getMuestraId() {
         return muestraId;
     }
 
     public void setMuestraId(Muestra muestraId) {
         this.muestraId = muestraId;
+    }
+
+    public Administrativo getAdministrativoId() {
+        return administrativoId;
+    }
+
+    public void setAdministrativoId(Administrativo administrativoId) {
+        this.administrativoId = administrativoId;
     }
 
     @Override

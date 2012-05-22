@@ -243,7 +243,7 @@
             $().ready(function() {
                 $(".progress").ajaxStart(function(){
                     $(this).show(); 
-                    $(".bar").css("width","50%");
+                    $(".bar").css("width","5%");
                 });
                 $(".progress").ajaxStop(function(){
                     $(".bar").css("width","100%");
@@ -428,8 +428,7 @@
                             </a>
                             <ul class="dropdown-menu" style="padding-top: 0px;">
                                 <form  id="formulario_login" class="well"  action="" method="post" style="background-color: #FFFFFF; margin-bottom: 0px; border:0">
-                                    <div class="progress progress-info
-                                         progress-striped active" style="display: none;">
+                                    <div class="progress progress-warning progress-striped active" style="display: none;">
                                         <div class="bar"
                                              style="width: 5%;"></div>
                                     </div>
@@ -443,7 +442,7 @@
                                     <input id="codigo" type="text" name="codigo" class="span3 {required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
                                     <label>Contrase&ntilde;a</label>
                                     <input id="pass" type="password" name="pass" class="span3 {required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
-                                    <label><a href="#" style="color: #F77F00;margin-top: -20px;padding-left: 0px;font-size: 12px">¿Olvidó su contrase&ntilde;a?</a></label>
+                                    <label><a href="#" style="color: #F77F00;margin-top: -20px;margin-right:50%; padding-left: 0px;font-size: 12px">¿Olvidó su contrase&ntilde;a?</a></label>
 
                                     <label style="margin-top: 15px;">Tipo</label>
                                     <select id="tipo" name="tipo" class="span3">
@@ -493,7 +492,7 @@
         <div class="ui-layout-center">
             <div style="height: 68%; background-color: #f77f00;">
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 22%; top: 5%">    
-                    <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 20%; position: relative;right:15%;top: 13%;float: right">    
+                    <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right">    
                         </div>
                         <div style="height: 32%;" class="offset2">
                             <ul class="thumbnails" style="margin-top: 10px;">
