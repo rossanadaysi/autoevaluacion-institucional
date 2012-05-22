@@ -10,8 +10,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Docente;
 import entity.Muestra;
+import entity.Docente;
 import entity.Muestradocente;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -35,24 +35,24 @@ public class MuestradocenteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Docente docenteId = muestradocente.getDocenteId();
-            if (docenteId != null) {
-                docenteId = em.getReference(docenteId.getClass(), docenteId.getId());
-                muestradocente.setDocenteId(docenteId);
-            }
             Muestra muestraId = muestradocente.getMuestraId();
             if (muestraId != null) {
                 muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
                 muestradocente.setMuestraId(muestraId);
             }
-            em.persist(muestradocente);
+            Docente docenteId = muestradocente.getDocenteId();
             if (docenteId != null) {
-                docenteId.getMuestradocenteList().add(muestradocente);
-                docenteId = em.merge(docenteId);
+                docenteId = em.getReference(docenteId.getClass(), docenteId.getId());
+                muestradocente.setDocenteId(docenteId);
             }
+            em.persist(muestradocente);
             if (muestraId != null) {
                 muestraId.getMuestradocenteList().add(muestradocente);
                 muestraId = em.merge(muestraId);
+            }
+            if (docenteId != null) {
+                docenteId.getMuestradocenteList().add(muestradocente);
+                docenteId = em.merge(docenteId);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,27 +68,19 @@ public class MuestradocenteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestradocente persistentMuestradocente = em.find(Muestradocente.class, muestradocente.getId());
-            Docente docenteIdOld = persistentMuestradocente.getDocenteId();
-            Docente docenteIdNew = muestradocente.getDocenteId();
             Muestra muestraIdOld = persistentMuestradocente.getMuestraId();
             Muestra muestraIdNew = muestradocente.getMuestraId();
-            if (docenteIdNew != null) {
-                docenteIdNew = em.getReference(docenteIdNew.getClass(), docenteIdNew.getId());
-                muestradocente.setDocenteId(docenteIdNew);
-            }
+            Docente docenteIdOld = persistentMuestradocente.getDocenteId();
+            Docente docenteIdNew = muestradocente.getDocenteId();
             if (muestraIdNew != null) {
                 muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
                 muestradocente.setMuestraId(muestraIdNew);
             }
+            if (docenteIdNew != null) {
+                docenteIdNew = em.getReference(docenteIdNew.getClass(), docenteIdNew.getId());
+                muestradocente.setDocenteId(docenteIdNew);
+            }
             muestradocente = em.merge(muestradocente);
-            if (docenteIdOld != null && !docenteIdOld.equals(docenteIdNew)) {
-                docenteIdOld.getMuestradocenteList().remove(muestradocente);
-                docenteIdOld = em.merge(docenteIdOld);
-            }
-            if (docenteIdNew != null && !docenteIdNew.equals(docenteIdOld)) {
-                docenteIdNew.getMuestradocenteList().add(muestradocente);
-                docenteIdNew = em.merge(docenteIdNew);
-            }
             if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
                 muestraIdOld.getMuestradocenteList().remove(muestradocente);
                 muestraIdOld = em.merge(muestraIdOld);
@@ -96,6 +88,14 @@ public class MuestradocenteJpaController implements Serializable {
             if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
                 muestraIdNew.getMuestradocenteList().add(muestradocente);
                 muestraIdNew = em.merge(muestraIdNew);
+            }
+            if (docenteIdOld != null && !docenteIdOld.equals(docenteIdNew)) {
+                docenteIdOld.getMuestradocenteList().remove(muestradocente);
+                docenteIdOld = em.merge(docenteIdOld);
+            }
+            if (docenteIdNew != null && !docenteIdNew.equals(docenteIdOld)) {
+                docenteIdNew.getMuestradocenteList().add(muestradocente);
+                docenteIdNew = em.merge(docenteIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -126,15 +126,15 @@ public class MuestradocenteJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestradocente with id " + id + " no longer exists.", enfe);
             }
-            Docente docenteId = muestradocente.getDocenteId();
-            if (docenteId != null) {
-                docenteId.getMuestradocenteList().remove(muestradocente);
-                docenteId = em.merge(docenteId);
-            }
             Muestra muestraId = muestradocente.getMuestraId();
             if (muestraId != null) {
                 muestraId.getMuestradocenteList().remove(muestradocente);
                 muestraId = em.merge(muestraId);
+            }
+            Docente docenteId = muestradocente.getDocenteId();
+            if (docenteId != null) {
+                docenteId.getMuestradocenteList().remove(muestradocente);
+                docenteId = em.merge(docenteId);
             }
             em.remove(muestradocente);
             em.getTransaction().commit();

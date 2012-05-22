@@ -11,8 +11,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Privilegio;
 import entity.Representante;
+import entity.Privilegio;
 import entity.Representantehasprivilegio;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -34,24 +34,24 @@ public class RepresentantehasprivilegioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Privilegio privilegioId = representantehasprivilegio.getPrivilegioId();
-            if (privilegioId != null) {
-                privilegioId = em.getReference(privilegioId.getClass(), privilegioId.getId());
-                representantehasprivilegio.setPrivilegioId(privilegioId);
-            }
             Representante representanteId = representantehasprivilegio.getRepresentanteId();
             if (representanteId != null) {
                 representanteId = em.getReference(representanteId.getClass(), representanteId.getId());
                 representantehasprivilegio.setRepresentanteId(representanteId);
             }
-            em.persist(representantehasprivilegio);
+            Privilegio privilegioId = representantehasprivilegio.getPrivilegioId();
             if (privilegioId != null) {
-                privilegioId.getRepresentantehasprivilegioList().add(representantehasprivilegio);
-                privilegioId = em.merge(privilegioId);
+                privilegioId = em.getReference(privilegioId.getClass(), privilegioId.getId());
+                representantehasprivilegio.setPrivilegioId(privilegioId);
             }
+            em.persist(representantehasprivilegio);
             if (representanteId != null) {
                 representanteId.getRepresentantehasprivilegioList().add(representantehasprivilegio);
                 representanteId = em.merge(representanteId);
+            }
+            if (privilegioId != null) {
+                privilegioId.getRepresentantehasprivilegioList().add(representantehasprivilegio);
+                privilegioId = em.merge(privilegioId);
             }
             em.getTransaction().commit();
         } finally {
@@ -67,27 +67,19 @@ public class RepresentantehasprivilegioJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Representantehasprivilegio persistentRepresentantehasprivilegio = em.find(Representantehasprivilegio.class, representantehasprivilegio.getId());
-            Privilegio privilegioIdOld = persistentRepresentantehasprivilegio.getPrivilegioId();
-            Privilegio privilegioIdNew = representantehasprivilegio.getPrivilegioId();
             Representante representanteIdOld = persistentRepresentantehasprivilegio.getRepresentanteId();
             Representante representanteIdNew = representantehasprivilegio.getRepresentanteId();
-            if (privilegioIdNew != null) {
-                privilegioIdNew = em.getReference(privilegioIdNew.getClass(), privilegioIdNew.getId());
-                representantehasprivilegio.setPrivilegioId(privilegioIdNew);
-            }
+            Privilegio privilegioIdOld = persistentRepresentantehasprivilegio.getPrivilegioId();
+            Privilegio privilegioIdNew = representantehasprivilegio.getPrivilegioId();
             if (representanteIdNew != null) {
                 representanteIdNew = em.getReference(representanteIdNew.getClass(), representanteIdNew.getId());
                 representantehasprivilegio.setRepresentanteId(representanteIdNew);
             }
+            if (privilegioIdNew != null) {
+                privilegioIdNew = em.getReference(privilegioIdNew.getClass(), privilegioIdNew.getId());
+                representantehasprivilegio.setPrivilegioId(privilegioIdNew);
+            }
             representantehasprivilegio = em.merge(representantehasprivilegio);
-            if (privilegioIdOld != null && !privilegioIdOld.equals(privilegioIdNew)) {
-                privilegioIdOld.getRepresentantehasprivilegioList().remove(representantehasprivilegio);
-                privilegioIdOld = em.merge(privilegioIdOld);
-            }
-            if (privilegioIdNew != null && !privilegioIdNew.equals(privilegioIdOld)) {
-                privilegioIdNew.getRepresentantehasprivilegioList().add(representantehasprivilegio);
-                privilegioIdNew = em.merge(privilegioIdNew);
-            }
             if (representanteIdOld != null && !representanteIdOld.equals(representanteIdNew)) {
                 representanteIdOld.getRepresentantehasprivilegioList().remove(representantehasprivilegio);
                 representanteIdOld = em.merge(representanteIdOld);
@@ -95,6 +87,14 @@ public class RepresentantehasprivilegioJpaController implements Serializable {
             if (representanteIdNew != null && !representanteIdNew.equals(representanteIdOld)) {
                 representanteIdNew.getRepresentantehasprivilegioList().add(representantehasprivilegio);
                 representanteIdNew = em.merge(representanteIdNew);
+            }
+            if (privilegioIdOld != null && !privilegioIdOld.equals(privilegioIdNew)) {
+                privilegioIdOld.getRepresentantehasprivilegioList().remove(representantehasprivilegio);
+                privilegioIdOld = em.merge(privilegioIdOld);
+            }
+            if (privilegioIdNew != null && !privilegioIdNew.equals(privilegioIdOld)) {
+                privilegioIdNew.getRepresentantehasprivilegioList().add(representantehasprivilegio);
+                privilegioIdNew = em.merge(privilegioIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -125,15 +125,15 @@ public class RepresentantehasprivilegioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The representantehasprivilegio with id " + id + " no longer exists.", enfe);
             }
-            Privilegio privilegioId = representantehasprivilegio.getPrivilegioId();
-            if (privilegioId != null) {
-                privilegioId.getRepresentantehasprivilegioList().remove(representantehasprivilegio);
-                privilegioId = em.merge(privilegioId);
-            }
             Representante representanteId = representantehasprivilegio.getRepresentanteId();
             if (representanteId != null) {
                 representanteId.getRepresentantehasprivilegioList().remove(representantehasprivilegio);
                 representanteId = em.merge(representanteId);
+            }
+            Privilegio privilegioId = representantehasprivilegio.getPrivilegioId();
+            if (privilegioId != null) {
+                privilegioId.getRepresentantehasprivilegioList().remove(representantehasprivilegio);
+                privilegioId = em.merge(privilegioId);
             }
             em.remove(representantehasprivilegio);
             em.getTransaction().commit();

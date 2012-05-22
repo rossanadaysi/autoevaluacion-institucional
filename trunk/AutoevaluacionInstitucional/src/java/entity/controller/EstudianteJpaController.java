@@ -39,15 +39,15 @@ public class EstudianteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Persona personaId = estudiante.getPersonaId();
-            if (personaId != null) {
-                personaId = em.getReference(personaId.getClass(), personaId.getId());
-                estudiante.setPersonaId(personaId);
-            }
             Programa programaId = estudiante.getProgramaId();
             if (programaId != null) {
                 programaId = em.getReference(programaId.getClass(), programaId.getId());
                 estudiante.setProgramaId(programaId);
+            }
+            Persona personaId = estudiante.getPersonaId();
+            if (personaId != null) {
+                personaId = em.getReference(personaId.getClass(), personaId.getId());
+                estudiante.setPersonaId(personaId);
             }
             Fuente fuenteId = estudiante.getFuenteId();
             if (fuenteId != null) {
@@ -61,13 +61,13 @@ public class EstudianteJpaController implements Serializable {
             }
             estudiante.setMuestraestudianteList(attachedMuestraestudianteList);
             em.persist(estudiante);
-            if (personaId != null) {
-                personaId.getEstudianteList().add(estudiante);
-                personaId = em.merge(personaId);
-            }
             if (programaId != null) {
                 programaId.getEstudianteList().add(estudiante);
                 programaId = em.merge(programaId);
+            }
+            if (personaId != null) {
+                personaId.getEstudianteList().add(estudiante);
+                personaId = em.merge(personaId);
             }
             if (fuenteId != null) {
                 fuenteId.getEstudianteList().add(estudiante);
@@ -101,10 +101,10 @@ public class EstudianteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getId());
-            Persona personaIdOld = persistentEstudiante.getPersonaId();
-            Persona personaIdNew = estudiante.getPersonaId();
             Programa programaIdOld = persistentEstudiante.getProgramaId();
             Programa programaIdNew = estudiante.getProgramaId();
+            Persona personaIdOld = persistentEstudiante.getPersonaId();
+            Persona personaIdNew = estudiante.getPersonaId();
             Fuente fuenteIdOld = persistentEstudiante.getFuenteId();
             Fuente fuenteIdNew = estudiante.getFuenteId();
             List<Muestraestudiante> muestraestudianteListOld = persistentEstudiante.getMuestraestudianteList();
@@ -121,13 +121,13 @@ public class EstudianteJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (personaIdNew != null) {
-                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-                estudiante.setPersonaId(personaIdNew);
-            }
             if (programaIdNew != null) {
                 programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
                 estudiante.setProgramaId(programaIdNew);
+            }
+            if (personaIdNew != null) {
+                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+                estudiante.setPersonaId(personaIdNew);
             }
             if (fuenteIdNew != null) {
                 fuenteIdNew = em.getReference(fuenteIdNew.getClass(), fuenteIdNew.getId());
@@ -141,14 +141,6 @@ public class EstudianteJpaController implements Serializable {
             muestraestudianteListNew = attachedMuestraestudianteListNew;
             estudiante.setMuestraestudianteList(muestraestudianteListNew);
             estudiante = em.merge(estudiante);
-            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-                personaIdOld.getEstudianteList().remove(estudiante);
-                personaIdOld = em.merge(personaIdOld);
-            }
-            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-                personaIdNew.getEstudianteList().add(estudiante);
-                personaIdNew = em.merge(personaIdNew);
-            }
             if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
                 programaIdOld.getEstudianteList().remove(estudiante);
                 programaIdOld = em.merge(programaIdOld);
@@ -156,6 +148,14 @@ public class EstudianteJpaController implements Serializable {
             if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
                 programaIdNew.getEstudianteList().add(estudiante);
                 programaIdNew = em.merge(programaIdNew);
+            }
+            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+                personaIdOld.getEstudianteList().remove(estudiante);
+                personaIdOld = em.merge(personaIdOld);
+            }
+            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+                personaIdNew.getEstudianteList().add(estudiante);
+                personaIdNew = em.merge(personaIdNew);
             }
             if (fuenteIdOld != null && !fuenteIdOld.equals(fuenteIdNew)) {
                 fuenteIdOld.getEstudianteList().remove(estudiante);
@@ -216,15 +216,15 @@ public class EstudianteJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Persona personaId = estudiante.getPersonaId();
-            if (personaId != null) {
-                personaId.getEstudianteList().remove(estudiante);
-                personaId = em.merge(personaId);
-            }
             Programa programaId = estudiante.getProgramaId();
             if (programaId != null) {
                 programaId.getEstudianteList().remove(estudiante);
                 programaId = em.merge(programaId);
+            }
+            Persona personaId = estudiante.getPersonaId();
+            if (personaId != null) {
+                personaId.getEstudianteList().remove(estudiante);
+                personaId = em.merge(personaId);
             }
             Fuente fuenteId = estudiante.getFuenteId();
             if (fuenteId != null) {

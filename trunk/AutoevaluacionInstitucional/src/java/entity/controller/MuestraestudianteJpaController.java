@@ -10,8 +10,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Estudiante;
 import entity.Muestra;
+import entity.Estudiante;
 import entity.Muestraestudiante;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -35,24 +35,24 @@ public class MuestraestudianteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Estudiante estudianteId = muestraestudiante.getEstudianteId();
-            if (estudianteId != null) {
-                estudianteId = em.getReference(estudianteId.getClass(), estudianteId.getId());
-                muestraestudiante.setEstudianteId(estudianteId);
-            }
             Muestra muestraId = muestraestudiante.getMuestraId();
             if (muestraId != null) {
                 muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
                 muestraestudiante.setMuestraId(muestraId);
             }
-            em.persist(muestraestudiante);
+            Estudiante estudianteId = muestraestudiante.getEstudianteId();
             if (estudianteId != null) {
-                estudianteId.getMuestraestudianteList().add(muestraestudiante);
-                estudianteId = em.merge(estudianteId);
+                estudianteId = em.getReference(estudianteId.getClass(), estudianteId.getId());
+                muestraestudiante.setEstudianteId(estudianteId);
             }
+            em.persist(muestraestudiante);
             if (muestraId != null) {
                 muestraId.getMuestraestudianteList().add(muestraestudiante);
                 muestraId = em.merge(muestraId);
+            }
+            if (estudianteId != null) {
+                estudianteId.getMuestraestudianteList().add(muestraestudiante);
+                estudianteId = em.merge(estudianteId);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,27 +68,19 @@ public class MuestraestudianteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestraestudiante persistentMuestraestudiante = em.find(Muestraestudiante.class, muestraestudiante.getId());
-            Estudiante estudianteIdOld = persistentMuestraestudiante.getEstudianteId();
-            Estudiante estudianteIdNew = muestraestudiante.getEstudianteId();
             Muestra muestraIdOld = persistentMuestraestudiante.getMuestraId();
             Muestra muestraIdNew = muestraestudiante.getMuestraId();
-            if (estudianteIdNew != null) {
-                estudianteIdNew = em.getReference(estudianteIdNew.getClass(), estudianteIdNew.getId());
-                muestraestudiante.setEstudianteId(estudianteIdNew);
-            }
+            Estudiante estudianteIdOld = persistentMuestraestudiante.getEstudianteId();
+            Estudiante estudianteIdNew = muestraestudiante.getEstudianteId();
             if (muestraIdNew != null) {
                 muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
                 muestraestudiante.setMuestraId(muestraIdNew);
             }
+            if (estudianteIdNew != null) {
+                estudianteIdNew = em.getReference(estudianteIdNew.getClass(), estudianteIdNew.getId());
+                muestraestudiante.setEstudianteId(estudianteIdNew);
+            }
             muestraestudiante = em.merge(muestraestudiante);
-            if (estudianteIdOld != null && !estudianteIdOld.equals(estudianteIdNew)) {
-                estudianteIdOld.getMuestraestudianteList().remove(muestraestudiante);
-                estudianteIdOld = em.merge(estudianteIdOld);
-            }
-            if (estudianteIdNew != null && !estudianteIdNew.equals(estudianteIdOld)) {
-                estudianteIdNew.getMuestraestudianteList().add(muestraestudiante);
-                estudianteIdNew = em.merge(estudianteIdNew);
-            }
             if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
                 muestraIdOld.getMuestraestudianteList().remove(muestraestudiante);
                 muestraIdOld = em.merge(muestraIdOld);
@@ -96,6 +88,14 @@ public class MuestraestudianteJpaController implements Serializable {
             if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
                 muestraIdNew.getMuestraestudianteList().add(muestraestudiante);
                 muestraIdNew = em.merge(muestraIdNew);
+            }
+            if (estudianteIdOld != null && !estudianteIdOld.equals(estudianteIdNew)) {
+                estudianteIdOld.getMuestraestudianteList().remove(muestraestudiante);
+                estudianteIdOld = em.merge(estudianteIdOld);
+            }
+            if (estudianteIdNew != null && !estudianteIdNew.equals(estudianteIdOld)) {
+                estudianteIdNew.getMuestraestudianteList().add(muestraestudiante);
+                estudianteIdNew = em.merge(estudianteIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -126,15 +126,15 @@ public class MuestraestudianteJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestraestudiante with id " + id + " no longer exists.", enfe);
             }
-            Estudiante estudianteId = muestraestudiante.getEstudianteId();
-            if (estudianteId != null) {
-                estudianteId.getMuestraestudianteList().remove(muestraestudiante);
-                estudianteId = em.merge(estudianteId);
-            }
             Muestra muestraId = muestraestudiante.getMuestraId();
             if (muestraId != null) {
                 muestraId.getMuestraestudianteList().remove(muestraestudiante);
                 muestraId = em.merge(muestraId);
+            }
+            Estudiante estudianteId = muestraestudiante.getEstudianteId();
+            if (estudianteId != null) {
+                estudianteId.getMuestraestudianteList().remove(muestraestudiante);
+                estudianteId = em.merge(estudianteId);
             }
             em.remove(muestraestudiante);
             em.getTransaction().commit();

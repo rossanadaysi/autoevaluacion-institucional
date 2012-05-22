@@ -23,12 +23,12 @@ public class Muestradirector implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "directorprograma_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Directorprograma directorprogramaId;
     @JoinColumn(name = "muestra_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestra muestraId;
+    @JoinColumn(name = "directorprograma_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Directorprograma directorprogramaId;
 
     public Muestradirector() {
     }
@@ -45,20 +45,20 @@ public class Muestradirector implements Serializable {
         this.id = id;
     }
 
-    public Directorprograma getDirectorprogramaId() {
-        return directorprogramaId;
-    }
-
-    public void setDirectorprogramaId(Directorprograma directorprogramaId) {
-        this.directorprogramaId = directorprogramaId;
-    }
-
     public Muestra getMuestraId() {
         return muestraId;
     }
 
     public void setMuestraId(Muestra muestraId) {
         this.muestraId = muestraId;
+    }
+
+    public Directorprograma getDirectorprogramaId() {
+        return directorprogramaId;
+    }
+
+    public void setDirectorprogramaId(Directorprograma directorprogramaId) {
+        this.directorprogramaId = directorprogramaId;
     }
 
     @Override

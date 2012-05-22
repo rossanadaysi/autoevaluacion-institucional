@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `encabezado` (
   `proceso_id` int(11) NOT NULL,
   `encuesta_id` int(11) NOT NULL,
   `fuente_id` int(11) NOT NULL,
+  `estado` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_encabezado_persona1` (`persona_id`),
   KEY `fk_encabezado_proceso1` (`proceso_id`),

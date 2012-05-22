@@ -11,8 +11,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Persona;
 import entity.Programa;
+import entity.Persona;
 import entity.Representante;
 import entity.Representantehasprivilegio;
 import entity.controller.exceptions.IllegalOrphanException;
@@ -40,15 +40,15 @@ public class RepresentanteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Persona personaId = representante.getPersonaId();
-            if (personaId != null) {
-                personaId = em.getReference(personaId.getClass(), personaId.getId());
-                representante.setPersonaId(personaId);
-            }
             Programa programaId = representante.getProgramaId();
             if (programaId != null) {
                 programaId = em.getReference(programaId.getClass(), programaId.getId());
                 representante.setProgramaId(programaId);
+            }
+            Persona personaId = representante.getPersonaId();
+            if (personaId != null) {
+                personaId = em.getReference(personaId.getClass(), personaId.getId());
+                representante.setPersonaId(personaId);
             }
             List<Representantehasprivilegio> attachedRepresentantehasprivilegioList = new ArrayList<Representantehasprivilegio>();
             for (Representantehasprivilegio representantehasprivilegioListRepresentantehasprivilegioToAttach : representante.getRepresentantehasprivilegioList()) {
@@ -57,13 +57,13 @@ public class RepresentanteJpaController implements Serializable {
             }
             representante.setRepresentantehasprivilegioList(attachedRepresentantehasprivilegioList);
             em.persist(representante);
-            if (personaId != null) {
-                personaId.getRepresentanteList().add(representante);
-                personaId = em.merge(personaId);
-            }
             if (programaId != null) {
                 programaId.getRepresentanteList().add(representante);
                 programaId = em.merge(programaId);
+            }
+            if (personaId != null) {
+                personaId.getRepresentanteList().add(representante);
+                personaId = em.merge(personaId);
             }
             for (Representantehasprivilegio representantehasprivilegioListRepresentantehasprivilegio : representante.getRepresentantehasprivilegioList()) {
                 Representante oldRepresentanteIdOfRepresentantehasprivilegioListRepresentantehasprivilegio = representantehasprivilegioListRepresentantehasprivilegio.getRepresentanteId();
@@ -88,10 +88,10 @@ public class RepresentanteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Representante persistentRepresentante = em.find(Representante.class, representante.getId());
-            Persona personaIdOld = persistentRepresentante.getPersonaId();
-            Persona personaIdNew = representante.getPersonaId();
             Programa programaIdOld = persistentRepresentante.getProgramaId();
             Programa programaIdNew = representante.getProgramaId();
+            Persona personaIdOld = persistentRepresentante.getPersonaId();
+            Persona personaIdNew = representante.getPersonaId();
             List<Representantehasprivilegio> representantehasprivilegioListOld = persistentRepresentante.getRepresentantehasprivilegioList();
             List<Representantehasprivilegio> representantehasprivilegioListNew = representante.getRepresentantehasprivilegioList();
             List<String> illegalOrphanMessages = null;
@@ -106,13 +106,13 @@ public class RepresentanteJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (personaIdNew != null) {
-                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
-                representante.setPersonaId(personaIdNew);
-            }
             if (programaIdNew != null) {
                 programaIdNew = em.getReference(programaIdNew.getClass(), programaIdNew.getId());
                 representante.setProgramaId(programaIdNew);
+            }
+            if (personaIdNew != null) {
+                personaIdNew = em.getReference(personaIdNew.getClass(), personaIdNew.getId());
+                representante.setPersonaId(personaIdNew);
             }
             List<Representantehasprivilegio> attachedRepresentantehasprivilegioListNew = new ArrayList<Representantehasprivilegio>();
             for (Representantehasprivilegio representantehasprivilegioListNewRepresentantehasprivilegioToAttach : representantehasprivilegioListNew) {
@@ -122,14 +122,6 @@ public class RepresentanteJpaController implements Serializable {
             representantehasprivilegioListNew = attachedRepresentantehasprivilegioListNew;
             representante.setRepresentantehasprivilegioList(representantehasprivilegioListNew);
             representante = em.merge(representante);
-            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
-                personaIdOld.getRepresentanteList().remove(representante);
-                personaIdOld = em.merge(personaIdOld);
-            }
-            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
-                personaIdNew.getRepresentanteList().add(representante);
-                personaIdNew = em.merge(personaIdNew);
-            }
             if (programaIdOld != null && !programaIdOld.equals(programaIdNew)) {
                 programaIdOld.getRepresentanteList().remove(representante);
                 programaIdOld = em.merge(programaIdOld);
@@ -137,6 +129,14 @@ public class RepresentanteJpaController implements Serializable {
             if (programaIdNew != null && !programaIdNew.equals(programaIdOld)) {
                 programaIdNew.getRepresentanteList().add(representante);
                 programaIdNew = em.merge(programaIdNew);
+            }
+            if (personaIdOld != null && !personaIdOld.equals(personaIdNew)) {
+                personaIdOld.getRepresentanteList().remove(representante);
+                personaIdOld = em.merge(personaIdOld);
+            }
+            if (personaIdNew != null && !personaIdNew.equals(personaIdOld)) {
+                personaIdNew.getRepresentanteList().add(representante);
+                personaIdNew = em.merge(personaIdNew);
             }
             for (Representantehasprivilegio representantehasprivilegioListNewRepresentantehasprivilegio : representantehasprivilegioListNew) {
                 if (!representantehasprivilegioListOld.contains(representantehasprivilegioListNewRepresentantehasprivilegio)) {
@@ -189,15 +189,15 @@ public class RepresentanteJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Persona personaId = representante.getPersonaId();
-            if (personaId != null) {
-                personaId.getRepresentanteList().remove(representante);
-                personaId = em.merge(personaId);
-            }
             Programa programaId = representante.getProgramaId();
             if (programaId != null) {
                 programaId.getRepresentanteList().remove(representante);
                 programaId = em.merge(programaId);
+            }
+            Persona personaId = representante.getPersonaId();
+            if (personaId != null) {
+                personaId.getRepresentanteList().remove(representante);
+                personaId = em.merge(personaId);
             }
             em.remove(representante);
             em.getTransaction().commit();

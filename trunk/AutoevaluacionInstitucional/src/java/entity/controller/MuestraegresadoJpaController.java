@@ -10,8 +10,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Egresado;
 import entity.Muestra;
+import entity.Egresado;
 import entity.Muestraegresado;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -35,24 +35,24 @@ public class MuestraegresadoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Egresado egresadoId = muestraegresado.getEgresadoId();
-            if (egresadoId != null) {
-                egresadoId = em.getReference(egresadoId.getClass(), egresadoId.getId());
-                muestraegresado.setEgresadoId(egresadoId);
-            }
             Muestra muestraId = muestraegresado.getMuestraId();
             if (muestraId != null) {
                 muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
                 muestraegresado.setMuestraId(muestraId);
             }
-            em.persist(muestraegresado);
+            Egresado egresadoId = muestraegresado.getEgresadoId();
             if (egresadoId != null) {
-                egresadoId.getMuestraegresadoList().add(muestraegresado);
-                egresadoId = em.merge(egresadoId);
+                egresadoId = em.getReference(egresadoId.getClass(), egresadoId.getId());
+                muestraegresado.setEgresadoId(egresadoId);
             }
+            em.persist(muestraegresado);
             if (muestraId != null) {
                 muestraId.getMuestraegresadoList().add(muestraegresado);
                 muestraId = em.merge(muestraId);
+            }
+            if (egresadoId != null) {
+                egresadoId.getMuestraegresadoList().add(muestraegresado);
+                egresadoId = em.merge(egresadoId);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,27 +68,19 @@ public class MuestraegresadoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestraegresado persistentMuestraegresado = em.find(Muestraegresado.class, muestraegresado.getId());
-            Egresado egresadoIdOld = persistentMuestraegresado.getEgresadoId();
-            Egresado egresadoIdNew = muestraegresado.getEgresadoId();
             Muestra muestraIdOld = persistentMuestraegresado.getMuestraId();
             Muestra muestraIdNew = muestraegresado.getMuestraId();
-            if (egresadoIdNew != null) {
-                egresadoIdNew = em.getReference(egresadoIdNew.getClass(), egresadoIdNew.getId());
-                muestraegresado.setEgresadoId(egresadoIdNew);
-            }
+            Egresado egresadoIdOld = persistentMuestraegresado.getEgresadoId();
+            Egresado egresadoIdNew = muestraegresado.getEgresadoId();
             if (muestraIdNew != null) {
                 muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
                 muestraegresado.setMuestraId(muestraIdNew);
             }
+            if (egresadoIdNew != null) {
+                egresadoIdNew = em.getReference(egresadoIdNew.getClass(), egresadoIdNew.getId());
+                muestraegresado.setEgresadoId(egresadoIdNew);
+            }
             muestraegresado = em.merge(muestraegresado);
-            if (egresadoIdOld != null && !egresadoIdOld.equals(egresadoIdNew)) {
-                egresadoIdOld.getMuestraegresadoList().remove(muestraegresado);
-                egresadoIdOld = em.merge(egresadoIdOld);
-            }
-            if (egresadoIdNew != null && !egresadoIdNew.equals(egresadoIdOld)) {
-                egresadoIdNew.getMuestraegresadoList().add(muestraegresado);
-                egresadoIdNew = em.merge(egresadoIdNew);
-            }
             if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
                 muestraIdOld.getMuestraegresadoList().remove(muestraegresado);
                 muestraIdOld = em.merge(muestraIdOld);
@@ -96,6 +88,14 @@ public class MuestraegresadoJpaController implements Serializable {
             if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
                 muestraIdNew.getMuestraegresadoList().add(muestraegresado);
                 muestraIdNew = em.merge(muestraIdNew);
+            }
+            if (egresadoIdOld != null && !egresadoIdOld.equals(egresadoIdNew)) {
+                egresadoIdOld.getMuestraegresadoList().remove(muestraegresado);
+                egresadoIdOld = em.merge(egresadoIdOld);
+            }
+            if (egresadoIdNew != null && !egresadoIdNew.equals(egresadoIdOld)) {
+                egresadoIdNew.getMuestraegresadoList().add(muestraegresado);
+                egresadoIdNew = em.merge(egresadoIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -126,15 +126,15 @@ public class MuestraegresadoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestraegresado with id " + id + " no longer exists.", enfe);
             }
-            Egresado egresadoId = muestraegresado.getEgresadoId();
-            if (egresadoId != null) {
-                egresadoId.getMuestraegresadoList().remove(muestraegresado);
-                egresadoId = em.merge(egresadoId);
-            }
             Muestra muestraId = muestraegresado.getMuestraId();
             if (muestraId != null) {
                 muestraId.getMuestraegresadoList().remove(muestraegresado);
                 muestraId = em.merge(muestraId);
+            }
+            Egresado egresadoId = muestraegresado.getEgresadoId();
+            if (egresadoId != null) {
+                egresadoId.getMuestraegresadoList().remove(muestraegresado);
+                egresadoId = em.merge(egresadoId);
             }
             em.remove(muestraegresado);
             em.getTransaction().commit();
