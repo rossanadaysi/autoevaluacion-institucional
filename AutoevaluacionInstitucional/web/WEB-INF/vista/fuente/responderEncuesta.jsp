@@ -53,11 +53,12 @@
         $("#guardar").click(function(){
             $.ajax({
                     type: 'POST', 
-                    url: "<%=request.getContextPath()%>/formController3?action=GuardarE",
+                    url: "<%=request.getContextPath()%>/formController3?action=guardarE",
                     data: $("#formResponderE").serialize(),
                     success: function(){
                         location = "<%=request.getContextPath()%>/#inicio"
                     } //fin success
+                    })
         });
         
         var validator = $("#formResponderE").bind("invalid-form.validate", function() {
