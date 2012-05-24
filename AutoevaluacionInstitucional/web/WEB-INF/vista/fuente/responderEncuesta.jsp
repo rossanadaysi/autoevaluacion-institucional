@@ -52,13 +52,13 @@
         
         $("#guardar").click(function(){
             $.ajax({
-                    type: 'POST', 
-                    url: "<%=request.getContextPath()%>/formController3?action=guardarE",
-                    data: $("#formResponderE").serialize(),
-                    success: function(){
-                        location = "<%=request.getContextPath()%>/#inicio"
-                    } //fin success
-                    })
+                type: 'POST', 
+                url: "<%=request.getContextPath()%>/formController3?action=guardarE",
+                data: $("#formResponderE").serialize(),
+                success: function(){
+                    location = "<%=request.getContextPath()%>/#inicio"
+                } //fin success
+            })
         });
         
         var validator = $("#formResponderE").bind("invalid-form.validate", function() {
@@ -68,7 +68,7 @@
             ignore: "", 
                 
             submitHandler: function(){
-                  $.ajax({
+                $.ajax({
                     type: 'POST', 
                     url: "<%=request.getContextPath()%>/formController3?action=responderE",
                     data: $("#formResponderE").serialize(),
@@ -124,41 +124,81 @@
         <table id="preguntas" class="table table-striped table-condensed" style="width: 100%;">
             <tbody>
 
+                <c:choose>
+                    <c:when test="${respuestas == null}">
+                        <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status">
+                            <c:choose>
+                                <c:when test="${pregunta[2] != 'Elegir 1-5'}">
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${pregunta[1]}</p></td>
+                                        <td>
+                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <option value="Si">Si</option>  
+                                                <option value="No">No</option>  
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${pregunta[1]}</p></td>
+                                        <td>
+                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <option value="0">0</option>  
+                                                <option value="1">1</option>  
+                                                <option value="2">2</option>  
+                                                <option value="3">3</option>  
+                                                <option value="4">4</option>  
+                                                <option value="5">5</option>  
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:otherwise>    
+                            </c:choose>
+                        </c:forEach>        
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status">
+                            <c:choose>
+                                <c:when test="${pregunta[2] != 'Elegir 1-5'}">
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${pregunta[1]}</p></td>
+                                        <td>
+                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <option value="Si">Si</option>  
+                                                <option value="No">No</option>  
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${status.count}</td>   
+                                        <td><p>${pregunta[1]}</p></td>
+                                        <td>
+                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                                <option></option>  
+                                                <option value="0">0</option>  
+                                                <option value="1">1</option>  
+                                                <option value="2">2</option>  
+                                                <option value="3">3</option>  
+                                                <option value="4">4</option>  
+                                                <option value="5">5</option>  
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </c:otherwise>    
+                            </c:choose>
+                        </c:forEach>        
+                    </c:otherwise>
+                </c:choose>
 
-                <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status">
-                    <c:choose>
-                        <c:when test="${pregunta[2] != 'Elegir 1-5'}">
-                            <tr>
-                                <td>${status.count}</td>   
-                                <td><p>${pregunta[1]}</p></td>
-                                <td>
-                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
-                                        <option></option>  
-                                        <option value="Si">Si</option>  
-                                        <option value="No">No</option>  
-                                    </select>
-                                </td>
-                            </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                                <td>${status.count}</td>   
-                                <td><p>${pregunta[1]}</p></td>
-                                <td>
-                                    <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
-                                        <option></option>  
-                                        <option value="0">0</option>  
-                                        <option value="1">1</option>  
-                                        <option value="2">2</option>  
-                                        <option value="3">3</option>  
-                                        <option value="4">4</option>  
-                                        <option value="5">5</option>  
-                                    </select>
-                                </td>
-                            </tr>
-                        </c:otherwise>    
-                    </c:choose>
-                </c:forEach>        
             </tbody>
         </table>
         <div class="row"> 
