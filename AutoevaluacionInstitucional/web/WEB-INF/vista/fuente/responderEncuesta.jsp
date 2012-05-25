@@ -162,17 +162,31 @@
                         </c:forEach>        
                     </c:when>
                     <c:otherwise>
-                        <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status">
+                        <c:forEach items="${respuestas.rowsByIndex}" var="respuesta" varStatus="status">
                             <c:choose>
-                                <c:when test="${pregunta[2] != 'Elegir 1-5'}">
+                                <c:when test="${respuesta[2] != 'Elegir 1-5'}">
                                     <tr>
                                         <td>${status.count}</td>   
-                                        <td><p>${pregunta[1]}</p></td>
+                                        <td><p>${respuesta[1]}</p></td>
                                         <td>
-                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                            <select id="pregunta${respuesta[0]}" name="pregunta${respuesta[0]}" class="span1 {required:true}">
                                                 <option></option>  
-                                                <option value="Si">Si</option>  
-                                                <option value="No">No</option>  
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == 'Si'}">
+                                                        <option selected="selected" value="Si">Si</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="Si">Si</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == 'No'}">
+                                                        <option selected="selected" value="No">No</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="No">No</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </select>
                                         </td>
                                     </tr>
@@ -180,16 +194,58 @@
                                 <c:otherwise>
                                     <tr>
                                         <td>${status.count}</td>   
-                                        <td><p>${pregunta[1]}</p></td>
+                                        <td><p>${respuesta[1]}</p></td>
                                         <td>
-                                            <select id="pregunta${pregunta[0]}" name="pregunta${pregunta[0]}" class="span1 {required:true}">
+                                            <select id="pregunta${respuesta[0]}" name="pregunta${respuesta[0]}" class="span1 {required:true}">
                                                 <option></option>  
-                                                <option value="0">0</option>  
-                                                <option value="1">1</option>  
-                                                <option value="2">2</option>  
-                                                <option value="3">3</option>  
-                                                <option value="4">4</option>  
-                                                <option value="5">5</option>  
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == '0'}">
+                                                        <option selected="selected" value="0">0</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="0">0</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == '1'}">
+                                                        <option selected="selected" value="1">1</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="1">1</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == '2'}">
+                                                        <option selected="selected" value="2">2</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="2">2</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == '3'}">
+                                                        <option selected="selected" value="3">3</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="3">3</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == '4'}">
+                                                        <option selected="selected" value="4">4</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="4">4</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${respuesta[3] == '5'}">
+                                                        <option selected="selected" value="5">5</option>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="5">5</option>      
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </select>
                                         </td>
                                     </tr>
