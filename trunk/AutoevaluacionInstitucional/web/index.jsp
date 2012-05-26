@@ -377,50 +377,6 @@
                             <span class="icon-bar"></span>
                         </a>
                         <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
-                        <!-- <ul class="nav pull-right">
-                             <li class="divider-vertical"></li>
-                             <li class="dropdown">
-                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar Sesion <b class="caret"></b></a>
-                                 <ul class="dropdown-menu"  >
- 
-                                     <form  id="formulario_login" class="well"  action="" method="post" style="background-color: #FFFFFF;">
-                                         <div class="progress progress-info
-                                              progress-striped active" style="display: none;">
-                                             <div class="bar"
-                                                  style="width: 5%;"></div>
-                                         </div>
- 
-                                         <div class='alert alert-error' style="display: none">
-                                             <a data-dismiss='alert' class='close'>×</a>  
-                                             <strong>Error!</strong>
-                                         </div>
- 
-                                         <label>Usuario</label>
-                                         <input id="codigo" type="text" name="codigo" class="span3 {required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
-                                         <label>Contrase&ntilde;a</label>
-                                         <input id="pass" type="password" name="pass" class="span3 {required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
-                                         <label><a href="#" style="color: #F77F00;">¿Olvidó su contrase&ntilde;a?</a></label>
- 
-                                         <label>Tipo</label>
-                                         <select id="tipo" name="tipo" class="span3">
-                                             <option>Autoevaluacion Institucional</option>
-                                             <option>Comite Central</option>
-                                             <optgroup label="Fuentes">
-                                                 <option>Estudiantes</option>
-                                                 <option>Docentes</option>
-                                                 <option>Administrativos</option>
-                                             </optgroup>
-                                         </select>
-                                         <button type="submit" class="btn" name="submit_login" style="font-weight:700">Iniciar sesi&oacute;n</button>
-                                     </form>
-                                 </ul>
-                             </li>
-                         </ul>
-                        
-                        -->
-
-
-
                         <div class="btn-group pull-right">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="icon-user"></i> Iniciar sesi&oacute;n
@@ -493,24 +449,25 @@
             <div style="height: 68%; background-color: #f77f00;">
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 22%; top: 5%">    
                     <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right">    
+                   <p style="z-index: 6;color: #FFFFFF;float: left;position:relative;top:-60%;left: 5%;font-size: 16px;font-weight: bold;">La Oficina de Autoevaluacion de la Universidad de Cartagena cuenta con el Sistema de Autoevaluacion Institucional SIA que sirve de Apoyo a los procesos de autoevaluación con fines de Acreditación.</p>     
                         </div>
                         <div style="height: 32%;" class="offset2">
                             <ul class="thumbnails" style="margin-top: 10px;">
                                 <li class="span3">
                                     <div class="thumbnail" style="box-shadow:none;border: 0;">
-                                        <a href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/albums/70_7697778.jpg">
+                                        <a href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/diseno.png">
                                         </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/albums/70_7854374.jpg">
+                                        <a href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/ponderacion.png">
                                         </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a  href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/albums/70_7774920.jpg">
+                                        <a  href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/proceso.png">
                                         </a>
                                         <div class="caption">
-                                            <h3 style="color: #F77F00;">New Releases</span></h3>
-                                            <p>Hear new music from all types of artists and discover something new you'll love.</p>
-                                            <a href="./javascript.html#buttons" class="btn js-btn" style="text-decoration: none;">Get the javascript »</a>
+                                            <h3 style="color: #F77F00;">Construcci&oacute;n del Modelo</span></h3>
+                                            <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
+                                            <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
                                         </div>
                                     </div>
 
@@ -518,38 +475,38 @@
 
                                 <li class="span3">
                                     <div class="thumbnail" style="box-shadow:none;border: 0;">
-                                        <a href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_playlist70268320.jpg">
+                                        <a href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/encuesta.png">
                                         </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%"  src="http://images.grooveshark.com/static/featured/120_playlist69842843.jpg">
+                                        <a href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%"  src="css/images/documental.png">
                                         </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a  href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_playlist61212328.jpg">
+                                        <a  href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/recoleccion.png">
                                         </a>
                                         <div class="caption">
-                                            <h3 style="color: #F77F00;">Playlists and Stations</h3>
-                                            <p>Listen to artist-curated Playlists or customizable genre radio Stations.</p>
-                                            <a href="./javascript.html#buttons" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
+                                            <h3 style="color: #F77F00;">Recopile Informaci&oacute;n</h3>
+                                            <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s.</p>
+                                            <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
                                         </div>
                                     </div>
 
                                 </li>
                                 <li class="span3">
                                     <div class="thumbnail" style="box-shadow:none;border: 0;">
-                                        <a href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_videoc54752009df2c945.jpg">
+                                        <a href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/pie.png">
                                         </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%"  src="http://images.grooveshark.com/static/featured/120_video671dcdbad465d91f.jpg">
+                                        <a href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%"  src="css/images/bar.png">
                                         </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a  href="#!/music" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="http://images.grooveshark.com/static/featured/120_videoDiiGKQFy9ro.jpg">
+                                        <a  href="#" style="text-decoration:none;">
+                                            <img width="28%" height="28%" src="css/images/line.png">
                                         </a>
                                         <div class="caption">
-                                            <h3 style="color: #F77F00;">Videos</h3>
-                                            <p>Watch featured music videos, recording sessions, and more.</p>
-                                            <a href="./javascript.html#buttons" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
+                                            <h3 style="color: #F77F00;">Analice Resultados</h3>
+                                            <p>Realiza el procesamiento y sistematizaci&oacute;n de la información recolectada, mostrando informes en tiempo real.</p>
+                                            <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
                                         </div>
                                     </div>
 

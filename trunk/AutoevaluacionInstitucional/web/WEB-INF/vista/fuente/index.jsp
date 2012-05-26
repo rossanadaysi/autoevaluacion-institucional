@@ -104,11 +104,10 @@
         <script type="text/javascript">
             $(function(){
                 location ="/AutoevaluacionInstitucional/#inicio"; 
+                
                 $(window).hashchange(function(){
                     
-                    
-                    
-                    var hash = location.hash;
+                   var hash = location.hash;
                 
                     if(hash=="#CerrarSesion"){
                         $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion', function(data) {
@@ -173,7 +172,7 @@
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
                     <div class="container-fluid" style="width: auto;">
-                         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -217,7 +216,44 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
+             <div class="container">  
+                <div class="row">
+                    <div class="span8">
+                        <br/>
+                        <h2>Listado de  Encuestas Disponibles</h2>
+                        <c:choose>
+                            <c:when test="${listaEncuestasDisponibles.getRowCount()>0}">
 
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <th>Encuesta</th>
+                                        <th>Programa</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
+                                            <tr>    
+                                                <td>   
+                                                    <c:out value="${item[1]}"/>
+                                                </td>
+                                                <td>
+                                                    <c:out value="${proceso.programaId.nombre}"/>
+                                                </td>
+                                                <td class="action">
+                                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                No Existen Encuestas Disponibles.
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </div>
         </div><!--/Center-->
     </body>
 </html> 
