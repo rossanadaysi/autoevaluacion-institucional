@@ -16,6 +16,7 @@
                     <th>Fecha Inicio</th>
                     <th>Fecha Cierre</th>
                     <th>Programa</th>
+                    <th>Informes</th>
                     </thead>
                     <tbody>
                         <c:forEach items="${detailProceso}" var="row" varStatus="iter">
@@ -31,6 +32,9 @@
                                 </td>
                                 <td>   
                                     <c:out value="${row.programaId.nombre}"/>
+                                </td>
+                                <td>   
+                                    link
                                 </td>
                             </tr>
                         </c:forEach>
