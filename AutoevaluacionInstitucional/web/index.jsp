@@ -74,7 +74,7 @@
                 background-image: -moz-linear-gradient(center top , #F5F6F9, #F9FBFD);
                 box-shadow: 0 1px 0 white;
             }
-            
+
             div.dropdown a {
                 line-height: 19px;
                 padding: 0 20px 0 7px;
@@ -408,74 +408,74 @@
         </div>
         <div class="ui-layout-center">
             <div style="height: 68%; background-color: #f77f00;">
-            <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 3%; top: 5%">    
-            <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right">    
-            <div style="z-index: 5;float: left;position:relative;top:25%;left: 4%;width: 26%;color: #FAF4E3;"><h2>La Oficina de Autoevaluacion de la Universidad de Cartagena cuenta con el Sistema de Autoevaluacion Institucional SIA que sirve de Apoyo a los procesos de autoevaluación con fines de Acreditación.</h2></div>     
+                <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 3%; top: 5%"/>    
+                <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right"/>    
+                <div style="z-index: 5;float: left;position:relative;top:25%;left: 4%;width: 26%;color: #FAF4E3;"><h2>La Oficina de Autoevaluacion de la Universidad de Cartagena cuenta con el Sistema de Autoevaluacion Institucional SIA que sirve de Apoyo a los procesos de autoevaluación con fines de Acreditación.</h2></div>     
             </div>
-                        <div style="height: 32%;" class="offset2">
-                            <ul class="thumbnails" style="margin-top: 10px;">
-                                <li class="span3">
-                                    <div class="thumbnail" style="box-shadow:none;border: 0;">
-                                        <a href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/diseno.png">
-                                        </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/ponderacion.png">
-                                        </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a  href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/proceso.png">
-                                        </a>
-                                        <div class="caption">
-                                            <h3 style="color: #F77F00;">Construcci&oacute;n del Modelo</span></h3>
-                                            <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
-                                            <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
-                                        </div>
-                                    </div>
-
-                                </li>
-
-                                <li class="span3">
-                                    <div class="thumbnail" style="box-shadow:none;border: 0;">
-                                        <a href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/encuesta.png">
-                                        </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%"  src="css/images/documental.png">
-                                        </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a  href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/recoleccion.png">
-                                        </a>
-                                        <div class="caption">
-                                            <h3 style="color: #F77F00;">Recopile Informaci&oacute;n</h3>
-                                            <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s.</p>
-                                            <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
-                                        </div>
-                                    </div>
-
-                                </li>
-                                <li class="span3">
-                                    <div class="thumbnail" style="box-shadow:none;border: 0;">
-                                        <a href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/pie.png">
-                                        </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%"  src="css/images/bar.png">
-                                        </a><!-- THEME: Grooveshark Explore Thumb  -->
-                                        <a  href="#" style="text-decoration:none;">
-                                            <img width="28%" height="28%" src="css/images/line.png">
-                                        </a>
-                                        <div class="caption">
-                                            <h3 style="color: #F77F00;">Analice Resultados</h3>
-                                            <p>Realiza el procesamiento y sistematizaci&oacute;n de la información recolectada, mostrando informes en tiempo real.</p>
-                                            <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar »</a>
-                                        </div>
-                                    </div>
-
-                                </li>
-                            </ul>
-                        </div>
+            <div style="height: 32%;" class="offset2">
+                <ul class="thumbnails" style="margin-top: 10px;">
+                    <li class="span3">
+                        <div class="thumbnail" style="box-shadow:none;border: 0;">
+                            <a href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/diseno.png">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/ponderacion.png">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a  href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/proceso.png">
+                            </a>
+                            <div class="caption">
+                                <h3 style="color: #F77F00;">Construcci&oacute;n del Modelo</span></h3>
+                                <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
+                                <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar &raquo;</a>
+                            </div>
                         </div>
 
+                    </li>
 
-                        </body>
-                        </html>
+                    <li class="span3">
+                        <div class="thumbnail" style="box-shadow:none;border: 0;">
+                            <a href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/encuesta.png">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%"  src="css/images/documental.png">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a  href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/recoleccion.png">
+                            </a>
+                            <div class="caption">
+                                <h3 style="color: #F77F00;">Recopile Informaci&oacute;n</h3>
+                                <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s.</p>
+                                <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar &raquo;</a>
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="span3">
+                        <div class="thumbnail" style="box-shadow:none;border: 0;">
+                            <a href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/pie.png">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%"  src="css/images/bar.png">
+                            </a><!-- THEME: Grooveshark Explore Thumb  -->
+                            <a  href="#" style="text-decoration:none;">
+                                <img width="28%" height="28%" src="css/images/line.png">
+                            </a>
+                            <div class="caption">
+                                <h3 style="color: #F77F00;">Analice Resultados</h3>
+                                <p>Realiza el procesamiento y sistematizaci&oacute;n de la informaci&oacute;n recolectada, mostrando informes en tiempo real.</p>
+                                <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar &raquo;</a>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </body>
+</html>
