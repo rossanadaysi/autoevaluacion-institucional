@@ -30,6 +30,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="language" content="en" />
         <title>Autoevaluacion Institucional</title>
         <link rel="stylesheet" type="text/css" href="css/layout2.css" />
@@ -53,29 +54,6 @@
 
 
         <style type="text/css">
-            .icon_arrow {
-                background-image: url("css/images/flecha.png");
-            }
-
-            #iniciarSesion {
-                background-position: right -12px;
-                background-repeat: no-repeat;
-                padding-right: 17px;
-            }
-            #loginReplace{
-                background-position: right -85px;
-                background-repeat: no-repeat;
-                padding-right: 17px;   
-                -moz-text-decoration-line: none;
-            }
-
-            #iniciarSesion:hover{
-                background-position: right -50px;
-
-            }
-
-
-
             label {
                 display: block;
                 margin: 10px 0 2px;
@@ -96,24 +74,7 @@
                 background-image: -moz-linear-gradient(center top , #F5F6F9, #F9FBFD);
                 box-shadow: 0 1px 0 white;
             }
-            div.active-class2 {
-
-
-                background: none repeat scroll 0 0 white;
-                box-shadow: 0 0 5px rgba(0, 148, 255, 0.7);
-                color: black;
-
-            }
-
-            .indicator-down {
-                background: url("http://cdn.mediafire.com/images/icons/dropdown-arrow.png") no-repeat scroll center center transparent;
-                right: 7px;
-                top: 10px;
-                height: 8px;
-                position: absolute;
-                width: 8px;
-
-            }
+            
             div.dropdown a {
                 line-height: 19px;
                 padding: 0 20px 0 7px;
