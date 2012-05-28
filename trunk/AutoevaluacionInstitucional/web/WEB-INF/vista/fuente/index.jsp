@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -107,7 +108,7 @@
                 
                 $(window).hashchange(function(){
                     
-                   var hash = location.hash;
+                    var hash = location.hash;
                 
                     if(hash=="#CerrarSesion"){
                         $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion', function(data) {
@@ -216,41 +217,35 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
-             <div class="container">  
+            <div class="container">  
                 <div class="row">
                     <div class="span8">
                         <br/>
                         <h2>Listado de  Encuestas Disponibles</h2>
-                        <c:choose>
-                            <c:when test="${listaEncuestasDisponibles.getRowCount()>0}">
+                        
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                    <th>Encuesta</th>
+                                    <th>Programa</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
+                                        <tr>    
+                                            <td>   
+                                                <c:out value="${item[1]}"/>
+                                            </td>
+                                            <td>
+                                                <c:out value="${proceso.programaId.nombre}"/>
+                                            </td>
+                                            <td class="action">
+                                                <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
 
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                        <th>Encuesta</th>
-                                        <th>Programa</th>
-                                        <th></th>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
-                                            <tr>    
-                                                <td>   
-                                                    <c:out value="${item[1]}"/>
-                                                </td>
-                                                <td>
-                                                    <c:out value="${proceso.programaId.nombre}"/>
-                                                </td>
-                                                <td class="action">
-                                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>
-                            <c:otherwise>
-                                No Existen Encuestas Disponibles.
-                            </c:otherwise>
-                        </c:choose>
                     </div>
                 </div>
             </div>

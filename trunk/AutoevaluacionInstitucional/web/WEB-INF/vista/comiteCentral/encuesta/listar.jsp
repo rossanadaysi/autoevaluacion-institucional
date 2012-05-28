@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="hero-unit">
     <div class="row">
@@ -6,8 +7,7 @@
             <br/>
             <h2>Listado de  Encuestas</h2>
             <c:choose>
-                <c:when test="${listencuestas.size() != 0}">
-
+                <c:when test="${fn:length(listencuestas)!= 0}">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>Nombre</th>

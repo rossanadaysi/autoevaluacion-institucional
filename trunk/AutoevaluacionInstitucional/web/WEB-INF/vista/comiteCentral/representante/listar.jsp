@@ -4,6 +4,7 @@
     Author     : Usuario
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
     <body>
         <h1>Representantes</h1>
         <c:choose>
-            <c:when test="${listrepresentantes.size() != 0}">
+            <c:when test="${fn:length(listrepresentantes)!= 0}">
                 <table border="1" cellspacing="2">
                     <%-- for every row in the Result ...--%>
                     <thead>

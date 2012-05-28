@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(function(){
@@ -25,8 +26,7 @@
             <br/>
             <h2>Listado de  Preguntas</h2>
             <c:choose>
-                <c:when test="${listpreguntas.size() != 0}">
-
+                <c:when test="${fn:length(listpreguntas)!= 0}">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>Pregunta</th>

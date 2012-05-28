@@ -276,9 +276,6 @@ public class loginController extends HttpServlet {
                                                 + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
                                                 + "";
                                         
-                                                
-
-
                                         Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
                                         session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
                                         session.setAttribute("idfuente", idFuenteEstudiante); //session---------------------------------
