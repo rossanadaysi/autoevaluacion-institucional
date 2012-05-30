@@ -31,7 +31,7 @@ public class PreguntaJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return jpaConnection.getEntityManager();
     }
-
+    
     public void create(Pregunta pregunta) {
         if (pregunta.getEncuestaList() == null) {
             pregunta.setEncuestaList(new ArrayList<Encuesta>());

@@ -105,4 +105,4 @@ public class Sectorempresarial implements Serializable {
         return "entity.Sectorempresarial[ id=" + id + " ]";
     }
 
-    }
+}

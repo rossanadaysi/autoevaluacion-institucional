@@ -39,8 +39,8 @@ public class Caracteristica implements Serializable {
     @JoinColumn(name = "factor_id", referencedColumnName = "id")
     @ManyToOne
     private Factor factorId;
- 
-   public Caracteristica() {
+
+    public Caracteristica() {
     }
 
     public Caracteristica(Integer id) {
@@ -127,4 +127,4 @@ public class Caracteristica implements Serializable {
         return "entity.Caracteristica[ id=" + id + " ]";
     }
 
-    }
+}
