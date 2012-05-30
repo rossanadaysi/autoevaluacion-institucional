@@ -19,7 +19,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Indicador.findAll", query = "SELECT i FROM Indicador i"),
     @NamedQuery(name = "Indicador.findById", query = "SELECT i FROM Indicador i WHERE i.id = :id"),
     @NamedQuery(name = "Indicador.findByNombre", query = "SELECT i FROM Indicador i WHERE i.nombre = :nombre"),
-    @NamedQuery(name = "Indicador.findByDescripcion", query = "SELECT i FROM Indicador i WHERE i.descripcion = :descripcion")})
+    @NamedQuery(name = "Indicador.findByDescripcion", query = "SELECT i FROM Indicador i WHERE i.descripcion = :descripcion"),
+    @NamedQuery(name = "Indicador.findByCodigo", query = "SELECT i FROM Indicador i WHERE i.codigo = :codigo")})
 public class Indicador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,6 +33,8 @@ public class Indicador implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "codigo")
+    private String codigo;
     @JoinTable(name = "instrumentohasindicador", joinColumns = {
         @JoinColumn(name = "indicador_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "instrumento_id", referencedColumnName = "id")})
@@ -79,6 +82,14 @@ public class Indicador implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     @XmlTransient

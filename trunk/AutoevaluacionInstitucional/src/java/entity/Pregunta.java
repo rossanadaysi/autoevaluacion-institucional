@@ -19,7 +19,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
     @NamedQuery(name = "Pregunta.findById", query = "SELECT p FROM Pregunta p WHERE p.id = :id"),
     @NamedQuery(name = "Pregunta.findByPregunta", query = "SELECT p FROM Pregunta p WHERE p.pregunta = :pregunta"),
-    @NamedQuery(name = "Pregunta.findByTipo", query = "SELECT p FROM Pregunta p WHERE p.tipo = :tipo")})
+    @NamedQuery(name = "Pregunta.findByTipo", query = "SELECT p FROM Pregunta p WHERE p.tipo = :tipo"),
+    @NamedQuery(name = "Pregunta.findByCodigo", query = "SELECT p FROM Pregunta p WHERE p.codigo = :codigo")})
 public class Pregunta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,6 +34,8 @@ public class Pregunta implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipo")
     private String tipo;
+    @Column(name = "codigo")
+    private String codigo;
     @ManyToMany(mappedBy = "preguntaList")
     private List<Encuesta> encuestaList;
     @JoinColumn(name = "indicador_id", referencedColumnName = "id")
@@ -76,6 +79,14 @@ public class Pregunta implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     @XmlTransient

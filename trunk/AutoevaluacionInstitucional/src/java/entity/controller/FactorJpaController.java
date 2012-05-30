@@ -5,7 +5,6 @@
 
 package entity.controller;
 
-import connection.jpaConnection;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -26,9 +25,10 @@ public class FactorJpaController implements Serializable {
 
     public FactorJpaController() {
     }
+    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return jpaConnection.getEntityManager();
+        return emf.createEntityManager();
     }
 
     public void create(Factor factor) {
