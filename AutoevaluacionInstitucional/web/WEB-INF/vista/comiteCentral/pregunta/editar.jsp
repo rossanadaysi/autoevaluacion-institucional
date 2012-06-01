@@ -37,6 +37,12 @@
                 <fieldset>
                     <legend>Editar Pregunta</legend>
                     <div class="control-group">
+                        <label for="codigo" class="control-label">C&oacute;digo</label>
+                        <div class="controls">
+                            <input type="text" value="${pregunta.getCodigo()}" class="{required:true}" name="codigo" id="codigo" />
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label for="pregunta" class="control-label">Pregunta</label>
                         <div class="controls">
                             <textarea rows="3" name="pregunta" id="pregunta" class="input-xxlarge {required:true}">${pregunta.getPregunta()}</textarea>

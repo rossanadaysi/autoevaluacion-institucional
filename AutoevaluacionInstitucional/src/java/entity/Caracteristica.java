@@ -18,8 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Caracteristica.findAll", query = "SELECT c FROM Caracteristica c"),
     @NamedQuery(name = "Caracteristica.findById", query = "SELECT c FROM Caracteristica c WHERE c.id = :id"),
-    @NamedQuery(name = "Caracteristica.findByNombre", query = "SELECT c FROM Caracteristica c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Caracteristica.findByDescripcion", query = "SELECT c FROM Caracteristica c WHERE c.descripcion = :descripcion")})
+    @NamedQuery(name = "Caracteristica.findByNombre", query = "SELECT c FROM Caracteristica c WHERE c.nombre = :nombre")})
 public class Caracteristica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -30,8 +29,6 @@ public class Caracteristica implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "descripcion")
-    private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "caracteristicaId")
     private List<Ponderacioncaracteristica> ponderacioncaracteristicaList;
     @OneToMany(mappedBy = "caracteristicaId")
@@ -66,14 +63,6 @@ public class Caracteristica implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     @XmlTransient

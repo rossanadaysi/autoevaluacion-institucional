@@ -11,7 +11,7 @@
             
         })
     })
- </script> 
+</script> 
 <div class="hero-unit">
     <div class="row">
         <div class="span10">
@@ -23,7 +23,6 @@
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>Nombre</th>
-                        <th>Descripci&oacute;n</th>
                         <th></th>
                         </thead>
                         <tbody>
@@ -31,9 +30,6 @@
                                 <tr>    
                                     <td>   
                                         <c:out value="${row.nombre}"/>
-                                    </td>
-                                    <td>
-                                        <c:out value="${row.descripcion}"/>
                                     </td>
                                     <td class="action icon16">
                                         <a title="Editar" href="#editarCaracteristica&${row.id}" class="edit"></a>

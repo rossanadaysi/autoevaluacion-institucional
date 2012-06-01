@@ -41,12 +41,6 @@
                     </div>
                         
                         
-                    <div class="control-group">
-                        <label for="descripcion" class="control-label">Descripcion</label>
-                        <div class="controls">
-                        <textarea rows="3" name="descripcion" id="descripcion" class="input-xxlarge {required:true}">${indicador.getDescripcion()}</textarea>
-                        </div>
-                    </div>
                        <div class="control-group">
                         <label for="caracteristica" class="control-label">Asignar Caracteristica</label>
                         <div class="controls">

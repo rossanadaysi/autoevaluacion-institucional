@@ -29,6 +29,7 @@
                 <c:when test="${fn:length(listpreguntas)!= 0}">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
+                        <th>C&oacute;digo</th>    
                         <th>Pregunta</th>
                         <th>Tipo</th>
                         <th></th>
@@ -36,6 +37,9 @@
                         <tbody>
                             <c:forEach items="${listpreguntas}" var="row" varStatus="iter">
                                 <tr>    
+                                    <td>   
+                                        <c:out value="${row.codigo}"/>
+                                    </td>
                                     <td>   
                                         <c:out value="${row.pregunta}"/>
                                     </td>
