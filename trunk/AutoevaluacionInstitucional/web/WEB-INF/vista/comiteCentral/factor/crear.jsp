@@ -79,19 +79,13 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="descripcion" class="control-label">Descripcion</label>
-                        <div class="controls">
-                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}"></textarea>
-                        </div>    
-                    </div>
-                    <div class="control-group">
                         <label for="descripcion" class="control-label">Asignar Caracteristicas</label>
                         <div class="controls">
                             <ul id="fcbklist">
                                 <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
                                     <li>
                                         <strong>${row.nombre}</strong><br/> 
-                                        <span class="fcbkitem_text">${row.descripcion}</span>
+                                        <span class="fcbkitem_text">${row.nombre}</span>
                                         <input name="C${row.id}" type="hidden" value="0"/>
                                     </li>
                                 </c:forEach>

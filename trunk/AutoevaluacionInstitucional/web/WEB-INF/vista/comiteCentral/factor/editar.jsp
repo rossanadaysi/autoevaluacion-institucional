@@ -79,12 +79,6 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="descripcion" class="control-label">Descripcion</label>
-                        <div class="controls">
-                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}">${factor.getDescripcion()}</textarea>
-                        </div>    
-                    </div>
-                    <div class="control-group">
                         <label for="descripcion" class="control-label">Asignar Caracteristicas</label>
                         <div class="controls">
 
@@ -95,7 +89,7 @@
                                         <c:when test="${item.factorId != factor}">
                                             <li>
                                                 <strong>${item.nombre}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <span class="fcbkitem_text">${item.nombre}</span>
                                                 <input name="C${item.id}" type="hidden" value="0"/>
                                             </li>
 

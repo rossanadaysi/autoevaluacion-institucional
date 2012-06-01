@@ -83,12 +83,6 @@
                     </div>
 
                     <div class="control-group">
-                        <label for="descripcion" class="control-label">Descripcion</label>
-                        <div class="controls">
-                            <textarea rows="3" name="descripcion" id="descripcion" class="input-xlarge {required:true}">${caracteristica.getDescripcion()}</textarea>
-                        </div>
-                    </div>
-                    <div class="control-group">
                         <label for="factor" class="control-label">Asignar Factor</label>
                         <div class="controls">
                             <select id="factor" name="factor">
@@ -110,14 +104,14 @@
                     <div class="control-group">
                         <label  class="control-label">Asignar Indicadores</label>
                         <div class="controls">
-                            
+
                             <ul id="fcbklist">
                                 <c:forEach items="${listindicadores}" var="item" varStatus="iter">
                                     <c:choose>
                                         <c:when test="${item.caracteristicaId != caracteristica}">
                                             <li>
-                                                <strong>${item.nombre}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.nombre}</span>
                                                 <input name="I${item.id}" type="hidden" value="0"/>
                                             </li>
 
@@ -132,10 +126,10 @@
                                     </c:choose>
                                 </c:forEach>
                             </ul>
-                            
+
                         </div>
                     </div>    
-                        <input name="idC" type="hidden" value="${caracteristica.getId()}">
+                    <input name="idC" type="hidden" value="${caracteristica.getId()}">
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         <button class="btn" type="reset">Cancelar</button>

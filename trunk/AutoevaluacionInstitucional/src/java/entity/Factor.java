@@ -18,8 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Factor.findAll", query = "SELECT f FROM Factor f"),
     @NamedQuery(name = "Factor.findById", query = "SELECT f FROM Factor f WHERE f.id = :id"),
-    @NamedQuery(name = "Factor.findByNombre", query = "SELECT f FROM Factor f WHERE f.nombre = :nombre"),
-    @NamedQuery(name = "Factor.findByDescripcion", query = "SELECT f FROM Factor f WHERE f.descripcion = :descripcion")})
+    @NamedQuery(name = "Factor.findByNombre", query = "SELECT f FROM Factor f WHERE f.nombre = :nombre")})
 public class Factor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -30,8 +29,6 @@ public class Factor implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "descripcion")
-    private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "factorId")
     private List<Ponderacionfactor> ponderacionfactorList;
     @OneToMany(mappedBy = "factorId")
@@ -63,14 +60,6 @@ public class Factor implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     @XmlTransient

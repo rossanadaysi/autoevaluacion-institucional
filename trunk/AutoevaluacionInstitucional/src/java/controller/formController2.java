@@ -95,7 +95,7 @@ public class formController2 extends HttpServlet {
                 FactorJpaController conFa = new FactorJpaController();
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 fa.setNombre(request.getParameter("nombre"));
-                fa.setDescripcion(request.getParameter("descripcion"));
+                
 
                 List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
                 List<Caracteristica> aux = new ArrayList<Caracteristica>();
@@ -116,7 +116,7 @@ public class formController2 extends HttpServlet {
                 Factor fa = conFa.findFactor(Integer.parseInt(idF));
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 fa.setNombre(request.getParameter("nombre"));
-                fa.setDescripcion(request.getParameter("descripcion"));
+
 
                 List<Caracteristica> listadeCaracteristicas = conCa.findCaracteristicaEntities();
                 List<Caracteristica> aux = new ArrayList<Caracteristica>();
@@ -149,7 +149,6 @@ public class formController2 extends HttpServlet {
                 Indicador in = conIndi.findIndicador(Integer.parseInt(idI));
                 PreguntaJpaController conPre = new PreguntaJpaController();
                 in.setNombre(request.getParameter("nombre"));
-                in.setDescripcion(request.getParameter("descripcion"));
                 String car = request.getParameter("caracteristica");
                 if (car != null && !car.equals("")) {
                     Caracteristica ca = conCarac.findCaracteristica(Integer.parseInt(car));
@@ -191,7 +190,6 @@ public class formController2 extends HttpServlet {
                 Caracteristica ca = conCara.findCaracteristica(Integer.parseInt(idC));
                 IndicadorJpaController conIndi = new IndicadorJpaController();
                 ca.setNombre(request.getParameter("nombre"));
-                ca.setDescripcion(request.getParameter("descripcion"));
                 String fac = request.getParameter("factor");
                 if (fac != null && !fac.equals("")) {
                     Factor f = conFac.findFactor(Integer.parseInt(fac));
@@ -226,7 +224,6 @@ public class formController2 extends HttpServlet {
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 ca.setNombre(request.getParameter("nombre"));
-                ca.setDescripcion(request.getParameter("descripcion"));
                 FactorJpaController conFa = new FactorJpaController();
                 String fac = (String) request.getParameter("factor");
                 if (fac != null && !fac.equals("")) {
@@ -254,7 +251,6 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 PreguntaJpaController conPre = new PreguntaJpaController();
                 in.setNombre(request.getParameter("nombre"));
-                in.setDescripcion(request.getParameter("descripcion"));
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 String car = request.getParameter("caracteristica");
                 if (car != null && !car.equals("")) {
@@ -283,6 +279,7 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 p.setPregunta(request.getParameter("pregunta"));
                 p.setTipo(request.getParameter("tipo"));
+                p.setCodigo(request.getParameter("codigo"));
                 
                 String ind = request.getParameter("indicador");
 
@@ -309,7 +306,8 @@ public class formController2 extends HttpServlet {
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 pre.setTipo(request.getParameter("tipo"));
                 String ind = request.getParameter("indicador");
-
+                String cod = request.getParameter("codigo");
+                pre.setCodigo(cod);
                 if (ind != null && !ind.equals("")) {
                     Indicador in = conIn.findIndicador(Integer.parseInt(ind));
                     pre.setIndicadorId(in);
