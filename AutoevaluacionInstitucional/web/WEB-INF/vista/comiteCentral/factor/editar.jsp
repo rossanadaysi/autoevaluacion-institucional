@@ -88,7 +88,7 @@
                                     <c:choose>
                                         <c:when test="${item.factorId != factor}">
                                             <li>
-                                                <strong>${item.nombre}</strong><br/> 
+                                                <strong>${item.id}</strong><br/> 
                                                 <span class="fcbkitem_text">${item.nombre}</span>
                                                 <input name="C${item.id}" type="hidden" value="0"/>
                                             </li>
@@ -96,8 +96,8 @@
                                         </c:when>
                                         <c:otherwise>
                                             <li>
-                                                <strong>${item.nombre}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <strong>${item.id}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.nombre}</span>
                                                 <input name="C${item.id}" type="hidden" checked="checked" value="0"/>
                                             </li>
                                         </c:otherwise>
