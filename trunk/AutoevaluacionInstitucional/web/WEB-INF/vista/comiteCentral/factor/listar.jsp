@@ -22,12 +22,16 @@
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Nombre</th>
+                        <th>C&oacute;digo</th>    
+                        <th>Factor</th>
                         <th></th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listfactores}" var="row" varStatus="iter">
-                                <tr>    
+                                <tr>
+                                    <td>   
+                                        <c:out value="${row.id}"/>
+                                    </td>
                                     <td>   
                                         <c:out value="${row.nombre}"/>
                                     </td>
