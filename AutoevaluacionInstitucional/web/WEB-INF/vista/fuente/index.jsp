@@ -18,8 +18,8 @@
         <![endif]-->
 
         <!-- Le styles -->
-        <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-        <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap3.css" rel="stylesheet"/>
+        <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive3.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/css/docs2.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet"/>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-ui.js"></script>
@@ -60,6 +60,19 @@
                 padding: 0px;   
 
             }
+            .ui-layout-pane2 { /* solo header */
+                background:	#FFF; 
+                /* <<<< ojo comentado por mi >>>>> */
+                /*border: 1px solid #BBB; */
+
+
+                /* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
+                   otherwise you may get double-scrollbars - on the pane AND on the content-div
+                */
+
+                padding: 0;
+                overflow:	auto;
+            }
 
 
         </style>
@@ -73,7 +86,7 @@
                 myLayout = $('body').layout({
                     //	enable showOverflow on west-pane so CSS popups will overlap north pane
                     center__paneSelector:  ".ui-layout-center"
-                    ,   north__paneClass:    "ui-layout-pane"
+                    ,   north__paneClass:    "ui-layout-pane2"
                     ,   closable:				true	// pane can open & close
 
 
@@ -81,7 +94,8 @@
                     ,	closable:				true	// pane can open & close
                     ,	resizable:				false	// when open, pane can be resized 
                     ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-                        
+                    ,   north__size:            41
+                    ,   north__maxSize:         41    
                     ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
                     ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
                     ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
@@ -172,32 +186,32 @@
         <div class="ui-layout-north ui-widget-content">
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
-                    <div class="container-fluid" style="width: auto;">
+                    <div class="container-fluid">
                         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" href="#">Autoevaluacion Institucional</a>
+                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
+
+                        <div class="btn-group pull-right">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="icon-user"></i> ${persona.nombre}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Perfil</a></li>
+                                <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
+                            </ul>
+                        </div>
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
                                 <li><a href="#">Contacto</a></li>
                             </ul>
-
-                            <ul class="nav pull-right">
-                                <li class="divider-vertical"></li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown">${persona.nombre}<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Perfil</a></li>
-                                        <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </div><!-- /.nav-collapse -->
+
                     </div>
                 </div><!-- /navbar-inner -->
             </div><!-- /navbar -->
@@ -222,30 +236,36 @@
                     <div class="span8">
                         <br/>
                         <h2>Listado de  Encuestas Disponibles</h2>
-                        
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                    <th>Encuesta</th>
-                                    <th>Programa</th>
-                                    <th></th>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
-                                        <tr>    
-                                            <td>   
-                                                <c:out value="${item[1]}"/>
-                                            </td>
-                                            <td>
-                                                <c:out value="${proceso.programaId.nombre}"/>
-                                            </td>
-                                            <td class="action">
-                                                <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                        <c:choose>
+                            <c:when test="${listaEncuestasDisponibles.getRowCount()>0}">
 
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <th>Encuesta</th>
+                                        <th>Programa</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
+                                            <tr>    
+                                                <td>   
+                                                    <c:out value="${item[1]}"/>
+                                                </td>
+                                                <td>
+                                                    <c:out value="${proceso.programaId.nombre}"/>
+                                                </td>
+                                                <td class="action">
+                                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                No Existen Encuestas Disponibles.
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
