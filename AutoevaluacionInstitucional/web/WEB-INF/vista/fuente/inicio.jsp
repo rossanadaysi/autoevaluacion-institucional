@@ -13,28 +13,36 @@
                 <div class="span8">
                     <br/>
                     <h2>Listado de  Encuestas Disponibles</h2>
-                    <table class="table table-striped table-bordered table-condensed">
-                        <thead>
-                        <th>Encuesta</th>
-                        <th>Programa</th>
-                        <th></th>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
-                                <tr>    
-                                    <td>   
-                                        <c:out value="${item[1]}"/>
-                                    </td>
-                                    <td>
-                                        <c:out value="${proceso.programaId.nombre}"/>
-                                    </td>
-                                    <td class="action">
-                                        <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                    <c:choose>
+                            <c:when test="${listaEncuestasDisponibles.getRowCount()>0}">
+
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <th>Encuesta</th>
+                                        <th>Programa</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listaEncuestasDisponibles.rowsByIndex}" var="item" varStatus="iter">
+                                            <tr>    
+                                                <td>   
+                                                    <c:out value="${item[1]}"/>
+                                                </td>
+                                                <td>
+                                                    <c:out value="${proceso.programaId.nombre}"/>
+                                                </td>
+                                                <td class="action">
+                                                    <a title="Responder Encuesta" href="#responderEncuesta&${item[0]}">Responder encuesta</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                No Existen Encuestas Disponibles.
+                            </c:otherwise>
+                        </c:choose>
                 </div>
             </div>
         </div>
