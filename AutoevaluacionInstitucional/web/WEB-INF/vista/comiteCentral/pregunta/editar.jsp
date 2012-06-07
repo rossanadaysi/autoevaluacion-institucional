@@ -75,10 +75,10 @@
                                 <c:forEach items="${listindicadores}" var="row" varStatus="iter">
                                 <c:choose>
                                         <c:when test="${pregunta.getIndicadorId()!= row}">
-                                            <option value="${row.id}">${row.nombre}</option>
+                                            <option value="${row.id}">${row.codigo} ${row.nombre}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option selected="selected" value="${row.id}">${row.nombre}</option>
+                                            <option selected="selected" value="${row.id}">${row.codigo} ${row.nombre}</option>
                                         </c:otherwise>       
                                 </c:choose>    
                                     
