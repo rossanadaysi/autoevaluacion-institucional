@@ -21,12 +21,16 @@
                 <c:when test="${fn:length(listindicadores)!= 0}">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Nombre</th>
+                        <th>Codigo</th>
+                        <th>Indicador</th>
                         <th></th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listindicadores}" var="row" varStatus="iter">
                                 <tr>    
+                                    <td>   
+                                        <c:out value="${row.codigo}"/>
+                                    </td>
                                     <td>   
                                         <c:out value="${row.nombre}"/>
                                     </td>
