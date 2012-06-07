@@ -16,18 +16,23 @@
     <div class="row">
         <div class="span10">
             <br/>
-            <h2>Listado de  Caracteristicas</h2>
+            <h2>Listado de  Caracter&iacute;sticas</h2>
             <c:choose>
                 <c:when test="${fn:length(listcaracteristicas)!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Nombre</th>
+                        <th>C&oacute;digo</th>
+                        <th>Caracter&iacute;stica</th>
                         <th></th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
                                 <tr>    
+                                    <td>   
+                                        <c:out value="${row.factorId.id}.${row.id}"/>
+                                    </td>
+                           
                                     <td>   
                                         <c:out value="${row.nombre}"/>
                                     </td>
