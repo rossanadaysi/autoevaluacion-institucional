@@ -118,8 +118,8 @@
                                         </c:when>
                                         <c:otherwise>
                                             <li>
-                                                <strong>${item.nombre}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.descripcion}</span>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.nombre}</span>
                                                 <input name="I${item.id}" type="hidden" checked="checked" value="0"/>
                                             </li>
                                         </c:otherwise>
