@@ -30,3 +30,4 @@ sql = "Select factor.`NOMBRE` as 'Factor',"
 + " order by factor.`ID`";
 
 
+SELECT pregunta_id (select count(respuesta) from resultadoevaluacion where pregunta_id = 3 and respuesta = '1'), (select count(respuesta) from resultadoevaluacion where pregunta_id = 3 and respuesta = '2') from resultadoevaluacion
