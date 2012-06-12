@@ -7,71 +7,70 @@
         var chart = new Array(${preguntas.getRowCount()});
         $(document).ready(function() {
                     
-        <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status" >
-                                $("#container").append("<div id='${pregunta[0]}'></div>")
-                                chart[${status.index}] = new Highcharts.Chart({
-                            chart: {
-                                renderTo: '${pregunta[0]}',
-                                type: 'bar'
-                            },
-                            title: {
-                                text: 'Historic World Population by Region'
-                            },
-                            subtitle: {
-                                text: 'Source: Wikipedia.org'
-                            },
-                            xAxis: {
-                                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
-                                title: {
-                                    text: null
-                                }
-                            },
-                            yAxis: {
-                                min: 0,
-                                title: {
-                                    text: 'Population (millions)',
-                                    align: 'high'
-                                }
-                            },
-                            tooltip: {
+    <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status" >
+                $("#container").append("<div id='${pregunta[0]}' class='span10'></div>")
+                chart[${status.index}] = new Highcharts.Chart({
+                    chart: {
+                        renderTo: '${pregunta[0]}',
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                                
+                    },
+                    title: {
+                        text: null
+                    },
+                    subtitle: {
+                        text: '${pregunta[1]}'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
                                 formatter: function() {
-                                    return ''+
-                                        this.series.name +': '+ this.y +' millions';
+                                    return '<b>'+ this.point.name +'</b>: '+ this.y +'';
                                 }
-                            },
-                            plotOptions: {
-                                bar: {
-                                    dataLabels: {
-                                        enabled: true
-                                    }
-                                }
-                            },
-                            legend: {
-                                layout: 'vertical',
-                                align: 'right',
-                                verticalAlign: 'top',
-                                x: -100,
-                                y: 100,
-                                floating: true,
-                                borderWidth: 1,
-                                backgroundColor: '#FFFFFF',
-                                shadow: true
-                            },
-                            credits: {
-                                enabled: false
-                            },
-                            series: [{
-                                    name: 'Year 1800',
-                                    data: [107, 31, 635, 203, 2]
-                                }]
-                        });        
+                            }
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return ''+
+                                this.point.name +': '+ this.percentage +' %';
+                        }
+                    },
+                    series: [{
+                            type: 'pie',
+                            name: 'Personas',
+                            data: [
+                                ['0',  45],
+                                ['1',  0],
+                                ['2',  5],
+                                ['3',  8],
+                                ['4',  2],
+                                {
+                                    name: '5',
+                                    y: 50,
+                                    sliced: true,
+                                    selected: true
+                                },
+    
+                            ]
+                        }]
+                    
+                    
+                });        
     </c:forEach>
                     
                     
                     
-                    });
+            });
     
-                });
+        });
 </script>
 
 
