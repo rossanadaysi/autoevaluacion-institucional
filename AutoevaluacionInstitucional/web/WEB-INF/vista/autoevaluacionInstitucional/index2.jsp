@@ -838,7 +838,18 @@
                                 }); //fin $.ajax
                             
                             }
+                            else if(hash == "#informeMatriz"){
+                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url3,
+                                    success: function(data){
+                                       $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin $.ajax
                             
+                            }
                         } //fin del else
                     }
                 });  
@@ -966,7 +977,7 @@
                                         <li class="divider"></li>
                                         <li class="nav-header">Estado del Proceso</li>
                                         <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
-                                        <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informe2"><i class="icon-signal"></i> Informe Encuestas 2</a></li>
+                                        <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Informe Encuestas 2</a></li>
                                     </c:otherwise>
                                 </c:choose>
                                 <li class="nav-header">Procesos Anteriores</li>
