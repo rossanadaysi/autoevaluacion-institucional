@@ -1,10 +1,3 @@
-ResultSet result;
-cont1 = 0;
-cont2 = 0;
-cont3 = 0;
-bd.conectarMySQL();
-maneja.setConexion(bd);
-
 sql = "Select factor.`NOMBRE` as 'Factor',"
 + " caracteristica.`NOMBRE` as 'Caracteristica',"
 + " ponderacion.`PONDERACION` as 'Ponderacion (1 â€“10)',"
@@ -31,3 +24,7 @@ sql = "Select factor.`NOMBRE` as 'Factor',"
 
 
 SELECT pregunta_id (select count(respuesta) from resultadoevaluacion where pregunta_id = 3 and respuesta = '1'), (select count(respuesta) from resultadoevaluacion where pregunta_id = 3 and respuesta = '2') from resultadoevaluacion
+
+
+
+
