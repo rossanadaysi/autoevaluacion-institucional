@@ -271,19 +271,19 @@
                     $("div.ui-layout-center").empty();
                     $.ajax({ 
                         type: "POST", 
-                        url: "<%=request.getContextPath()%>/formController?action=CerrarProcesoAI",
+                        url: "/formController?action=CerrarProcesoAI",
                         success: function(data) 
                         {
-                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                            $("#menu").load("/ControllerAI?action=menuAI");
                                                                             
-                            location = "<%=request.getContextPath()%>/#listarProcesos";                                
+                            location = "/#listarProcesos";                                
                                                              
                         } //fin success
                     }); //fin del $.ajax*/
                 });
                 
                 $('#myModalCP2b2').click(function(){
-                    location = "<%=request.getContextPath()%>/#detalleProceso"; 
+                    location = "/#detalleProceso"; 
                 });
             
              
@@ -294,12 +294,12 @@
                     $("div.ui-layout-center").empty();
                     $.ajax({ 
                         type: "POST", 
-                        url: "<%=request.getContextPath()%>/formController?action=IniciarProcesoAI", 
+                        url: "/formController?action=IniciarProcesoAI", 
                         success: function(data) 
                         { 
                             $.ajax({
                                 type: 'POST',
-                                url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
+                                url: "/ControllerAI?action=validar1",
                                 success: function(data){
                                     $("#center").html(data);
                                 }
@@ -309,7 +309,7 @@
                 });
                 
                 $('#myModalIP2b2').click(function(){
-                    location = "<%=request.getContextPath()%>/#detalleProceso"; 
+                    location = "/#detalleProceso"; 
                 });
             
             
@@ -317,24 +317,24 @@
                 $(window).hashchange(function(){
                       
                     var hash = location.hash;
-                
+                    
                     if(hash.indexOf("PonderacionFactores")!=-1){
-                       
+                        
                     }
                                                 
                     if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
-                                                  
-                    }else{
-                                                    
-                        if(hash=="#CerrarSesion"){
-                            $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
+                                                 
+                    }else{//else principal
+                                                
+                        if(hash=="#CerrarSesion"){//CerrarSesion
+                            $.post('/ControllerAI?action=CerrarSesion',
                             function(data) {
-                                location = "<%=request.getContextPath()%>/";
+                                location = "/";
                                  
                             });
                                                         
-                        }
-                        if(hash=="#inicio"){
+                        }//fin CerrarSesion
+                        if(hash=="#inicio"){//inicio
                             $("div.ui-layout-center").empty();
                             $("div.ui-layout-center").append(
                             "<div class='span10' style='text-align: justify'>"
@@ -365,17 +365,13 @@
                             $(".nav-collapse .nav >li:eq(0)").addClass("active");
                             $("ul.nav-list li").siblings().children("a").children("i").removeClass("icon-white");
                             return false;
-                        }
+                        } //fin inicio
                                                     
-                        /* if(grid){
-                            grid.destroy(); 
-                        
-                        }*/
-                                               
+                                  
            
-                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum")
-                        {
-                        
+                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 && hash.indexOf("#detalleCaracteristica")==-1)
+                        { //si no es ---
+                            
                             $.unsubscribe("set_grid_width");
                             $.unsubscribe("set_grid_height");    
                             if(middleLayout){
@@ -396,7 +392,7 @@
                 
                             $("div.ui-layout-center").empty();
                             var url3 = "<%=request.getContextPath()%>/"+hash;
-                        
+                            
                             if(hash == "#PonderacionFactor"){
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                           
@@ -449,13 +445,13 @@
                                                     setTimeout(function () {
                                                         $.ajax({
                                                             type: 'POST',
-                                                            url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
+                                                            url: "/formController?action=asignarPonderacionFactorAIp",
                                                             data: $("#formPondeFa").serialize(),
                                                             success: function(){
                                                                 //alert("Ponderación de Factores Actualizada con Exito!");
                                                                 $('#myModalF').modal();
                                                                 $('#myModalF').on('hidden', function () {
-                                                                    location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
+                                                                    location = "/#listarPonderacionFactor";
                                                                 })
                                                             } //fin success
                                             
@@ -516,7 +512,7 @@
                                              
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
+                                                    url: "/formController?action=asignarEncuestasAIp",
                                                     data: $("#formAsigEnc").serialize(),
                                                     success: function(){
                                                                                     
@@ -558,7 +554,7 @@
                                              
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
+                                                   
                                                     data: $("#formAsigMue").serialize(),
                                                     success: function(){
                                                                                     
@@ -598,12 +594,12 @@
                                             event.preventDefault();
                                             $.ajax({
                                                 type: 'POST',
-                                                url: "<%=request.getContextPath()%>/formController?action=evaluarInfoDocumentalAI",
+                                                url: "/formController?action=evaluarInfoDocumentalAI",
                                                 data: $("#formInfoDoc").serialize(),
                                                 success: function(){
                                                     $('#myModalID').modal();
                                                     $('#myModalID').on('hidden', function () {
-                                                        location = "<%=request.getContextPath()%>/#listarEvaluarDoc";
+                                                        location = "/#listarEvaluarDoc";
                                                     })             
                                                 } //fin success
                                             }); //fin $.ajax
@@ -627,12 +623,12 @@
                                             event.preventDefault();
                                             $.ajax({
                                                 type: 'POST',
-                                                url: "<%=request.getContextPath()%>/formController?action=evaluarInfoNumericaAI",
+                                                url: "/formController?action=evaluarInfoNumericaAI",
                                                 data: $("#formInfoNum").serialize(),
                                                 success: function(){
                                                     $('#myModalIN').modal();
                                                     $('#myModalIN').on('hidden', function () {
-                                                        location = "<%=request.getContextPath()%>/#listarEvaluarNum";
+                                                        location = "/#listarEvaluarNum";
                                                     })             
                                                 } //fin success
                                             }); //fin $.ajax
@@ -657,7 +653,7 @@
                                         
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                    url: "/formController?action=crearProcesoAIp",
                                                     data: $("#formCrearProc").serialize(),
                                                     success: function(){
                                                         $('#myModalP1').modal(); 
@@ -673,6 +669,7 @@
                                 }); //fin del $.ajax
                             }
                             else if(hash == "#CrearProceso1"){
+                                                        
                                 var a = 0;
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                                 $("div.ui-layout-center").empty();
@@ -688,7 +685,7 @@
                                             submitHandler: function() {
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
+                                                    url: "/formController?action=crearProcesoAIp",
                                                     data: $("#formCrearProc").serialize(),
                                                     beforeSend: function(){
                                                         $('#myModalLoading').modal();   
@@ -709,7 +706,7 @@
                                                         },2000);
                                                                                 
                                                         $('#myModalP').on('hidden', function () {
-                                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
+                                                            $("#menu").load("/ControllerAI?action=menuAI");
                                                             setTimeout(function(){
                                                                 location = '/AutoevaluacionInstitucional/';
                                                             }, 200);
@@ -728,20 +725,23 @@
                                 $('#myModalCP2').modal();
                             }
                             else {
+                            
+                                
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";
                                 $("div.ui-layout-center").load(url3);
                             }
-                        }else{
-                        
+                            //fin si no es ---
+                        }else{ //si sio es ---
+                            
                             if(hash == "#detalleProceso")
                             {
                                 $.ajax({
                                     type: 'POST',
-                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=detalleProceso",
+                                    url: "/jsonController?ejecucion=detalleProceso",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=detalleProceso",
+                                            url: "/ControllerAI?action=detalleProceso",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -753,11 +753,11 @@
                             {               
                                 $.ajax({
                                     type: 'POST',
-                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarProcesos",
+                                    url: "/jsonController?ejecucion=listarProcesos",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarProceso",
+                                            url: "/ControllerAI?action=listarProceso",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -768,11 +768,11 @@
                             if(hash == "#listarPonderacionFactor"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarPonderacionFactor",
+                                    url: "/jsonController?ejecucion=listarPonderacionFactor",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionFactor",
+                                            url: "/ControllerAI?action=listarPonderacionFactor",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -783,11 +783,11 @@
                             if(hash == "#listarPonderacionCaracteristica"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarPonderacionCaracteristica",
+                                    url: "/jsonController?ejecucion=listarPonderacionCaracteristica",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionCaracteristica",
+                                            url: "/ControllerAI?action=listarPonderacionCaracteristica",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -798,11 +798,11 @@
                             if(hash == "#listarEvaluarDoc"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarEvaluarDoc",
+                                    url: "/jsonController?ejecucion=listarEvaluarDoc",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarDoc",
+                                            url: "/ControllerAI?action=listarEvaluarDoc",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -813,11 +813,11 @@
                             if(hash == "#listarEvaluarNum"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "<%=request.getContextPath()%>//jsonController?ejecucion=listarEvaluarNum",
+                                    url: "/jsonController?ejecucion=listarEvaluarNum",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarNum",
+                                            url: "/ControllerAI?action=listarEvaluarNum",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -826,43 +826,44 @@
                                 }); //fin $.ajax
                             }
                             
-                            else if(hash == "#informe1"){
-                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
+                            else if(hash.indexOf("#detalleFactor")!=-1 ){
+                            
+                                var url4 = "<%=request.getContextPath()%>/"+hash;
+                              
+                                url4 = url4.replace('#detalleFactor', "ControllerAI?action=detalleFactorAI");
+                                url4 = url4.replace('&', "&idF=");
+                                $("div.ui-layout-center").empty();
                                 $.ajax({
                                     type: 'POST',
-                                    url: url3,
+                                    url: url4,
                                     success: function(data){
-                                       $("div.ui-layout-center").append(data);
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin $.ajax
+                            
+                            }else if(hash.indexOf("#detalleCaracteristica")!=-1 ){
+                            
+                                var url4 = "<%=request.getContextPath()%>/"+hash;
+                              
+                                url4 = url4.replace('#detalleCaracteristica', "ControllerAI?action=detalleCaracteristicaAI");
+                                url4 = url4.replace('&', "&idC=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url4,
+                                    success: function(data){
+                                        $("div.ui-layout-center").append(data);
                                         
                                     } //fin success
                                 }); //fin $.ajax
                             
                             }
-                            else if(hash == "#informeMatriz"){
-                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                $.ajax({
-                                    type: 'POST',
-                                    url: url3,
-                                    success: function(data){
-                                       $("div.ui-layout-center").append(data);
-                                        
-                                    } //fin success
-                                }); //fin $.ajax
                             
-                            }else if(hash == "#informeMatrizFactores"){
-                            url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                $.ajax({
-                                    type: 'POST',
-                                    url: url3,
-                                    success: function(data){
-                                       $("div.ui-layout-center").append(data);
-                                        
-                                    } //fin success
-                                }); //fin $.ajax
-                            
-                            }
-                        } //fin del else
-                    }
+                        } //fin si si es ---
+                    
+                    } //fin else principal
+                   
                 });  
              
             });  //fin del function   
@@ -894,12 +895,12 @@
                                 <li><a href="#">Perfil</a></li>
                                 <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
+                                <li><a href="/#CerrarSesion">Cerrar Sesion</a></li>
                             </ul>
                         </div>
                         <div class="nav-collapse">
                             <ul class="nav">
-                                <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
+                                <li class="active"><a href="/#inicio">Inicio</a></li>
                                 <li><a href="#">Contacto</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
