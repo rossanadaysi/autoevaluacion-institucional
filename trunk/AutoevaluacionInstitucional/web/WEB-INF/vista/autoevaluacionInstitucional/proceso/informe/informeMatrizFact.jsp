@@ -30,7 +30,7 @@
                                         <c:out value="${row[0]}"/>
                                     </td>
                                     <td>   
-                                        <c:out value="${row[1]}"/>
+                                        <a href="#detalleFactor&${row[0]}">${row[1]}</a>
                                     </td>
                                     <td>   
                                         <c:out value="${row[2]}"/>
