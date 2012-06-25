@@ -22,13 +22,13 @@ public class informeDetalleCaracteristicaAI implements Action{
         String idC = (String) request.getParameter("idC");
         sqlController conSql = new sqlController();
         Result detalleCaracteristica = null;
-        String sql2 = "SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, avg(respuesta)"
+        String sql2 = "SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, format(avg(respuesta),2)"
                 + " FROM Caracteristica"
                 + " INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id"
                 + " INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id"
-                + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id "
-                + "INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
-                + " WHERE pregunta.tipo = 'elegir 1-5' and caracteristica.id ="+idC
+                + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
+                + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
+                + " WHERE pregunta.tipo = 'elegir 1-5' and resultadoevaluacion.respuesta!=0 and caracteristica.id ="+idC
                 + " GROUP BY indicador.id";
         detalleCaracteristica = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detalleCaracteristica", detalleCaracteristica);

@@ -369,7 +369,7 @@
                                                     
                                   
            
-                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 && hash.indexOf("#detalleCaracteristica")==-1)
+                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1)
                         { //si no es ---
                             
                             $.unsubscribe("set_grid_width");
@@ -860,6 +860,24 @@
                             
                             }
                             
+                            else if(hash.indexOf("#detalleIndicador")!=-1 ){
+                            
+                                var url4 = "<%=request.getContextPath()%>/"+hash;
+                              
+                                url4 = url4.replace('#detalleIndicador', "ControllerAI?action=detalleIndicadorAI");
+                                url4 = url4.replace('&', "&idI=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url4,
+                                    success: function(data){
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin $.ajax
+                            
+                            }
+                            
                         } //fin si si es ---
                     
                     } //fin else principal
@@ -895,7 +913,7 @@
                                 <li><a href="#">Perfil</a></li>
                                 <li><a href="#">Cambiar Contrase&ntilde;a</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/#CerrarSesion">Cerrar Sesion</a></li>
+                                <li><a href="<%=request.getContextPath()%>/#CerrarSesion">Cerrar Sesion</a></li>
                             </ul>
                         </div>
                         <div class="nav-collapse">

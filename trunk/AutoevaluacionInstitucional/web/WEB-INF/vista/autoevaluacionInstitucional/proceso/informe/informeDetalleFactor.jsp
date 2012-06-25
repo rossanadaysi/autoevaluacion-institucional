@@ -6,7 +6,7 @@
     <div class="row">
         <div class="span10">
             <br/>
-            <h2>Matriz de Calidad Factor</h2>
+            <h2>Detalle factor</h2>
             <c:choose>
                 <c:when test="${detalleFactor.getRowCount()!= 0}">
 
