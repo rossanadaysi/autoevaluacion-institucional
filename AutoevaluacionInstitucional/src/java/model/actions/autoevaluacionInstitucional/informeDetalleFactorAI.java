@@ -30,7 +30,7 @@ public class informeDetalleFactorAI implements Action{
                 + " INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id"
                 + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
                 + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
-                + " WHERE pregunta.tipo = 'elegir 1-5' and factor.id="+idF+""
+                + " WHERE pregunta.tipo = 'elegir 1-5' and factor.id="+idF+" and resultadoevaluacion.respuesta!=0"
                 + " GROUP BY caracteristica.id";
         detalleFactor = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detalleFactor", detalleFactor);

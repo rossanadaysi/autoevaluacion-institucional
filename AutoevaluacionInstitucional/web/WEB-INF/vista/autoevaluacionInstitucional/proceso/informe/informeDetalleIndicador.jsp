@@ -6,35 +6,35 @@
     <div class="row">
         <div class="span10">
             <br/>
-            <h2>Detalle caracteristica</h2>
+            <h2>Detalle indicador</h2>
             <c:choose>
-                <c:when test="${detalleCaracteristica.getRowCount()!= 0}">
+                <c:when test="${detalleIndicador.getRowCount()!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id caracteristica</th>
-                        <th>Caracteristica</th>
                         <th>Id indicador</th>
                         <th>Indicador</th>
-                        <th>Cumplimiento</th>
+                        <th>Id Pregunta</th>
+                        <th>Pregunta</th>
+                        <th>Promedio respuesta</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${detalleCaracteristica.rowsByIndex}" var="row" varStatus="iter">
+                            <c:forEach items="${detalleIndicador.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
 
                                     <c:choose>
                                         <c:when test="${iter.index == 0}">
-                                            <td rowspan="${detalleCaracteristica.getRowCount()}">   
+                                            <td rowspan="${detalleIndicador.getRowCount()}">   
                                                 <c:out value="${row[0]}"/>
                                             </td>
-                                            <td rowspan="${detalleCaracteristica.getRowCount()}">   
+                                            <td rowspan="${detalleIndicador.getRowCount()}">   
                                                 <c:out value="${row[1]}"/>
                                             </td>
                                             <td>   
                                                 <c:out value="${row[2]}"/>
                                             </td>
                                             <td>   
-                                                <a href="#detalleIndicador&${row[2]}">${row[3]}</a> 
+                                                <a href="#detallePregunta&${row[2]}">${row[3]}</a> 
                                             </td>
                                             <td>   
                                                 <c:out value="${row[4]}"/>
@@ -45,7 +45,7 @@
                                                 <c:out value="${row[2]}"/>
                                             </td>
                                             <td>   
-                                                <a href="#detalleIndicador&${row[2]}">${row[3]}</a> 
+                                                <a href="#detallePregunta&${row[2]}">${row[3]}</a> 
                                             </td>
                                             <td>   
                                                 <c:out value="${row[4]}"/>
@@ -67,5 +67,3 @@
         </div>
     </div>
 </div>    
-
-
