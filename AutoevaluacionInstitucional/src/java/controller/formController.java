@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.sql.Result;
+import model.Bean1;
 import model.PasswordGenerator;
 
 /**
@@ -435,6 +436,65 @@ public class formController extends HttpServlet {
                 }
 
             } else if (request.getParameter(
+                    "action").equals("configurarParametrosMuestraAI")) {
+                HttpSession session = request.getSession();
+                sqlController conSql = new sqlController();
+                String bd = (String) session.getAttribute("bd");
+                String conglomerado = request.getParameter("conglomerado");
+
+                session.setAttribute("conglomerado", conglomerado);
+
+                if (conglomerado.equals("programa")) {
+                    Result rs = conSql.CargarSql2("Select*  from programa", bd);
+                    session.setAttribute("listProgramasMuestra", rs);
+                }
+                if (conglomerado.equals("nuevoCriterio")) {
+
+                    String criterio = (String) session.getAttribute("criterio");
+                    System.out.println("Criterio " + criterio);
+                    ResultSet rs = conSql.CargarSql("Select nombre from criterio where id = " + criterio, bd);
+                    try {
+                        while (rs.next()) {
+                            session.setAttribute("listNombreCriterio", rs.getString(1));
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Result r = conSql.CargarSql2("Select id, nombre from descripcioncriterio where criterio_id = '" + criterio + "'", bd);
+                    session.setAttribute("listDescripcionCriterio2", r);
+                }
+            } else if (request.getParameter(
+                    "action").equals("pnuevoConglomeradoAI")) {
+                HttpSession session = request.getSession();
+                sqlController conSql = new sqlController();
+                String bd = (String) session.getAttribute("bd");
+                String conglomerado = request.getParameter("conglomerado");
+
+
+                if (request.getParameter("selectCriterio").equals("nuevoCriterio")) {
+                    String criterio = (String) request.getParameter("nombreCriterio");
+                    String descripcion = (String) request.getParameter("descripcionCriterio");
+
+                    conSql.UpdateSql("INSERT INTO `criterio` (`id`, `nombre`, `descripcion`) VALUES (NULL, '" + criterio + "', '" + descripcion + "')", bd);
+
+
+
+                    String countaux = (String) request.getParameter("countCriterio");
+                    int count = Integer.parseInt(countaux);
+
+
+                    for (int i = 0; i < count; i++) {
+
+                        if (request.getParameter("criterio" + i) != null) {
+                            String descripcionCriterio = request.getParameter("criterio" + i);
+
+                            conSql.UpdateSql("INSERT INTO `descripcioncriterio` (`id`, `nombre`, `descripcion`, `criterio_id`) VALUES (NULL, '" + descripcionCriterio + "', '--', (Select id from criterio where nombre = '" + criterio + "'))", bd);
+                        }
+                    }
+
+                }
+
+            } else if (request.getParameter(
                     "action").equals("asignarMuestraAIp")) {
 
 
@@ -555,6 +615,42 @@ public class formController extends HttpServlet {
                         session.setAttribute("muestrasSeleccionadas", rs);
                         session.setAttribute("aux_asignarM", 1);
 
+
+                        sql = "Select conglomerado from " + tabla + " where muestra_id = " + idMuestra + " LIMIT 1";
+                        ResultSet rst = conSql.CargarSql(sql, bd);
+                        try {
+                            while (rst.next()) {
+                                String conglomerado = rst.getString(1);
+                                session.setAttribute("conglomeradoFiltro", conglomerado);
+                                if (conglomerado.equals("programa")) {
+                                    rs = null;
+                                    sql = "Select* from programa";
+                                    rs = conSql.CargarSql2(sql, bd);
+                                    session.setAttribute("descripcionFiltro", rs);
+                                } else if (conglomerado.equals("tipo")) {
+                                    sql = "Select distinct tipo from docente";
+                                    rs = conSql.CargarSql2(sql, bd);
+                                    session.setAttribute("descripcionFiltro", rs);
+                                } else if (conglomerado.equals("cargo")) {
+                                    sql = "Select distinct cargo from adiminstrativo";
+                                    rs = conSql.CargarSql2(sql, bd);
+                                    session.setAttribute("descripcionFiltro", rs);
+                                } else if (conglomerado.equals("sectorempresarial")) {
+                                    sql = "Select distinct sectorempresarial from empleador";
+                                    rs = conSql.CargarSql2(sql, bd);
+                                    session.setAttribute("descripcionFiltro", rs);
+                                } else if (conglomerado.equals("nuevoCriterio")) {
+                                    sql = "Select distinct descripcioncriterio.id, descripcioncriterio.nombre from muestracriterio inner join descripcioncriterio on muestracriterio.`descripcioncriterio_id` = descripcioncriterio.id where muestracriterio.fuente_id = '" + id + "'";
+                                    rs = conSql.CargarSql2(sql, bd);
+                                    session.setAttribute("descripcionFiltro", rs);
+                                }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+
+
                     } else {
                         //f  System.out.println("no hay asignacion de muestras!!!!!");
                         session.setAttribute("aux_asignarM", 0);
@@ -662,6 +758,7 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("selectorAsignarMuestra2AI")) {
 
+                System.out.println("ENTRA");
                 HttpSession session = request.getSession();
                 sqlController conSql = new sqlController();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
@@ -702,48 +799,76 @@ public class formController extends HttpServlet {
                 String sql = null;
 
                 System.out.println("Entra: " + id);
-                //Estatico
-                if (id == 1) {
 
 
+                String conglomerado = (String) session.getAttribute("conglomeradoFiltro");
+
+                if (conglomerado.equals("programa")) {
+                    if (id == 1) {
+                        String idP = request.getParameter("programas");
+                        String idS = request.getParameter("semestres");
+                        if (!idP.equals("--") && !idS.equals("--")) {
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS + " order by estudiante.id";
+                        } else if (!idP.equals("--")) {
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " order by estudiante.id";
+                        } else if (!idS.equals("--")) {
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.id";
+                        } else if (idP.equals("--") && idS.equals("--")) {
+                            //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
+                        }
+
+                    } else if (id == 2) {
+                        String idP = request.getParameter("programas");
+
+                        if (!idP.equals("--")) {
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
+                        } else if (!idP.equals("--")) {
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
+                        } else if (idP.equals("--")) {
+                            //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
+                        }
+                    }
+
+                } else if (conglomerado.equals("tipo")) {
                     String idP = request.getParameter("programas");
-                    String idS = request.getParameter("semestres");
-                    if (!idP.equals("--") && !idS.equals("--")) {
-                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS + " order by estudiante.id";
-                    } else if (!idP.equals("--")) {
-                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " order by estudiante.id";
-                    } else if (!idS.equals("--")) {
-                        sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.id";
-                    } else if (idP.equals("--") && idS.equals("--")) {
-                        //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
+                    if (!idP.equals("--")) {
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.tipo = '" + idP + "'order by muestradocente.id";
+                        System.out.println("sql8: " + sql);
                     }
 
-
-                } else if (id == 2) {
-
-                    String idP = request.getParameter("programas3");
-
+                } else if (conglomerado.equals("cargo")) {
+                    String idP = request.getParameter("programas");
                     if (!idP.equals("--")) {
-                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
-                    } else if (!idP.equals("--")) {
-                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
-                    } else if (idP.equals("--")) {
-                        //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraadministrativo inner join administrativo on muestraadministrativo.administrativo = administrativo.id inner join persona on administrativo.persona_id = persona.id where muestraadministrativo.muestra_id = " + idMuestra + " and administrativo.cargo = '" + idP + "'order by muestraadministrativo.id";
+                        System.out.println("sql8: " + sql);
                     }
 
-                } else {
-                    String idP = request.getParameter("programas4");
+                } else if (conglomerado.equals("sectorempresarial")) {
+                    String idP = request.getParameter("programas");
                     if (!idP.equals("--")) {
-                        sql = "select persona.nombre, persona.apellido, persona.password from " + tabla + " inner join " + tabla1 + " on " + tabla + "." + tabla1 + "_id = " + tabla1 + ".id inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla + ".muestra_id = " + idMuestra + " order by " + tabla + ".id";
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraempleador inner join empleador on muestraempleador.empleador_id = empleador.id inner join persona on empleador.persona_id = persona.id where muestraempleador.muestra_id = " + idMuestra + " and empleador.sectorempresarial = '" + idP + "'order by muestraempleador.id";
+                        System.out.println("sql8: " + sql);
+                    }
+                } else if (conglomerado.equals("nuevoCriterio")) {
+                    String idP = request.getParameter("programas");
+                    if (!idP.equals("--")) {
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestracriterio inner join persona on muestracriterio.persona_id = persona.id where muestracriterio.muestra_id = " + idMuestra + " and muestracriterio.descripcioncriterio_id = '" + idP + "'order by persona.id";
+                        System.out.println("sql8: " + sql);
+                    }
+                } else if (conglomerado.equals("ninguno")) {
+                    String idP = request.getParameter("programas");
+                    if (!idP.equals("--")) {
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from " + tabla + " inner join " + tabla1 + " on " + tabla + "." + tabla1 + "_id = " + tabla1 + ".id inner join persona on " + tabla1 + ".persona_id = persona.id where " + tabla + ".muestra_id = " + idMuestra + " order by persona.id";
                         System.out.println("sql8: " + sql);
                     }
                 }
 
+
                 session.setAttribute("idFuenteMuestra", id);
-
+                System.out.println("va pa esa");
                 Result rs = conSql.CargarSql2(sql, bd);
+                System.out.println("couunt" + rs.getRowCount());
                 session.setAttribute("selectorAsignarM2", rs);
-
             } else if (request.getParameter(
                     "action").equals("generarMuestra")) {
 
@@ -788,8 +913,11 @@ public class formController extends HttpServlet {
                     tabla = "muestraagencia";
                     tabla1 = "agenciagubernamental";
                 }
-                String aux = null;
 
+                String aux = "aleatorio" + tabla1 + "";
+
+                String conglomerado = request.getParameter("conglomerado");
+                String metodo = request.getParameter("metodo");
 
                 ArrayList rs = (ArrayList) session.getAttribute("muestraCalculada2");
 
@@ -801,87 +929,20 @@ public class formController extends HttpServlet {
 
                         conSql.UpdateSql("TRUNCATE TABLE `" + tabla + "` ", bd);
 
-                        if (id == 2) {
+                        String sql = "DELETE " + tabla1 + " from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where persona.apellido = '" + aux + "'";
+                        conSql.UpdateSql(sql, bd);
 
-                            String sql = "DELETE from docente where docente.tipo = 'aleatorioDocente'";
-                            conSql.UpdateSql(sql, bd);
-
-                            sql = "DELETE from persona where persona.mail = 'aleatorioDocente'";
-                            conSql.UpdateSql(sql, bd);
-
-                        }
-                        if (id == 3) {
-
-                            String sql = "DELETE from administrativo where persona_id in (select id from persona WHERE mail='aleatorioAdministrativo')";
-                            conSql.UpdateSql(sql, bd);
-
-                            sql = "DELETE from persona where persona.mail = 'aleatorioAdministrativo'";
-                            conSql.UpdateSql(sql, bd);
-
-                        }
-                        if (id == 4) {
-
-                            String sql = "DELETE from directorprograma where persona_id in = (Select id from persona where persona.mail = 'aleatorioDirectivo')";
-                            conSql.UpdateSql(sql, bd);
-
-                            sql = "DELETE from persona where persona.mail = 'aleatorioDirectivo'";
-                            conSql.UpdateSql(sql, bd);
-
-                        }
-                        if (id == 5) {
-
-                            String sql = "DELETE from egresado where persona_id in = (Select id from persona where persona.mail = 'aleatorioEgresado')";
-                            conSql.UpdateSql(sql, bd);
-
-                            sql = "DELETE from persona where persona.mail = 'aleatorioEgresado'";
-                            conSql.UpdateSql(sql, bd);
-
-                        }
-                        if (id == 6) {
-
-                            String sql = "DELETE from empleador where persona_id in = (Select id from persona where persona.mail = 'aleatorioEmpleador')";
-                            conSql.UpdateSql(sql, bd);
-
-                            sql = "DELETE from persona where persona.mail = 'aleatorioEmpleador'";
-                            conSql.UpdateSql(sql, bd);
-
-                        }
-                        if (id == 7) {
-
-                            String sql = "DELETE from agenciagubernamental where persona_id in = (Select id from persona where persona.mail = 'aleatorioAgencia')";
-                            conSql.UpdateSql(sql, bd);
-
-                            sql = "DELETE from persona where persona.mail = 'aleatorioAgencia'";
-                            conSql.UpdateSql(sql, bd);
-
-                        }
+                        sql = "DELETE muestracriterio from muestracriterio inner join persona on muestracriterio.persona_id = persona.id where persona.apellido = '" + aux + "'";
+                        conSql.UpdateSql(sql, bd);
 
 
-                        if (id == 3) {
-                            aux = "aleatorioAdministrativo";
-                            tabla1 = "administrativo";
-                        } else if (id == 4) {
-                            aux = "aleatorioDirectivo";
-                            tabla1 = "directorprograma";
-                        } else if (id == 5) {
-                            aux = "aleatorioEgresado";
-                            tabla1 = "egresado";
-                        } else if (id == 6) {
-                            aux = "aleatorioEmpleador";
-                            tabla1 = "empleador";
-                        } else if (id == 7) {
-                            aux = "aleatorioAgencia";
-                            tabla1 = "agenciagubernamental";
-                        }
-
-
-
-
-
+                        sql = "DELETE from persona where persona.apellido = '" + aux + "'";
+                        conSql.UpdateSql(sql, bd);
 
                     } catch (Error e) {
                         System.out.println(e);
                     }
+
                     while (i.hasNext()) {
 
                         String s1 = (String) i.next();
@@ -889,37 +950,56 @@ public class formController extends HttpServlet {
 
                         String muestra = campos[campos.length - 1];
                         String programa = campos[campos.length - 2];
-                        if (id == 1) {
-                            String sql = "SELECT * FROM estudiante where estudiante.programa_id = " + programa + " and estudiante.semestre != 01 and  estudiante.semestre != 02 ORDER BY Rand() LIMIT " + muestra;
-                            ResultSet rs1 = conSql.CargarSql(sql, bd);
-                            try {
-                                while (rs1.next()) {
-                                    String sql2 = "insert into muestraestudiante values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "')";
+
+                        System.out.println("Conglomerado: " + programa + " / Muestra: " + muestra);
+
+                        System.out.println("Conglomerado: " + conglomerado);
+                        System.out.println("Metodo: " + metodo);
+
+                        if (conglomerado.equals("programa")) {
+                            if (metodo.equals("normal")) {
+                                String sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
+                                ResultSet rs1 = conSql.CargarSql(sql, bd);
+                                if (rs1 != null) {
+                                    try {
+                                        while (rs1.next()) {
+                                            String sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "', 'programa', 'normal')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                    } catch (SQLException ex) {
+                                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            } else if (metodo.equals("aleatorio")) {
+                                int d = (int) Math.floor(Double.parseDouble(muestra));
+                                for (int j = 0; j < d; j++) {
+
+                                    String pass = PasswordGenerator.getPassword(
+                                            PasswordGenerator.MINUSCULAS
+                                            + PasswordGenerator.MAYUSCULAS
+                                            + PasswordGenerator.NUMEROS
+                                            + PasswordGenerator.ESPECIALES, 6);
+
+                                    String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', '--')";
+                                    System.out.println(sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                    if (id == 1) {
+                                        sql2 = "insert into " + tabla1 + " values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '--', '--', '--', '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "', '" + programa + "')";
+                                        System.out.println(sql2);
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+                                    if (id == 2) {
+                                        sql2 = "insert into " + tabla1 + " values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '--', '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "', '" + programa + "')";
+                                        System.out.println(sql2);
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+
+                                    sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "' LIMIT 1), 'programa', 'aleatorio')";
+                                    System.out.println(sql2);
                                     conSql.UpdateSql(sql2, bd);
                                 }
-                            } catch (SQLException ex) {
-                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        } else if (id == 2) {
-                            String sql;
-                            int contador = 0;
-                            sql = "SELECT id, CONV(FLOOR(RAND() * 99999999999999), 10, 36) from docente ORDER BY Rand() LIMIT " + muestra;
-                            System.out.println("sql1: " + sql);
-                            ResultSet rs1 = conSql.CargarSql(sql, bd);
-                            try {
-                                while (rs1.next()) {
-                                    String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + programa + "" + contador + "', 'Fuente'  , 'Docente', '" + rs1.getString(2) + "', 'aleatorioDocente')";
-                                    conSql.UpdateSql(sql2, bd);
-                                    sql2 = "insert into docente values (null, 'aleatorioDocente', '" + proceso.getId() + "" + id + "" + programa + "" + contador + "', '" + id + "'  , '" + programa + "')";
-                                    conSql.UpdateSql(sql2, bd);
-                                    sql2 = "insert into muestradocente values (null, '" + idMuestra + "', (SELECT id from docente where persona_id = " + proceso.getId() + "" + id + "" + programa + "" + contador + " LIMIT 1))";
-                                    conSql.UpdateSql(sql2, bd);
-                                    contador++;
-                                }
-                            } catch (SQLException ex) {
-                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        } else {
+                        } else if (conglomerado.equals("nuevoCriterio")) {
                             int d = (int) Math.floor(Double.parseDouble(muestra));
                             for (int j = 0; j < d; j++) {
 
@@ -929,22 +1009,148 @@ public class formController extends HttpServlet {
                                         + PasswordGenerator.NUMEROS
                                         + PasswordGenerator.ESPECIALES, 6);
 
-                                String sql2 = "insert into persona values ('" + proceso.getId() + "" + id + "" + j + "', 'Fuente'  , '" + tabla1 + "', '" + pass + "', '" + aux + "')";
+
+                                String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', 'nuevoConglomerado')";
+                                System.out.println(sql2);
                                 conSql.UpdateSql(sql2, bd);
-                                if (id == 3 || id == 4 || id == 5) {
-                                    sql2 = "insert into " + tabla1 + " values (null, '" + proceso.getId() + "" + id + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                if (id == 1) {
+                                    sql2 = "insert into " + tabla1 + " values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '--', '--', '--', '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "', '1')";
+                                    System.out.println(sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                                if (id == 2) {
+                                    sql2 = "insert into " + tabla1 + " values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '--', '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '1')";
+                                    System.out.println(sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                                if (id == 3) {
+                                    sql2 = "insert into " + tabla1 + " values (null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "'  , '" + 1 + "', NULL)";
+                                    System.out.println(sql2);
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                                if (id == 4 || id == 5) {
+                                    sql2 = "insert into " + tabla1 + " values (null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                    System.out.println(sql2);
                                     conSql.UpdateSql(sql2, bd);
                                 }
                                 if (id == 6) {
-                                    sql2 = "insert into " + tabla1 + " values (null, null, '" + proceso.getId() + "" + id + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                    sql2 = "insert into " + tabla1 + " values (null, null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                    System.out.println(sql2);
                                     conSql.UpdateSql(sql2, bd);
                                 }
                                 if (id == 7) {
-                                    sql2 = "insert into " + tabla1 + " values (null, null, '" + proceso.getId() + "" + id + "" + j + "', '" + id + "')";
+                                    sql2 = "insert into " + tabla1 + " values (null, null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "')";
+                                    System.out.println(sql2);
                                     conSql.UpdateSql(sql2, bd);
                                 }
-                                sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = " + proceso.getId() + "" + id + "" + j + " LIMIT 1))";
+                                sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "' LIMIT 1), 'nuevoCriterio', 'aleatorio')";
+                                System.out.println(sql2);
                                 conSql.UpdateSql(sql2, bd);
+
+                                sql2 = "insert into muestracriterio values (null, '" + idMuestra + "', '" + id + "','" + programa + "','" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "')";
+                                System.out.println(sql2);
+                                conSql.UpdateSql(sql2, bd);
+                            }
+                        } else if (conglomerado.equals("ninguno")) {
+                            if (metodo.equals("normal")) {
+                                String sql = "SELECT * FROM " + tabla1 + " ORDER BY Rand() LIMIT " + muestra;
+                                ResultSet rs1 = conSql.CargarSql(sql, bd);
+                                if (rs1 != null) {
+                                    try {
+                                        while (rs1.next()) {
+                                            String sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "', 'ninguno', 'normal')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                    } catch (SQLException ex) {
+                                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            } else if (metodo.equals("aleatorio")) {
+                                int d = (int) Math.floor(Double.parseDouble(muestra));
+                                String x = "00";
+                                for (int j = 0; j < d; j++) {
+
+                                    String pass = PasswordGenerator.getPassword(
+                                            PasswordGenerator.MINUSCULAS
+                                            + PasswordGenerator.MAYUSCULAS
+                                            + PasswordGenerator.NUMEROS
+                                            + PasswordGenerator.ESPECIALES, 6);
+
+
+                                    String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', '--')";
+                                    conSql.UpdateSql(sql2, bd);
+
+                                    if (id == 3) {
+                                        sql2 = "insert into " + tabla1 + " values (null, '" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "', '" + id + "'  , '" + 1 + "', NULL)";
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+                                    if (id == 4 || id == 5) {
+                                        sql2 = "insert into " + tabla1 + " values (null, '" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+                                    if (id == 6) {
+                                        sql2 = "insert into " + tabla1 + " values (null, null, '" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+                                    if (id == 7) {
+                                        sql2 = "insert into " + tabla1 + " values (null, null, '" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "', '" + id + "')";
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+                                    sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = '" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "' LIMIT 1), 'ninguno', 'aleatorio')";
+                                    conSql.UpdateSql(sql2, bd);
+                                }
+                            } else {
+                                if (metodo.equals("normal")) {
+                                    String sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + "." + conglomerado + " = " + programa + " ORDER BY Rand() LIMIT " + muestra;
+                                    ResultSet rs1 = conSql.CargarSql(sql, bd);
+                                    if (rs1 != null) {
+                                        try {
+                                            while (rs1.next()) {
+                                                String sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "'  , '" + rs1.getString(1) + "', '" + conglomerado + "', 'normal')";
+                                                conSql.UpdateSql(sql2, bd);
+                                            }
+                                        } catch (SQLException ex) {
+                                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                } else if (metodo.equals("aleatorio")) {
+                                    int d = (int) Math.floor(Double.parseDouble(muestra));
+                                    for (int j = 0; j < d; j++) {
+
+                                        String pass = PasswordGenerator.getPassword(
+                                                PasswordGenerator.MINUSCULAS
+                                                + PasswordGenerator.MAYUSCULAS
+                                                + PasswordGenerator.NUMEROS
+                                                + PasswordGenerator.ESPECIALES, 6);
+
+
+                                        String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', '--')";
+                                        conSql.UpdateSql(sql2, bd);
+
+                                        if (id == 2) {
+                                            sql2 = "insert into " + tabla1 + " values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + programa + "', '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "', '1')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                        if (id == 3) {
+                                            sql2 = "insert into " + tabla1 + " values (null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "'  , '" + 1 + "', '" + programa + "')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                        if (id == 4 || id == 5) {
+                                            sql2 = "insert into " + tabla1 + " values (null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                        if (id == 6) {
+                                            sql2 = "insert into " + tabla1 + " values (null, null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "'  , '" + 1 + "')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                        if (id == 7) {
+                                            sql2 = "insert into " + tabla1 + " values (null, null, '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "', '" + programa + "')";
+                                            conSql.UpdateSql(sql2, bd);
+                                        }
+                                        sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "' LIMIT 1), '" + conglomerado + "', 'aleatorio')";
+                                        conSql.UpdateSql(sql2, bd);
+                                    }
+                                }
                             }
                         }
                     }
@@ -954,13 +1160,23 @@ public class formController extends HttpServlet {
             } else if (request.getParameter(
                     "action").equals("calcularMuestraAI")) {
 
+
                 HttpSession session = request.getSession();
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
+
+                session.setAttribute("muestraIndividual", null);
+                session.setAttribute("muestraCalculada3", null);
+
+
+                session.setAttribute("muestraCalculada", null);
+
 
                 sqlController conSql = new sqlController();
 
                 String idFormula = request.getParameter("formula");
                 String idFuente = request.getParameter("fuente");
+                String conglomerado = request.getParameter("conglomerado");
+
                 int id = Integer.parseInt(idFuente);
 
                 String bd = (String) session.getAttribute("bd");
@@ -1020,67 +1236,184 @@ public class formController extends HttpServlet {
 
                     try {
 
-                        String manual = request.getParameter("tamanioPobla");
-
-                        if (!"".equals(manual)) {
-                            N = Integer.parseInt(manual);
-                            System.out.println("Manual");
+                        String inputAux;
+                        if (request.getParameter("inputAux") != null) {
+                            inputAux = request.getParameter("inputAux");
                         } else {
-                            System.out.println("Bd");
-                            sql = "Select count(*) from " + tabla1;
+                            inputAux = "automatic";
+                        }
+
+                        if (inputAux.equals("automatic")) {
+                            sql = "Select count(*) from " + tabla1 + " inner join persona on " + tabla1 + ".persona_id = persona.id where persona.apellido <> 'aleatorio" + tabla1 + "'";
                             rs = conSql.CargarSql(sql, bd);
                             while (rs.next()) {
                                 N = Double.parseDouble(rs.getString(1));
                             }
+                        } else {
+                            if (session.getAttribute("conglomerado").equals("ninguno")) {
+                                N = Double.valueOf(request.getParameter("tamanioPobla"));
+                            } else if (session.getAttribute("conglomerado").equals("programa")) {
+                                rs = conSql.CargarSql("Select id from programa", bd);
+                                while (rs.next()) {
+                                    if (!"".equals(request.getParameter("tamanioPobla" + rs.getString(1)))) {
+                                        double aux = Double.valueOf(request.getParameter("tamanioPobla" + rs.getString(1)));
+                                        N = N + aux;
+                                    }
+                                }
+                            } else if (session.getAttribute("conglomerado").equals("nuevoCriterio")) {
+                                String criterio = (String) session.getAttribute("criterio");
+
+                                rs = conSql.CargarSql("Select id from descripcioncriterio where criterio_id = '" + criterio + "'", bd);
+                                while (rs.next()) {
+                                    if (!"".equals(request.getParameter("tamanioPobla" + rs.getString(1)))) {
+                                        double aux = Double.valueOf(request.getParameter("tamanioPoblaCriterio" + rs.getString(1)));
+                                        N = N + aux;
+                                    }
+                                }
+                            }
                         }
+
+                        System.out.println("N :" + N);
 
                         if (N != 0.0) {
 
                             n = (N * p * q * (z * z)) / ((N - 1) * (e * e) + p * q * (z * z));
 
-                            ArrayList l = new ArrayList();
-                            String s;
-                            String sql2 = null;
 
-                            if (idFuente.equals("1")) {
-                                double cociente = n / N;
-                                sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.2,0), programa.id from estudiante inner join programa on estudiante.programa_id = programa.id group by estudiante.programa_id order by programa.nombre";
-                                Result result = conSql.CargarSql2(sql2, bd);
-                                session.setAttribute("muestraCalculada", result);
-                            } else if (idFuente.equals("2")) {
-                                sql2 = "Select programa.nombre, ROUND((count(*)*0.2),0), programa.id from docente inner join programa on docente.programa_id = programa.id inner join persona on docente.persona_id = persona.id  where docente.tipo <> 'aleatorioDocente' group by docente.programa_id order by programa.nombre";
-                                Result result = conSql.CargarSql2(sql2, bd);
-                                session.setAttribute("muestraCalculada", result);
-                            } else {
-                                if (n != 0) {
-                                    s = "Muestra/" + n;
-                                    int d = (int) Math.floor(n);
-                                    session.setAttribute("muestraIndividual", d);
-                                } else {
-                                    s = "Muestra/" + 1;
-                                    session.setAttribute("muestraIndividual", 1);
-                                }
+                            String sql2 = null;
+                            int var1 = 0;
+
+                            if (conglomerado.equals("ninguno")) {
+                                String s;
+                                ArrayList l = new ArrayList();
+
+
+                                int d = (int) Math.floor(n);
+                                s = "Muestra/" + d;
                                 l.add(s);
+                                session.setAttribute("muestraIndividual", d);
                                 session.setAttribute("muestraCalculada", null);
-                            }
-                            if (idFuente.equals("1") || idFuente.equals("2")) {
+                                session.setAttribute("muestraCalculada3", null);
+
+                                session.setAttribute("muestraCalculada2", l);
+                            } else if (conglomerado.equals("programa")) {
+                                double cociente = n / N;
+                                Result result = null;
+                                if (inputAux.equals("automatic")) {
+                                    ArrayList l = new ArrayList();
+                                    String s;
+                                    sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.2,0), programa.id from " + tabla1 + " inner join programa on " + tabla1 + ".programa_id = programa.id group by " + tabla1 + ".programa_id order by programa.nombre";
+                                    result = conSql.CargarSql2(sql2, bd);
+                                    session.setAttribute("muestraCalculada", result);
+                                    session.setAttribute("muestraIndividual", null);
+                                    session.setAttribute("muestraCalculada3", null);
+                                    var1 = 1;
+
+                                    ResultSet rs1 = conSql.CargarSql(sql2, bd);
+
+                                    while (rs1.next()) {
+
+                                        if (rs1.getString(2).equals("0")) {
+                                            s = rs1.getString(3) + "/" + "1";
+                                        } else {
+                                            s = rs1.getString(3) + "/" + rs1.getString(2);
+                                        }
+                                        l.add(s);
+                                    }
+                                    session.setAttribute("muestraCalculada2", l);
+
+                                } else {
+                                    ArrayList<Bean1> l2 = new ArrayList<Bean1>();
+                                    ArrayList l = new ArrayList();
+                                    String s;
+                                    rs = conSql.CargarSql("Select id, nombre from programa", bd);
+                                    while (rs.next()) {
+                                        if (!"".equals(request.getParameter("tamanioPobla" + rs.getString(1)))) {
+                                            Bean1 bean = new Bean1();
+                                            bean.setPrograma(rs.getString(2));
+                                            double tam = Double.valueOf(request.getParameter("tamanioPobla" + rs.getString(1)));
+                                            int d = (int) Math.floor(tam * cociente);
+                                            bean.setTamanio(String.valueOf(d));
+                                            l2.add(bean);
+
+                                            if (request.getParameter("tamanioPobla" + rs.getString(1)).equals("0")) {
+                                                s = rs.getString(1) + "/" + "1";
+                                            } else {
+                                                s = rs.getString(1) + "/" + d;
+                                            }
+                                            l.add(s);
+                                        }
+                                    }
+                                    session.setAttribute("muestraCalculada", null);
+                                    session.setAttribute("muestraIndividual", null);
+                                    session.setAttribute("muestraCalculada3", l2);
+
+                                    session.setAttribute("muestraCalculada2", l);
+                                }
+                            } else if (conglomerado.equals("nuevoCriterio")) {
+                                ArrayList<Bean1> l2 = new ArrayList<Bean1>();
+                                ArrayList l = new ArrayList();
+                                String s;
+                                String criterio = (String) session.getAttribute("criterio");
+                                double cociente = n / N;
+
+                                rs = conSql.CargarSql("Select id, nombre from descripcioncriterio where criterio_id = '" + criterio + "'", bd);
+                                while (rs.next()) {
+                                    if (!"".equals(request.getParameter("tamanioPoblaCriterio" + rs.getString(1)))) {
+                                        Bean1 bean = new Bean1();
+                                        bean.setPrograma(rs.getString(2));
+                                        double tam = Double.valueOf(request.getParameter("tamanioPoblaCriterio" + rs.getString(1)));
+                                        int d = (int) Math.floor(tam * cociente);
+                                        bean.setTamanio(String.valueOf(d));
+                                        l2.add(bean);
+
+                                        if (request.getParameter("tamanioPoblaCriterio" + rs.getString(1)).equals("0")) {
+                                            s = rs.getString(1) + "/" + "1";
+                                        } else {
+                                            s = rs.getString(1) + "/" + d;
+                                        }
+                                        l.add(s);
+                                    }
+                                }
+                                session.setAttribute("muestraCalculada", null);
+                                session.setAttribute("muestraIndividual", null);
+                                session.setAttribute("muestraCalculada3", l2);
+
+                                session.setAttribute("muestraCalculada2", l);
+
+                            } else {
+                                ArrayList l = new ArrayList();
+                                String s;
+                                double cociente = n / N;
+                                sql2 = "Select distinct " + tabla1 + "." + conglomerado + ", ROUND((count(*)*" + cociente + ")*1.2,0) from " + tabla1 + " where " + tabla1 + "." + conglomerado + " <> null group by " + tabla1 + "." + conglomerado + " order by " + conglomerado + "";
+                                System.out.println(sql2);
+                                Result result = conSql.CargarSql2(sql2, bd);
+                                if (result.getRowCount() > 0) {
+                                    session.setAttribute("muestraCalculada", result);
+                                } else {
+                                    session.setAttribute("muestraCalculada", null);
+
+                                }
+                                session.setAttribute("muestraIndividual", null);
+                                session.setAttribute("muestraCalculada3", null);
+
                                 ResultSet rs1 = conSql.CargarSql(sql2, bd);
 
                                 while (rs1.next()) {
 
                                     if (rs1.getString(2).equals("0")) {
-                                        s = rs1.getString(3) + "/" + "1";
+                                        s = rs1.getString(1) + "/" + "1";
                                     } else {
-                                        s = rs1.getString(3) + "/" + rs1.getString(2);
+                                        s = rs1.getString(1) + "/" + rs1.getString(2);
                                     }
                                     l.add(s);
                                 }
+                                session.setAttribute("muestraCalculada2", l);
+
                             }
 
-                            session.setAttribute("muestraCalculada2", l);
-
                         } else {
-                            System.out.println("null");
+                            System.out.println("No existe población");
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1105,6 +1438,16 @@ public class formController extends HttpServlet {
                     try {
                         conSql.UpdateSql("UPDATE `proceso` SET `descripcion` = '" + request.getParameter("descripcion") + "' WHERE `proceso`.`id` = " + idProceso, bd);
                         conProceso.edit(proceso);
+
+
+
+
+
+
+
+
+
+
 
 
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
@@ -1133,6 +1476,7 @@ public class formController extends HttpServlet {
                         String str = request.getSession().getServletContext().getRealPath("/scriptsSql/script.sql");
                         String str2 = request.getSession().getServletContext().getRealPath("/scriptsSql/script2.sql");
                         conSql.newDb(proceso, str, str2);
+
                     } catch (SQLException ex) {
                         // Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1142,6 +1486,34 @@ public class formController extends HttpServlet {
 
                     session.setAttribute("proceso", proceso);
                     session.setAttribute("bd", nombreBd);
+
+                    conSql.UpdateSql("INSERT INTO `" + nombreBd + "`.`muestra` (`id`, `formula`, `proceso_id`) VALUES (NULL, NULL, '" + proceso.getId() + "')", nombreBd);
+
+                    String sql2 = "Select id from muestra where proceso_id = " + proceso.getId();
+                    ResultSet rs3 = conSql.CargarSql(sql2, nombreBd);
+
+                    try {
+                        while (rs3.next()) {
+
+                            int idMuestra = Integer.parseInt(rs3.getString(1));
+                            session.setAttribute("idMuestra", idMuestra);
+
+
+
+
+
+
+
+
+
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+
                 }
 
 
@@ -1157,6 +1529,16 @@ public class formController extends HttpServlet {
                 p.setFechacierre(date);
                 try {
                     pc.edit(p);
+
+
+
+
+
+
+
+
+
+
 
 
                 } catch (entity.controller.exceptions.NonexistentEntityException ex) {
@@ -1226,6 +1608,16 @@ public class formController extends HttpServlet {
                         rs = conSql.CargarSql2(sql, bd);
                         if (rs.getRowCount() != 0) {
                             count++;
+
+
+
+
+
+
+
+
+
+
                         }
                     }
                 } catch (SQLException ex) {
@@ -1297,6 +1689,16 @@ public class formController extends HttpServlet {
 
                                 if (rs.getRowCount() != 0) {
                                     count3++;
+
+
+
+
+
+
+
+
+
+
                                 }
                             }
                         } catch (SQLException ex) {
@@ -1311,6 +1713,16 @@ public class formController extends HttpServlet {
                         } else {
                             System.out.println("Debe asignar las Muestra.");
                             session.setAttribute("aux_IniciarP", 0);
+
+
+
+
+
+
+
+
+
+
                         }
 
                     }
@@ -1326,6 +1738,16 @@ public class formController extends HttpServlet {
                 if (f != 0 && c != 0 && e != 0 && m != 0) {
                     try {
                         pc.edit(p);
+
+
+
+
+
+
+
+
+
+
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
                                 null, ex);
@@ -1379,6 +1801,16 @@ public class formController extends HttpServlet {
                         try {
                             while (rs.next()) {
                                 idNumDoc = Integer.parseInt(rs.getString(1));
+
+
+
+
+
+
+
+
+
+
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1414,6 +1846,16 @@ public class formController extends HttpServlet {
                             String responsable = request.getParameter("responsableNumero" + i);
 
                             conSql.UpdateSql("INSERT INTO `numericadocumental` (`id`, `evaluacion`, `nombre`, `accion`, `responsable`, `indicador_id`, `proceso_id`) VALUES (NULL, '" + evaluacion + "', '" + nombreDoc + "', '" + accion + "', '" + responsable + "', '" + id + "', '" + idProceso + "')", bd);
+
+
+
+
+
+
+
+
+
+
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1438,6 +1880,16 @@ public class formController extends HttpServlet {
                             try {
                                 while (rs2.next()) {
                                     idNumDoc = Integer.parseInt(rs2.getString(1));
+
+
+
+
+
+
+
+
+
+
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1445,13 +1897,32 @@ public class formController extends HttpServlet {
 
                             conSql.UpdateSql("UPDATE `numericadocumental` SET `evaluacion` = '" + evaluacion + "',`nombre` = '" + nombreDoc + "',`accion` = '" + accion + "',`responsable` = '" + responsable + "' WHERE `numericadocumental`.`id` ='" + idNumDoc + "'", bd);
 
+
+
+
+
+
+
+
+
+
+
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
+
+
+
+
+
+
+
+
+
                 }
             }
-
         } catch (Error ex) {
             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

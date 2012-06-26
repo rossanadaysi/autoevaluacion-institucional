@@ -23,6 +23,7 @@
         <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.js"></script>
         <script type="text/javascript"src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/script/highlightFade.js"></script>
 
 
 
@@ -1224,5 +1225,12 @@
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
             </div>
         </div>
+
+        <div class="modal hide fade" id="myModalConfigurarMuestra">
+        </div>
+
+        <div class="modal hide fade" id="myModalNuevoConglomerado">
+        </div>
+
     </body>
 </html> 

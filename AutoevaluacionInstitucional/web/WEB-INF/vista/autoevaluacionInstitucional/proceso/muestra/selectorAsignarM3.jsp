@@ -12,8 +12,9 @@
         var b = $("#select6 option:selected").index();
         $("#select3 option:eq("+a+")").attr("selected", "selected");
         $("#select4 option:eq("+b+")").attr("selected", "selected");
-        $("#filtro").show();
-        $("#filtro2").hide();
+        $("#filtro01").show();
+        $("#filtro02").hide();
+        
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=asignarMuestraAIp",
@@ -59,8 +60,8 @@
                 var b = $("#select6 option:selected").index();
                 $("#select3 option:eq("+a+")").attr("selected", "selected");
                 $("#select4 option:eq("+b+")").attr("selected", "selected");
-                $("#filtro").show();
-                $("#filtro2").hide();
+                $("#filtro01").show();
+                $("#filtro02").hide();
                 $("#resultados4").html(data);
                 $("#resultados4").show();
             }
@@ -97,9 +98,9 @@
     <div class="form-actions">
         <button class="btn btn-primary" id="botonActualizarMuestra" type="button">Actualizar Muestra Para Fuente Seleccionada</button>
         <button class="btn btn-secundary" id="botonCancelar" type="button">Cancelar</button>
-
     </div>
 </c:if>
 <c:if test="${aux_selectorAsignarM3 == 0}">
     <p class="help-block">Debe seleccionar un programa y un semestre.</p>
+    <button class="btn btn-secundary" id="botonCancelar" type="button">Cancelar</button>
 </c:if>

@@ -4,6 +4,7 @@
  */
 package model.actions.navigation;
 
+import controller.sqlController;
 import entity.controller.CaracteristicaJpaController;
 import entity.controller.EncuestaJpaController;
 import entity.controller.FactorJpaController;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.sql.Result;
 import model.Action;
 
 /**
@@ -49,6 +51,22 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/encuesta/selectorAsignarE";
         } else if (path.equals("ponderacionAjax")) {
             path = "autoevaluacionInstitucional/proceso/ponderacion/ponderacionAjax";
+        } else if (path.equals("conglomerado")) {
+            path = "autoevaluacionInstitucional/proceso/muestra/cargarConglomerado";
+        } else if (path.equals("configurarParametrosMuestraAI")) {
+            path = "autoevaluacionInstitucional/proceso/muestra/cargarConfigurarParametros";
+        } else if (path.equals("nuevoConglomeradoAI")) {
+            sqlController conSql = new sqlController();
+            String bd = (String) session.getAttribute("bd");
+            Result rs = conSql.CargarSql2("Select*  from criterio", bd);
+            session.setAttribute("listCriterio", rs);
+            path = "autoevaluacionInstitucional/proceso/muestra/nuevoConglomerado";
+        } else if (path.equals("conglomeradoExistenteAI")) {
+            sqlController conSql = new sqlController();
+            String bd = (String) session.getAttribute("bd");
+            Result rs = conSql.CargarSql2("Select*  from criterio", bd);
+            session.setAttribute("listCriterio", rs);
+            path = "autoevaluacionInstitucional/proceso/muestra/conglomeradosExistentes";
         } else if (path.equals("selectorAsignarMuestraAI")) {
             path = "autoevaluacionInstitucional/proceso/muestra/selectorAsignarM";
         } else if (path.equals("selectorAsignarMuestra2AI")) {
@@ -99,8 +117,7 @@ public class navegacion implements Action {
             path = "comiteCentral/encuesta/listar";
         } else if (path.equals("indexF")) {
             path = "fuente/index";
-        }
-         else if (path.equals("inicio")) {
+        } else if (path.equals("inicio")) {
             path = "fuente/inicio";
         }
 
