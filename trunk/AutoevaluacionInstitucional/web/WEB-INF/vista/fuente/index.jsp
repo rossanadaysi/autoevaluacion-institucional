@@ -174,9 +174,7 @@
                     }
                     
                 });//fin hashchange
-               
-               
-                          
+                                     
             
             });//fin function
         </script>

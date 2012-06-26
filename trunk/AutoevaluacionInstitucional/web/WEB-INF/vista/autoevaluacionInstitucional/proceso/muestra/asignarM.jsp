@@ -13,6 +13,8 @@
         $("#select6 option:eq(0)").attr("selected", "selected");
         $("#select7 option:eq(0)").attr("selected", "selected");
         $("#select8 option:eq(0)").attr("selected", "selected");
+        $("#select9 option:eq(0)").attr("selected", "selected");
+        $("#select10 option:eq(0)").attr("selected", "selected");
             
         $.ajax({
             type: 'POST',
@@ -25,11 +27,22 @@
             },
             success: function(){
                 //   
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
+                    success: function(data){
+                        $("#resultados4").html(data);
+                        $("#resultados4").show();
+                    }
+                })
+                
                 $("#cargando").hide();
                 
                 $("#select3 option:eq(0)").attr("selected", "selected");
                 $("#select4 option:eq(0)").attr("selected", "selected");
                 $("#select8 option:eq(0)").attr("selected", "selected");
+                $("#select9 option:eq(0)").attr("selected", "selected");
+                $("#select10 option:eq(0)").attr("selected", "selected");
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
@@ -47,8 +60,26 @@
     
     
     function presionSubmitConfigurarFormula()
-    {
-        $("#configuracionFormula").show();
+    {  
+        var formularioA=$('#formAsigMue').serialize();
+        var formularioB=$('#formAsigMue2').serialize();
+        var Todo=formularioA+"&"+formularioB;
+          
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=configurarParametrosMuestraAI",
+            data: Todo,
+            success: function(data){
+                $.ajax({
+                    type: 'POST',
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=configurarParametrosMuestraAI",
+                    success: function(data){
+                        $("#myModalConfigurarMuestra").html(data);
+                        $('#myModalConfigurarMuestra').modal();
+                    }
+                })
+            }
+        })
     }
     
     
@@ -59,16 +90,11 @@
         $("#resultados3").hide();
         $("#resultados4").hide();
         $("#enlace").hide();
+        $("#conglomerado").hide();
         $("#filtro").hide();
-        $("#filtro1").hide();
-        $("#filtro2").hide();
-        $("#filtro3").hide();
-        $("#filtro4").hide();
         $("#botonGenerarMuestra").hide();
         $("#botonCalcularMuestra2").hide();
         $("#botonCalcularMuestra").show();
-        $("#configuracionFormula").hide();
-     
             
         if($("#select2 option:selected").val() == "--"){
             $("#resultados2").hide();
@@ -76,18 +102,57 @@
             $("#resultados4").hide();
             $("#enlace").hide();
             $("#filtro").hide();
-            $("#filtro1").hide();
-            $("#filtro2").hide();
-            $("#filtro3").hide();
-            $("#filtro4").hide();
+            $("#conglomerado").hide();
         }
         else{
-         
-            $("#enlace").show();
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=conglomerado",
+                success: function(data){
+                    $("#conglomerado").html(data);
+                    $("#conglomerado").show();
+                }
+            })
+            $("#conglomerado").show();
+            // $("#enlace").show();
         }
     }
     
+    function presionSubmitConglomerado()
+    {
+        
+        $("#resultados2").hide();
+        $("#resultados3").hide();
+        $("#resultados4").hide();
+        $("#enlace").hide();
+        $("#filtro").hide();
+        $("#botonGenerarMuestra").hide();
+        $("#botonCalcularMuestra2").hide();
+        $("#botonCalcularMuestra").show();
+         
+        if($("#selectConglomerado option:selected").val() == "--"){
+            $("#resultados2").hide();
+            $("#resultados3").hide();
+            $("#resultados4").hide();
+            $("#enlace").hide();
+            $("#filtro").hide();
+        }
+        else{
+            $("#enlace").show();
+        }
     
+        if($("#selectConglomerado option:selected").val() == "nuevoCriterio"){
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=nuevoConglomeradoAI",
+                data: $("#formAsigMue").serialize(),
+                success: function(data){
+                    $("#myModalNuevoConglomerado").html(data);
+                    $('#myModalNuevoConglomerado').modal(); 
+                }
+            })
+        }
+    }
     
     function presionSubmitCalcularMuestra()
     {
@@ -96,11 +161,6 @@
         $("#resultados3").hide();
         $("#resultados4").hide();
         $("#enlace").hide();
-        $("#filtro").hide();
-        $("#filtro1").hide();
-        $("#filtro2").hide();
-        $("#filtro3").hide();
-        $("#filtro4").hide();
             
         if($("#select2 option:selected").val() == "--"){
             $("#resultados2").hide();
@@ -108,18 +168,17 @@
             $("#resultados4").hide();
             $("#enlace").hide();
             $("#filtro").hide();
-            $("#filtro1").hide();
-            $("#filtro2").hide();
-            $("#filtro3").hide();
-            $("#filtro4").hide();
         }
         else{
+            var formularioA=$('#formAsigMue').serialize();
+            var formularioB=$('#formAsigMue2').serialize();
+            var formularioC=$('#formAsigMue3').serialize();
+            var Todo=formularioA+"&"+formularioB;
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=calcularMuestraAI",
-                data: $("#formAsigMue").serialize(),
+                data: Todo,
                 beforeSend:function(){
-                    // $("#resultados2").show();
                 },
                 success: function(){
                     $.ajax({
@@ -132,12 +191,7 @@
                             $("#enlace").show();
                         }
                     })
-                
-                
-               
-                  
-                } //fin success
-                                            
+                } //fin success                                          
             }); //fin $.ajax
         }
     }
@@ -150,16 +204,12 @@
             $("#resultados2").hide();
             $("#resultados3").hide();
             $("#resultados4").hide();
-            $("#formula").hide();
             $("#enlace").hide();
+            $("#conglomerado").hide();
             $("#filtro").hide();
-            $("#filtro1").hide();
-            $("#filtro2").hide();
-            $("#filtro3").hide();
-            $("#filtro4").hide();
             $("#resultadoAlert").hide();
             $("#infoMuestra").hide();
-            $("#configuracionFormula").hide();
+            $("#formula").hide();
            
         }
         else{
@@ -170,18 +220,16 @@
             $("#select6 option:eq(0)").attr("selected", "selected");
             $("#select7 option:eq(0)").attr("selected", "selected");
             $("#select8 option:eq(0)").attr("selected", "selected"); 
-            $("#configuracionFormula").hide();
-                
+            $("#select9 option:eq(0)").attr("selected", "selected");
+            $("#select10 option:eq(0)").attr("selected", "selected");
+            
             $("#resultados2").hide();
             $("#resultados3").hide();
             $("#resultados4").hide();
             $("#formula").hide();
             $("#enlace").hide();
+            $("#conglomerado").hide();
             $("#filtro").hide();
-            $("#filtro2").hide();
-            $("#filtro1").hide();
-            $("#filtro3").hide();
-            $("#filtro4").hide();
             $("#resultadoAlert").hide();
             $("#infoMuestra").hide();
             $.ajax({
@@ -195,7 +243,7 @@
                         type: 'POST',
                         url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
                         success: function(data){
-                            $("#resultados2").html(data);
+                            $("#filtro").html(data);
                         }
                     })
                 } //fin success
@@ -206,8 +254,9 @@
         return false;
     }
     
+    
     function presionSubmitFiltro()
-    {     
+    {    
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
@@ -256,15 +305,13 @@
          
         return false;
     }
+        
        
     $("#botonNuevaMuestra").click(function(){
     
         $("#resultados2").hide(); 
         $("#resultadoAlert").hide();
         $("#filtro").hide(); 
-        $("#filtro2").hide(); 
-        $("#filtro3").hide();
-        $("#filtro4").hide();
         $("#resultados3").hide(); 
         $("#resultados4").hide();
         $("#select2 option:eq(0)").attr("selected", "selected");
@@ -276,7 +323,13 @@
                     
         })
     })  
-        
+    $("#checkbox2").change(function(){
+        if( $(this).is(':checked')){
+            $("#metodo").attr('value', 'aleatorio');
+        }else{
+            $("#metodo").attr('value', 'normal');
+        }  
+    });
   
 </script>
 <br>
@@ -333,16 +386,20 @@
                                 <option data-content="<p> <div><img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/f1.gif'></div></p><br><p> n = Tamaño de la muestra. </p><p> Z = Nivel de confianza aplicado al estudio. Basados en la tabla Z. </p><p> p = probabilidad de ocurrencia del evento previsto. </p><p> q = Probabilidad de no ocurrencia del evento previsto. </p><p> EE = Error de tolerancia máxima permitida. </p><p> N = Tamaño de la población." rel="popover"  value="1" data-original-title="Detalle Formula">Muestreo aleatorio por conglomerado</option>
                             </select>
                         </div>
-                        <div id="configuracionFormula" style="display: none">
-                            <p>Tamaño de la Población: </p>
-                            <input name="tamanioPobla" type="text">
+                        <div id="conglomerado" style="display: none;">
                         </div>
                         <div id="enlace" style="display: none;">
-                            <button style="display: none" id="botonGenerarMuestra" class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra</button>
                             <button style="display: none" id="botonCalcularMuestra2" class="btn btn-secundary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
                             <button id="botonCalcularMuestra" class="btn btn-primary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
                             <button id="botonConfigurarFormula" class="btn btn-secundary" onclick="presionSubmitConfigurarFormula()" type="button">Configurar Parametros de Fórmula</button>
                             <p class="help-block">Utilize la opción de configurar parámetro de fórmula si desea generar una muestra de usuarios aleatorios a partir de un tamaño de población ingresado.</p>
+                            <br>
+                            <div style="display: none" id="botonGenerarMuestra">
+                                <button  class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra</button>
+                                <br> <input type="checkbox" id="checkbox2"> Generar Usuarios Aleatorios.<br>
+                                <p id="help1" class="help-block">Active ésta opción si desea generar usuarios y contraseñas aleatorias.</p>
+                                <input type="text" id="metodo" name="metodo"  style="display: none"  value="normal">
+                            </div>
                             <br>
                             <br>
                         </div>
@@ -351,107 +408,11 @@
                             <img src="<%=request.getContextPath()%>/css/images/wait.gif" style="float:left; padding: 1px 10px 0 0;">
                             Generando Muestra...
                         </div>
-                        <div id="filtro" style="display: none;">
-                            <p>Filtros</p>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <select  class="span3" id="select3" name="programas" onchange="presionSubmitFiltro()">
-                                            <option value="--">Seleccione Programa</option>
-                                            <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
-                                                <option value="${item2[0]}">${item2[1]}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select id="select4" name="semestres" onchange="presionSubmitFiltro()">
-                                            <option value="--">Seleccione Semestre</option>
-                                            <option value="1">Primer Semestre</option>
-                                            <option value="2">Segundo Semestre</option>
-                                            <option value="3">Tercero Semestre</option>
-                                            <option value="4">Cuarto Semestre</option>
-                                            <option value="5">Quinto Semestre</option>
-                                            <option value="6">Sexto Semestre</option>
-                                            <option value="7">Septimo Semestre</option>
-                                            <option value="8">Octavo Semestre</option>
-                                            <option value="9">Noveno Semestre</option>
-                                            <option value="10">Decimo Semestre</option>                                      
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div style=""><p class="help-block">Seleccione un programa para ver la muestra asignada al mismo.</p></div>
-                            <br>
-                        </div>
-                        <div id="filtro2" style="display: none;">
-                            <p>Filtros</p>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <select  class="span3" id="select5" name="programas2" onchange="presionSubmitFiltro2()">
-                                            <option value="--">Seleccione Programa</option>
-                                            <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
-                                                <option value="${item2[0]}">${item2[1]}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select id="select6" name="semestres2" onchange="presionSubmitFiltro2()">
-                                            <option value="--">Seleccione Semestre</option>
-                                            <option value="1">Primer Semestre</option>
-                                            <option value="2">Segundo Semestre</option>
-                                            <option value="3">Tercero Semestre</option>
-                                            <option value="4">Cuarto Semestre</option>
-                                            <option value="5">Quinto Semestre</option>
-                                            <option value="6">Sexto Semestre</option>
-                                            <option value="7">Septimo Semestre</option>
-                                            <option value="8">Octavo Semestre</option>
-                                            <option value="9">Noveno Semestre</option>
-                                            <option value="10">Decimo Semestre</option>                                      
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div style="width: 500px;"><p class="help-block">Seleccione un programa para ver la muestra asignada al mismo.</p></div>
-                            <br>
-                        </div>
-                        <div id="filtro3" style="display: none;">
-                            <p>Filtros</p>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <select  class="span3" id="select7" name="programas3" onchange="presionSubmitFiltro()">
-                                            <option value="--">Seleccione Programa</option>
-                                            <c:forEach items="${programas.rowsByIndex}" var="item2" varStatus="iter">
-                                                <option value="${item2[0]}">${item2[1]}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div style="width: 500px;"><p class="help-block">Seleccione un programa para ver la muestra asignada al mismo.</p></div>
-                            <br>
-                        </div>
-                        <div id="filtro4" style="display: none;">
-                            <p>Filtros</p>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <select  class="span3" id="select8" name="programas4" onchange="presionSubmitFiltro()">
-                                            <option value="--">Seleccione Opción</option>
-                                            <option value="Todos">Todos</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div style="width: 500px;"><p class="help-block">Seleccione una opción para ver la muestra asignada.</p></div>
-                            <br>
-                        </div>
+                        <div id="filtro" style="display: none;"></div>
                         <div  id="resultados2"></div>
                         <div  class="span10">
                             <div id="resultados4" class="accordion" style="margin-left: -30px;"></div> 
                         </div>
-                    </div>
                 </fieldset>
             </form>
         </div>

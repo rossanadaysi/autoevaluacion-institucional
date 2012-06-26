@@ -113,6 +113,7 @@ public class loginController extends HttpServlet {
             System.out.println("Procesando..");
             if (persona != null) {
                 if (persona.getPassword().equals(pw)) {
+                    System.out.println("buen pass");
                     String tipo = tp;
                     if (tipo.equals("Autoevaluacion Institucional") || tipo.equals("Comite Central")) {
 

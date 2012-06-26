@@ -1,9 +1,11 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `administrativo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `persona_id` varchar(25) NOT NULL,
   `fuente_id` int(11) NOT NULL,
   `programa_id` int(11) NOT NULL,
+  `cargo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_administrativo_fuente1` (`fuente_id`),
   KEY `fk_administrativo_programa1` (`programa_id`),
@@ -35,7 +37,21 @@ CREATE TABLE IF NOT EXISTS `caracteristica` (
   `factor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_caracteristica_factor1` (`factor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `criterio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `descripcioncriterio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  `criterio_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_descripcioncriterio_criterio1` (`criterio_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `directorprograma` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `persona_id` varchar(25) NOT NULL,
@@ -56,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `docente` (
   KEY `fk_docente_fuente1` (`fuente_id`),
   KEY `fk_docente_programa1` (`programa_id`),
   KEY `fk_docente_persona1` (`persona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33158624 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `egresado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `persona_id` varchar(25) NOT NULL,
@@ -72,10 +88,9 @@ CREATE TABLE IF NOT EXISTS `empleador` (
   `descripcion` varchar(500) DEFAULT NULL,
   `persona_id` varchar(25) NOT NULL,
   `fuente_id` int(11) NOT NULL,
-  `sectorempresarial_id` int(11) NOT NULL,
+  `sectorempresarial` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_empleador_fuente1` (`fuente_id`),
-  KEY `fk_empleador_sectorempresarial1` (`sectorempresarial_id`),
   KEY `fk_empleador_persona1` (`persona_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `encabezado` (
@@ -100,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
   `mensaje` varchar(500) DEFAULT NULL,
   `fecha` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `encuestahaspregunta` (
   `encuesta_id` int(11) NOT NULL,
   `pregunta_id` int(11) NOT NULL,
@@ -126,20 +141,20 @@ CREATE TABLE IF NOT EXISTS `factor` (
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `facultad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `fuente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `indicador` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -148,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `indicador` (
   `caracteristica_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_indicador_caracteristica1` (`caracteristica_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `instrumento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -173,6 +188,8 @@ CREATE TABLE IF NOT EXISTS `muestraadministrativo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `administrativo_id` int(11) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraadministrativo_muestra1` (`muestra_id`),
   KEY `fk_muestraadministrativo_administrativo1` (`administrativo_id`)
@@ -181,14 +198,30 @@ CREATE TABLE IF NOT EXISTS `muestraagencia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `agenciagubernamental_id` int(11) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraagencia_agenciagubernamental1` (`agenciagubernamental_id`),
   KEY `fk_muestraagencia_muestra1` (`muestra_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `muestracriterio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `muestra_id` int(11) NOT NULL,
+  `fuente_id` int(11) NOT NULL,
+  `descripcioncriterio_id` int(11) NOT NULL,
+  `persona_id` varchar(25) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_muestracriterio_muestra1` (`muestra_id`),
+  KEY `fk_muestracriterio_fuente1` (`fuente_id`),
+  KEY `fk_muestracriterio_descripcioncriterio1` (`descripcioncriterio_id`),
+  KEY `fk_muestracriterio_persona1` (`persona_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `muestradirector` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `directorprograma_id` int(11) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestradirector_muestra1` (`muestra_id`),
   KEY `fk_muestradirector_directorprograma1` (`directorprograma_id`)
@@ -197,6 +230,8 @@ CREATE TABLE IF NOT EXISTS `muestradocente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `docente_id` int(11) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraprofesor_muestra1` (`muestra_id`),
   KEY `fk_muestraprofesor_docente1` (`docente_id`)
@@ -205,6 +240,8 @@ CREATE TABLE IF NOT EXISTS `muestraegresado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `egresado_id` int(11) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraegresado_muestra1` (`muestra_id`),
   KEY `fk_muestraegresado_egresado1` (`egresado_id`)
@@ -213,6 +250,8 @@ CREATE TABLE IF NOT EXISTS `muestraempleador` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `empleador_id` int(11) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraempleador_muestra1` (`muestra_id`),
   KEY `fk_muestraempleador_empleador1` (`empleador_id`)
@@ -221,6 +260,8 @@ CREATE TABLE IF NOT EXISTS `muestraestudiante` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `muestra_id` int(11) NOT NULL,
   `estudiante_id` varchar(25) NOT NULL,
+  `conglomerado` varchar(45) DEFAULT NULL,
+  `metodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_muestraestudiante_muestra1` (`muestra_id`),
   KEY `fk_muestraestudiante_estudiante1` (`estudiante_id`)
@@ -274,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `pregunta` (
   `indicador_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pregunta_indicador1` (`indicador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `privilegio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -299,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `programa` (
   PRIMARY KEY (`id`),
   KEY `fk_programa_facultad1` (`facultad_id`),
   KEY `fk_programa_sede1` (`sede_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1003 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `representante` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rol` varchar(45) NOT NULL,
@@ -308,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `representante` (
   PRIMARY KEY (`id`),
   KEY `fk_representante_programa1` (`programa_id`),
   KEY `fk_representante_persona1` (`persona_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `representantehasprivilegio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `representante_id` int(11) NOT NULL,
@@ -325,13 +366,6 @@ CREATE TABLE IF NOT EXISTS `resultadoevaluacion` (
   PRIMARY KEY (`idResultadoEvaluacion`),
   KEY `fk_ResultadoEvaluacion_encabezado1` (`encabezado_id`),
   KEY `fk_ResultadoEvaluacion_pregunta1` (`pregunta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-CREATE TABLE IF NOT EXISTS `sectorempresarial` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `descripcion` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idSectores Empresariales_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `sede` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -354,6 +388,8 @@ ALTER TABLE `asignacionencuesta`
   ADD CONSTRAINT `fk_asignacionencuesta_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `caracteristica`
   ADD CONSTRAINT `fk_caracteristica_factor1` FOREIGN KEY (`factor_id`) REFERENCES `factor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `descripcioncriterio`
+  ADD CONSTRAINT `fk_descripcioncriterio_criterio1` FOREIGN KEY (`criterio_id`) REFERENCES `criterio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `directorprograma`
   ADD CONSTRAINT `fk_directorprograma_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_directorprograma_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -368,8 +404,7 @@ ALTER TABLE `egresado`
   ADD CONSTRAINT `fk_egresado_programa1` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `empleador`
   ADD CONSTRAINT `fk_empleador_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_empleador_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_empleador_sectorempresarial1` FOREIGN KEY (`sectorempresarial_id`) REFERENCES `sectorempresarial` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_empleador_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `encabezado`
   ADD CONSTRAINT `fk_encabezado_encuesta1` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_encabezado_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -395,6 +430,11 @@ ALTER TABLE `muestraadministrativo`
 ALTER TABLE `muestraagencia`
   ADD CONSTRAINT `fk_muestraagencia_agenciagubernamental1` FOREIGN KEY (`agenciagubernamental_id`) REFERENCES `agenciagubernamental` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_muestraagencia_muestra1` FOREIGN KEY (`muestra_id`) REFERENCES `muestra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `muestracriterio`
+  ADD CONSTRAINT `fk_muestracriterio_muestra1` FOREIGN KEY (`muestra_id`) REFERENCES `muestra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_muestracriterio_fuente1` FOREIGN KEY (`fuente_id`) REFERENCES `fuente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_muestracriterio_descripcioncriterio1` FOREIGN KEY (`descripcioncriterio_id`) REFERENCES `descripcioncriterio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_muestracriterio_persona1` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `muestradirector`
   ADD CONSTRAINT `fk_muestradirector_directorprograma1` FOREIGN KEY (`directorprograma_id`) REFERENCES `directorprograma` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_muestradirector_muestra1` FOREIGN KEY (`muestra_id`) REFERENCES `muestra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

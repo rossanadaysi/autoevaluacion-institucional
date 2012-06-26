@@ -16,8 +16,19 @@
         }); 
                   
        
-        if(${muestraCalculada != null} || ${muestraIndividual != null}){
-          
+        if(${muestraCalculada != null} || ${muestraIndividual != null} || ${muestraCalculada3 != null}){
+      
+            $("#checkbox2").removeAttr("checked");
+
+            $("#checkbox2").removeAttr("disabled");
+
+            if(${conglomerado == "nuevoCriterio"}){
+                $("#checkbox2").attr("checked", true);
+                $("#checkbox2").attr("disabled", true);
+
+            }
+            
+            
             $("#botonGenerarMuestra").show();
             $("#botonCalcularMuestra2").show();
             $("#botonCalcularMuestra").hide();    
@@ -66,18 +77,55 @@
                 </table>   
             </c:if>
             <c:if test="${muestraCalculada == null}">
+                <c:if test="${muestraCalculada3 != null}">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                        <th>Muestra Calculada</th>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${muestraCalculada3}" var="item2" varStatus="iter">
+                                <tr>
+                                    <td>${item2.programa}</td>
+                                    <c:choose>
+                                        <c:when test="${item2.tamanio == '0'}">
+                                            <td>1</td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>${item2.tamanio}</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </tr>
+                                <c:set var="iterador" value="${iterador + item2.tamanio}" />
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if> 
+                <c:if test="${muestraIndividual != null}">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                        <th>Muestra Calculada</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <c:if test="${muestraIndividual != null}">
+                                    <td>${muestraIndividual}</td>
+                                </c:if>
+                                <c:if test="${muestraIndividual == null}">
+                                    <td>No existen datos en la base de datos. Configure tamanio de la muestra manualmente.</td>
+                                </c:if>
+                            </tr>
+                        </tbody>
+                    </table>
+                </c:if> 
+            </c:if>
+            <c:if test="${muestraCalculada == null && muestraCalculada3 == null && muestraIndividual == null}">
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Muestra Calculada</th>
                     </thead>
                     <tbody>
                         <tr>
-                            <c:if test="${muestraIndividual != null}">
-                                <td>${muestraIndividual}</td>
-                            </c:if>
-                            <c:if test="${muestraIndividual == null}">
-                                <td>No existen datos en la base de datos. Configure tamanio de la muestra manualmente.</td>
-                            </c:if>
+                            <td>No existen datos en la base de datos. Configure tamanio de la muestra manualmente.</td>
                         </tr>
                     </tbody>
                 </table>   
