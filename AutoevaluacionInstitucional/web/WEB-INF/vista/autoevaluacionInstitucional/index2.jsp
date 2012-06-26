@@ -324,13 +324,13 @@
                     }
                                                 
                     if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
-                                                 
+                    
                     }else{//else principal
-                                                
+                    
                         if(hash=="#CerrarSesion"){//CerrarSesion
-                            $.post('/ControllerAI?action=CerrarSesion',
+                            $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
                             function(data) {
-                                location = "/";
+                                location = "<%=request.getContextPath()%>/";
                                  
                             });
                                                         
@@ -370,7 +370,7 @@
                                                     
                                   
            
-                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1)
+                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1 && hash != "#CerrarSesion")
                         { //si no es ---
                             
                             $.unsubscribe("set_grid_width");

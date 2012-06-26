@@ -139,15 +139,15 @@
                                     <c:choose>
                                         <c:when test="${item.encuestaList.contains(encuesta)}">
                                             <li>
-                                                <strong>${item.pregunta}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.tipo}</span>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.pregunta}</span>
                                                 <input name="P${item.id}" type="hidden" checked="checked" value="1"/>
                                             </li>
                                         </c:when>
                                         <c:otherwise>
                                             <li>
-                                                <strong>${item.pregunta}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.tipo}</span>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.pregunta}</span>
                                                 <input name="P${item.id}" type="hidden" value="0"/>
                                             </li>
                                         </c:otherwise>

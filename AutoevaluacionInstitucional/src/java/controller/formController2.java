@@ -148,6 +148,7 @@ public class formController2 extends HttpServlet {
                 CaracteristicaJpaController conCarac = new CaracteristicaJpaController();
                 Indicador in = conIndi.findIndicador(Integer.parseInt(idI));
                 PreguntaJpaController conPre = new PreguntaJpaController();
+                in.setCodigo(request.getParameter("codigo"));
                 in.setNombre(request.getParameter("nombre"));
                 String car = request.getParameter("caracteristica");
                 if (car != null && !car.equals("")) {
@@ -250,6 +251,7 @@ public class formController2 extends HttpServlet {
                 Indicador in = new Indicador();
                 IndicadorJpaController conIn = new IndicadorJpaController();
                 PreguntaJpaController conPre = new PreguntaJpaController();
+                in.setCodigo(request.getParameter("codigo"));
                 in.setNombre(request.getParameter("nombre"));
                 CaracteristicaJpaController conCa = new CaracteristicaJpaController();
                 String car = request.getParameter("caracteristica");

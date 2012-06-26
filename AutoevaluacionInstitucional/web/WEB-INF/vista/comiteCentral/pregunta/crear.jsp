@@ -9,7 +9,13 @@
         .click(function(e) {
             e.preventDefault();
                     
-        }); 
+        });
+        
+        $("option[rel=popover2]")
+        .popover({
+            placement: 'left'
+        });
+        
         
         $("#formCrearPreg").validate({
             submitHandler: function(){
@@ -58,17 +64,17 @@
                             </select>
                         </div>
                     </div>
-                            
+
                     <div class="control-group">
                         <label for="indicador" class="control-label">Asignar Indicador</label>
                         <div class="controls">
-                            <select id="indicador" name="indicador">
+                            <select id="indicador" name="indicador" class="span">
                                 <option></option>
                                 <c:forEach items="${listindicadores}" var="row" varStatus="iter">
-                                    <option value="${row.id}">${row.nombre}</option>
+                                    <option data-content="${row.nombre}" rel="popover2" data-original-title="Indicador" value="${row.id}">${row.codigo}</option>
                                 </c:forEach>
                             </select>                
-                                            
+
                         </div>
                     </div>
 

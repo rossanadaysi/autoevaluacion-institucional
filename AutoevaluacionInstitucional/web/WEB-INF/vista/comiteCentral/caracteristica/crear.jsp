@@ -88,7 +88,7 @@
                             <select id="factor" name="factor">
                                 <option></option>
                                 <c:forEach items="${listfactores}" var="row" varStatus="iter">
-                                    <option value="${row.id}">${row.nombre}</option>
+                                    <option value="${row.id}">${row.id} ${row.nombre}</option>
                                 </c:forEach>
                             </select>                
                         </div>
