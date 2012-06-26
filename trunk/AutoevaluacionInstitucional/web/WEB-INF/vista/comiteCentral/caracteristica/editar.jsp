@@ -90,10 +90,10 @@
                                 <c:forEach items="${listfactores}" var="row" varStatus="iter">
                                     <c:choose>
                                         <c:when test="${row != caracteristica.getFactorId()}">
-                                            <option value="${row.id}">${row.nombre}</option>    
+                                            <option value="${row.id}">${row.id} ${row.nombre}</option>    
                                         </c:when>
                                         <c:otherwise>
-                                            <option selected="selected" value="${row.id}">${row.nombre}</option>
+                                            <option selected="selected" value="${row.id}">${row.id} ${row.nombre}</option>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>

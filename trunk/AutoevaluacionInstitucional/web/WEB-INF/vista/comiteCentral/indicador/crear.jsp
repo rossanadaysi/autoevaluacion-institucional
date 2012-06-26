@@ -76,6 +76,12 @@
                 <fieldset>
                     <legend>Crear Indicador</legend>
                     <div class="control-group">
+                        <label for="codigo" class="control-label">Codigo</label>
+                        <div class="controls">
+                        <input type="text" id="codigo" name="codigo" class="input-large {required:true}" value=""/>
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
                         <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value=""/>
@@ -89,7 +95,7 @@
                             <select id="caracteristica" name="caracteristica">
                                 <option></option>
                                 <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
-                                    <option value="${row.id}">${row.nombre}</option>
+                                    <option value="${row.id}">${row.getFactorId().getId()}.${row.id} ${row.nombre}</option>
                                 </c:forEach>
                             </select>                
                         </div>
@@ -100,8 +106,8 @@
                             <ul id="fcbklist">
                                 <c:forEach items="${listpreguntas}" var="row" varStatus="iter">
                                     <li>
-                                        <strong>${row.pregunta}</strong><br/> 
-                                        <span class="fcbkitem_text">${row.tipo}</span>
+                                        <strong>${row.codigo}</strong><br/> 
+                                        <span class="fcbkitem_text">${row.pregunta}</span>
                                         <input name="P${row.id}" type="hidden" value="0"/>
                                     </li>
                                 </c:forEach>

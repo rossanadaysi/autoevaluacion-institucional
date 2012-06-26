@@ -34,6 +34,12 @@
                 <fieldset>
                     <legend>Editar Indicador</legend>
                     <div class="control-group">
+                        <label for="codigo" class="control-label">Codigo</label>
+                        <div class="controls">
+                        <input type="text" id="codigo" name="codigo" class="input-large {required:true}" value="${indicador.getCodigo()}"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
                         <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value="${indicador.getNombre()}"/>
@@ -49,10 +55,10 @@
                                 <c:forEach items="${listcaracteristicas}" var="row" varStatus="iter">
                                     <c:choose>
                                         <c:when test="${row != indicador.getCaracteristicaId()}">
-                                            <option value="${row.id}">${row.nombre}</option>    
+                                            <option value="${row.id}">${row.getFactorId().getId()}.${row.id} ${row.nombre}</option>    
                                         </c:when>
                                         <c:otherwise>
-                                            <option selected="selected" value="${row.id}">${row.nombre}</option>
+                                            <option selected="selected" value="${row.id}">${row.getFactorId().getId()}.${row.id} ${row.nombre}</option>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
@@ -67,16 +73,16 @@
                                     <c:choose>
                                         <c:when test="${item.indicadorId != indicador}">
                                             <li>
-                                                <strong>${item.pregunta}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.tipo}</span>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.pregunta}</span>
                                                 <input name="P${item.id}" type="hidden" value="0"/>
                                             </li>
 
                                         </c:when>
                                         <c:otherwise>
                                             <li>
-                                                <strong>${item.pregunta}</strong><br/> 
-                                                <span class="fcbkitem_text">${item.tipo}</span>
+                                                <strong>${item.codigo}</strong><br/> 
+                                                <span class="fcbkitem_text">${item.pregunta}</span>
                                                 <input name="P${item.id}" type="hidden" checked="checked" value="0"/>
                                             </li>
                                         </c:otherwise>
