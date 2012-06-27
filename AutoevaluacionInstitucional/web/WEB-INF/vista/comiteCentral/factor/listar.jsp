@@ -11,7 +11,7 @@
             
         })
     })
- </script>   
+</script>   
 <div class="hero-unit">
     <div class="row">
         <div class="span10">
@@ -37,7 +37,6 @@
                                     </td>
                                     <td class="action icon16">
                                         <a title="Editar" href="#editarFactor&${row.id}" class="edit"></a>
-                                        <a title="Eliminar" class="delete" href=""></a>
                                     </td>
                                 </tr>
                             </c:forEach>
