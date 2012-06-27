@@ -19,12 +19,12 @@
                         console.log("ocurrio un error");
                     },
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarIndicadores"
+                        location = "<%=request.getContextPath()%>/#editarIndicador&${indicador.id+1}"
                     } //fin success
                 }); //fin $.ajax    
             }
         });
-  });      
+    });      
 </script>
 <br>
 <div class="hero-unit">
@@ -36,18 +36,18 @@
                     <div class="control-group">
                         <label for="codigo" class="control-label">Codigo</label>
                         <div class="controls">
-                        <input type="text" id="codigo" name="codigo" class="input-large {required:true}" value="${indicador.getCodigo()}"/>
+                            <input type="text" id="codigo" name="codigo" class="input-large {required:true}" value="${indicador.getCodigo()}"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
-                        <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value="${indicador.getNombre()}"/>
+                            <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value="${indicador.getNombre()}"/>
                         </div>
                     </div>
-                        
-                        
-                       <div class="control-group">
+
+
+                    <div class="control-group">
                         <label for="caracteristica" class="control-label">Asignar Caracteristica</label>
                         <div class="controls">
                             <select id="caracteristica" name="caracteristica">
@@ -65,10 +65,30 @@
                             </select>            
                         </div>
                     </div>
-                         <div class="control-group">
+
+                    <div class="control-group">
+                        <label for="instrumento" class="control-label">Asignar instrumentos</label>
+                        <div class="controls">
+                            <select id="instrumento" name="instrumento" multiple="multiple">
+                                <option></option>
+                                <c:forEach items="${instrumentos}" var="row" varStatus="iter">
+                                    <c:choose>
+                                        <c:when test="${row.indicadorList.contains(indicador)}">
+                                            <option value="${row.id}" selected="selected">${row.nombre}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${row.id}">${row.nombre}</option>
+                                        </c:otherwise>
+                                    </c:choose>    
+                                </c:forEach>
+                            </select>    
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <label  class="control-label">Asignar Preguntas</label>
                         <div class="controls">
-                       <ul id="fcbklist">
+                            <ul id="fcbklist">
                                 <c:forEach items="${listpreguntas}" var="item" varStatus="iter">
                                     <c:choose>
                                         <c:when test="${item.indicadorId != indicador}">
@@ -91,12 +111,12 @@
                             </ul>
                         </div>
                     </div>   
-                        <input name="idI" type="hidden" value="${indicador.getId()}">
-                        <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
-                            <button class="btn" type="reset">Cancelar</button>
-                        </div>
-                    </fieldset>
+                    <input name="idI" type="hidden" value="${indicador.getId()}">
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        <button class="btn" type="reset">Cancelar</button>
+                    </div>
+                </fieldset>
             </form>
         </div><!--/span-->        
     </div><!--/row-->    
