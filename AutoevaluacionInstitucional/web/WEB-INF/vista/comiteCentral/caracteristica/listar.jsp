@@ -38,7 +38,6 @@
                                     </td>
                                     <td class="action icon16">
                                         <a title="Editar" href="#editarCaracteristica&${row.id}" class="edit"></a>
-                                        <a title="Eliminar" class="delete" href=""></a>
                                     </td>
                                 </tr>
                             </c:forEach>
