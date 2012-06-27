@@ -7,7 +7,7 @@
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
-        $.fcbkListSelection("#fcbklist","600","50","3");       
+        $.fcbkListSelection("#fcbklist","600","50","3");    
         
         $("#formCrearIndic").validate({
             submitHandler: function(){
@@ -98,6 +98,17 @@
                                     <option value="${row.id}">${row.getFactorId().getId()}.${row.id} ${row.nombre}</option>
                                 </c:forEach>
                             </select>                
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="instrumento" class="control-label">Asignar instrumentos</label>
+                        <div class="controls">
+                            <select id="instrumento" name="instrumento" multiple="multiple">
+                                <option></option>
+                                <c:forEach items="${instrumentos}" var="row" varStatus="iter">
+                                    <option value="${row.id}">${row.nombre}</option>
+                                </c:forEach>
+                            </select>    
                         </div>
                     </div>
                      <div class="control-group">
