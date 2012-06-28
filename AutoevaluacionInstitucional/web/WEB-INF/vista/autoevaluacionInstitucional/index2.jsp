@@ -654,7 +654,7 @@
                                         
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "/formController?action=crearProcesoAIp",
+                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
                                                     data: $("#formCrearProc").serialize(),
                                                     success: function(){
                                                         $('#myModalP1').modal(); 
@@ -686,7 +686,7 @@
                                             submitHandler: function() {
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "/formController?action=crearProcesoAIp",
+                                                    url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
                                                     data: $("#formCrearProc").serialize(),
                                                     beforeSend: function(){
                                                         $('#myModalLoading').modal();   
@@ -707,9 +707,9 @@
                                                         },2000);
                                                                                 
                                                         $('#myModalP').on('hidden', function () {
-                                                            $("#menu").load("/ControllerAI?action=menuAI");
+                                                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                             setTimeout(function(){
-                                                                location = '/AutoevaluacionInstitucional/';
+                                                                location = '<%=request.getContextPath()%>/';
                                                             }, 200);
                                                         });
                                                     } //fin success
@@ -754,11 +754,11 @@
                             {               
                                 $.ajax({
                                     type: 'POST',
-                                    url: "/jsonController?ejecucion=listarProcesos",
+                                    url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarProcesos",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "/ControllerAI?action=listarProceso",
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarProceso",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -769,11 +769,11 @@
                             if(hash == "#listarPonderacionFactor"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "/jsonController?ejecucion=listarPonderacionFactor",
+                                    url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarPonderacionFactor",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "/ControllerAI?action=listarPonderacionFactor",
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionFactor",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -784,11 +784,11 @@
                             if(hash == "#listarPonderacionCaracteristica"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "/jsonController?ejecucion=listarPonderacionCaracteristica",
+                                    url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarPonderacionCaracteristica",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "/ControllerAI?action=listarPonderacionCaracteristica",
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionCaracteristica",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -799,11 +799,11 @@
                             if(hash == "#listarEvaluarDoc"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "/jsonController?ejecucion=listarEvaluarDoc",
+                                    url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarEvaluarDoc",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "/ControllerAI?action=listarEvaluarDoc",
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarDoc",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
@@ -814,11 +814,11 @@
                             if(hash == "#listarEvaluarNum"){
                                 $.ajax({
                                     type: 'POST',
-                                    url: "/jsonController?ejecucion=listarEvaluarNum",
+                                    url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarEvaluarNum",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "/ControllerAI?action=listarEvaluarNum",
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarNum",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }

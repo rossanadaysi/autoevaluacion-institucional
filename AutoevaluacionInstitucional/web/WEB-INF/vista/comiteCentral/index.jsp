@@ -126,6 +126,15 @@
         </script>
         <script type="text/javascript">
             $(function(){
+                
+                 $("ul.nav-list li a").click(function(event){
+                    $(".nav li").removeClass("active");
+                    $(this).parent().siblings().removeClass("active");
+                    $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
+                    $(this).parent().addClass("active");
+                    $(this).children("i").addClass("icon-white");
+                    location = $(this).attr("href");
+                })
             
                 $(window).hashchange(function(){
                     var hash = location.hash;
@@ -137,6 +146,39 @@
                         });//fin post
                                                         
                     }
+                    
+                    if(hash=="#inicio"){//inicio
+                            $("div.ui-layout-center").empty();
+                            $("div.ui-layout-center").append(
+                            "<div class='span10' style='text-align: justify'>"
+                                +"<div class='hero-unit'>"
+                                +"<h1>Autoevaluaci&oacute;n Institucional!</h1>"
+                                +"<p>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>"
+                                +"<p><a class='btn btn-primary btn-large'>Leer M&aacute;s »</a></p>"
+                                +"</div>"
+                                +"<div class='row-fluid'>"
+                                +"<div class='span4'>"
+                                +"<h2>Marco Normativo</h2>"
+                                +"<p>los lineamientos de Autoevaluaci&oacute;n para la Acreditaci&oacute;n Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y el Modelo de Autoevaluacion Institucional con fines de acreditacion de la  Universidad de Cartagena se fundamentan en.. . </p>"
+                                +"<p><a href='#' class='btn'>Ver detalles »</a></p>"
+                                +"</div><!--/span-->"
+                                +"<div class='span4'>"
+                                +"<h2>Definiciones</h2>"
+                                +"<p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>"
+                                +"<p><a href='#' class='btn'>Ver detalles »</a></p>"
+                                +"</div>"
+                                +"<div class='span4'>"
+                                +"<h2>Objetivos</h2>"
+                                +"<p>Mantener informado a la comunidad academica sobre el proceso de autoevaluacion institucional. </p>"
+                                +"<p><a href='#' class='btn'>Ver detalles »</a></p>"
+                                +"</div><!--/span-->"
+                                +"</div><!--/row-->"
+                                +"</div>");
+                            $("ul.nav-list li").removeClass("active");
+                            $(".nav-collapse .nav >li:eq(0)").addClass("active");
+                            $("ul.nav-list li").siblings().children("a").children("i").removeClass("icon-white");
+                            return false;
+                        } //fin inicio
                     
                     if(hash == "#crearFactor"){
                             
