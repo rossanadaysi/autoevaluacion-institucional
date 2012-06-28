@@ -919,7 +919,7 @@
                         </div>
                         <div class="nav-collapse">
                             <ul class="nav">
-                                <li class="active"><a href="/#inicio">Inicio</a></li>
+                                <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
                                 <li><a href="#">Contacto</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
