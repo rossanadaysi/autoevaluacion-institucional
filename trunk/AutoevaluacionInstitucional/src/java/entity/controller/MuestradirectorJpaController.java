@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity.controller;
 
 import java.io.Serializable;
@@ -10,15 +9,18 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Muestra;
 import entity.Directorprograma;
+import entity.Muestra;
 import entity.Muestradirector;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
+/**
+ *
+ * @author Oscar
+ */
 public class MuestradirectorJpaController implements Serializable {
 
     public MuestradirectorJpaController(EntityManagerFactory emf) {
@@ -35,24 +37,24 @@ public class MuestradirectorJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Muestra muestraId = muestradirector.getMuestraId();
-            if (muestraId != null) {
-                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
-                muestradirector.setMuestraId(muestraId);
-            }
             Directorprograma directorprogramaId = muestradirector.getDirectorprogramaId();
             if (directorprogramaId != null) {
                 directorprogramaId = em.getReference(directorprogramaId.getClass(), directorprogramaId.getId());
                 muestradirector.setDirectorprogramaId(directorprogramaId);
             }
-            em.persist(muestradirector);
+            Muestra muestraId = muestradirector.getMuestraId();
             if (muestraId != null) {
-                muestraId.getMuestradirectorList().add(muestradirector);
-                muestraId = em.merge(muestraId);
+                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
+                muestradirector.setMuestraId(muestraId);
             }
+            em.persist(muestradirector);
             if (directorprogramaId != null) {
                 directorprogramaId.getMuestradirectorList().add(muestradirector);
                 directorprogramaId = em.merge(directorprogramaId);
+            }
+            if (muestraId != null) {
+                muestraId.getMuestradirectorList().add(muestradirector);
+                muestraId = em.merge(muestraId);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,27 +70,19 @@ public class MuestradirectorJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestradirector persistentMuestradirector = em.find(Muestradirector.class, muestradirector.getId());
-            Muestra muestraIdOld = persistentMuestradirector.getMuestraId();
-            Muestra muestraIdNew = muestradirector.getMuestraId();
             Directorprograma directorprogramaIdOld = persistentMuestradirector.getDirectorprogramaId();
             Directorprograma directorprogramaIdNew = muestradirector.getDirectorprogramaId();
-            if (muestraIdNew != null) {
-                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
-                muestradirector.setMuestraId(muestraIdNew);
-            }
+            Muestra muestraIdOld = persistentMuestradirector.getMuestraId();
+            Muestra muestraIdNew = muestradirector.getMuestraId();
             if (directorprogramaIdNew != null) {
                 directorprogramaIdNew = em.getReference(directorprogramaIdNew.getClass(), directorprogramaIdNew.getId());
                 muestradirector.setDirectorprogramaId(directorprogramaIdNew);
             }
+            if (muestraIdNew != null) {
+                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
+                muestradirector.setMuestraId(muestraIdNew);
+            }
             muestradirector = em.merge(muestradirector);
-            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
-                muestraIdOld.getMuestradirectorList().remove(muestradirector);
-                muestraIdOld = em.merge(muestraIdOld);
-            }
-            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
-                muestraIdNew.getMuestradirectorList().add(muestradirector);
-                muestraIdNew = em.merge(muestraIdNew);
-            }
             if (directorprogramaIdOld != null && !directorprogramaIdOld.equals(directorprogramaIdNew)) {
                 directorprogramaIdOld.getMuestradirectorList().remove(muestradirector);
                 directorprogramaIdOld = em.merge(directorprogramaIdOld);
@@ -96,6 +90,14 @@ public class MuestradirectorJpaController implements Serializable {
             if (directorprogramaIdNew != null && !directorprogramaIdNew.equals(directorprogramaIdOld)) {
                 directorprogramaIdNew.getMuestradirectorList().add(muestradirector);
                 directorprogramaIdNew = em.merge(directorprogramaIdNew);
+            }
+            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
+                muestraIdOld.getMuestradirectorList().remove(muestradirector);
+                muestraIdOld = em.merge(muestraIdOld);
+            }
+            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
+                muestraIdNew.getMuestradirectorList().add(muestradirector);
+                muestraIdNew = em.merge(muestraIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -126,15 +128,15 @@ public class MuestradirectorJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestradirector with id " + id + " no longer exists.", enfe);
             }
-            Muestra muestraId = muestradirector.getMuestraId();
-            if (muestraId != null) {
-                muestraId.getMuestradirectorList().remove(muestradirector);
-                muestraId = em.merge(muestraId);
-            }
             Directorprograma directorprogramaId = muestradirector.getDirectorprogramaId();
             if (directorprogramaId != null) {
                 directorprogramaId.getMuestradirectorList().remove(muestradirector);
                 directorprogramaId = em.merge(directorprogramaId);
+            }
+            Muestra muestraId = muestradirector.getMuestraId();
+            if (muestraId != null) {
+                muestraId.getMuestradirectorList().remove(muestradirector);
+                muestraId = em.merge(muestraId);
             }
             em.remove(muestradirector);
             em.getTransaction().commit();
@@ -190,5 +192,5 @@ public class MuestradirectorJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

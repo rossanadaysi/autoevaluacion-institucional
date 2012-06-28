@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity.controller;
 
 import java.io.Serializable;
@@ -18,7 +17,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
+/**
+ *
+ * @author Oscar
+ */
 public class MuestraagenciaJpaController implements Serializable {
 
     public MuestraagenciaJpaController(EntityManagerFactory emf) {
@@ -190,5 +192,5 @@ public class MuestraagenciaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

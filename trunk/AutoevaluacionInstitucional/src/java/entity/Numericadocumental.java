@@ -2,24 +2,28 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "numericadocumental")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Numericadocumental.findAll", query = "SELECT n FROM Numericadocumental n"),
     @NamedQuery(name = "Numericadocumental.findById", query = "SELECT n FROM Numericadocumental n WHERE n.id = :id"),
+    @NamedQuery(name = "Numericadocumental.findByDocumento", query = "SELECT n FROM Numericadocumental n WHERE n.documento = :documento"),
+    @NamedQuery(name = "Numericadocumental.findByResponsable", query = "SELECT n FROM Numericadocumental n WHERE n.responsable = :responsable"),
+    @NamedQuery(name = "Numericadocumental.findByMedio", query = "SELECT n FROM Numericadocumental n WHERE n.medio = :medio"),
+    @NamedQuery(name = "Numericadocumental.findByLugar", query = "SELECT n FROM Numericadocumental n WHERE n.lugar = :lugar"),
     @NamedQuery(name = "Numericadocumental.findByEvaluacion", query = "SELECT n FROM Numericadocumental n WHERE n.evaluacion = :evaluacion"),
-    @NamedQuery(name = "Numericadocumental.findByNombre", query = "SELECT n FROM Numericadocumental n WHERE n.nombre = :nombre"),
-    @NamedQuery(name = "Numericadocumental.findByAccion", query = "SELECT n FROM Numericadocumental n WHERE n.accion = :accion"),
-    @NamedQuery(name = "Numericadocumental.findByResponsable", query = "SELECT n FROM Numericadocumental n WHERE n.responsable = :responsable")})
+    @NamedQuery(name = "Numericadocumental.findByAccion", query = "SELECT n FROM Numericadocumental n WHERE n.accion = :accion")})
 public class Numericadocumental implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,17 +32,23 @@ public class Numericadocumental implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "evaluacion")
-    private int evaluacion;
-    @Basic(optional = false)
-    @Column(name = "nombre")
-    private String nombre;
-    @Basic(optional = false)
-    @Column(name = "accion")
-    private String accion;
+    @Column(name = "documento")
+    private String documento;
     @Basic(optional = false)
     @Column(name = "responsable")
     private String responsable;
+    @Basic(optional = false)
+    @Column(name = "medio")
+    private String medio;
+    @Basic(optional = false)
+    @Column(name = "lugar")
+    private String lugar;
+    @Basic(optional = false)
+    @Column(name = "evaluacion")
+    private int evaluacion;
+    @Basic(optional = false)
+    @Column(name = "accion")
+    private String accion;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
@@ -53,12 +63,14 @@ public class Numericadocumental implements Serializable {
         this.id = id;
     }
 
-    public Numericadocumental(Integer id, int evaluacion, String nombre, String accion, String responsable) {
+    public Numericadocumental(Integer id, String documento, String responsable, String medio, String lugar, int evaluacion, String accion) {
         this.id = id;
-        this.evaluacion = evaluacion;
-        this.nombre = nombre;
-        this.accion = accion;
+        this.documento = documento;
         this.responsable = responsable;
+        this.medio = medio;
+        this.lugar = lugar;
+        this.evaluacion = evaluacion;
+        this.accion = accion;
     }
 
     public Integer getId() {
@@ -69,28 +81,12 @@ public class Numericadocumental implements Serializable {
         this.id = id;
     }
 
-    public int getEvaluacion() {
-        return evaluacion;
+    public String getDocumento() {
+        return documento;
     }
 
-    public void setEvaluacion(int evaluacion) {
-        this.evaluacion = evaluacion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getAccion() {
-        return accion;
-    }
-
-    public void setAccion(String accion) {
-        this.accion = accion;
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
     public String getResponsable() {
@@ -99,6 +95,38 @@ public class Numericadocumental implements Serializable {
 
     public void setResponsable(String responsable) {
         this.responsable = responsable;
+    }
+
+    public String getMedio() {
+        return medio;
+    }
+
+    public void setMedio(String medio) {
+        this.medio = medio;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
+
+    public int getEvaluacion() {
+        return evaluacion;
+    }
+
+    public void setEvaluacion(int evaluacion) {
+        this.evaluacion = evaluacion;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
     }
 
     public Proceso getProcesoId() {
@@ -141,5 +169,5 @@ public class Numericadocumental implements Serializable {
     public String toString() {
         return "entity.Numericadocumental[ id=" + id + " ]";
     }
-
+    
 }

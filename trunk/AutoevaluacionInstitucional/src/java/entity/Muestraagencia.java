@@ -2,20 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "muestraagencia")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Muestraagencia.findAll", query = "SELECT m FROM Muestraagencia m"),
-    @NamedQuery(name = "Muestraagencia.findById", query = "SELECT m FROM Muestraagencia m WHERE m.id = :id")})
+    @NamedQuery(name = "Muestraagencia.findById", query = "SELECT m FROM Muestraagencia m WHERE m.id = :id"),
+    @NamedQuery(name = "Muestraagencia.findByConglomerado", query = "SELECT m FROM Muestraagencia m WHERE m.conglomerado = :conglomerado"),
+    @NamedQuery(name = "Muestraagencia.findByMetodo", query = "SELECT m FROM Muestraagencia m WHERE m.metodo = :metodo")})
 public class Muestraagencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,6 +27,10 @@ public class Muestraagencia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "conglomerado")
+    private String conglomerado;
+    @Column(name = "metodo")
+    private String metodo;
     @JoinColumn(name = "muestra_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestra muestraId;
@@ -43,6 +51,22 @@ public class Muestraagencia implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getConglomerado() {
+        return conglomerado;
+    }
+
+    public void setConglomerado(String conglomerado) {
+        this.conglomerado = conglomerado;
+    }
+
+    public String getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(String metodo) {
+        this.metodo = metodo;
     }
 
     public Muestra getMuestraId() {
@@ -85,5 +109,5 @@ public class Muestraagencia implements Serializable {
     public String toString() {
         return "entity.Muestraagencia[ id=" + id + " ]";
     }
-
+    
 }

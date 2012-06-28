@@ -13,35 +13,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Oscar
  */
 @Entity
-@Table(name = "muestraegresado")
+@Table(name = "muestracriterio")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Muestraegresado.findAll", query = "SELECT m FROM Muestraegresado m"),
-    @NamedQuery(name = "Muestraegresado.findById", query = "SELECT m FROM Muestraegresado m WHERE m.id = :id"),
-    @NamedQuery(name = "Muestraegresado.findByConglomerado", query = "SELECT m FROM Muestraegresado m WHERE m.conglomerado = :conglomerado"),
-    @NamedQuery(name = "Muestraegresado.findByMetodo", query = "SELECT m FROM Muestraegresado m WHERE m.metodo = :metodo")})
-public class Muestraegresado implements Serializable {
+    @NamedQuery(name = "Muestracriterio.findAll", query = "SELECT m FROM Muestracriterio m"),
+    @NamedQuery(name = "Muestracriterio.findById", query = "SELECT m FROM Muestracriterio m WHERE m.id = :id")})
+public class Muestracriterio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "conglomerado")
-    private String conglomerado;
-    @Column(name = "metodo")
-    private String metodo;
-    @JoinColumn(name = "egresado_id", referencedColumnName = "id")
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Egresado egresadoId;
+    private Persona personaId;
+    @JoinColumn(name = "descripcioncriterio_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Descripcioncriterio descripcioncriterioId;
+    @JoinColumn(name = "fuente_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Fuente fuenteId;
     @JoinColumn(name = "muestra_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Muestra muestraId;
 
-    public Muestraegresado() {
+    public Muestracriterio() {
     }
 
-    public Muestraegresado(Integer id) {
+    public Muestracriterio(Integer id) {
         this.id = id;
     }
 
@@ -53,28 +53,28 @@ public class Muestraegresado implements Serializable {
         this.id = id;
     }
 
-    public String getConglomerado() {
-        return conglomerado;
+    public Persona getPersonaId() {
+        return personaId;
     }
 
-    public void setConglomerado(String conglomerado) {
-        this.conglomerado = conglomerado;
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
-    public String getMetodo() {
-        return metodo;
+    public Descripcioncriterio getDescripcioncriterioId() {
+        return descripcioncriterioId;
     }
 
-    public void setMetodo(String metodo) {
-        this.metodo = metodo;
+    public void setDescripcioncriterioId(Descripcioncriterio descripcioncriterioId) {
+        this.descripcioncriterioId = descripcioncriterioId;
     }
 
-    public Egresado getEgresadoId() {
-        return egresadoId;
+    public Fuente getFuenteId() {
+        return fuenteId;
     }
 
-    public void setEgresadoId(Egresado egresadoId) {
-        this.egresadoId = egresadoId;
+    public void setFuenteId(Fuente fuenteId) {
+        this.fuenteId = fuenteId;
     }
 
     public Muestra getMuestraId() {
@@ -95,10 +95,10 @@ public class Muestraegresado implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Muestraegresado)) {
+        if (!(object instanceof Muestracriterio)) {
             return false;
         }
-        Muestraegresado other = (Muestraegresado) object;
+        Muestracriterio other = (Muestracriterio) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +107,7 @@ public class Muestraegresado implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Muestraegresado[ id=" + id + " ]";
+        return "entity.Muestracriterio[ id=" + id + " ]";
     }
     
 }

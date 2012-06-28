@@ -15,14 +15,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Oscar
  */
 @Entity
-@Table(name = "privilegio")
+@Table(name = "criterio")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Privilegio.findAll", query = "SELECT p FROM Privilegio p"),
-    @NamedQuery(name = "Privilegio.findById", query = "SELECT p FROM Privilegio p WHERE p.id = :id"),
-    @NamedQuery(name = "Privilegio.findByNombre", query = "SELECT p FROM Privilegio p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Privilegio.findByDescripcion", query = "SELECT p FROM Privilegio p WHERE p.descripcion = :descripcion")})
-public class Privilegio implements Serializable {
+    @NamedQuery(name = "Criterio.findAll", query = "SELECT c FROM Criterio c"),
+    @NamedQuery(name = "Criterio.findById", query = "SELECT c FROM Criterio c WHERE c.id = :id"),
+    @NamedQuery(name = "Criterio.findByNombre", query = "SELECT c FROM Criterio c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "Criterio.findByDescripcion", query = "SELECT c FROM Criterio c WHERE c.descripcion = :descripcion")})
+public class Criterio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +34,17 @@ public class Privilegio implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "privilegioId")
-    private List<Representantehasprivilegio> representantehasprivilegioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criterioId")
+    private List<Descripcioncriterio> descripcioncriterioList;
 
-    public Privilegio() {
+    public Criterio() {
     }
 
-    public Privilegio(Integer id) {
+    public Criterio(Integer id) {
         this.id = id;
     }
 
-    public Privilegio(Integer id, String nombre) {
+    public Criterio(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -74,12 +74,12 @@ public class Privilegio implements Serializable {
     }
 
     @XmlTransient
-    public List<Representantehasprivilegio> getRepresentantehasprivilegioList() {
-        return representantehasprivilegioList;
+    public List<Descripcioncriterio> getDescripcioncriterioList() {
+        return descripcioncriterioList;
     }
 
-    public void setRepresentantehasprivilegioList(List<Representantehasprivilegio> representantehasprivilegioList) {
-        this.representantehasprivilegioList = representantehasprivilegioList;
+    public void setDescripcioncriterioList(List<Descripcioncriterio> descripcioncriterioList) {
+        this.descripcioncriterioList = descripcioncriterioList;
     }
 
     @Override
@@ -92,10 +92,10 @@ public class Privilegio implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Privilegio)) {
+        if (!(object instanceof Criterio)) {
             return false;
         }
-        Privilegio other = (Privilegio) object;
+        Criterio other = (Criterio) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +104,7 @@ public class Privilegio implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Privilegio[ id=" + id + " ]";
+        return "entity.Criterio[ id=" + id + " ]";
     }
     
 }

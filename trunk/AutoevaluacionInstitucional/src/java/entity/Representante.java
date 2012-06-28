@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "representante")
 @XmlRootElement
@@ -31,12 +33,12 @@ public class Representante implements Serializable {
     private String rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "representanteId")
     private List<Representantehasprivilegio> representantehasprivilegioList;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id")
-    @ManyToOne
-    private Programa programaId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne
+    private Programa programaId;
 
     public Representante() {
     }
@@ -75,20 +77,20 @@ public class Representante implements Serializable {
         this.representantehasprivilegioList = representantehasprivilegioList;
     }
 
-    public Programa getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(Programa programaId) {
-        this.programaId = programaId;
-    }
-
     public Persona getPersonaId() {
         return personaId;
     }
 
     public void setPersonaId(Persona personaId) {
         this.personaId = personaId;
+    }
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
     }
 
     @Override
@@ -115,5 +117,5 @@ public class Representante implements Serializable {
     public String toString() {
         return "entity.Representante[ id=" + id + " ]";
     }
-
+    
 }

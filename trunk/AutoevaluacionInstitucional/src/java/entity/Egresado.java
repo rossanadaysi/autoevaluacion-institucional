@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "egresado")
 @XmlRootElement
@@ -27,12 +29,12 @@ public class Egresado implements Serializable {
     private Integer id;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresadoId")
     private List<Muestraegresado> muestraegresadoList;
-    @JoinColumn(name = "programa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Programa programaId;
     @JoinColumn(name = "persona_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Persona personaId;
+    @JoinColumn(name = "programa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Programa programaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
@@ -61,20 +63,20 @@ public class Egresado implements Serializable {
         this.muestraegresadoList = muestraegresadoList;
     }
 
-    public Programa getProgramaId() {
-        return programaId;
-    }
-
-    public void setProgramaId(Programa programaId) {
-        this.programaId = programaId;
-    }
-
     public Persona getPersonaId() {
         return personaId;
     }
 
     public void setPersonaId(Persona personaId) {
         this.personaId = personaId;
+    }
+
+    public Programa getProgramaId() {
+        return programaId;
+    }
+
+    public void setProgramaId(Programa programaId) {
+        this.programaId = programaId;
     }
 
     public Fuente getFuenteId() {
@@ -109,5 +111,5 @@ public class Egresado implements Serializable {
     public String toString() {
         return "entity.Egresado[ id=" + id + " ]";
     }
-
+    
 }
