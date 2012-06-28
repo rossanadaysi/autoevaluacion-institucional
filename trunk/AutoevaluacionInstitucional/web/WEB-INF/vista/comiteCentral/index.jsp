@@ -129,8 +129,7 @@
                 
                  $("ul.nav-list li a").click(function(event){
                     $(".nav li").removeClass("active");
-                    $(this).parent().siblings().removeClass("active");
-                    $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
+                    $("ul.nav-list li a").children("i").removeClass("icon-white");
                     $(this).parent().addClass("active");
                     $(this).children("i").addClass("icon-white");
                     location = $(this).attr("href");
