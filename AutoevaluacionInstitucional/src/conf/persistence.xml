@@ -63,6 +63,9 @@
     <class>entity.Instrumento</class>
     <class>entity.Resultadoevaluacion</class>
     <class>entity.Encabezado</class>
+    <class>entity.Descripcioncriterio</class>
+    <class>entity.Muestracriterio</class>
+    <class>entity.Criterio</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/autoevaluacion"/>

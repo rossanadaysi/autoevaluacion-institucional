@@ -2,20 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "muestraadministrativo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Muestraadministrativo.findAll", query = "SELECT m FROM Muestraadministrativo m"),
-    @NamedQuery(name = "Muestraadministrativo.findById", query = "SELECT m FROM Muestraadministrativo m WHERE m.id = :id")})
+    @NamedQuery(name = "Muestraadministrativo.findById", query = "SELECT m FROM Muestraadministrativo m WHERE m.id = :id"),
+    @NamedQuery(name = "Muestraadministrativo.findByConglomerado", query = "SELECT m FROM Muestraadministrativo m WHERE m.conglomerado = :conglomerado"),
+    @NamedQuery(name = "Muestraadministrativo.findByMetodo", query = "SELECT m FROM Muestraadministrativo m WHERE m.metodo = :metodo")})
 public class Muestraadministrativo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,12 +27,16 @@ public class Muestraadministrativo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "muestra_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Muestra muestraId;
+    @Column(name = "conglomerado")
+    private String conglomerado;
+    @Column(name = "metodo")
+    private String metodo;
     @JoinColumn(name = "administrativo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Administrativo administrativoId;
+    @JoinColumn(name = "muestra_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Muestra muestraId;
 
     public Muestraadministrativo() {
     }
@@ -45,12 +53,20 @@ public class Muestraadministrativo implements Serializable {
         this.id = id;
     }
 
-    public Muestra getMuestraId() {
-        return muestraId;
+    public String getConglomerado() {
+        return conglomerado;
     }
 
-    public void setMuestraId(Muestra muestraId) {
-        this.muestraId = muestraId;
+    public void setConglomerado(String conglomerado) {
+        this.conglomerado = conglomerado;
+    }
+
+    public String getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(String metodo) {
+        this.metodo = metodo;
     }
 
     public Administrativo getAdministrativoId() {
@@ -59,6 +75,14 @@ public class Muestraadministrativo implements Serializable {
 
     public void setAdministrativoId(Administrativo administrativoId) {
         this.administrativoId = administrativoId;
+    }
+
+    public Muestra getMuestraId() {
+        return muestraId;
+    }
+
+    public void setMuestraId(Muestra muestraId) {
+        this.muestraId = muestraId;
     }
 
     @Override
@@ -85,5 +109,5 @@ public class Muestraadministrativo implements Serializable {
     public String toString() {
         return "entity.Muestraadministrativo[ id=" + id + " ]";
     }
-
+    
 }

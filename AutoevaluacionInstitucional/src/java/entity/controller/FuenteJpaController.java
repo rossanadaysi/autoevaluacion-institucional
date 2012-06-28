@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity.controller;
 
 import entity.*;
@@ -18,7 +17,10 @@ import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
+/**
+ *
+ * @author Oscar
+ */
 public class FuenteJpaController implements Serializable {
 
     public FuenteJpaController(EntityManagerFactory emf) {
@@ -54,6 +56,9 @@ public class FuenteJpaController implements Serializable {
         }
         if (fuente.getEmpleadorList() == null) {
             fuente.setEmpleadorList(new ArrayList<Empleador>());
+        }
+        if (fuente.getMuestracriterioList() == null) {
+            fuente.setMuestracriterioList(new ArrayList<Muestracriterio>());
         }
         if (fuente.getDocenteList() == null) {
             fuente.setDocenteList(new ArrayList<Docente>());
@@ -110,6 +115,12 @@ public class FuenteJpaController implements Serializable {
                 attachedEmpleadorList.add(empleadorListEmpleadorToAttach);
             }
             fuente.setEmpleadorList(attachedEmpleadorList);
+            List<Muestracriterio> attachedMuestracriterioList = new ArrayList<Muestracriterio>();
+            for (Muestracriterio muestracriterioListMuestracriterioToAttach : fuente.getMuestracriterioList()) {
+                muestracriterioListMuestracriterioToAttach = em.getReference(muestracriterioListMuestracriterioToAttach.getClass(), muestracriterioListMuestracriterioToAttach.getId());
+                attachedMuestracriterioList.add(muestracriterioListMuestracriterioToAttach);
+            }
+            fuente.setMuestracriterioList(attachedMuestracriterioList);
             List<Docente> attachedDocenteList = new ArrayList<Docente>();
             for (Docente docenteListDocenteToAttach : fuente.getDocenteList()) {
                 docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getId());
@@ -189,6 +200,15 @@ public class FuenteJpaController implements Serializable {
                     oldFuenteIdOfEmpleadorListEmpleador = em.merge(oldFuenteIdOfEmpleadorListEmpleador);
                 }
             }
+            for (Muestracriterio muestracriterioListMuestracriterio : fuente.getMuestracriterioList()) {
+                Fuente oldFuenteIdOfMuestracriterioListMuestracriterio = muestracriterioListMuestracriterio.getFuenteId();
+                muestracriterioListMuestracriterio.setFuenteId(fuente);
+                muestracriterioListMuestracriterio = em.merge(muestracriterioListMuestracriterio);
+                if (oldFuenteIdOfMuestracriterioListMuestracriterio != null) {
+                    oldFuenteIdOfMuestracriterioListMuestracriterio.getMuestracriterioList().remove(muestracriterioListMuestracriterio);
+                    oldFuenteIdOfMuestracriterioListMuestracriterio = em.merge(oldFuenteIdOfMuestracriterioListMuestracriterio);
+                }
+            }
             for (Docente docenteListDocente : fuente.getDocenteList()) {
                 Fuente oldFuenteIdOfDocenteListDocente = docenteListDocente.getFuenteId();
                 docenteListDocente.setFuenteId(fuente);
@@ -228,6 +248,8 @@ public class FuenteJpaController implements Serializable {
             List<Agenciagubernamental> agenciagubernamentalListNew = fuente.getAgenciagubernamentalList();
             List<Empleador> empleadorListOld = persistentFuente.getEmpleadorList();
             List<Empleador> empleadorListNew = fuente.getEmpleadorList();
+            List<Muestracriterio> muestracriterioListOld = persistentFuente.getMuestracriterioList();
+            List<Muestracriterio> muestracriterioListNew = fuente.getMuestracriterioList();
             List<Docente> docenteListOld = persistentFuente.getDocenteList();
             List<Docente> docenteListNew = fuente.getDocenteList();
             List<String> illegalOrphanMessages = null;
@@ -293,6 +315,14 @@ public class FuenteJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Empleador " + empleadorListOldEmpleador + " since its fuenteId field is not nullable.");
+                }
+            }
+            for (Muestracriterio muestracriterioListOldMuestracriterio : muestracriterioListOld) {
+                if (!muestracriterioListNew.contains(muestracriterioListOldMuestracriterio)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Muestracriterio " + muestracriterioListOldMuestracriterio + " since its fuenteId field is not nullable.");
                 }
             }
             for (Docente docenteListOldDocente : docenteListOld) {
@@ -362,6 +392,13 @@ public class FuenteJpaController implements Serializable {
             }
             empleadorListNew = attachedEmpleadorListNew;
             fuente.setEmpleadorList(empleadorListNew);
+            List<Muestracriterio> attachedMuestracriterioListNew = new ArrayList<Muestracriterio>();
+            for (Muestracriterio muestracriterioListNewMuestracriterioToAttach : muestracriterioListNew) {
+                muestracriterioListNewMuestracriterioToAttach = em.getReference(muestracriterioListNewMuestracriterioToAttach.getClass(), muestracriterioListNewMuestracriterioToAttach.getId());
+                attachedMuestracriterioListNew.add(muestracriterioListNewMuestracriterioToAttach);
+            }
+            muestracriterioListNew = attachedMuestracriterioListNew;
+            fuente.setMuestracriterioList(muestracriterioListNew);
             List<Docente> attachedDocenteListNew = new ArrayList<Docente>();
             for (Docente docenteListNewDocenteToAttach : docenteListNew) {
                 docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getId());
@@ -455,6 +492,17 @@ public class FuenteJpaController implements Serializable {
                     if (oldFuenteIdOfEmpleadorListNewEmpleador != null && !oldFuenteIdOfEmpleadorListNewEmpleador.equals(fuente)) {
                         oldFuenteIdOfEmpleadorListNewEmpleador.getEmpleadorList().remove(empleadorListNewEmpleador);
                         oldFuenteIdOfEmpleadorListNewEmpleador = em.merge(oldFuenteIdOfEmpleadorListNewEmpleador);
+                    }
+                }
+            }
+            for (Muestracriterio muestracriterioListNewMuestracriterio : muestracriterioListNew) {
+                if (!muestracriterioListOld.contains(muestracriterioListNewMuestracriterio)) {
+                    Fuente oldFuenteIdOfMuestracriterioListNewMuestracriterio = muestracriterioListNewMuestracriterio.getFuenteId();
+                    muestracriterioListNewMuestracriterio.setFuenteId(fuente);
+                    muestracriterioListNewMuestracriterio = em.merge(muestracriterioListNewMuestracriterio);
+                    if (oldFuenteIdOfMuestracriterioListNewMuestracriterio != null && !oldFuenteIdOfMuestracriterioListNewMuestracriterio.equals(fuente)) {
+                        oldFuenteIdOfMuestracriterioListNewMuestracriterio.getMuestracriterioList().remove(muestracriterioListNewMuestracriterio);
+                        oldFuenteIdOfMuestracriterioListNewMuestracriterio = em.merge(oldFuenteIdOfMuestracriterioListNewMuestracriterio);
                     }
                 }
             }
@@ -555,6 +603,13 @@ public class FuenteJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Fuente (" + fuente + ") cannot be destroyed since the Empleador " + empleadorListOrphanCheckEmpleador + " in its empleadorList field has a non-nullable fuenteId field.");
             }
+            List<Muestracriterio> muestracriterioListOrphanCheck = fuente.getMuestracriterioList();
+            for (Muestracriterio muestracriterioListOrphanCheckMuestracriterio : muestracriterioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Fuente (" + fuente + ") cannot be destroyed since the Muestracriterio " + muestracriterioListOrphanCheckMuestracriterio + " in its muestracriterioList field has a non-nullable fuenteId field.");
+            }
             List<Docente> docenteListOrphanCheck = fuente.getDocenteList();
             for (Docente docenteListOrphanCheckDocente : docenteListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -619,5 +674,5 @@ public class FuenteJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "fuente")
 @XmlRootElement
@@ -48,6 +50,8 @@ public class Fuente implements Serializable {
     private List<Agenciagubernamental> agenciagubernamentalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
     private List<Empleador> empleadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
+    private List<Muestracriterio> muestracriterioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fuenteId")
     private List<Docente> docenteList;
 
@@ -160,6 +164,15 @@ public class Fuente implements Serializable {
     }
 
     @XmlTransient
+    public List<Muestracriterio> getMuestracriterioList() {
+        return muestracriterioList;
+    }
+
+    public void setMuestracriterioList(List<Muestracriterio> muestracriterioList) {
+        this.muestracriterioList = muestracriterioList;
+    }
+
+    @XmlTransient
     public List<Docente> getDocenteList() {
         return docenteList;
     }
@@ -192,5 +205,5 @@ public class Fuente implements Serializable {
     public String toString() {
         return "entity.Fuente[ id=" + id + " ]";
     }
-
+    
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity.controller;
 
 import java.io.Serializable;
@@ -10,15 +9,18 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Muestra;
 import entity.Administrativo;
+import entity.Muestra;
 import entity.Muestraadministrativo;
 import entity.controller.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
+/**
+ *
+ * @author Oscar
+ */
 public class MuestraadministrativoJpaController implements Serializable {
 
     public MuestraadministrativoJpaController(EntityManagerFactory emf) {
@@ -35,24 +37,24 @@ public class MuestraadministrativoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Muestra muestraId = muestraadministrativo.getMuestraId();
-            if (muestraId != null) {
-                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
-                muestraadministrativo.setMuestraId(muestraId);
-            }
             Administrativo administrativoId = muestraadministrativo.getAdministrativoId();
             if (administrativoId != null) {
                 administrativoId = em.getReference(administrativoId.getClass(), administrativoId.getId());
                 muestraadministrativo.setAdministrativoId(administrativoId);
             }
-            em.persist(muestraadministrativo);
+            Muestra muestraId = muestraadministrativo.getMuestraId();
             if (muestraId != null) {
-                muestraId.getMuestraadministrativoList().add(muestraadministrativo);
-                muestraId = em.merge(muestraId);
+                muestraId = em.getReference(muestraId.getClass(), muestraId.getId());
+                muestraadministrativo.setMuestraId(muestraId);
             }
+            em.persist(muestraadministrativo);
             if (administrativoId != null) {
                 administrativoId.getMuestraadministrativoList().add(muestraadministrativo);
                 administrativoId = em.merge(administrativoId);
+            }
+            if (muestraId != null) {
+                muestraId.getMuestraadministrativoList().add(muestraadministrativo);
+                muestraId = em.merge(muestraId);
             }
             em.getTransaction().commit();
         } finally {
@@ -68,27 +70,19 @@ public class MuestraadministrativoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Muestraadministrativo persistentMuestraadministrativo = em.find(Muestraadministrativo.class, muestraadministrativo.getId());
-            Muestra muestraIdOld = persistentMuestraadministrativo.getMuestraId();
-            Muestra muestraIdNew = muestraadministrativo.getMuestraId();
             Administrativo administrativoIdOld = persistentMuestraadministrativo.getAdministrativoId();
             Administrativo administrativoIdNew = muestraadministrativo.getAdministrativoId();
-            if (muestraIdNew != null) {
-                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
-                muestraadministrativo.setMuestraId(muestraIdNew);
-            }
+            Muestra muestraIdOld = persistentMuestraadministrativo.getMuestraId();
+            Muestra muestraIdNew = muestraadministrativo.getMuestraId();
             if (administrativoIdNew != null) {
                 administrativoIdNew = em.getReference(administrativoIdNew.getClass(), administrativoIdNew.getId());
                 muestraadministrativo.setAdministrativoId(administrativoIdNew);
             }
+            if (muestraIdNew != null) {
+                muestraIdNew = em.getReference(muestraIdNew.getClass(), muestraIdNew.getId());
+                muestraadministrativo.setMuestraId(muestraIdNew);
+            }
             muestraadministrativo = em.merge(muestraadministrativo);
-            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
-                muestraIdOld.getMuestraadministrativoList().remove(muestraadministrativo);
-                muestraIdOld = em.merge(muestraIdOld);
-            }
-            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
-                muestraIdNew.getMuestraadministrativoList().add(muestraadministrativo);
-                muestraIdNew = em.merge(muestraIdNew);
-            }
             if (administrativoIdOld != null && !administrativoIdOld.equals(administrativoIdNew)) {
                 administrativoIdOld.getMuestraadministrativoList().remove(muestraadministrativo);
                 administrativoIdOld = em.merge(administrativoIdOld);
@@ -96,6 +90,14 @@ public class MuestraadministrativoJpaController implements Serializable {
             if (administrativoIdNew != null && !administrativoIdNew.equals(administrativoIdOld)) {
                 administrativoIdNew.getMuestraadministrativoList().add(muestraadministrativo);
                 administrativoIdNew = em.merge(administrativoIdNew);
+            }
+            if (muestraIdOld != null && !muestraIdOld.equals(muestraIdNew)) {
+                muestraIdOld.getMuestraadministrativoList().remove(muestraadministrativo);
+                muestraIdOld = em.merge(muestraIdOld);
+            }
+            if (muestraIdNew != null && !muestraIdNew.equals(muestraIdOld)) {
+                muestraIdNew.getMuestraadministrativoList().add(muestraadministrativo);
+                muestraIdNew = em.merge(muestraIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -126,15 +128,15 @@ public class MuestraadministrativoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The muestraadministrativo with id " + id + " no longer exists.", enfe);
             }
-            Muestra muestraId = muestraadministrativo.getMuestraId();
-            if (muestraId != null) {
-                muestraId.getMuestraadministrativoList().remove(muestraadministrativo);
-                muestraId = em.merge(muestraId);
-            }
             Administrativo administrativoId = muestraadministrativo.getAdministrativoId();
             if (administrativoId != null) {
                 administrativoId.getMuestraadministrativoList().remove(muestraadministrativo);
                 administrativoId = em.merge(administrativoId);
+            }
+            Muestra muestraId = muestraadministrativo.getMuestraId();
+            if (muestraId != null) {
+                muestraId.getMuestraadministrativoList().remove(muestraadministrativo);
+                muestraId = em.merge(muestraId);
             }
             em.remove(muestraadministrativo);
             em.getTransaction().commit();
@@ -190,5 +192,5 @@ public class MuestraadministrativoJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

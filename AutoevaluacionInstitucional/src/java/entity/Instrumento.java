@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "instrumento")
 @XmlRootElement
@@ -32,7 +34,10 @@ public class Instrumento implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @ManyToMany(mappedBy = "instrumentoList")
+    @JoinTable(name = "instrumentohasindicador", joinColumns = {
+        @JoinColumn(name = "instrumento_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "indicador_id", referencedColumnName = "id")})
+    @ManyToMany
     private List<Indicador> indicadorList;
 
     public Instrumento() {
@@ -104,5 +109,5 @@ public class Instrumento implements Serializable {
     public String toString() {
         return "entity.Instrumento[ id=" + id + " ]";
     }
-
+    
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "persona")
 @XmlRootElement
@@ -50,11 +52,13 @@ public class Persona implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
     private List<Egresado> egresadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private List<Representante> representanteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
     private List<Agenciagubernamental> agenciagubernamentalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
+    private List<Representante> representanteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
     private List<Empleador> empleadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
+    private List<Muestracriterio> muestracriterioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
     private List<Docente> docenteList;
 
@@ -158,15 +162,6 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
-    public List<Representante> getRepresentanteList() {
-        return representanteList;
-    }
-
-    public void setRepresentanteList(List<Representante> representanteList) {
-        this.representanteList = representanteList;
-    }
-
-    @XmlTransient
     public List<Agenciagubernamental> getAgenciagubernamentalList() {
         return agenciagubernamentalList;
     }
@@ -176,12 +171,30 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
+    public List<Representante> getRepresentanteList() {
+        return representanteList;
+    }
+
+    public void setRepresentanteList(List<Representante> representanteList) {
+        this.representanteList = representanteList;
+    }
+
+    @XmlTransient
     public List<Empleador> getEmpleadorList() {
         return empleadorList;
     }
 
     public void setEmpleadorList(List<Empleador> empleadorList) {
         this.empleadorList = empleadorList;
+    }
+
+    @XmlTransient
+    public List<Muestracriterio> getMuestracriterioList() {
+        return muestracriterioList;
+    }
+
+    public void setMuestracriterioList(List<Muestracriterio> muestracriterioList) {
+        this.muestracriterioList = muestracriterioList;
     }
 
     @XmlTransient
@@ -217,5 +230,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "entity.Persona[ id=" + id + " ]";
     }
-
+    
 }

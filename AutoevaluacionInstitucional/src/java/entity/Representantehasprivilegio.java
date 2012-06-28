@@ -2,14 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "representantehasprivilegio")
 @XmlRootElement
@@ -23,12 +25,12 @@ public class Representantehasprivilegio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "representante_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Representante representanteId;
     @JoinColumn(name = "privilegio_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Privilegio privilegioId;
+    @JoinColumn(name = "representante_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Representante representanteId;
 
     public Representantehasprivilegio() {
     }
@@ -45,20 +47,20 @@ public class Representantehasprivilegio implements Serializable {
         this.id = id;
     }
 
-    public Representante getRepresentanteId() {
-        return representanteId;
-    }
-
-    public void setRepresentanteId(Representante representanteId) {
-        this.representanteId = representanteId;
-    }
-
     public Privilegio getPrivilegioId() {
         return privilegioId;
     }
 
     public void setPrivilegioId(Privilegio privilegioId) {
         this.privilegioId = privilegioId;
+    }
+
+    public Representante getRepresentanteId() {
+        return representanteId;
+    }
+
+    public void setRepresentanteId(Representante representanteId) {
+        this.representanteId = representanteId;
     }
 
     @Override
@@ -85,5 +87,5 @@ public class Representantehasprivilegio implements Serializable {
     public String toString() {
         return "entity.Representantehasprivilegio[ id=" + id + " ]";
     }
-
+    
 }

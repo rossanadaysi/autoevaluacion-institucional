@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity.controller;
 
 import entity.*;
@@ -18,7 +17,10 @@ import entity.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
+/**
+ *
+ * @author Oscar
+ */
 public class MuestraJpaController implements Serializable {
 
     public MuestraJpaController(EntityManagerFactory emf) {
@@ -51,6 +53,9 @@ public class MuestraJpaController implements Serializable {
         }
         if (muestra.getMuestraempleadorList() == null) {
             muestra.setMuestraempleadorList(new ArrayList<Muestraempleador>());
+        }
+        if (muestra.getMuestracriterioList() == null) {
+            muestra.setMuestracriterioList(new ArrayList<Muestracriterio>());
         }
         EntityManager em = null;
         try {
@@ -103,6 +108,12 @@ public class MuestraJpaController implements Serializable {
                 attachedMuestraempleadorList.add(muestraempleadorListMuestraempleadorToAttach);
             }
             muestra.setMuestraempleadorList(attachedMuestraempleadorList);
+            List<Muestracriterio> attachedMuestracriterioList = new ArrayList<Muestracriterio>();
+            for (Muestracriterio muestracriterioListMuestracriterioToAttach : muestra.getMuestracriterioList()) {
+                muestracriterioListMuestracriterioToAttach = em.getReference(muestracriterioListMuestracriterioToAttach.getClass(), muestracriterioListMuestracriterioToAttach.getId());
+                attachedMuestracriterioList.add(muestracriterioListMuestracriterioToAttach);
+            }
+            muestra.setMuestracriterioList(attachedMuestracriterioList);
             em.persist(muestra);
             if (procesoId != null) {
                 procesoId.getMuestraList().add(muestra);
@@ -171,6 +182,15 @@ public class MuestraJpaController implements Serializable {
                     oldMuestraIdOfMuestraempleadorListMuestraempleador = em.merge(oldMuestraIdOfMuestraempleadorListMuestraempleador);
                 }
             }
+            for (Muestracriterio muestracriterioListMuestracriterio : muestra.getMuestracriterioList()) {
+                Muestra oldMuestraIdOfMuestracriterioListMuestracriterio = muestracriterioListMuestracriterio.getMuestraId();
+                muestracriterioListMuestracriterio.setMuestraId(muestra);
+                muestracriterioListMuestracriterio = em.merge(muestracriterioListMuestracriterio);
+                if (oldMuestraIdOfMuestracriterioListMuestracriterio != null) {
+                    oldMuestraIdOfMuestracriterioListMuestracriterio.getMuestracriterioList().remove(muestracriterioListMuestracriterio);
+                    oldMuestraIdOfMuestracriterioListMuestracriterio = em.merge(oldMuestraIdOfMuestracriterioListMuestracriterio);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -201,6 +221,8 @@ public class MuestraJpaController implements Serializable {
             List<Muestraestudiante> muestraestudianteListNew = muestra.getMuestraestudianteList();
             List<Muestraempleador> muestraempleadorListOld = persistentMuestra.getMuestraempleadorList();
             List<Muestraempleador> muestraempleadorListNew = muestra.getMuestraempleadorList();
+            List<Muestracriterio> muestracriterioListOld = persistentMuestra.getMuestracriterioList();
+            List<Muestracriterio> muestracriterioListNew = muestra.getMuestracriterioList();
             List<String> illegalOrphanMessages = null;
             for (Muestradocente muestradocenteListOldMuestradocente : muestradocenteListOld) {
                 if (!muestradocenteListNew.contains(muestradocenteListOldMuestradocente)) {
@@ -256,6 +278,14 @@ public class MuestraJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Muestraempleador " + muestraempleadorListOldMuestraempleador + " since its muestraId field is not nullable.");
+                }
+            }
+            for (Muestracriterio muestracriterioListOldMuestracriterio : muestracriterioListOld) {
+                if (!muestracriterioListNew.contains(muestracriterioListOldMuestracriterio)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Muestracriterio " + muestracriterioListOldMuestracriterio + " since its muestraId field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -314,6 +344,13 @@ public class MuestraJpaController implements Serializable {
             }
             muestraempleadorListNew = attachedMuestraempleadorListNew;
             muestra.setMuestraempleadorList(muestraempleadorListNew);
+            List<Muestracriterio> attachedMuestracriterioListNew = new ArrayList<Muestracriterio>();
+            for (Muestracriterio muestracriterioListNewMuestracriterioToAttach : muestracriterioListNew) {
+                muestracriterioListNewMuestracriterioToAttach = em.getReference(muestracriterioListNewMuestracriterioToAttach.getClass(), muestracriterioListNewMuestracriterioToAttach.getId());
+                attachedMuestracriterioListNew.add(muestracriterioListNewMuestracriterioToAttach);
+            }
+            muestracriterioListNew = attachedMuestracriterioListNew;
+            muestra.setMuestracriterioList(muestracriterioListNew);
             muestra = em.merge(muestra);
             if (procesoIdOld != null && !procesoIdOld.equals(procesoIdNew)) {
                 procesoIdOld.getMuestraList().remove(muestra);
@@ -400,6 +437,17 @@ public class MuestraJpaController implements Serializable {
                     }
                 }
             }
+            for (Muestracriterio muestracriterioListNewMuestracriterio : muestracriterioListNew) {
+                if (!muestracriterioListOld.contains(muestracriterioListNewMuestracriterio)) {
+                    Muestra oldMuestraIdOfMuestracriterioListNewMuestracriterio = muestracriterioListNewMuestracriterio.getMuestraId();
+                    muestracriterioListNewMuestracriterio.setMuestraId(muestra);
+                    muestracriterioListNewMuestracriterio = em.merge(muestracriterioListNewMuestracriterio);
+                    if (oldMuestraIdOfMuestracriterioListNewMuestracriterio != null && !oldMuestraIdOfMuestracriterioListNewMuestracriterio.equals(muestra)) {
+                        oldMuestraIdOfMuestracriterioListNewMuestracriterio.getMuestracriterioList().remove(muestracriterioListNewMuestracriterio);
+                        oldMuestraIdOfMuestracriterioListNewMuestracriterio = em.merge(oldMuestraIdOfMuestracriterioListNewMuestracriterio);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -479,6 +527,13 @@ public class MuestraJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Muestra (" + muestra + ") cannot be destroyed since the Muestraempleador " + muestraempleadorListOrphanCheckMuestraempleador + " in its muestraempleadorList field has a non-nullable muestraId field.");
             }
+            List<Muestracriterio> muestracriterioListOrphanCheck = muestra.getMuestracriterioList();
+            for (Muestracriterio muestracriterioListOrphanCheckMuestracriterio : muestracriterioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Muestra (" + muestra + ") cannot be destroyed since the Muestracriterio " + muestracriterioListOrphanCheckMuestracriterio + " in its muestracriterioList field has a non-nullable muestraId field.");
+            }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
@@ -541,5 +596,5 @@ public class MuestraJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

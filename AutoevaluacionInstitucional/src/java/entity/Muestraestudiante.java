@@ -2,20 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "muestraestudiante")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Muestraestudiante.findAll", query = "SELECT m FROM Muestraestudiante m"),
-    @NamedQuery(name = "Muestraestudiante.findById", query = "SELECT m FROM Muestraestudiante m WHERE m.id = :id")})
+    @NamedQuery(name = "Muestraestudiante.findById", query = "SELECT m FROM Muestraestudiante m WHERE m.id = :id"),
+    @NamedQuery(name = "Muestraestudiante.findByConglomerado", query = "SELECT m FROM Muestraestudiante m WHERE m.conglomerado = :conglomerado"),
+    @NamedQuery(name = "Muestraestudiante.findByMetodo", query = "SELECT m FROM Muestraestudiante m WHERE m.metodo = :metodo")})
 public class Muestraestudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,12 +27,16 @@ public class Muestraestudiante implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "muestra_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Muestra muestraId;
+    @Column(name = "conglomerado")
+    private String conglomerado;
+    @Column(name = "metodo")
+    private String metodo;
     @JoinColumn(name = "estudiante_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Estudiante estudianteId;
+    @JoinColumn(name = "muestra_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Muestra muestraId;
 
     public Muestraestudiante() {
     }
@@ -45,12 +53,20 @@ public class Muestraestudiante implements Serializable {
         this.id = id;
     }
 
-    public Muestra getMuestraId() {
-        return muestraId;
+    public String getConglomerado() {
+        return conglomerado;
     }
 
-    public void setMuestraId(Muestra muestraId) {
-        this.muestraId = muestraId;
+    public void setConglomerado(String conglomerado) {
+        this.conglomerado = conglomerado;
+    }
+
+    public String getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(String metodo) {
+        this.metodo = metodo;
     }
 
     public Estudiante getEstudianteId() {
@@ -59,6 +75,14 @@ public class Muestraestudiante implements Serializable {
 
     public void setEstudianteId(Estudiante estudianteId) {
         this.estudianteId = estudianteId;
+    }
+
+    public Muestra getMuestraId() {
+        return muestraId;
+    }
+
+    public void setMuestraId(Muestra muestraId) {
+        this.muestraId = muestraId;
     }
 
     @Override
@@ -85,5 +109,5 @@ public class Muestraestudiante implements Serializable {
     public String toString() {
         return "entity.Muestraestudiante[ id=" + id + " ]";
     }
-
+    
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -12,7 +11,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "encabezado")
 @XmlRootElement
@@ -34,18 +36,18 @@ public class Encabezado implements Serializable {
     private Date fecha;
     @Column(name = "estado")
     private String estado;
-    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Proceso procesoId;
-    @JoinColumn(name = "persona_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Persona personaId;
     @JoinColumn(name = "fuente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Fuente fuenteId;
     @JoinColumn(name = "encuesta_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Encuesta encuestaId;
+    @JoinColumn(name = "proceso_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Proceso procesoId;
+    @JoinColumn(name = "persona_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Persona personaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encabezadoId")
     private List<Resultadoevaluacion> resultadoevaluacionList;
 
@@ -85,22 +87,6 @@ public class Encabezado implements Serializable {
         this.estado = estado;
     }
 
-    public Proceso getProcesoId() {
-        return procesoId;
-    }
-
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
-    }
-
-    public Persona getPersonaId() {
-        return personaId;
-    }
-
-    public void setPersonaId(Persona personaId) {
-        this.personaId = personaId;
-    }
-
     public Fuente getFuenteId() {
         return fuenteId;
     }
@@ -115,6 +101,22 @@ public class Encabezado implements Serializable {
 
     public void setEncuestaId(Encuesta encuestaId) {
         this.encuestaId = encuestaId;
+    }
+
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
+
+    public Persona getPersonaId() {
+        return personaId;
+    }
+
+    public void setPersonaId(Persona personaId) {
+        this.personaId = personaId;
     }
 
     @XmlTransient
@@ -150,5 +152,5 @@ public class Encabezado implements Serializable {
     public String toString() {
         return "entity.Encabezado[ id=" + id + " ]";
     }
-
+    
 }

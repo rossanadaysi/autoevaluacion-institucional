@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity.controller;
 
 import connection.jpaConnection;
@@ -20,7 +19,10 @@ import entity.controller.exceptions.PreexistingEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
+/**
+ *
+ * @author Oscar
+ */
 public class PersonaJpaController implements Serializable {
 
     public PersonaJpaController() {
@@ -46,14 +48,17 @@ public class PersonaJpaController implements Serializable {
         if (persona.getEgresadoList() == null) {
             persona.setEgresadoList(new ArrayList<Egresado>());
         }
-        if (persona.getRepresentanteList() == null) {
-            persona.setRepresentanteList(new ArrayList<Representante>());
-        }
         if (persona.getAgenciagubernamentalList() == null) {
             persona.setAgenciagubernamentalList(new ArrayList<Agenciagubernamental>());
         }
+        if (persona.getRepresentanteList() == null) {
+            persona.setRepresentanteList(new ArrayList<Representante>());
+        }
         if (persona.getEmpleadorList() == null) {
             persona.setEmpleadorList(new ArrayList<Empleador>());
+        }
+        if (persona.getMuestracriterioList() == null) {
+            persona.setMuestracriterioList(new ArrayList<Muestracriterio>());
         }
         if (persona.getDocenteList() == null) {
             persona.setDocenteList(new ArrayList<Docente>());
@@ -92,24 +97,30 @@ public class PersonaJpaController implements Serializable {
                 attachedEgresadoList.add(egresadoListEgresadoToAttach);
             }
             persona.setEgresadoList(attachedEgresadoList);
-            List<Representante> attachedRepresentanteList = new ArrayList<Representante>();
-            for (Representante representanteListRepresentanteToAttach : persona.getRepresentanteList()) {
-                representanteListRepresentanteToAttach = em.getReference(representanteListRepresentanteToAttach.getClass(), representanteListRepresentanteToAttach.getId());
-                attachedRepresentanteList.add(representanteListRepresentanteToAttach);
-            }
-            persona.setRepresentanteList(attachedRepresentanteList);
             List<Agenciagubernamental> attachedAgenciagubernamentalList = new ArrayList<Agenciagubernamental>();
             for (Agenciagubernamental agenciagubernamentalListAgenciagubernamentalToAttach : persona.getAgenciagubernamentalList()) {
                 agenciagubernamentalListAgenciagubernamentalToAttach = em.getReference(agenciagubernamentalListAgenciagubernamentalToAttach.getClass(), agenciagubernamentalListAgenciagubernamentalToAttach.getId());
                 attachedAgenciagubernamentalList.add(agenciagubernamentalListAgenciagubernamentalToAttach);
             }
             persona.setAgenciagubernamentalList(attachedAgenciagubernamentalList);
+            List<Representante> attachedRepresentanteList = new ArrayList<Representante>();
+            for (Representante representanteListRepresentanteToAttach : persona.getRepresentanteList()) {
+                representanteListRepresentanteToAttach = em.getReference(representanteListRepresentanteToAttach.getClass(), representanteListRepresentanteToAttach.getId());
+                attachedRepresentanteList.add(representanteListRepresentanteToAttach);
+            }
+            persona.setRepresentanteList(attachedRepresentanteList);
             List<Empleador> attachedEmpleadorList = new ArrayList<Empleador>();
             for (Empleador empleadorListEmpleadorToAttach : persona.getEmpleadorList()) {
                 empleadorListEmpleadorToAttach = em.getReference(empleadorListEmpleadorToAttach.getClass(), empleadorListEmpleadorToAttach.getId());
                 attachedEmpleadorList.add(empleadorListEmpleadorToAttach);
             }
             persona.setEmpleadorList(attachedEmpleadorList);
+            List<Muestracriterio> attachedMuestracriterioList = new ArrayList<Muestracriterio>();
+            for (Muestracriterio muestracriterioListMuestracriterioToAttach : persona.getMuestracriterioList()) {
+                muestracriterioListMuestracriterioToAttach = em.getReference(muestracriterioListMuestracriterioToAttach.getClass(), muestracriterioListMuestracriterioToAttach.getId());
+                attachedMuestracriterioList.add(muestracriterioListMuestracriterioToAttach);
+            }
+            persona.setMuestracriterioList(attachedMuestracriterioList);
             List<Docente> attachedDocenteList = new ArrayList<Docente>();
             for (Docente docenteListDocenteToAttach : persona.getDocenteList()) {
                 docenteListDocenteToAttach = em.getReference(docenteListDocenteToAttach.getClass(), docenteListDocenteToAttach.getId());
@@ -162,15 +173,6 @@ public class PersonaJpaController implements Serializable {
                     oldPersonaIdOfEgresadoListEgresado = em.merge(oldPersonaIdOfEgresadoListEgresado);
                 }
             }
-            for (Representante representanteListRepresentante : persona.getRepresentanteList()) {
-                Persona oldPersonaIdOfRepresentanteListRepresentante = representanteListRepresentante.getPersonaId();
-                representanteListRepresentante.setPersonaId(persona);
-                representanteListRepresentante = em.merge(representanteListRepresentante);
-                if (oldPersonaIdOfRepresentanteListRepresentante != null) {
-                    oldPersonaIdOfRepresentanteListRepresentante.getRepresentanteList().remove(representanteListRepresentante);
-                    oldPersonaIdOfRepresentanteListRepresentante = em.merge(oldPersonaIdOfRepresentanteListRepresentante);
-                }
-            }
             for (Agenciagubernamental agenciagubernamentalListAgenciagubernamental : persona.getAgenciagubernamentalList()) {
                 Persona oldPersonaIdOfAgenciagubernamentalListAgenciagubernamental = agenciagubernamentalListAgenciagubernamental.getPersonaId();
                 agenciagubernamentalListAgenciagubernamental.setPersonaId(persona);
@@ -180,6 +182,15 @@ public class PersonaJpaController implements Serializable {
                     oldPersonaIdOfAgenciagubernamentalListAgenciagubernamental = em.merge(oldPersonaIdOfAgenciagubernamentalListAgenciagubernamental);
                 }
             }
+            for (Representante representanteListRepresentante : persona.getRepresentanteList()) {
+                Persona oldPersonaIdOfRepresentanteListRepresentante = representanteListRepresentante.getPersonaId();
+                representanteListRepresentante.setPersonaId(persona);
+                representanteListRepresentante = em.merge(representanteListRepresentante);
+                if (oldPersonaIdOfRepresentanteListRepresentante != null) {
+                    oldPersonaIdOfRepresentanteListRepresentante.getRepresentanteList().remove(representanteListRepresentante);
+                    oldPersonaIdOfRepresentanteListRepresentante = em.merge(oldPersonaIdOfRepresentanteListRepresentante);
+                }
+            }
             for (Empleador empleadorListEmpleador : persona.getEmpleadorList()) {
                 Persona oldPersonaIdOfEmpleadorListEmpleador = empleadorListEmpleador.getPersonaId();
                 empleadorListEmpleador.setPersonaId(persona);
@@ -187,6 +198,15 @@ public class PersonaJpaController implements Serializable {
                 if (oldPersonaIdOfEmpleadorListEmpleador != null) {
                     oldPersonaIdOfEmpleadorListEmpleador.getEmpleadorList().remove(empleadorListEmpleador);
                     oldPersonaIdOfEmpleadorListEmpleador = em.merge(oldPersonaIdOfEmpleadorListEmpleador);
+                }
+            }
+            for (Muestracriterio muestracriterioListMuestracriterio : persona.getMuestracriterioList()) {
+                Persona oldPersonaIdOfMuestracriterioListMuestracriterio = muestracriterioListMuestracriterio.getPersonaId();
+                muestracriterioListMuestracriterio.setPersonaId(persona);
+                muestracriterioListMuestracriterio = em.merge(muestracriterioListMuestracriterio);
+                if (oldPersonaIdOfMuestracriterioListMuestracriterio != null) {
+                    oldPersonaIdOfMuestracriterioListMuestracriterio.getMuestracriterioList().remove(muestracriterioListMuestracriterio);
+                    oldPersonaIdOfMuestracriterioListMuestracriterio = em.merge(oldPersonaIdOfMuestracriterioListMuestracriterio);
                 }
             }
             for (Docente docenteListDocente : persona.getDocenteList()) {
@@ -227,12 +247,14 @@ public class PersonaJpaController implements Serializable {
             List<Encabezado> encabezadoListNew = persona.getEncabezadoList();
             List<Egresado> egresadoListOld = persistentPersona.getEgresadoList();
             List<Egresado> egresadoListNew = persona.getEgresadoList();
-            List<Representante> representanteListOld = persistentPersona.getRepresentanteList();
-            List<Representante> representanteListNew = persona.getRepresentanteList();
             List<Agenciagubernamental> agenciagubernamentalListOld = persistentPersona.getAgenciagubernamentalList();
             List<Agenciagubernamental> agenciagubernamentalListNew = persona.getAgenciagubernamentalList();
+            List<Representante> representanteListOld = persistentPersona.getRepresentanteList();
+            List<Representante> representanteListNew = persona.getRepresentanteList();
             List<Empleador> empleadorListOld = persistentPersona.getEmpleadorList();
             List<Empleador> empleadorListNew = persona.getEmpleadorList();
+            List<Muestracriterio> muestracriterioListOld = persistentPersona.getMuestracriterioList();
+            List<Muestracriterio> muestracriterioListNew = persona.getMuestracriterioList();
             List<Docente> docenteListOld = persistentPersona.getDocenteList();
             List<Docente> docenteListNew = persona.getDocenteList();
             List<String> illegalOrphanMessages = null;
@@ -276,14 +298,6 @@ public class PersonaJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain Egresado " + egresadoListOldEgresado + " since its personaId field is not nullable.");
                 }
             }
-            for (Representante representanteListOldRepresentante : representanteListOld) {
-                if (!representanteListNew.contains(representanteListOldRepresentante)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Representante " + representanteListOldRepresentante + " since its personaId field is not nullable.");
-                }
-            }
             for (Agenciagubernamental agenciagubernamentalListOldAgenciagubernamental : agenciagubernamentalListOld) {
                 if (!agenciagubernamentalListNew.contains(agenciagubernamentalListOldAgenciagubernamental)) {
                     if (illegalOrphanMessages == null) {
@@ -292,12 +306,28 @@ public class PersonaJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain Agenciagubernamental " + agenciagubernamentalListOldAgenciagubernamental + " since its personaId field is not nullable.");
                 }
             }
+            for (Representante representanteListOldRepresentante : representanteListOld) {
+                if (!representanteListNew.contains(representanteListOldRepresentante)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Representante " + representanteListOldRepresentante + " since its personaId field is not nullable.");
+                }
+            }
             for (Empleador empleadorListOldEmpleador : empleadorListOld) {
                 if (!empleadorListNew.contains(empleadorListOldEmpleador)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Empleador " + empleadorListOldEmpleador + " since its personaId field is not nullable.");
+                }
+            }
+            for (Muestracriterio muestracriterioListOldMuestracriterio : muestracriterioListOld) {
+                if (!muestracriterioListNew.contains(muestracriterioListOldMuestracriterio)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Muestracriterio " + muestracriterioListOldMuestracriterio + " since its personaId field is not nullable.");
                 }
             }
             for (Docente docenteListOldDocente : docenteListOld) {
@@ -346,13 +376,6 @@ public class PersonaJpaController implements Serializable {
             }
             egresadoListNew = attachedEgresadoListNew;
             persona.setEgresadoList(egresadoListNew);
-            List<Representante> attachedRepresentanteListNew = new ArrayList<Representante>();
-            for (Representante representanteListNewRepresentanteToAttach : representanteListNew) {
-                representanteListNewRepresentanteToAttach = em.getReference(representanteListNewRepresentanteToAttach.getClass(), representanteListNewRepresentanteToAttach.getId());
-                attachedRepresentanteListNew.add(representanteListNewRepresentanteToAttach);
-            }
-            representanteListNew = attachedRepresentanteListNew;
-            persona.setRepresentanteList(representanteListNew);
             List<Agenciagubernamental> attachedAgenciagubernamentalListNew = new ArrayList<Agenciagubernamental>();
             for (Agenciagubernamental agenciagubernamentalListNewAgenciagubernamentalToAttach : agenciagubernamentalListNew) {
                 agenciagubernamentalListNewAgenciagubernamentalToAttach = em.getReference(agenciagubernamentalListNewAgenciagubernamentalToAttach.getClass(), agenciagubernamentalListNewAgenciagubernamentalToAttach.getId());
@@ -360,6 +383,13 @@ public class PersonaJpaController implements Serializable {
             }
             agenciagubernamentalListNew = attachedAgenciagubernamentalListNew;
             persona.setAgenciagubernamentalList(agenciagubernamentalListNew);
+            List<Representante> attachedRepresentanteListNew = new ArrayList<Representante>();
+            for (Representante representanteListNewRepresentanteToAttach : representanteListNew) {
+                representanteListNewRepresentanteToAttach = em.getReference(representanteListNewRepresentanteToAttach.getClass(), representanteListNewRepresentanteToAttach.getId());
+                attachedRepresentanteListNew.add(representanteListNewRepresentanteToAttach);
+            }
+            representanteListNew = attachedRepresentanteListNew;
+            persona.setRepresentanteList(representanteListNew);
             List<Empleador> attachedEmpleadorListNew = new ArrayList<Empleador>();
             for (Empleador empleadorListNewEmpleadorToAttach : empleadorListNew) {
                 empleadorListNewEmpleadorToAttach = em.getReference(empleadorListNewEmpleadorToAttach.getClass(), empleadorListNewEmpleadorToAttach.getId());
@@ -367,6 +397,13 @@ public class PersonaJpaController implements Serializable {
             }
             empleadorListNew = attachedEmpleadorListNew;
             persona.setEmpleadorList(empleadorListNew);
+            List<Muestracriterio> attachedMuestracriterioListNew = new ArrayList<Muestracriterio>();
+            for (Muestracriterio muestracriterioListNewMuestracriterioToAttach : muestracriterioListNew) {
+                muestracriterioListNewMuestracriterioToAttach = em.getReference(muestracriterioListNewMuestracriterioToAttach.getClass(), muestracriterioListNewMuestracriterioToAttach.getId());
+                attachedMuestracriterioListNew.add(muestracriterioListNewMuestracriterioToAttach);
+            }
+            muestracriterioListNew = attachedMuestracriterioListNew;
+            persona.setMuestracriterioList(muestracriterioListNew);
             List<Docente> attachedDocenteListNew = new ArrayList<Docente>();
             for (Docente docenteListNewDocenteToAttach : docenteListNew) {
                 docenteListNewDocenteToAttach = em.getReference(docenteListNewDocenteToAttach.getClass(), docenteListNewDocenteToAttach.getId());
@@ -430,17 +467,6 @@ public class PersonaJpaController implements Serializable {
                     }
                 }
             }
-            for (Representante representanteListNewRepresentante : representanteListNew) {
-                if (!representanteListOld.contains(representanteListNewRepresentante)) {
-                    Persona oldPersonaIdOfRepresentanteListNewRepresentante = representanteListNewRepresentante.getPersonaId();
-                    representanteListNewRepresentante.setPersonaId(persona);
-                    representanteListNewRepresentante = em.merge(representanteListNewRepresentante);
-                    if (oldPersonaIdOfRepresentanteListNewRepresentante != null && !oldPersonaIdOfRepresentanteListNewRepresentante.equals(persona)) {
-                        oldPersonaIdOfRepresentanteListNewRepresentante.getRepresentanteList().remove(representanteListNewRepresentante);
-                        oldPersonaIdOfRepresentanteListNewRepresentante = em.merge(oldPersonaIdOfRepresentanteListNewRepresentante);
-                    }
-                }
-            }
             for (Agenciagubernamental agenciagubernamentalListNewAgenciagubernamental : agenciagubernamentalListNew) {
                 if (!agenciagubernamentalListOld.contains(agenciagubernamentalListNewAgenciagubernamental)) {
                     Persona oldPersonaIdOfAgenciagubernamentalListNewAgenciagubernamental = agenciagubernamentalListNewAgenciagubernamental.getPersonaId();
@@ -452,6 +478,17 @@ public class PersonaJpaController implements Serializable {
                     }
                 }
             }
+            for (Representante representanteListNewRepresentante : representanteListNew) {
+                if (!representanteListOld.contains(representanteListNewRepresentante)) {
+                    Persona oldPersonaIdOfRepresentanteListNewRepresentante = representanteListNewRepresentante.getPersonaId();
+                    representanteListNewRepresentante.setPersonaId(persona);
+                    representanteListNewRepresentante = em.merge(representanteListNewRepresentante);
+                    if (oldPersonaIdOfRepresentanteListNewRepresentante != null && !oldPersonaIdOfRepresentanteListNewRepresentante.equals(persona)) {
+                        oldPersonaIdOfRepresentanteListNewRepresentante.getRepresentanteList().remove(representanteListNewRepresentante);
+                        oldPersonaIdOfRepresentanteListNewRepresentante = em.merge(oldPersonaIdOfRepresentanteListNewRepresentante);
+                    }
+                }
+            }
             for (Empleador empleadorListNewEmpleador : empleadorListNew) {
                 if (!empleadorListOld.contains(empleadorListNewEmpleador)) {
                     Persona oldPersonaIdOfEmpleadorListNewEmpleador = empleadorListNewEmpleador.getPersonaId();
@@ -460,6 +497,17 @@ public class PersonaJpaController implements Serializable {
                     if (oldPersonaIdOfEmpleadorListNewEmpleador != null && !oldPersonaIdOfEmpleadorListNewEmpleador.equals(persona)) {
                         oldPersonaIdOfEmpleadorListNewEmpleador.getEmpleadorList().remove(empleadorListNewEmpleador);
                         oldPersonaIdOfEmpleadorListNewEmpleador = em.merge(oldPersonaIdOfEmpleadorListNewEmpleador);
+                    }
+                }
+            }
+            for (Muestracriterio muestracriterioListNewMuestracriterio : muestracriterioListNew) {
+                if (!muestracriterioListOld.contains(muestracriterioListNewMuestracriterio)) {
+                    Persona oldPersonaIdOfMuestracriterioListNewMuestracriterio = muestracriterioListNewMuestracriterio.getPersonaId();
+                    muestracriterioListNewMuestracriterio.setPersonaId(persona);
+                    muestracriterioListNewMuestracriterio = em.merge(muestracriterioListNewMuestracriterio);
+                    if (oldPersonaIdOfMuestracriterioListNewMuestracriterio != null && !oldPersonaIdOfMuestracriterioListNewMuestracriterio.equals(persona)) {
+                        oldPersonaIdOfMuestracriterioListNewMuestracriterio.getMuestracriterioList().remove(muestracriterioListNewMuestracriterio);
+                        oldPersonaIdOfMuestracriterioListNewMuestracriterio = em.merge(oldPersonaIdOfMuestracriterioListNewMuestracriterio);
                     }
                 }
             }
@@ -539,13 +587,6 @@ public class PersonaJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Egresado " + egresadoListOrphanCheckEgresado + " in its egresadoList field has a non-nullable personaId field.");
             }
-            List<Representante> representanteListOrphanCheck = persona.getRepresentanteList();
-            for (Representante representanteListOrphanCheckRepresentante : representanteListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Representante " + representanteListOrphanCheckRepresentante + " in its representanteList field has a non-nullable personaId field.");
-            }
             List<Agenciagubernamental> agenciagubernamentalListOrphanCheck = persona.getAgenciagubernamentalList();
             for (Agenciagubernamental agenciagubernamentalListOrphanCheckAgenciagubernamental : agenciagubernamentalListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -553,12 +594,26 @@ public class PersonaJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Agenciagubernamental " + agenciagubernamentalListOrphanCheckAgenciagubernamental + " in its agenciagubernamentalList field has a non-nullable personaId field.");
             }
+            List<Representante> representanteListOrphanCheck = persona.getRepresentanteList();
+            for (Representante representanteListOrphanCheckRepresentante : representanteListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Representante " + representanteListOrphanCheckRepresentante + " in its representanteList field has a non-nullable personaId field.");
+            }
             List<Empleador> empleadorListOrphanCheck = persona.getEmpleadorList();
             for (Empleador empleadorListOrphanCheckEmpleador : empleadorListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Empleador " + empleadorListOrphanCheckEmpleador + " in its empleadorList field has a non-nullable personaId field.");
+            }
+            List<Muestracriterio> muestracriterioListOrphanCheck = persona.getMuestracriterioList();
+            for (Muestracriterio muestracriterioListOrphanCheckMuestracriterio : muestracriterioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Muestracriterio " + muestracriterioListOrphanCheckMuestracriterio + " in its muestracriterioList field has a non-nullable personaId field.");
             }
             List<Docente> docenteListOrphanCheck = persona.getDocenteList();
             for (Docente docenteListOrphanCheckDocente : docenteListOrphanCheck) {
@@ -624,5 +679,5 @@ public class PersonaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,7 +10,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+/**
+ *
+ * @author Oscar
+ */
 @Entity
 @Table(name = "muestra")
 @XmlRootElement
@@ -28,11 +30,11 @@ public class Muestra implements Serializable {
     private Integer id;
     @Column(name = "formula")
     private String formula;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestraId")
-    private List<Muestradocente> muestradocenteList;
     @JoinColumn(name = "proceso_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Proceso procesoId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestraId")
+    private List<Muestradocente> muestradocenteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestraId")
     private List<Muestraadministrativo> muestraadministrativoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestraId")
@@ -45,6 +47,8 @@ public class Muestra implements Serializable {
     private List<Muestraestudiante> muestraestudianteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestraId")
     private List<Muestraempleador> muestraempleadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "muestraId")
+    private List<Muestracriterio> muestracriterioList;
 
     public Muestra() {
     }
@@ -69,6 +73,14 @@ public class Muestra implements Serializable {
         this.formula = formula;
     }
 
+    public Proceso getProcesoId() {
+        return procesoId;
+    }
+
+    public void setProcesoId(Proceso procesoId) {
+        this.procesoId = procesoId;
+    }
+
     @XmlTransient
     public List<Muestradocente> getMuestradocenteList() {
         return muestradocenteList;
@@ -76,14 +88,6 @@ public class Muestra implements Serializable {
 
     public void setMuestradocenteList(List<Muestradocente> muestradocenteList) {
         this.muestradocenteList = muestradocenteList;
-    }
-
-    public Proceso getProcesoId() {
-        return procesoId;
-    }
-
-    public void setProcesoId(Proceso procesoId) {
-        this.procesoId = procesoId;
     }
 
     @XmlTransient
@@ -140,6 +144,15 @@ public class Muestra implements Serializable {
         this.muestraempleadorList = muestraempleadorList;
     }
 
+    @XmlTransient
+    public List<Muestracriterio> getMuestracriterioList() {
+        return muestracriterioList;
+    }
+
+    public void setMuestracriterioList(List<Muestracriterio> muestracriterioList) {
+        this.muestracriterioList = muestracriterioList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -164,5 +177,5 @@ public class Muestra implements Serializable {
     public String toString() {
         return "entity.Muestra[ id=" + id + " ]";
     }
-
+    
 }
