@@ -33,9 +33,6 @@
         
     });
 </script>
-
-
-<br>
 <div class="hero-unit">
     <div class="row">
         <div class="span8">
