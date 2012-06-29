@@ -152,8 +152,11 @@ public class formController2 extends HttpServlet {
                 String instrumentos[] = request.getParameterValues("instrumento");
                 List<Instrumento> instrumentoList = new ArrayList<Instrumento>();
                 for (int i = 0; i < instrumentos.length; i++) {
+                    if(!instrumentos[i].equals("")){
                     Instrumento instr = conIns.findInstrumento(Integer.parseInt(instrumentos[i])); 
                     instrumentoList.add(instr);
+                    }
+                    
                 }
                 in.setInstrumentoList(instrumentoList);
                 
