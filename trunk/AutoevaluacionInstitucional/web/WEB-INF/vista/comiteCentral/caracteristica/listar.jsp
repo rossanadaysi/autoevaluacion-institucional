@@ -3,7 +3,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.pagination.js"></script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
-    var itemsxpagina=12;
+    var itemsxpagina=14;
     function pageselectCallback(page_index, jq){
         var num_entries = $("#caracteristicas tr").length;
         for(var i=0;i<num_entries;i++)
