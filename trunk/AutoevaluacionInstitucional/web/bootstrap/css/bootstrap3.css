@@ -4918,10 +4918,10 @@ a.badge:hover {
 .hero-unit {
   padding: 10px 60px 10px 60px;
   /*margin-bottom: 30px;*/
-  background-color: #eeeeee;
+ /* background-color: #eeeeee;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
-          border-radius: 6px;
+          border-radius: 6px;*/
 }
 
 .hero-unit h1 {
@@ -4933,10 +4933,10 @@ a.badge:hover {
 }
 
 .hero-unit p {
-  font-size: 18px;
+ /* font-size: 18px;
   font-weight: 200;
   line-height: 27px;
-  color: inherit;
+  color: inherit;*/
 }
 
 .pull-right {

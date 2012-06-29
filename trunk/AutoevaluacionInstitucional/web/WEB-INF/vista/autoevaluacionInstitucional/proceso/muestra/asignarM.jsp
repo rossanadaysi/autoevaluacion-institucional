@@ -149,6 +149,7 @@
                 success: function(data){
                     $("#myModalNuevoConglomerado").html(data);
                     $('#myModalNuevoConglomerado').modal(); 
+                    
                 }
             })
         }

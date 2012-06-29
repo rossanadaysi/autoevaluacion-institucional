@@ -34,7 +34,7 @@
 
     function addFormField() {
         var id = document.getElementById("id").value;
-        $("#divTxt").append("<p id='row" + id + "'><label for='txt" + id + "'>Nuevo Elemento: " + id + " <input type='text' size='20' name='criterio" + id + "' id='txt" + id + "'> <a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Borrar</a><p>");
+        $("#divTxt").append("<p id='row" + id + "'><label for='txt" + id + "'>Nuevo Elemento: <input type='text' size='20' name='criterio" + id + "' id='txt" + id + "'> <a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Borrar</a><p>");
 
         $("#row" + id).highlightFade({
             speed:1000
@@ -108,17 +108,17 @@
                     <div class="controls">
                         <input type="text" id="input1" name="criterio0">
                     </div>
-                    <p><a href="#" onClick="addFormField(); return false;">Añadir</a></p>
                     <input type="hidden" id="id" value="1" name="countCriterio">
                     <div id="divTxt"></div>
                 </div>
+                <p><a href="#" onClick="addFormField(); return false;">Añadir</a></p>
             </div>
             <div id="descripcionCriterio" style="display: none">
             </div>
         </div>
         <div class="modal-footer">
             <a class="btn btn-secundary" data-dismiss="modal" href="#">Cerrar</a>
-            <a id="aceptarConglomerado" class="btn btn-primary" data-dismiss="modal" href="#">Aceptar</a>
+            <a id="aceptarConglomerado" name="aceptarConglomerado" class="btn btn-primary" data-dismiss="modal" href="#">Aceptar</a>
             <a id="nuevoCriterio" class="btn btn-primary"  href="#" style="display: none">Crear</a>
         </div>
     </fieldset>
