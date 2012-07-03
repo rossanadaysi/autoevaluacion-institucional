@@ -410,7 +410,7 @@
             <div style="height: 68%; background-color: #f77f00;">
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 3%; top: 5%"/>    
                 <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right"/>    
-                <div style="z-index: 5;float: left;position:relative;top:25%;left: 4%;width: 26%;color: #FAF4E3;"><h2>La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluaci&oacute;n  SIA-UdeC que sirve de Apoyo a los procesos de autoevaluación con fines de ACREDITACIÓN INSTITUCIONAL.</h2></div>     
+                <div style="z-index: 5;float: left;position:relative;top:25%;left: 4%;width: 26%;color: #FAF4E3;"><h3>La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</h3></div>     
             </div>
             <div style="height: 32%;" class="offset2">
                 <ul class="thumbnails" style="margin-top: 10px;">

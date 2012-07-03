@@ -1026,8 +1026,8 @@
             </div>
             <div align="center">
                 <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
-                <a title="Autoevaluación Institucional" href="http://www.autoevaluacion.unicartagena.info" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
-                <a title="Universidad de Cartagena" href="http://wwww.unicartagena.edu.co"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
+                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
+                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
             </div>
             <br>  
         </div><!--/West-->
