@@ -25,7 +25,7 @@ public class editarCaracteristicaCC implements Action{
         FactorJpaController conFactor = new FactorJpaController(); 
         IndicadorJpaController conIndi = new IndicadorJpaController(); 
         HttpSession session = request.getSession();
-        String idcaracteristica = request.getParameter("idC");
+        String idcaracteristica = request.getParameter("id");
         
         
         session.setAttribute("caracteristica",conCaracteristica.findCaracteristica(Integer.parseInt(idcaracteristica)));

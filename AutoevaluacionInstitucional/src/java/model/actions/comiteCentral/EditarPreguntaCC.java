@@ -22,7 +22,7 @@ public class EditarPreguntaCC implements Action{
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         PreguntaJpaController conPregunta = new PreguntaJpaController(); 
         HttpSession session = request.getSession();
-        String idpregunta = request.getParameter("idP");
+        String idpregunta = request.getParameter("id");
         IndicadorJpaController conIndicador = new IndicadorJpaController();
         
         session.setAttribute("pregunta",conPregunta.findPregunta(Integer.parseInt(idpregunta)));

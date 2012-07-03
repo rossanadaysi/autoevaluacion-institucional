@@ -25,7 +25,7 @@ public class EditarEncuestaCC implements Action{
         EncuestaJpaController conEncuesta = new EncuestaJpaController(); 
         PreguntaJpaController conPregunta = new PreguntaJpaController(); 
         HttpSession session = request.getSession();
-        String idencuesta = request.getParameter("idE");
+        String idencuesta = request.getParameter("id");
         
         
         Encuesta e =  conEncuesta.findEncuesta(Integer.parseInt(idencuesta));
