@@ -136,22 +136,26 @@
             $("#resultados4").hide();
             $("#enlace").hide();
             $("#filtro").hide();
-        }
-        else{
-            $("#enlace").show();
-        }
-    
-        if($("#selectConglomerado option:selected").val() == "nuevoCriterio"){
+        }   
+        else if($("#selectConglomerado option:selected").val() == "nuevoCriterio"){
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/ControllerAI?action=nuevoConglomeradoAI",
                 data: $("#formAsigMue").serialize(),
                 success: function(data){
                     $("#myModalNuevoConglomerado").html(data);
-                    $('#myModalNuevoConglomerado').modal(); 
-                    
+                    $('#myModalNuevoConglomerado').modal({
+                        keyboard: false
+                    })
+                    $('#myModalNuevoConglomerado').on('hide', function () {
+                        $("#selectConglomerado option:eq(0)").attr("selected", "selected");
+                        $("#enlace").hide();
+                    });
                 }
             })
+        }
+        else{
+            $("#enlace").show();
         }
     }
     
@@ -331,11 +335,7 @@
             $("#metodo").attr('value', 'normal');
         }  
     });
-    
-    $("#cancelarConglomerado").click(function(){  
-     
-    });
-  
+       
 </script>
 <br>
 <div class="hero-unit">

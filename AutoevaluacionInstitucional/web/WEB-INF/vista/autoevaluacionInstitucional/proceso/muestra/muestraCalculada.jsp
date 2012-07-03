@@ -34,8 +34,12 @@
             $("#botonCalcularMuestra").hide();    
           
         }
-        
-        
+        if(${muestraCalculada == null && muestraCalculada3 == null && muestraIndividual == null}){
+            $("#botonGenerarMuestra").hide();
+            $("#botonCalcularMuestra2").hide();
+            $("#botonCalcularMuestra").show();    
+        }
+               
     });
 </script>
 <div class="accordion-group">

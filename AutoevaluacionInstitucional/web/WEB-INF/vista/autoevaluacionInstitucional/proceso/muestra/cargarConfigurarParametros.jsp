@@ -1,17 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <script type="text/javascript">
-    $("#checkbox1").change(function(){
-        if( $(this).is(':checked')){
-            $("#inputAux").attr('value', 'manual');
-            $("#manual").show();
-            $("#help1").hide();
-        }else{
-            $("#inputAux").attr('value', 'automatic');
-            $("#manual").hide();
-            $("#help1").show();
-        }  
-    });
+    $(function(){
+        $("#checkbox1").change(function(){
+            if( $(this).is(':checked')){
+                $("#inputAux").attr('value', 'manual');
+                $("#manual").show();
+                $("#help1").hide();
+            }else{
+                $("#inputAux").attr('value', 'automatic');
+                $("#manual").hide();
+                $("#help1").show();
+            }  
+        });
+    
+        $("#formAsigMue2").validate({
+            submitHandler: function(){
+                $('#myModalConfigurarMuestra').modal('hide');
+            }
+        }); 
+    }); 
 </script>
 <form  id="formAsigMue2" method="post">
     <fieldset>
