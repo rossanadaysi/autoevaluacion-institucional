@@ -39,6 +39,43 @@
         <script type="text/javascript" src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
 
         <style type="text/css">
+
+            .page_loading {
+                background-attachment: scroll;
+                background-clip: border-box;
+                background-color: #8F8F8F;
+                background-image: none;
+                background-origin: padding-box;
+                background-position: 0 0;
+                background-repeat: repeat;
+                background-size: auto auto;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                color: #FFFFFF;
+                height: 32px;
+                left: 45%;
+                line-height: 32px;
+                margin-bottom: 0;
+                margin-left: -62px;
+                margin-right: 0;
+                margin-top: -16px;
+                padding-bottom: 0;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 0;
+                position: absolute;
+                top: 30%;
+            }
+            .page_loading span {
+                color: #FFFFFF;
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 32px;
+                font-family: Helvetica,Arial,sans-serif;
+            }
+
             .ui-layout-north {
                 /* Drop-Down */
                 bottom:		auto;
@@ -127,7 +164,7 @@
         <script type="text/javascript">
             $(function(){
                 
-                 $("ul.nav-list li a").click(function(event){
+                $("ul.nav-list li a").click(function(event){
                     $(".nav li").removeClass("active");
                     $("ul.nav-list li a").children("i").removeClass("icon-white");
                     $(this).parent().addClass("active");
@@ -147,39 +184,74 @@
                     }
                     
                     if(hash=="#inicio"){//inicio
-                            $("div.ui-layout-center").empty();
-                            $("div.ui-layout-center").append(
-                            "<div class='span10' style='text-align: justify'>"
-                                +"<div class='hero-unit'>"
-                                +"<h1>Autoevaluaci&oacute;n Institucional!</h1>"
-                                +"<p>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>"
-                                +"<p><a class='btn btn-primary btn-large'>Leer M&aacute;s �</a></p>"
-                                +"</div>"
-                                +"<div class='row-fluid'>"
-                                +"<div class='span4'>"
-                                +"<h2>Marco Normativo</h2>"
-                                +"<p>los lineamientos de Autoevaluaci&oacute;n para la Acreditaci&oacute;n Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y el Modelo de Autoevaluacion Institucional con fines de acreditacion de la  Universidad de Cartagena se fundamentan en.. . </p>"
-                                +"<p><a href='#' class='btn'>Ver detalles �</a></p>"
-                                +"</div><!--/span-->"
-                                +"<div class='span4'>"
-                                +"<h2>Definiciones</h2>"
-                                +"<p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>"
-                                +"<p><a href='#' class='btn'>Ver detalles �</a></p>"
-                                +"</div>"
-                                +"<div class='span4'>"
-                                +"<h2>Objetivos</h2>"
-                                +"<p>Mantener informado a la comunidad academica sobre el proceso de autoevaluacion institucional. </p>"
-                                +"<p><a href='#' class='btn'>Ver detalles �</a></p>"
-                                +"</div><!--/span-->"
-                                +"</div><!--/row-->"
-                                +"</div>");
-                            $("ul.nav-list li").removeClass("active");
-                            $(".nav-collapse .nav >li:eq(0)").addClass("active");
-                            $("ul.nav-list li").siblings().children("a").children("i").removeClass("icon-white");
-                            return false;
-                        } //fin inicio
+                        $("div.ui-layout-center").empty();
+                        $("div.ui-layout-center").append(
+                        "<div class='span10' style='text-align: justify'>"
+                            +"<div class='hero-unit'>"
+                            +"<h1>Autoevaluaci&oacute;n Institucional!</h1>"
+                            +"<p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>"
+                            +"<p><a class='btn btn-primary btn-large'>Leer M&aacute;s �</a></p>"
+                            +"</div>"
+                            +"<div class='row-fluid'>"
+                            +"<div class='span4'>"
+                            +"<h2>Marco Normativo</h2>"
+                            +"<p>los lineamientos de Autoevaluaci&oacute;n para la Acreditaci&oacute;n Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y el Modelo de Autoevaluacion Institucional con fines de acreditacion de la  Universidad de Cartagena se fundamentan en.. . </p>"
+                            +"<p><a href='#' class='btn'>Ver detalles �</a></p>"
+                            +"</div><!--/span-->"
+                            +"<div class='span4'>"
+                            +"<h2>Definiciones</h2>"
+                            +"<p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>"
+                            +"<p><a href='#' class='btn'>Ver detalles �</a></p>"
+                            +"</div>"
+                            +"<div class='span4'>"
+                            +"<h2>Objetivos</h2>"
+                            +"<p>Mantener informado a la comunidad academica sobre el proceso de autoevaluacion institucional. </p>"
+                            +"<p><a href='#' class='btn'>Ver detalles �</a></p>"
+                            +"</div><!--/span-->"
+                            +"</div><!--/row-->"
+                            +"</div>");
+                        $("ul.nav-list li").removeClass("active");
+                        $(".nav-collapse .nav >li:eq(0)").addClass("active");
+                        $("ul.nav-list li").siblings().children("a").children("i").removeClass("icon-white");
+                        return false;
+                    } //fin inicio
                     
-                    if(hash == "#crearFactor"){
+                    
+                    if(hash.indexOf("#editarFactor")!=-1 || hash.indexOf("#editarEncuesta")!=-1 || hash.indexOf("#editarPregunta")!=-1
+                        || hash.indexOf("#editarCaracteristica")!=-1 || hash.indexOf("#editarIndicador")!=-1){
+                        var cual = hash.split("&");
+                        var url3 = "<%=request.getContextPath()%>/ControllerCC?action=";
+                        url3 = url3.concat(cual[0].substring(1),"CC&id=",cual[1]);
+                        $("div.ui-layout-center").empty();
+                        $.ajax({ 
+                            type: "POST", 
+                            url: url3, 
+                            beforeSend :function(){
+                                $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                $("#contenido").hide();
+                                $("div.ui-layout-center").append("<div class='page_loading'>"
+                                    +"<span>Cargando</span>"
+                                    +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                    +"</div>");
+                                
+                            },
+                            success: function(data) 
+                            {
+                                $("#contenido").append(data);
+                                $("#contenido").show(200, function(){
+                                    $(".page_loading").hide();
+                                })     
+                                
+                            } //fin success
+                        }); //fin del $.ajax
+                            
+                            
+                    }
+                   
+                    if(hash == "#crearFactor" || hash == "#crearCaracteristica" || hash == "#crearIndicador"
+                        || hash == "#crearEncuesta" || hash == "#listarFactores" || hash == "#listarPreguntas"
+                        || hash == "#listarEncuestas" || hash == "#listarIndicadores" || hash == "#listarCaracteristicas"
+                        || hash == "#crearPregunta" ){
                             
                         var url3 = "<%=request.getContextPath()%>/"+hash;
                         url3 = url3.replace('#', "ControllerCC?action=")+"CC";
@@ -189,283 +261,25 @@
                             type: "POST", 
                             url: url3, 
                             beforeSend :function(){
-                                $("div.ui-layout-center").hide();
+                                $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                $("#contenido").hide();
+                                $("div.ui-layout-center").append("<div class='page_loading'>"
+                                    +"<span>Cargando</span>"
+                                    +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                    +"</div>");
+                                
                             },
                             success: function(data) 
                             {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
+                                $("#contenido").append(data);
+                                $("#contenido").show(200, function(){
+                                    $(".page_loading").hide();
+                                })     
+                                
                             } //fin success
                         }); //fin del $.ajax
                          
                     }
-                    if(hash.indexOf("#editarFactor")!=-1){
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#editarFactor', "ControllerCC?action=editarFactorCC");
-                        url3 = url3.replace('&', "&idF=");
-                            
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").hide();
-                            },
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                            
-                            
-                    }
-                   
-                   
-                   
-                    if(hash.indexOf("#editarEncuesta")!=-1){
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#editarEncuesta', "ControllerCC?action=editarEncuestaCC");
-                        url3 = url3.replace('&', "&idE=");
-                            
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").hide();
-                            },
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                            
-                            
-                    }
-                   
-                   
-                    if(hash.indexOf("#editarPregunta")!=-1){
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#editarPregunta', "ControllerCC?action=editarPreguntaCC");
-                        url3 = url3.replace('&', "&idP=");
-                            
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").hide();
-                            },
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                            
-                            
-                    }
-                   
-                                      
-                    if(hash == "#crearCaracteristica"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").hide();
-                            },
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash.indexOf("#editarCaracteristica")!=-1){
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#editarCaracteristica', "ControllerCC?action=editarCaracteristicaCC");
-                        url3 = url3.replace('&', "&idC=");
-                            
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").hide();
-                            },
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                            
-                    }
-                    
-                    if(hash.indexOf("#editarIndicador")!=-1){
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#editarIndicador', "ControllerCC?action=editarIndicadorCC");
-                        url3 = url3.replace('&', "&idI=");
-                            
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").hide();
-                            },
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                            
-                    }
-                    
-                    if(hash == "#crearIndicador"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#crearEncuesta"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#listarFactores"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").html(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#listarPreguntas"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#listarEncuestas"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#listarIndicadores"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#listarCaracteristicas"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                    if(hash == "#crearPregunta"){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                        $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
-                            {
-                                $("div.ui-layout-center").append(data);
-                                        
-                            } //fin success
-                        }); //fin del $.ajax
-                         
-                    }
-                
                 });//fin hashchange
             });//fin function
         </script>
@@ -520,7 +334,33 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
+            <div class="span10" style="text-align: justify">
+                <div class="hero-unit">
+                    <h1>Autoevaluaci&oacute;n Institucional!</h1>
+                    <p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>
+                    <p><a class="btn btn-primary btn-large">Leer M&aacute;s �</a></p>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <h2>Marco Normativo</h2>
+                        <p>los lineamientos de Autoevaluaci&oacute;n para la Acreditaci&oacute;n Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y el Modelo de Autoevaluacion Institucional con fines de acreditacion de la  Universidad de Cartagena se fundamentan en.. . </p>
+                        <p><a href="#" class="btn">Ver detalles �</a></p>
+                    </div><!--/span-->
+                    <div class="span4">
+                        <h2>Definiciones</h2>
+                        <p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a href="#" class="btn">Ver detalles �</a></p>
+                    </div>
+                    <div class="span4">
+                        <h2>Objetivos</h2>
+                        <p>Mantener informado a la comunidad academica sobre el proceso de autoevaluacion institucional. </p>
+                        <p><a href="#" class="btn">Ver detalles �</a></p>
+                    </div><!--/span-->
 
+
+                </div><!--/row-->
+
+            </div> 
 
         </div><!--/Center-->
 

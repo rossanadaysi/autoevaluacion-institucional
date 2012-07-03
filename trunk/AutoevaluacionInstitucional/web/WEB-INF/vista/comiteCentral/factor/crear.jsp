@@ -22,33 +22,33 @@
             }
         });
         var removeValue = function(obj){
-        var randid = obj.find("[type=hidden]").attr("randid");
-        var inputid = elem.attr('id') + "_values";
-        if ($("#" + inputid).length != 0) {
-            try {
-                eval("json = " + $("#" + inputid).val() + ";");
-                var string = "{";
-                $.each(json, function(i, item){
-                    if (i && item && i != randid) {
-                        string += "\"" + i + "\":\"" + item + "\",";
+            var randid = obj.find("[type=hidden]").attr("randid");
+            var inputid = elem.attr('id') + "_values";
+            if ($("#" + inputid).length != 0) {
+                try {
+                    eval("json = " + $("#" + inputid).val() + ";");
+                    var string = "{";
+                    $.each(json, function(i, item){
+                        if (i && item && i != randid) {
+                            string += "\"" + i + "\":\"" + item + "\",";
+                        }
+                    });
+                    //remove last ,
+                    if (string.length > 2) {
+                        string = string.substr(0, (string.length - 1));
+                        string += "}"
                     }
-                });
-                //remove last ,
-                if (string.length > 2) {
-                    string = string.substr(0, (string.length - 1));
-                    string += "}"
+                    else {
+                        string = "";
+                    }
+                    $("#" + inputid).val(string);
+                } 
+                catch (e) {                
                 }
-                else {
-                    string = "";
-                }
-                $("#" + inputid).val(string);
-            } 
-            catch (e) {                
             }
         }
-    }
         $("button[type='reset']").click(function(){
-        elem = $("#fcbklist");
+            elem = $("#fcbklist");
             $.each(elem.children("li").children(".fcbklist_item"), function(i, obj){
                 obj = $(obj);
                 

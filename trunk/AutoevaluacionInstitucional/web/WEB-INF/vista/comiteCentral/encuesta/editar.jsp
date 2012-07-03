@@ -15,6 +15,7 @@
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/formController2?action=editarEncuestaCC",
                     data: $("#formEditarEncu").serialize(),
+                    
                     success: function(){
                         location = "<%=request.getContextPath()%>/#listarEncuestas"
                     } //fin success

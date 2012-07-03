@@ -24,7 +24,7 @@ public class editarFactorCC implements Action{
         FactorJpaController conFactor = new FactorJpaController(); 
         CaracteristicaJpaController conCaract = new CaracteristicaJpaController(); 
         HttpSession session = request.getSession();
-        String idfactor = request.getParameter("idF");
+        String idfactor = request.getParameter("id");
         
         
         Factor f =  conFactor.findFactor(Integer.parseInt(idfactor));

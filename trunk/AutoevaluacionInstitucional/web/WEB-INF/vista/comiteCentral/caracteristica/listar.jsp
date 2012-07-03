@@ -59,7 +59,7 @@
             <c:choose>
                 <c:when test="${fn:length(listcaracteristicas)!= 0}">
 
-                    <table id="caracteristicas"class="table table-striped table-bordered table-condensed">
+                    <table id="caracteristicas" class="table table-striped table-bordered table-condensed">
                         <thead>
                         <th>C&oacute;digo</th>
                         <th>Caracter&iacute;stica</th>

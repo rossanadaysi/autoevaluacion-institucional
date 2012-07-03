@@ -27,7 +27,7 @@ public class EditarIndicadorCC implements Action{
         InstrumentoJpaController conInst = new InstrumentoJpaController();
         PreguntaJpaController conPregunta = new PreguntaJpaController(); 
         HttpSession session = request.getSession();
-        String idindicador = request.getParameter("idI");
+        String idindicador = request.getParameter("id");
         
         
         session.setAttribute("indicador",conIndicador.findIndicador(Integer.parseInt(idindicador)));
