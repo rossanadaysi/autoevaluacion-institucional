@@ -331,6 +331,10 @@
             $("#metodo").attr('value', 'normal');
         }  
     });
+    
+    $("#cancelarConglomerado").click(function(){  
+     
+    });
   
 </script>
 <br>

@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a class="btn btn-secundary" data-dismiss="modal" href="#">Cerrar</a>
+            <a class="btn btn-secundary" name="cancelarConglomerado" data-dismiss="modal" href="#">Cerrar</a>
             <a id="aceptarConglomerado" name="aceptarConglomerado" class="btn btn-primary" data-dismiss="modal" href="#">Aceptar</a>
             <a id="nuevoCriterio" class="btn btn-primary"  href="#" style="display: none">Crear</a>
         </div>
