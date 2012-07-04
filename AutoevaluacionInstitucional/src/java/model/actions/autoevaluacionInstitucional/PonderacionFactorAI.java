@@ -42,15 +42,13 @@ public class PonderacionFactorAI implements Action {
 
         if (rs2.getRowCount() > 0) {
             session.setAttribute("auxAsignarF", 1);
-           session.setAttribute("pondeFactores", rs2);
+            session.setAttribute("pondeFactores", rs2);
             session.setAttribute("factores", rs);
         } else {
             session.setAttribute("auxAsignarF", 0);
-
-
             session.setAttribute("factores", rs);
             conSql.cerrarConexion();
-        
+
         }
 
         conSql.cerrarConexion();
