@@ -55,7 +55,7 @@
     <div class="subnav">
         <ul class="nav nav-pills">
             <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
-            <c:forEach items="${pondeFactores.rowsByIndex}" var="row" varStatus="iter">
+            <c:forEach items="${factores.rowsByIndex}" var="row" varStatus="iter">
                 <c:choose>
                     <c:when test="${((iter.index) % 5 == 0) || (iter.index == 0)}">
                         <c:choose>
