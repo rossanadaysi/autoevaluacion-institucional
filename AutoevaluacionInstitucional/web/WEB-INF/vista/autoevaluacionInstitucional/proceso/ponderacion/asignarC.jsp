@@ -3,7 +3,7 @@
 <script type="text/javascript" language="JavaScript">
     function presionSubmit(va, idc)
     {
-             console.log("idc:"+idc);
+             
         $.ajax({
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=cargarPonde",

@@ -46,6 +46,7 @@
         <script type="text/javascript" src="script/jquery.metadata.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-dropdown.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-carousel.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
 
         <script type="text/javascript" src="script/jquery-layout.js"></script>
@@ -54,6 +55,11 @@
 
 
         <style type="text/css">
+            #home-carousel {
+                width: 400px;
+            }
+
+            
             label {
                 display: block;
                 margin: 10px 0 2px;
@@ -202,6 +208,9 @@
         </style>
         <script type="text/javascript">
             $().ready(function() {
+                $("#home-carousel").carousel({
+                    interval: 15000
+                });
                 $(".progress").ajaxStart(function(){
                     $(this).show(); 
                     $(".bar").css("width","5%");
@@ -337,7 +346,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
+                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/logoSIA.png"></img></a>
                         <div class="btn-group pull-right">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="icon-user"></i> Iniciar sesi&oacute;n
@@ -407,73 +416,51 @@
             </div>
         </div>
         <div class="ui-layout-center">
-            <div style="height: 68%; background-color: #f77f00;">
-                <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 3%; top: 5%"/>    
+            <div style="height: 62%; background-color: #f77f00;">
+                <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 20%; top: 5%"/>    
                 <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right"/>    
-                <div style="z-index: 5;float: left;position:relative;top:25%;left: 4%;width: 26%;color: #FAF4E3;"><h3>La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</h3></div>     
             </div>
-            <div style="height: 32%;" class="offset2">
-                <ul class="thumbnails" style="margin-top: 10px;">
-                    <li class="span3">
-                        <div class="thumbnail" style="box-shadow:none;border: 0;">
-                            <a href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/diseno.png">
-                            </a><!-- THEME: Grooveshark Explore Thumb  -->
-                            <a href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/ponderacion.png">
-                            </a><!-- THEME: Grooveshark Explore Thumb  -->
-                            <a  href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/proceso.png">
-                            </a>
-                            <div class="caption">
-                                <h3 style="color: #F77F00;">Construcci&oacute;n del Modelo</span></h3>
-                                <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
-                                <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar &raquo;</a>
+            <div class="hero-unit">
+                <div class="row-fluid">
+                    <div class="span7">
+                        <h2>Autoevaluaci&oacute;n Institucional</h2>
+                        <p style="color: inherit;font-size: 18px;font-weight: 200;line-height: 27px;margin-bottom: -8px;">La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</p>     
+                        <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
+                            &nbsp;
+                        <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
+                    </div>
+                    <div class="span5">
+                        <div class="carousel" id="home-carousel">
+                            <div class="carousel-inner">
+                                <div class="item">
+                                    <img alt="Construcci&oacute;n del Modelo" src="<%=request.getContextPath()%>/css/images/modelo.png">
+                                        <div class="carousel-caption">
+                                            <h4>Construcci&oacute;n del Modelo</h4>
+                                            <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
+                                        </div>
+                                </div>
+                                <div class="item">
+                                    <img alt="Informes" src="<%=request.getContextPath()%>/css/images/informe.png">
+                                        <div class="carousel-caption">
+                                            <h4>Analice Resultados</h4>
+                                            <p>Realiza el procesamiento y sistematizaci&oacute;n de la informaci&oacute;n recolectada, mostrando informes en tiempo real.</p>
+                                        </div>
+                                </div>
+                                <div class="item active">
+                                    <img alt="Recolecci&oacute;n" src="<%=request.getContextPath()%>/css/images/recoleccion.png">
+                                        <div class="carousel-caption">
+                                            <h4>Recopile Informaci&oacute;n</h4>
+                                            <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s</p>
+                                        </div>
+                                </div>
                             </div>
+                            <a class="carousel-control left" data-slide="prev" href="#home-carousel">&lsaquo;</a>
+                            <a class="carousel-control right" data-slide="next" href="#home-carousel">&rsaquo;</a>
                         </div>
-
-                    </li>
-
-                    <li class="span3">
-                        <div class="thumbnail" style="box-shadow:none;border: 0;">
-                            <a href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/encuesta.png">
-                            </a><!-- THEME: Grooveshark Explore Thumb  -->
-                            <a href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%"  src="css/images/documental.png">
-                            </a><!-- THEME: Grooveshark Explore Thumb  -->
-                            <a  href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/recoleccion.png">
-                            </a>
-                            <div class="caption">
-                                <h3 style="color: #F77F00;">Recopile Informaci&oacute;n</h3>
-                                <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s.</p>
-                                <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar &raquo;</a>
-                            </div>
-                        </div>
-
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail" style="box-shadow:none;border: 0;">
-                            <a href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/pie.png">
-                            </a><!-- THEME: Grooveshark Explore Thumb  -->
-                            <a href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%"  src="css/images/bar.png">
-                            </a><!-- THEME: Grooveshark Explore Thumb  -->
-                            <a  href="#" style="text-decoration:none;">
-                                <img width="28%" height="28%" src="css/images/line.png">
-                            </a>
-                            <div class="caption">
-                                <h3 style="color: #F77F00;">Analice Resultados</h3>
-                                <p>Realiza el procesamiento y sistematizaci&oacute;n de la informaci&oacute;n recolectada, mostrando informes en tiempo real.</p>
-                                <a href="#" class="btn js-btn" style="text-decoration: none;">Explorar &raquo;</a>
-                            </div>
-                        </div>
-
-                    </li>
-                </ul>
+                    </div>
+                </div> 
             </div>
+
         </div>
 
 

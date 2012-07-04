@@ -66,11 +66,11 @@
                         <tbody>
                             <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                 <tr>
+                                    <td>${item[0]}</td>
                                     <td>${item[1]}</td>
                                     <td>${item[2]}</td>
                                     <td>${item[3]}</td>
                                     <td>${item[4]}</td>
-                                    <td>${item[5]}</td>
                                 </tr>
                                 <c:set var="iterador" value="${iter.index + 1}" />
                             </c:forEach>

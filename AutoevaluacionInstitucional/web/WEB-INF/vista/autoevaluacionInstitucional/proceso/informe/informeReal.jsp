@@ -10,120 +10,120 @@
     <c:forEach items="${preguntas.rowsByIndex}" var="pregunta" varStatus="status" >
         <c:choose>
             <c:when test="${pregunta[2]=='Si/No'}">
-            $("#container").append("<div id='${pregunta[0]}' class='span10'></div>")
-                    chart[${status.index}] = new Highcharts.Chart({
-                        chart: {
-                            renderTo: '${pregunta[0]}',
-                            plotBackgroundColor: null,
-                            plotBorderWidth: null,
-                            plotShadow: false
+                        $("#container").append("<div id='${pregunta[0]}' class='span10'></div>")
+                        chart[${status.index}] = new Highcharts.Chart({
+                            chart: {
+                                renderTo: '${pregunta[0]}',
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false
                                 
-                        },
-                        title: {
-                            text: null
-                        },
-                        subtitle: {
-                            text: '${pregunta[1]}'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: true,
-                                    color: '#000000',
-                                    connectorColor: '#000000',
-                                    formatter: function() {
-                                        return '<b>'+ this.point.name +'</b>: '+ this.y +' Personas';
+                            },
+                            title: {
+                                text: null
+                            },
+                            subtitle: {
+                                text: '${pregunta[1]}'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        color: '#000000',
+                                        connectorColor: '#000000',
+                                        formatter: function() {
+                                            return '<b>'+ this.point.name +'</b>: '+ this.y +' Personas';
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        tooltip: {
-                            formatter: function() {
-                                return ''+
-                                    this.point.name +': '+ this.percentage +' %';
-                            }
-                        },
-                        series: [{
-                                type: 'pie',
-                                name: 'Personas',
-                                data: [
+                            },
+                            tooltip: {
+                                formatter: function() {
+                                    return ''+
+                                        this.point.name +': '+ this.percentage +' %';
+                                }
+                            },
+                            series: [{
+                                    type: 'pie',
+                                    name: 'Personas',
+                                    data: [
                                     
-                                    {
-                                        name: 'Si',
-                                        y: ${pregunta[3]},
-                                        sliced: true,
-                                        selected: true
-                                    },
-                                    ['No',  ${pregunta[4]}]
+                                        {
+                                            name: 'Si',
+                                            y: ${pregunta[3]},
+                                            sliced: true,
+                                            selected: true
+                                        },
+                                        ['No',  ${pregunta[4]}]
                                     
     
-                                ]
-                            }]
+                                    ]
+                                }]
                     
                     
-                    });        
+                        });        
             
-        </c:when>
-        <c:when test="${pregunta[2]=='Elegir 1-5'}">
-            $("#container").append("<div id='${pregunta[0]}' class='span10'></div>")
-                    chart[${status.index}] = new Highcharts.Chart({
-                        chart: {
-                            renderTo: '${pregunta[0]}',
-                            plotBackgroundColor: null,
-                            plotBorderWidth: null,
-                            plotShadow: false
+            </c:when>
+            <c:when test="${pregunta[2]=='Elegir 1-5'}">
+                        $("#container").append("<div id='${pregunta[0]}' class='span10'></div>")
+                        chart[${status.index}] = new Highcharts.Chart({
+                            chart: {
+                                renderTo: '${pregunta[0]}',
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false
                                 
-                        },
-                        title: {
-                            text: null
-                        },
-                        subtitle: {
-                            text: '${pregunta[1]}'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: true,
-                                    color: '#000000',
-                                    connectorColor: '#000000',
-                                    formatter: function() {
-                                        return '<b>'+ this.point.name +'</b>: '+ this.y +' Personas';
+                            },
+                            title: {
+                                text: null
+                            },
+                            subtitle: {
+                                text: '${pregunta[1]}'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        color: '#000000',
+                                        connectorColor: '#000000',
+                                        formatter: function() {
+                                            return '<b>'+ this.point.name +'</b>: '+ this.y +' Personas';
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        tooltip: {
-                            formatter: function() {
-                                return ''+
-                                    this.point.name +': '+ this.percentage +' %';
-                            }
-                        },
-                        series: [{
-                                type: 'pie',
-                                name: 'Personas',
-                                data: [
-                                    ['0',  ${pregunta[5]}],
-                                    ['1',  ${pregunta[6]}],
-                                    ['2',  ${pregunta[7]}],
-                                    ['3',  ${pregunta[8]}],
-                                    ['4',  ${pregunta[9]}],
-                                    {
-                                        name: '5',
-                                        y: ${pregunta[10]},
-                                        sliced: true,
-                                        selected: true
-                                    },
+                            },
+                            tooltip: {
+                                formatter: function() {
+                                    return ''+
+                                        this.point.name +': '+ this.percentage +' %';
+                                }
+                            },
+                            series: [{
+                                    type: 'pie',
+                                    name: 'Personas',
+                                    data: [
+                                        ['0',  ${pregunta[5]}],
+                                        ['1',  ${pregunta[6]}],
+                                        ['2',  ${pregunta[7]}],
+                                        ['3',  ${pregunta[8]}],
+                                        ['4',  ${pregunta[9]}],
+                                        {
+                                            name: '5',
+                                            y: ${pregunta[10]},
+                                            sliced: true,
+                                            selected: true
+                                        },
     
-                                ]
-                            }]
+                                    ]
+                                }]
                     
                     
-                    });        
-        </c:when>
+                        });        
+            </c:when>
         </c:choose>
                     
     </c:forEach>
@@ -135,5 +135,13 @@
         });
 </script>
 
+<c:choose>
+    <c:when test="${preguntas.getRowCount()==0}">
+        <div id="container">No existen datos registrados en el sistema</div>
+    </c:when>
+    <c:otherwise>
+        <div id="container"></div>            
+    </c:otherwise>        
+</c:choose>
 
-<div id="container"></div>
+
