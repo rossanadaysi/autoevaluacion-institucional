@@ -352,7 +352,7 @@
                                 +"</div><!--/span-->"
                                 +"<div class='span4'>"
                                 +"<h2>Definiciones</h2>"
-                                +"<p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>"
+                                +"<p>La evaluaci&oacute;n de la calidad con miras a la acreditaci&oacute;n institucional, implica la evaluaci&oacute;n de la Instituci&oacute;n como un todo, es decir, el an&aacute;lisis de la Instituci&oacute;n en cumplimiento de sus procesos misionales.</p>"
                                 +"<p><a href='#' class='btn'>Ver detalles »</a></p>"
                                 +"</div>"
                                 +"<div class='span4'>"
@@ -903,7 +903,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
+                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/logoSIA.png"></img> Gesti&oacute;n del proceso</a>
 
                         <div class="btn-group pull-right">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -958,7 +958,7 @@
                     </div><!--/span-->
                     <div class="span4">
                         <h2>Definiciones</h2>
-                        <p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p>La evaluaci&oacute;n de la calidad con miras a la acreditaci&oacute;n institucional, implica la evaluaci&oacute;n de la Instituci&oacute;n como un todo, es decir, el an&aacute;lisis de la Instituci&oacute;n en cumplimiento de sus procesos misionales.</p>
                         <p><a href="#" class="btn">Ver detalles »</a></p>
                     </div>
                     <div class="span4">

@@ -200,7 +200,7 @@
                             +"</div><!--/span-->"
                             +"<div class='span4'>"
                             +"<h2>Definiciones</h2>"
-                            +"<p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>"
+                            +"<p>La evaluaci&oacute;n de la calidad con miras a la acreditaci&oacute;n institucional, implica la evaluaci&oacute;n de la Instituci&oacute;n como un todo, es decir, el an&aacute;lisis de la Instituci&oacute;n en cumplimiento de sus procesos misionales.</p>"
                             +"<p><a href='#' class='btn'>Ver detalles »</a></p>"
                             +"</div>"
                             +"<div class='span4'>"
@@ -294,7 +294,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/SIA UDEC - LOGO letras solas - copia.png"></img></a>
+                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/logoSIA.png"></img> Gesti&oacute;n del modelo</a>
 
                         <div class="btn-group pull-right">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -348,7 +348,7 @@
                     </div><!--/span-->
                     <div class="span4">
                         <h2>Definiciones</h2>
-                        <p>lorem ipsum id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p>La evaluaci&oacute;n de la calidad con miras a la acreditaci&oacute;n institucional, implica la evaluaci&oacute;n de la Instituci&oacute;n como un todo, es decir, el an&aacute;lisis de la Instituci&oacute;n en cumplimiento de sus procesos misionales.</p>
                         <p><a href="#" class="btn">Ver detalles »</a></p>
                     </div>
                     <div class="span4">
@@ -368,84 +368,25 @@
             <div class="ui-layout-content">
                 <div id="menu" style="padding: 8px 0pt;" class="well">
                     <ul class="nav nav-list">  
-                        <li class="nav-header">Modelo de Autoevaluaci&oacute;n</li>
-
-                        <div id="accordion1" class="accordion">
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a href="#collapseOne" data-parent="#accordion1" data-toggle="collapse" class="accordion-toggle">
-                                        Factores
-                                    </a>
-                                </div>
-                                <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
-                                    <div class="accordion-inner">
-                                        <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factor</a></li>
-                                        <li><a href="#listarFactores"><i class="icon-th-list"></i> listar Factores</a></li>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion2" class="accordion">
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a href="#collapseCaracteristicas" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
-                                        Caracteristicas
-                                    </a>
-                                </div>
-                                <div class="accordion-body collapse" id="collapseCaracteristicas" style="height: 0px;">
-                                    <div class="accordion-inner">
-                                        <li><a href="#crearCaracteristica"><i class="icon-plus"></i> Crear Caracteristica</a></li>
-                                        <li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> listar Caracteristicas</a></li>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion3" class="accordion">
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a href="#collapseIndicadores" data-parent="#accordion3" data-toggle="collapse" class="accordion-toggle">
-                                        Indicadores
-                                    </a>
-                                </div>
-                                <div class="accordion-body collapse" id="collapseIndicadores" style="height: 0px;">
-                                    <div class="accordion-inner">
-                                        <li><a href="#crearIndicador"><i class="icon-plus"></i> Crear Indicador</a></li>
-                                        <li><a href="#listarIndicadores"><i class="icon-th-list"></i> listar Indicadores</a></li>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion4" class="accordion">
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a href="#collapsePreguntas" data-parent="#accordion4" data-toggle="collapse" class="accordion-toggle">
-                                        Preguntas
-                                    </a>
-                                </div>
-                                <div class="accordion-body collapse" id="collapsePreguntas" style="height: 0px;">
-                                    <div class="accordion-inner">
-                                        <li><a href="#crearPregunta"><i class="icon-plus"></i> Crear Pregunta</a></li>
-                                        <li><a href="#listarPreguntas"><i class="icon-th-list"></i> listar Preguntas</a></li>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion5" class="accordion">
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a href="#collapseEncuestas" data-parent="#accordion5" data-toggle="collapse" class="accordion-toggle">
-                                        Encuestas
-                                    </a>
-                                </div>
-                                <div class="accordion-body collapse" id="collapseEncuestas" style="height: 0px;">
-                                    <div class="accordion-inner">
-                                        <li><a href="#crearEncuesta"><i class="icon-plus"></i> Crear Encuesta</a></li>
-                                        <li><a href="#listarEncuestas"><i class="icon-th-list"></i> listar Encuestas</a></li>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <li class="nav-header">Factores</li>
+                        <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factor</a></li>
+                        <li><a href="#listarFactores"><i class="icon-th-list"></i> listar Factores</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Caracteristicas</li>
+                        <li><a href="#crearCaracteristica"><i class="icon-plus"></i> Crear Caracteristica</a></li>
+                        <li><a href="#listarCaracteristicas"><i class="icon-th-list"></i> listar Caracteristicas</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Indicadores</li>
+                        <li><a href="#crearIndicador"><i class="icon-plus"></i> Crear Indicador</a></li>
+                        <li><a href="#listarIndicadores"><i class="icon-th-list"></i> listar Indicadores</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Preguntas</li>
+                        <li><a href="#crearPregunta"><i class="icon-plus"></i> Crear Pregunta</a></li>
+                        <li><a href="#listarPreguntas"><i class="icon-th-list"></i> listar Preguntas</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Encuestas</li>
+                        <li><a href="#crearEncuesta"><i class="icon-plus"></i> Crear Encuesta</a></li>
+                        <li><a href="#listarEncuestas"><i class="icon-th-list"></i> listar Encuestas</a></li>
                     </ul>
                 </div>
             </div>
