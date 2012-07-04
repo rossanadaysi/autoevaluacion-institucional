@@ -31,8 +31,8 @@
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
                     success: function(data){
-                        $("#resultados4").html(data);
-                        $("#resultados4").show();
+                        $("#filtro").html(data);
+                        $("#filtro").show();
                     }
                 })
                 
@@ -405,7 +405,6 @@
                                 <p id="help1" class="help-block">Active ésta opción si desea generar usuarios y contraseñas aleatorias.</p>
                                 <input type="text" id="metodo" name="metodo"  style="display: none"  value="normal">
                             </div>
-                            <br>
                             <br>
                         </div>
                         <div class="alert alert-info" id="cargando" style="display: none;" class="span10">
