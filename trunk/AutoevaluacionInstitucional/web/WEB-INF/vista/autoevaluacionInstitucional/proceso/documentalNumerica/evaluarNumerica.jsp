@@ -10,46 +10,48 @@
                         <legend>Evaluar información numérica</legend>
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Indicador</th>
-                                    <th>Evaluación</th>
-                                    <th>Nombre de la información numérica donde está ubicado</th>
-                                    <th>Acción</th>
-                                    <th>Responsable</th>
-                                </tr>
+                            <th>Código del indicador</th>
+                            <th>Documento asociado</th>
+                            <th>Responsable</th>
+                            <th>Medio</th>
+                            <th>Lugar</th>
+                            <th>Estado</th>
+                            <th>Acción a implementar u observación</th>
                             </thead>
                             <tbody>
-                            <c:forEach items="${indicadoresNumerica.rowsByIndex}" var="row" varStatus="iter">
-                                <tr id="InformacionNumerica${iter.index+1}">    
-                                    <td>   
-                                <c:out value="${row[0]}"/>
-                                </td>
-                                <td class="span3">   
-                                <c:out value="${row[1]}"/>
-                                </td>
-                                <td>
-                                    <select class="span1"  name="evaluacionNum${row[0]}">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                    <input type="hidden"  value="${row[0]}" name="idIndicadorNum${row[0]}">
-                                </td>
-                                <td>
-                                    <textarea name="nombreNumero${row[0]}" rows="4" class="span2"></textarea>
-                                </td>
-                                <td>
-                                    <textarea name="accionNumero${row[0]}" rows="4" class="span2"></textarea>
-                                </td>
-                                <td>
-                                    <textarea name="responsableNumero${row[0]}" rows="4" class="span2"></textarea>
-                                </td>
-                                </tr>
-                                <c:set var="iterador" value="${iter.index + 1}" />
-                            </c:forEach>
+                                <c:forEach items="${indicadoresNumerica.rowsByIndex}" var="row" varStatus="iter">
+                                    <tr id="InformacionNumerica${iter.index+1}">    
+                                        <td>   
+                                            <c:out value="${row[0]}"/>
+                                        </td>
+                                        <td>
+                                            <textarea name="nombreDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="responsableDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="medioDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="lugarDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <select class="span1"  name="evaluacionDoc${row[0]}">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                            <input type="hidden"  value="${row[0]}" name="idIndicadorDoc${row[0]}">
+                                        </td>
+                                        <td>
+                                            <textarea name="accionDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                    </tr>
+                                    <c:set var="iterador" value="${iter.index + 1}" />
+                                </c:forEach>
                             </tbody>
                         </table>
                         <input type="hidden" name="count" id="count" value="${iterador}">
@@ -82,77 +84,77 @@
                                     <th>Código</th>
                                     <th>Indicador</th>
                                     <th>Evaluación</th>
-                                    <th>Nombre de la información numérica donde está ubicado</th>
+                                    <th>Nombre del documento donde está ubicado</th>
                                     <th>Acción</th>
                                     <th>Responsable</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${evaluarcionNumerica.rowsByIndex}" var="row2" varStatus="iter">
-                                <tr id="InformacionNumerica${iter.index+1}">
-                                    <td>   
-                                <c:out value="${row2[0]}"/>
-                                </td>
-                                <td>   
-                                <c:out value="${row2[1]}"/>
-                                </td>
-                                <td>
-                                    <select  class="span1" name="evaluacionDoc${row2[0]}">
-                                        <c:choose>
-                                            <c:when test="${row2[2] == 1.0}">
-                                                <option selected="selected" value="1.0">1.0</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="1.0">1.0</option>
-                                            </c:otherwise>
-                                        </c:choose>                                        
-                                        <c:choose>
-                                            <c:when test="${row2[2] == 2.0}">
-                                                <option selected="selected" value="2.0">2.0</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="2.0">2.0</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <c:choose>
-                                            <c:when test="${row2[2] == 3.0}">
-                                                <option selected="selected" value="3.0">3.0</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="3.0">3.0</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <c:choose>
-                                            <c:when test="${row2[2] == 4.0}">
-                                                <option selected="selected" value="4.0">4.0</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="4.0">4.0</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <c:choose>
-                                            <c:when test="${row2[2] == 5.0}">
-                                                <option selected="selected" value="5.0">5.0</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="5.0">5.0</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </select>
-                                    <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
-                                </td>
-                                <td>
-                                    <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
-                                </td>
-                                <td>
-                                    <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[4]}</textarea>
-                                </td>
-                                <td>
-                                    <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
-                                </td>
-                                </tr>
-                                <c:set var="iterador" value="${iter.index + 1}"/>
-                            </c:forEach>
+                                <c:forEach items="${evaluarcionNumerica.rowsByIndex}" var="row2" varStatus="iter">
+                                    <tr id="InformacionNumerica${iter.index+1}">
+                                        <td>   
+                                            <c:out value="${row2[0]}"/>
+                                        </td>
+                                        <td>   
+                                            <c:out value="${row2[1]}"/>
+                                        </td>
+                                        <td>
+                                            <select  class="span1" name="evaluacionDoc${row2[0]}">
+                                                <c:choose>
+                                                    <c:when test="${row2[2] == 1.0}">
+                                                        <option selected="selected" value="1.0">1.0</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="1.0">1.0</option>
+                                                    </c:otherwise>
+                                                </c:choose>                                        
+                                                <c:choose>
+                                                    <c:when test="${row2[2] == 2.0}">
+                                                        <option selected="selected" value="2.0">2.0</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="2.0">2.0</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${row2[2] == 3.0}">
+                                                        <option selected="selected" value="3.0">3.0</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="3.0">3.0</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${row2[2] == 4.0}">
+                                                        <option selected="selected" value="4.0">4.0</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="4.0">4.0</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${row2[2] == 5.0}">
+                                                        <option selected="selected" value="5.0">5.0</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="5.0">5.0</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
+                                            <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
+                                        </td>
+                                        <td>
+                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[4]}</textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
+                                        </td>
+                                    </tr>
+                                    <c:set var="iterador" value="${iter.index + 1}"/>
+                                </c:forEach>
                             </tbody>
                         </table>
                         <input type="hidden" name="count" id="count" value="${iterador}">

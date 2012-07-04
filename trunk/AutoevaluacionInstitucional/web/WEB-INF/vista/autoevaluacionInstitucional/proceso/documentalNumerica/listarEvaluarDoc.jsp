@@ -7,13 +7,14 @@
             <fieldset>
                 <legend>Listado de evaluación información documental</legend>
                 <table class="table table-striped table-bordered table-condensed">
-                    <thead>
-                    <th>Código</th>
-                    <th>Indicador</th>
-                    <th>Evaluación</th>
-                    <th>Nombre del documento donde está ubicado</th>
-                    <th>Acción</th>
+                    <thead>  
+                    <th>Código del indicador</th>
+                    <th>Documento asociado</th>
                     <th>Responsable</th>
+                    <th>Medio</th>
+                    <th>Lugar</th>
+                    <th>Estado</th>
+                    <th>Acción a implementar u observación</th>
                     </thead>
                     <tbody>
                     <tbody>
@@ -25,6 +26,7 @@
                                 <td>${item[3]}</td>
                                 <td>${item[4]}</td>
                                 <td>${item[5]}</td>
+                                <td>${item[6]}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
