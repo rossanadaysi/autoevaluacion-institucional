@@ -28,8 +28,7 @@
         if(${auxAsignarC1} == 0){
             $('#myModalC1').modal(); 
             $('#myModalC1').on('hidden', function () {
-                $("ul.nav-list li:eq(2) a").trigger("click");
-                                                                                    
+                $("ul.nav-list li:eq(2) a").trigger("click");                                                                
             })
         }
         
