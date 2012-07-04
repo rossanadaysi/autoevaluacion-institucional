@@ -272,7 +272,7 @@
                     $("div.ui-layout-center").empty();
                     $.ajax({ 
                         type: "POST", 
-                        url: "/formController?action=CerrarProcesoAI",
+                        url: "<%=request.getContextPath()%>/formController?action=CerrarProcesoAI",
                         success: function(data) 
                         {
                             $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
@@ -514,7 +514,7 @@
                                              
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: "/formController?action=asignarEncuestasAIp",
+                                                    url: "<%=request.getContextPath()%>/formController?action=asignarEncuestasAIp",
                                                     data: $("#formAsigEnc").serialize(),
                                                     success: function(){
                                                                                     
@@ -1029,7 +1029,7 @@
             <div align="center">
                 <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
                 <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
-                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
+                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
             </div>
             <br>  
         </div><!--/West-->

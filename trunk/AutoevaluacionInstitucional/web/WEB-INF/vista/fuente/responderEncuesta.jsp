@@ -91,7 +91,7 @@
     <table class="table table-bordered table-striped" style="font-weight: bold;">
         <tbody>
             <tr>
-                <td rowspan="3" style="width: 25%; text-align: center;"><img style="width: 224px; height: 80px" src="/AutoevaluacionInstitucional/css/Sin título-3.png"></td>
+                <td rowspan="3" style="width: 25%; text-align: center;"><img style="width: 224px; height: 80px" src="/AutoevaluacionInstitucional/css/LogoUdeC.png"></td>
                 <td style="width: 50%; text-align: center;">UNIVERSIDAD DE CARTAGENA</td>
                 <td style="width: 25%;">CÓDIGO: FO-DO/AA-002</td>
             </tr>
