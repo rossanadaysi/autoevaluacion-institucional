@@ -275,16 +275,16 @@
                         url: "/formController?action=CerrarProcesoAI",
                         success: function(data) 
                         {
-                            $("#menu").load("/ControllerAI?action=menuAI");
+                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                                             
-                            location = "/#listarProcesos";                                
+                            location = "<%=request.getContextPath()%>/#listarProcesos";                                
                                                              
                         } //fin success
                     }); //fin del $.ajax*/
                 });
                 
                 $('#myModalCP2b2').click(function(){
-                    location = "/#detalleProceso"; 
+                    location = "<%=request.getContextPath()%>/#detalleProceso"; 
                 });
             
              
@@ -295,12 +295,12 @@
                     $("div.ui-layout-center").empty();
                     $.ajax({ 
                         type: "POST", 
-                        url: "/formController?action=IniciarProcesoAI", 
+                        url: "<%=request.getContextPath()%>/formController?action=IniciarProcesoAI", 
                         success: function(data) 
                         { 
                             $.ajax({
                                 type: 'POST',
-                                url: "/ControllerAI?action=validar1",
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
                                 success: function(data){
                                     $("#center").html(data);
                                 }
@@ -310,7 +310,7 @@
                 });
                 
                 $('#myModalIP2b2').click(function(){
-                    location = "/#detalleProceso"; 
+                    location = "<%=request.getContextPath()%>/#detalleProceso"; 
                 });
             
             
@@ -446,13 +446,13 @@
                                                     setTimeout(function () {
                                                         $.ajax({
                                                             type: 'POST',
-                                                            url: "/formController?action=asignarPonderacionFactorAIp",
+                                                            url: "<%=request.getContextPath()%>/formController?action=asignarPonderacionFactorAIp",
                                                             data: $("#formPondeFa").serialize(),
                                                             success: function(){
                                                                 //alert("Ponderación de Factores Actualizada con Exito!");
                                                                 $('#myModalF').modal();
                                                                 $('#myModalF').on('hidden', function () {
-                                                                    location = "/#listarPonderacionFactor";
+                                                                    location = "<%=request.getContextPath()%>/#listarPonderacionFactor";
                                                                 })
                                                             } //fin success
                                             
@@ -600,7 +600,7 @@
                                                 success: function(){
                                                     $('#myModalID').modal();
                                                     $('#myModalID').on('hidden', function () {
-                                                        location = "/#listarEvaluarDoc";
+                                                        location = "<%=request.getContextPath()%>/#listarEvaluarDoc";
                                                     })             
                                                 } //fin success
                                             }); //fin $.ajax
@@ -629,7 +629,7 @@
                                                 success: function(){
                                                     $('#myModalIN').modal();
                                                     $('#myModalIN').on('hidden', function () {
-                                                        location = "/#listarEvaluarNum";
+                                                        location = "<%=request.getContextPath()%>/#listarEvaluarNum";
                                                     })             
                                                 } //fin success
                                             }); //fin $.ajax
@@ -738,11 +738,11 @@
                             {
                                 $.ajax({
                                     type: 'POST',
-                                    url: "/jsonController?ejecucion=detalleProceso",
+                                    url: "<%=request.getContextPath()%>/jsonController?ejecucion=detalleProceso",
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
-                                            url: "/ControllerAI?action=detalleProceso",
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=detalleProceso",
                                             success: function(data){
                                                 $("#center").html(data);
                                             }
