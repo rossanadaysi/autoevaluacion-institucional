@@ -10,14 +10,13 @@
                         <legend>Evaluar información documental</legend>
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Indicador</th>
-                                    <th>Evaluación</th>
-                                    <th>Nombre del documento donde está ubicado</th>
-                                    <th>Acción</th>
-                                    <th>Responsable</th>
-                                </tr>
+                            <th>Código del indicador</th>
+                            <th>Documento asociado</th>
+                            <th>Responsable</th>
+                            <th>Medio</th>
+                            <th>Lugar</th>
+                            <th>Estado</th>
+                            <th>Acción a implementar u observación</th>
                             </thead>
                             <tbody>
                                 <c:forEach items="${indicadoresDocumental.rowsByIndex}" var="row" varStatus="iter">
@@ -25,8 +24,17 @@
                                         <td>   
                                             <c:out value="${row[0]}"/>
                                         </td>
-                                        <td class="span3">   
-                                            <c:out value="${row[1]}"/>
+                                        <td>
+                                            <textarea name="nombreDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="responsableDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="medioDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="lugarDocumento${row[0]}" rows="4" class="span2"></textarea>
                                         </td>
                                         <td>
                                             <select class="span1"  name="evaluacionDoc${row[0]}">
@@ -39,13 +47,7 @@
                                             <input type="hidden"  value="${row[0]}" name="idIndicadorDoc${row[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row[0]}" rows="4" class="span2"></textarea>
-                                        </td>
-                                        <td>
                                             <textarea name="accionDocumento${row[0]}" rows="4" class="span2"></textarea>
-                                        </td>
-                                        <td>
-                                            <textarea name="responsableDocumento${row[0]}" rows="4" class="span2"></textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
