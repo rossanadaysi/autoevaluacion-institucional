@@ -917,6 +917,10 @@ public class formController extends HttpServlet {
                 String aux = "aleatorio" + tabla1 + "";
 
                 String conglomerado = request.getParameter("conglomerado");
+
+                session.setAttribute("conglomerado", conglomerado);
+                session.setAttribute("conglomeradoFiltro", conglomerado);
+
                 String metodo = request.getParameter("metodo");
 
                 ArrayList rs = (ArrayList) session.getAttribute("muestraCalculada2");

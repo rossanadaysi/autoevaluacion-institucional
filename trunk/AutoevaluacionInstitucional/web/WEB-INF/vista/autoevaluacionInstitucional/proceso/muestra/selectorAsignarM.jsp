@@ -1,14 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
-    $(document).ready(function() {    
+    $(document).ready(function() {       
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select8 option:eq(0)").attr("selected", "selected");
         if(${aux_asignarM == 1}){
             if(${aux_IniciarP == 0}){
-                $("#resultadoAlert").show();
-                $("#filtro").show();
+                if ($('#enlace').is (':visible') && $('#formula').is (':visible')){
+                    $("#filtro").show();
+                }else{
+                    $("#resultadoAlert").show();
+                    $("#filtro").show();
+                }
             }else{
                 $("#resultadoAlert").hide();
                 $("#formula").hide();
