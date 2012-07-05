@@ -5,8 +5,11 @@
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select8 option:eq(0)").attr("selected", "selected");
+        alert(${aux_asignarM});
+        alert(${aux_IniciarP});
         if(${aux_asignarM == 1}){
             if(${aux_IniciarP == 0}){
+                alert("hola1");
                 if ($('#enlace').is (':visible') && $('#formula').is (':visible')){
                     $("#filtro").show();
                 }else{
@@ -14,6 +17,7 @@
                     $("#filtro").show();
                 }
             }else{
+                alert("hola2")
                 $("#resultadoAlert").hide();
                 $("#formula").hide();
                 $("#botonNuevaMuestra").hide();
