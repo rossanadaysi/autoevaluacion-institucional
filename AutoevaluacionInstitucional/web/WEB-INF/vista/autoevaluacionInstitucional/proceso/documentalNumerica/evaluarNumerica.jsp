@@ -81,12 +81,13 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Código</th>
-                                    <th>Indicador</th>
-                                    <th>Evaluación</th>
-                                    <th>Nombre del documento donde está ubicado</th>
-                                    <th>Acción</th>
+                                    <th>Código del indicador</th>
+                                    <th>Documento asociado</th>
                                     <th>Responsable</th>
+                                    <th>Medio</th>
+                                    <th>Lugar</th>
+                                    <th>Estado</th>
+                                    <th>Acción a implementar u observación</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,13 +96,22 @@
                                         <td>   
                                             <c:out value="${row2[0]}"/>
                                         </td>
-                                        <td>   
-                                            <c:out value="${row2[1]}"/>
+                                        <td>
+                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[2]}</textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span2">${row2[4]}</textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
                                         </td>
                                         <td>
                                             <select  class="span1" name="evaluacionDoc${row2[0]}">
                                                 <c:choose>
-                                                    <c:when test="${row2[2] == 1.0}">
+                                                    <c:when test="${row2[6] == 1.0}">
                                                         <option selected="selected" value="1.0">1.0</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -109,7 +119,7 @@
                                                     </c:otherwise>
                                                 </c:choose>                                        
                                                 <c:choose>
-                                                    <c:when test="${row2[2] == 2.0}">
+                                                    <c:when test="${row2[6] == 2.0}">
                                                         <option selected="selected" value="2.0">2.0</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -117,7 +127,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[2] == 3.0}">
+                                                    <c:when test="${row2[6] == 3.0}">
                                                         <option selected="selected" value="3.0">3.0</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -125,7 +135,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[2] == 4.0}">
+                                                    <c:when test="${row2[6] == 4.0}">
                                                         <option selected="selected" value="4.0">4.0</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -133,7 +143,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${row2[2] == 5.0}">
+                                                    <c:when test="${row2[6] == 5.0}">
                                                         <option selected="selected" value="5.0">5.0</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -144,13 +154,7 @@
                                             <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
-                                        </td>
-                                        <td>
-                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[4]}</textarea>
-                                        </td>
-                                        <td>
-                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
+                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[6]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}"/>
