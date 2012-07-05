@@ -1006,7 +1006,7 @@
                                         <li><a  id="asignarMuestra"  href="<%=request.getContextPath()%>/#AsignacionMuestra"><i class="icon-glass"></i> Asignar Muestra</a></li>
                                         <li><a  id="infoDocumental"  href="<%=request.getContextPath()%>/#infoDocumental"><i class="icon-glass"></i> Información Documental</a></li>
                                         <li><a  id="infoNumerica"  href="<%=request.getContextPath()%>/#infoNumerica"><i class="icon-glass"></i> Información Numérica</a></li>
-                                        <li><a href="#kk"><i class="icon-trash"></i> Finalizar Proceso</a></li>
+                                        <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                                         <li class="divider"></li>
                                         <li class="nav-header">Estado del Proceso</li>
                                         <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
