@@ -57,9 +57,10 @@
         <style type="text/css">
             #home-carousel {
                 width: 400px;
+                float: right;
             }
 
-            
+
             label {
                 display: block;
                 margin: 10px 0 2px;
@@ -420,45 +421,46 @@
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 20%; top: 5%"/>    
                 <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right"/>    
             </div>
-            <div class="hero-unit">
-                <div class="row-fluid">
-                    <div class="span7">
-                        <h2>Autoevaluaci&oacute;n Institucional</h2>
-                        <p style="color: inherit;font-size: 18px;font-weight: 200;line-height: 27px;margin-bottom: -8px;">La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</p>     
-                        <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
-                            &nbsp;
-                        <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
-                    </div>
-                    <div class="span5">
-                        <div class="carousel" id="home-carousel">
-                            <div class="carousel-inner">
-                                <div class="item">
-                                    <img alt="Construcci&oacute;n del Modelo" src="<%=request.getContextPath()%>/css/images/modelo.png">
-                                        <div class="carousel-caption">
-                                            <h4>Construcci&oacute;n del Modelo</h4>
-                                            <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
-                                        </div>
-                                </div>
-                                <div class="item">
-                                    <img alt="Informes" src="<%=request.getContextPath()%>/css/images/informe.png">
-                                        <div class="carousel-caption">
-                                            <h4>Analice Resultados</h4>
-                                            <p>Realiza el procesamiento y sistematizaci&oacute;n de la informaci&oacute;n recolectada, mostrando informes en tiempo real.</p>
-                                        </div>
-                                </div>
-                                <div class="item active">
-                                    <img alt="Recolecci&oacute;n" src="<%=request.getContextPath()%>/css/images/recoleccion.png">
-                                        <div class="carousel-caption">
-                                            <h4>Recopile Informaci&oacute;n</h4>
-                                            <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s</p>
-                                        </div>
-                                </div>
-                            </div>
-                            <a class="carousel-control left" data-slide="prev" href="#home-carousel">&lsaquo;</a>
-                            <a class="carousel-control right" data-slide="next" href="#home-carousel">&rsaquo;</a>
+            <div class="container-fluid">
+                <div class="hero-unit">
+                    <div class="row-fluid">
+                        <div class="span7">
+                            <h2>Autoevaluaci&oacute;n Institucional</h2>
+                            <p style="color: inherit;font-size: 18px;font-weight: 200;line-height: 27px;margin-bottom: -8px;text-align: justify;">La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</p>     
+                            <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank" style="float: right;"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
+                            <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank" style="float: right;margin-right: 100px;margin-top: 20px;"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img></a>
                         </div>
-                    </div>
-                </div> 
+                        <div class="span5">
+                            <div class="carousel" id="home-carousel">
+                                <div class="carousel-inner">
+                                    <div class="item">
+                                        <img alt="Construcci&oacute;n del Modelo" src="<%=request.getContextPath()%>/css/images/modelo.png">
+                                            <div class="carousel-caption">
+                                                <h4>Construcci&oacute;n del Modelo</h4>
+                                                <p>Realice la ponderación de factores y características, el diseño de instrumentos y m&aacute;s.</p>
+                                            </div>
+                                    </div>
+                                    <div class="item">
+                                        <img alt="Informes" src="<%=request.getContextPath()%>/css/images/informe.png">
+                                            <div class="carousel-caption">
+                                                <h4>Analice Resultados</h4>
+                                                <p>Realiza el procesamiento y sistematizaci&oacute;n de la informaci&oacute;n recolectada, mostrando informes en tiempo real.</p>
+                                            </div>
+                                    </div>
+                                    <div class="item active">
+                                        <img alt="Recolecci&oacute;n" src="<%=request.getContextPath()%>/css/images/recoleccion.png">
+                                            <div class="carousel-caption">
+                                                <h4>Recopile Informaci&oacute;n</h4>
+                                                <p>A traves de encuestas en linea, informaci&oacute;n documental y m&aacute;s</p>
+                                            </div>
+                                    </div>
+                                </div>
+                                <a class="carousel-control left" data-slide="prev" href="#home-carousel">&lsaquo;</a>
+                                <a class="carousel-control right" data-slide="next" href="#home-carousel">&rsaquo;</a>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
             </div>
 
         </div>
