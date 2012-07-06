@@ -175,6 +175,10 @@
                 $(window).hashchange(function(){
                     var hash = location.hash;
                 
+                    if(hash.indexOf("#editar")!=-1){
+                        $(".nav li").removeClass("active");
+                        $("ul.nav-list li a").children("i").removeClass("icon-white");
+                    }
                     if(hash=="#CerrarSesion"){
                         $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion', function(data) {
                             location = "<%=request.getContextPath()%>/";

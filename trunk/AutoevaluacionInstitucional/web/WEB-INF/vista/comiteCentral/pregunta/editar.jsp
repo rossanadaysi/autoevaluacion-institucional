@@ -10,7 +10,10 @@
             e.preventDefault();
                     
         }); 
-        
+        $("option[rel=popover2]")
+        .popover({
+            placement: 'left'
+        });
         $("#formEditarPreg").validate({
             submitHandler: function(){
                 $.ajax({
@@ -18,7 +21,7 @@
                     url: "<%=request.getContextPath()%>/formController2?action=editarPreguntaCC",
                     data: $("#formEditarPreg").serialize(),
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarPreguntas"
+                        $("a[href='#listarPreguntas']").click();
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -54,41 +57,41 @@
                         <div class="controls">
                             <select name="tipo" id="tipo">
                                 <c:choose>
-                                        <c:when test="${pregunta.getTipo().equals('Elegir 1-5')}">
-                                            <option selected="selected" data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/1-5.png'>" rel="popover" data-original-title="Elegir del 1 al 5" value="Elegir 1-5">Elegir del 1 al 5</option>
-                                            <option data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/Si-No.png'>" rel="popover" data-original-title="Si/No" value="Si/No">Si/No</option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <option  data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/1-5.png'>" rel="popover" data-original-title="Elegir del 1 al 5" value="Elegir 1-5">Elegir del 1 al 5</option>
-                                            <option selected="selected" data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/Si-No.png'>" rel="popover" data-original-title="Si/No" value="Si/No">Si/No</option>
-                                        </c:otherwise>   
+                                    <c:when test="${pregunta.getTipo().equals('Elegir 1-5')}">
+                                        <option selected="selected" data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/1-5.png'>" rel="popover" data-original-title="Elegir del 1 al 5" value="Elegir 1-5">Elegir del 1 al 5</option>
+                                        <option data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/Si-No.png'>" rel="popover" data-original-title="Si/No" value="Si/No">Si/No</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option  data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/1-5.png'>" rel="popover" data-original-title="Elegir del 1 al 5" value="Elegir 1-5">Elegir del 1 al 5</option>
+                                        <option selected="selected" data-content="<img style='text-align: center;  margin:0 auto;' src='<%=request.getContextPath()%>/css/images/Si-No.png'>" rel="popover" data-original-title="Si/No" value="Si/No">Si/No</option>
+                                    </c:otherwise>   
                                 </c:choose>
                             </select>
                         </div>
                     </div>
-                            
+
                     <div class="control-group">
                         <label for="indicador" class="control-label">Asignar Indicador</label>
                         <div class="controls">
                             <select id="indicador" name="indicador">
                                 <option></option>
                                 <c:forEach items="${listindicadores}" var="row" varStatus="iter">
-                                <c:choose>
+                                    <c:choose>
                                         <c:when test="${pregunta.getIndicadorId()!= row}">
-                                            <option value="${row.id}">${row.codigo} ${row.nombre}</option>
+                                            <option data-content="${row.nombre}" rel="popover2" data-original-title="Indicador" value="${row.id}">${row.codigo}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option selected="selected" value="${row.id}">${row.codigo} ${row.nombre}</option>
+                                            <option data-content="${row.nombre}" rel="popover2" data-original-title="Indicador" selected="selected" value="${row.id}">${row.codigo}</option>
                                         </c:otherwise>       
-                                </c:choose>    
-                                    
+                                    </c:choose>    
+
                                 </c:forEach>
                             </select>                
-                                            
+
                         </div>
                     </div>
 
-                        <input name="idP" type="hidden" value="${pregunta.getId()}">
+                    <input name="idP" type="hidden" value="${pregunta.getId()}">
                     <div class="form-actions">
                         <button class="btn btn-primary" type="submit">Guardar Cambios</button>
                         <button class="btn" type="reset">Cancelar</button>
