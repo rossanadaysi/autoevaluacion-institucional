@@ -56,8 +56,13 @@
 
         <style type="text/css">
             #home-carousel {
+                margin-top: -6px;
                 width: 400px;
                 float: right;
+                border: 2px solid #2C2C2C;
+                -webkit-border-radius: 6px;
+                -moz-border-radius: 6px;
+                border-radius: 6px;
             }
 
 

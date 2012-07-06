@@ -16,7 +16,7 @@
                     url: "<%=request.getContextPath()%>/formController2?action=editarCaracteristicaCC",
                     data: $("#formEditarCarac").serialize(),
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarCaracteristicas"
+                        $("a[href='#listarCaracteristicas']").click();
                     } //fin success
                 }); //fin $.ajax    
             }

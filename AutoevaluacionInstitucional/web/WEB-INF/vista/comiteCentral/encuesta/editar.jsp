@@ -17,7 +17,7 @@
                     data: $("#formEditarEncu").serialize(),
                     
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarEncuestas"
+                        $("a[href='#listarEncuestas']").click();
                     } //fin success
                 }); //fin $.ajax    
             }

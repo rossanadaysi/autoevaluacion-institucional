@@ -19,7 +19,7 @@
                         console.log("ocurrio un error");
                     },
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#listarIndicadores"
+                         $("a[href='#listarIndicadores']").click();
                     } //fin success
                 }); //fin $.ajax    
             }
