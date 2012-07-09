@@ -7,7 +7,61 @@
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
-        $.fcbkListSelection("#fcbklist","600","50","3");    
+        var $fcbklist = $('#fcbklist'); 
+        var $listItems = $fcbklist.find('li');
+        
+        $.fcbkListSelection("#fcbklist","600","50","3");       
+        
+        $(".clearer").before('<input type="text" id="filter" class="input-medium search-query" placeholder="Buscar" style="padding-top: 0px; padding-bottom: 0px; float: right; border-right-width: 1px; padding-right: 14px; margin-right: 35px;">');
+        $('#filter').keyup(function (){ 
+            var $this = $(this); 
+
+            var val = $this.val(); 
+
+            /*** Show all the listItems when the filter is cleared ***/ 
+            if (!val) { 
+                $this.data('lastVal', val); 
+                $listItems.show(); 
+                return; 
+            } 
+
+            var lastVal = $this.data('lastVal'); 
+            $this.data('lastVal', val); 
+            /*** If the filter hasn't changed, do nothing ***/ 
+            if(val === lastVal) { return; } 
+
+            /*** Hide the results of the previous filter ***/ 
+            $listItems.filter(':visible').hide(); 
+
+            /*** 
+      Show only the items of the current tab that match 
+      the filter. 
+             ***/ 
+            var $tabItems; 
+            switch($(".view_on").attr("id").replace("view_","")) { 
+                case "all": 
+                    $tabItems = $listItems; 
+                    break; 
+                case "selected": 
+                    $tabItems = $listItems.filter('[addedid]'); 
+                    break; 
+                case "unselected": 
+                    $tabItems = $listItems.filter(':not([addedid])'); 
+                    break;   
+            } 
+            $tabItems.filter(':icontains(' + val + ')').show(); 
+        }); 
+
+        /*** 
+    This is a custom pseudo-selector that selects 
+    elements whose text contains the specified substring. 
+    It is case-insensitive, unlike the built-in :contains selector. 
+         ***/ 
+        $.extend($.expr[':'], { 
+            icontains: function(elem, i, match){ 
+                return (new RegExp(match[3], 'im')).test($(elem).text()); 
+            } 
+        });
         
         $("#formCrearIndic").validate({
             submitHandler: function(){
@@ -24,33 +78,33 @@
         
         
         var removeValue = function(obj){
-        var randid = obj.find("[type=hidden]").attr("randid");
-        var inputid = elem.attr('id') + "_values";
-        if ($("#" + inputid).length != 0) {
-            try {
-                eval("json = " + $("#" + inputid).val() + ";");
-                var string = "{";
-                $.each(json, function(i, item){
-                    if (i && item && i != randid) {
-                        string += "\"" + i + "\":\"" + item + "\",";
+            var randid = obj.find("[type=hidden]").attr("randid");
+            var inputid = elem.attr('id') + "_values";
+            if ($("#" + inputid).length != 0) {
+                try {
+                    eval("json = " + $("#" + inputid).val() + ";");
+                    var string = "{";
+                    $.each(json, function(i, item){
+                        if (i && item && i != randid) {
+                            string += "\"" + i + "\":\"" + item + "\",";
+                        }
+                    });
+                    //remove last ,
+                    if (string.length > 2) {
+                        string = string.substr(0, (string.length - 1));
+                        string += "}"
                     }
-                });
-                //remove last ,
-                if (string.length > 2) {
-                    string = string.substr(0, (string.length - 1));
-                    string += "}"
+                    else {
+                        string = "";
+                    }
+                    $("#" + inputid).val(string);
+                } 
+                catch (e) {                
                 }
-                else {
-                    string = "";
-                }
-                $("#" + inputid).val(string);
-            } 
-            catch (e) {                
             }
         }
-    }
         $("button[type='reset']").click(function(){
-        elem = $("#fcbklist");
+            elem = $("#fcbklist");
             $.each(elem.children("li").children(".fcbklist_item"), function(i, obj){
                 obj = $(obj);
                 
@@ -65,6 +119,18 @@
             })
         })
         
+        $("#instrumento").change(function(){
+            $("#preguntas").hide();
+            $("#instrumento option:selected").each(function()
+            { 
+                if($(this).text()=="Encuestas"){
+                    $("#preguntas").show();
+                }
+            });   
+
+        });
+        
+        $("#preguntas").hide();
         
     }); //fin (document).ready        
 </script>
@@ -77,17 +143,17 @@
                     <div class="control-group">
                         <label for="codigo" class="control-label">Codigo</label>
                         <div class="controls">
-                        <input type="text" id="codigo" name="codigo" class="input-large {required:true}" value=""/>
+                            <input type="text" id="codigo" name="codigo" class="input-large {required:true}" value=""/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label for="nombre" class="control-label">Nombre</label>
                         <div class="controls">
-                        <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value=""/>
+                            <input type="text" id="nombre" name="nombre" class="input-xxlarge {required:true}" value=""/>
                         </div>
                     </div>
-                        
-                        
+
+
                     <div class="control-group">
                         <label for="caracteristica" class="control-label">Asignar Caracteristica</label>
                         <div class="controls">
@@ -107,10 +173,11 @@
                                 <c:forEach items="${instrumentos}" var="row" varStatus="iter">
                                     <option value="${row.id}">${row.nombre}</option>
                                 </c:forEach>
-                            </select>    
+                            </select>  
+                            <p class="help-block">Presione la tecla control (ctrl) + click para seleccionar varios elementos</p>    
                         </div>
                     </div>
-                     <div class="control-group">
+                    <div class="control-group" id="preguntas">
                         <label for="descripcion" class="control-label">Asignar Preguntas</label>
                         <div class="controls">
                             <ul id="fcbklist">
@@ -124,12 +191,12 @@
                             </ul>
                         </div>
                     </div>   
-                        
-                        <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Crear Indicador</button>
-                            <button class="btn" type="reset">Cancelar</button>
-                        </div>
-                    </fieldset>
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Crear Indicador</button>
+                        <button class="btn" type="reset">Cancelar</button>
+                    </div>
+                </fieldset>
             </form>
         </div><!--/span-->        
     </div><!--/row-->    

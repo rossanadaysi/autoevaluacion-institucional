@@ -68,6 +68,41 @@
 
         <style type="text/css">
 
+            .page_loading {
+                background-attachment: scroll;
+                background-clip: border-box;
+                background-color: #8F8F8F;
+                background-image: none;
+                background-origin: padding-box;
+                background-position: 0 0;
+                background-repeat: repeat;
+                background-size: auto auto;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                color: #FFFFFF;
+                height: 32px;
+                left: 45%;
+                line-height: 32px;
+                margin-bottom: 0;
+                margin-left: -62px;
+                margin-right: 0;
+                margin-top: -16px;
+                padding-bottom: 0;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 0;
+                position: absolute;
+                top: 30%;
+            }
+            .page_loading span {
+                color: #FFFFFF;
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 32px;
+                font-family: Helvetica,Arial,sans-serif;
+            }
             .slick-cell .options a {
                 cursor: pointer;
                 display: block;
@@ -371,7 +406,9 @@
                                                     
                                   
            
-                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1 && hash != "#CerrarSesion")
+                        if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" 
+                            && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 
+                            && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1 && hash != "#CerrarSesion" && hash.indexOf("#detallePregunta")==-1)
                         { //si no es ---
                             
                             $.unsubscribe("set_grid_width");
@@ -879,7 +916,23 @@
                                 }); //fin $.ajax
                             
                             }
+                            else if(hash.indexOf("#detallePregunta")!=-1 ){
                             
+                                var url4 = "<%=request.getContextPath()%>/"+hash;
+                              
+                                url4 = url4.replace('#detallePregunta', "ControllerAI?action=detallePreguntaAI");
+                                url4 = url4.replace('&', "&idP=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url4,
+                                    success: function(data){
+                                        $("div.ui-layout-center").append(data);
+                                        
+                                    } //fin success
+                                }); //fin $.ajax
+                            
+                            }
                         } //fin si si es ---
                     
                     } //fin else principal

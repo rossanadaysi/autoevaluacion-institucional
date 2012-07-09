@@ -7,7 +7,65 @@
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
+        var $fcbklist = $('#fcbklist'); 
+        var $listItems = $fcbklist.find('li');
+        
         $.fcbkListSelection("#fcbklist","600","50","3");       
+        
+        $(".clearer").before('<input type="text" id="filter" class="input-medium search-query" placeholder="Buscar" style="padding-top: 0px; padding-bottom: 0px; float: right; border-right-width: 1px; padding-right: 14px; margin-right: 35px;">');
+        
+        
+        
+        
+        $('#filter').keyup(function (){ 
+            var $this = $(this); 
+
+            var val = $this.val(); 
+
+            /*** Show all the listItems when the filter is cleared ***/ 
+            if (!val) { 
+                $this.data('lastVal', val); 
+                $listItems.show(); 
+                return; 
+            } 
+
+            var lastVal = $this.data('lastVal'); 
+            $this.data('lastVal', val); 
+            /*** If the filter hasn't changed, do nothing ***/ 
+            if(val === lastVal) { return; } 
+
+            /*** Hide the results of the previous filter ***/ 
+            $listItems.filter(':visible').hide(); 
+
+            /*** 
+      Show only the items of the current tab that match 
+      the filter. 
+             ***/ 
+            var $tabItems; 
+            switch($(".view_on").attr("id").replace("view_","")) { 
+                case "all": 
+                    $tabItems = $listItems; 
+                    break; 
+                case "selected": 
+                    $tabItems = $listItems.filter('[addedid]'); 
+                    break; 
+                case "unselected": 
+                    $tabItems = $listItems.filter(':not([addedid])'); 
+                    break;   
+            } 
+            $tabItems.filter(':icontains(' + val + ')').show(); 
+        }); 
+
+        /*** 
+    This is a custom pseudo-selector that selects 
+    elements whose text contains the specified substring. 
+    It is case-insensitive, unlike the built-in :contains selector. 
+         ***/ 
+        $.extend($.expr[':'], { 
+            icontains: function(elem, i, match){ 
+                return (new RegExp(match[3], 'im')).test($(elem).text()); 
+            } 
+        });
         
         $("#formEditarIndic").validate({
             submitHandler: function(){
@@ -19,11 +77,29 @@
                         console.log("ocurrio un error");
                     },
                     success: function(){
-                         $("a[href='#listarIndicadores']").click();
+                        $("a[href='#listarIndicadores']").click();
                     } //fin success
                 }); //fin $.ajax    
             }
         });
+        
+        $("#instrumento").change(function(){
+            $("#preguntas").hide();
+            $("#instrumento option:selected").each(function()
+            { 
+                if($(this).text()=="Encuestas"){
+                    $("#preguntas").show();
+                }
+            });   
+
+        });
+        $("#preguntas").hide();
+        $("#instrumento option:selected").each(function()
+        { 
+            if($(this).text()=="Encuestas"){
+                $("#preguntas").show();
+            }
+        }); 
     });      
 </script>
 <br>
@@ -82,10 +158,11 @@
                                     </c:choose>    
                                 </c:forEach>
                             </select>    
+                            <p class="help-block">Presione la tecla control (ctrl) + click para seleccionar varios elementos</p>    
                         </div>
                     </div>
 
-                    <div class="control-group">
+                    <div class="control-group" id="preguntas">
                         <label  class="control-label">Asignar Preguntas</label>
                         <div class="controls">
                             <ul id="fcbklist">
