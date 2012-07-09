@@ -2,19 +2,27 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(function(){
-        $("#boton").click(function(){
+        $("#encuesta").change(function(){
             $.ajax({ 
                 type: "POST", 
                 url: "<%=request.getContextPath()%>/ControllerAI?action=informeRealAI",
                 data: "encuesta="+$("#encuesta option:selected").val(),
                 beforeSend :function(){
-                    $("div.ui-layout-center").hide();
+                    $("div.ui-layout-center").append("<div id='contenido'></div>");
+                    $("#contenido").hide();
+                    $("div.ui-layout-center").append("<div class='page_loading'>"
+                        +"<span>Cargando</span>"
+                        +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                        +"</div>");
+                                
                 },
                 success: function(data) 
                 {
-                    $("div.ui-layout-center").append(data);
-                    $("div.ui-layout-center").show(100);
-                                        
+                    $("#contenido").append(data);
+                    $("#contenido").show(200, function(){
+                        $(".page_loading").hide();
+                    })     
+                                
                 } //fin success
             }); //fin del $.ajax    
         });
@@ -39,9 +47,7 @@
                         </div>
                     </div>
                 </fieldset>
-                <div class="form-actions">
-                    <button class="btn" id="boton" type="button">Mostrar</button>
-                </div>
+
             </form>
         </div>
     </div>
