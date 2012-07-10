@@ -748,6 +748,8 @@ public class formController extends HttpServlet {
                     }
 
 
+                    Result rs = conSql.CargarSql2("select `persona_id`, `estado` from encabezado where `proceso_id` = '" + proceso.getId() + "' and `fuente_id` = '" + id + "'", bd);
+                    session.setAttribute("selectorAsignarM33", rs);
 
                 } catch (Error ex) {
                     //  Logger.getLogger(fontController.class.getName()).log(Level.SEVERE, null, ex);
@@ -870,10 +872,12 @@ public class formController extends HttpServlet {
 
 
                 session.setAttribute("idFuenteMuestra", id);
-                System.out.println("va pa esa");
                 Result rs = conSql.CargarSql2(sql, bd);
-                System.out.println("couunt" + rs.getRowCount());
                 session.setAttribute("selectorAsignarM2", rs);
+
+                rs = conSql.CargarSql2("select `persona_id`, `estado` from encabezado where `proceso_id` = '" + proceso.getId() + "' and `fuente_id` = '" + id + "'", bd);
+                session.setAttribute("selectorAsignarM22", rs);
+
             } else if (request.getParameter(
                     "action").equals("generarMuestra")) {
 
