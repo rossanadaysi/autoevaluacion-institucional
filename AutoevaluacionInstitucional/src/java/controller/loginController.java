@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.sql.Result;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,7 +150,7 @@ public class loginController extends HttpServlet {
 
                                     for (Proceso proceso : listProceso) {
                                         if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
-                                            session.setAttribute("aux_IniciarP", 1);
+                                            session.setAttribute("aux_IniciarP", 0);
 
                                             session.setAttribute("proceso", proceso);
                                             aux = 1;
@@ -196,13 +197,22 @@ public class loginController extends HttpServlet {
                                                 aux1 = 1;
                                                 session.setAttribute("aux2_index2", aux1);
                                                 session.setAttribute("aux_IniciarP", 0);
+                                            } else {
+                                                aux1 = 2;
+                                                session.setAttribute("aux2_index2", aux1);
+                                                session.setAttribute("aux_IniciarP", 1);
                                             }
 
-                                            ResultSet rs3 = conSql.CargarSql("select id from proceso where id = " + proceso.getId() + " and fechainicio = 'Proceso en Configuración.'", nombreBd);
+                                            ResultSet rs3 = conSql.CargarSql("select id, fechainicio from proceso where id = " + proceso.getId() + " and fechainicio <> null", nombreBd);
                                             try {
                                                 if (rs3.next()) {
-                                                    session.setAttribute("aux_IniciarP", 0);
-                                                    System.out.println("Proceso en configuración.");
+                                                    if (rs3.getString(2).equals("Proceso en Configuración.")) {
+                                                        session.setAttribute("aux_IniciarP", 0);
+                                                        System.out.println("Proceso en configuración.");
+                                                    } else {
+                                                        session.setAttribute("aux_IniciarP", 0);
+                                                        System.out.println("Proceso en ejecucion.");
+                                                    }
                                                 }
                                             } catch (SQLException ex) {
                                                 Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -275,7 +285,7 @@ public class loginController extends HttpServlet {
                                                 + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
                                                 + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
                                                 + "";
-                                        
+
                                         Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
                                         session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
                                         session.setAttribute("idfuente", idFuenteEstudiante); //session---------------------------------
@@ -315,11 +325,6 @@ public class loginController extends HttpServlet {
         } catch (java.lang.NumberFormatException e) {
             out.println(4);
         }
-
-
-
-
-
     }
 
     /**

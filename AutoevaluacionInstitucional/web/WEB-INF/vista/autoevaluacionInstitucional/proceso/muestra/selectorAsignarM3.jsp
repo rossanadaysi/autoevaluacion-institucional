@@ -77,12 +77,36 @@
             <c:set var="auxx" value="1"></c:set>
             <c:forEach items="${muestrasSeleccionadas.rowsByIndex}" var="item2" varStatus="iter2">
                 <c:if test="${item[0] == item2[2]}">
-                    <li>
-                        <c:set var="auxx" value="0"></c:set>
-                        <strong>${item[2]} ${item[3]}</strong><br/> 
-                        <span class="fcbkitem_text">${item[1]}</span>
-                        <input name="${item[0]}" type="hidden" checked="checked" value="0"/>
-                    </li>
+                    <c:set var="varaux" value="0"/>
+                    <c:forEach items="${selectorAsignarM33.rowsByIndex}" var="item3" varStatus="iter2">
+                        <c:if test="${item[1] == item3[0]}">
+                            <c:set var="varaux" value="1"/>
+                            <c:if test="${item3[1] == 'terminado'}">
+                                <li style="background-color: #DFF0D8; color: #468847;">
+                                    <c:set var="auxx" value="0"></c:set>
+                                    <strong>${item[2]} ${item[3]}</strong><br/> 
+                                    <span class="fcbkitem_text">${item[1]}</span>
+                                    <input name="${item[0]}" type="hidden" checked="checked" value="0"/>
+                                </li>
+                            </c:if>
+                            <c:if test="${item3[1] == 'guardada'}">
+                                <li style="background-color: #D9EDF7; color: #3A87AD;">
+                                    <c:set var="auxx" value="0"></c:set>
+                                    <strong>${item[2]} ${item[3]}</strong><br/> 
+                                    <span class="fcbkitem_text">${item[1]}</span>
+                                    <input name="${item[0]}" type="hidden" checked="checked" value="0"/>
+                                </li>
+                            </c:if>                   
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${varaux == 0}">
+                        <li style="background-color: #F2DEDE; color: #B94A48;">
+                            <c:set var="auxx" value="0"></c:set>
+                            <strong>${item[2]} ${item[3]}</strong><br/> 
+                            <span class="fcbkitem_text">${item[1]}</span>
+                            <input name="${item[0]}" type="hidden" checked="checked" value="0"/>
+                        </li>
+                    </c:if>
                 </c:if>
             </c:forEach>
             <c:if test="${auxx == 1}">
