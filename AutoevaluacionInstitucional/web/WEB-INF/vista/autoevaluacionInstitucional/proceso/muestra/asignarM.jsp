@@ -6,7 +6,7 @@
  
     function presionSubmitGenerarMuestra()
     {
-       
+        $("#filtro").hide(data);
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select5 option:eq(0)").attr("selected", "selected");
@@ -26,36 +26,25 @@
                 // $("#resultados2").show();
             },
             success: function(){
-                //   
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
+                    url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
+                    data: $("#formAsigMue").serialize(),
+                    beforeSend:function(){
+                    },
                     success: function(data){
-                        $("#filtro").html(data);
-                        $("#filtro").show();
-                    }
-                })
-                
-                $("#cargando").hide();
-                
-                $("#select3 option:eq(0)").attr("selected", "selected");
-                $("#select4 option:eq(0)").attr("selected", "selected");
-                $("#select8 option:eq(0)").attr("selected", "selected");
-                $("#select9 option:eq(0)").attr("selected", "selected");
-                $("#select10 option:eq(0)").attr("selected", "selected");
-                $.ajax({
-                    type: 'POST',
-                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
-                    success: function(data){
-                        $("#resultados4").html(data);
-                        $("#resultados4").show();
-                    }
-                })
-                  
-            } //fin success
-                                            
-        }); //fin $.ajax
-            
+                        $.ajax({
+                            type: 'POST',
+                            url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
+                            success: function(data){
+                                $("#cargando").hide();
+                                $("#filtro").html(data);
+                            }
+                        })
+                    } //fin success                              
+                }); //fin $.ajax
+            } //fin success                               
+        });
     }
     
     

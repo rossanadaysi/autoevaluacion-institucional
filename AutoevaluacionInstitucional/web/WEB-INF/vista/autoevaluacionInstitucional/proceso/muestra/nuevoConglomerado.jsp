@@ -13,79 +13,80 @@
                 });
             }
         }); 
+        
+    });
     
-        $("#criterio").change(function(){
-            $("#aceptarConglomerado").show();
-            $("#nuevoCriterio").hide();
-            if($("#criterio option:selected").val() == "nuevoCriterio"){
-                $("#descripcionCriterio").hide();
-                $("#formCriterio").show();
-                $("#aceptarConglomerado").hide();
-                $("#nuevoCriterio").show();
-            }  
-            else if($("#criterio option:selected").val() != ""){
+    $("#criterio").change(function(){
+        $("#aceptarConglomerado").show();
+        $("#nuevoCriterio").hide();
+        if($("#criterio option:selected").val() == "nuevoCriterio"){
+            $("#descripcionCriterio").hide();
+            $("#formCriterio").show();
+            $("#aceptarConglomerado").hide();
+            $("#nuevoCriterio").show();
+        }  
+        else if($("#criterio option:selected").val() != ""){
+            $("#formCriterio").hide();
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=descripcionConglomerado",
+                data: $('#formAsigMue3').serialize(),
+                success: function(data){
+                    $("#descripcionCriterio").html(data);
+                    $("#descripcionCriterio").show();
+                    
+                }
+            }) 
+        
+        }
+        else{
+            $("#formCriterio").hide();
+            $("#descripcionCriterio").hide();
+        }
+    });
+    
+    function removeFormField(id) {
+        $(id).remove();
+    }
+    
+
+    function addFormField() {
+        var id = document.getElementById("id").value;
+        $("#divTxt").append("<p id='row" + id + "'><label for='txt" + id + "'>Nuevo Elemento: <input type='text' size='20' name='criterio" + id + "' id='txt" + id + "'> <a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Borrar</a><p>");
+
+        $("#row" + id).highlightFade({
+            speed:1000
+        });
+
+        id = (id - 1) + 2;
+        document.getElementById("id").value = id;
+    }
+    
+    $("#nuevoCriterio").click(function(){    
+        var formularioA=$('#formAsigMue').serialize();
+        var formularioB=$('#formAsigMue3').serialize();
+        var Todo=formularioA+"&"+formularioB;
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/formController?action=pnuevoConglomeradoAI",
+            data: $('#formAsigMue3').serialize(),
+            success: function(data){
+                $("#aceptarConglomerado").show();
+                $("#nuevoCriterio").hide();
                 $("#formCriterio").hide();
                 $.ajax({
                     type: 'POST',
-                    url: "<%=request.getContextPath()%>/ControllerAI?action=descripcionConglomerado",
+                    url: "<%=request.getContextPath()%>/ControllerAI?action=conglomeradoExistenteAI",
                     data: $('#formAsigMue3').serialize(),
                     success: function(data){
-                        $("#descripcionCriterio").html(data);
-                        $("#descripcionCriterio").show();
-                    
+                        $("#selectConglomerado2").html(data);
                     }
                 }) 
-        
             }
-            else{
-                $("#formCriterio").hide();
-                $("#descripcionCriterio").hide();
-            }
-        });
-    
-        function removeFormField(id) {
-            $(id).remove();
-        }
-    
-
-        function addFormField() {
-            var id = document.getElementById("id").value;
-            $("#divTxt").append("<p id='row" + id + "'><label for='txt" + id + "'>Nuevo Elemento: <input type='text' size='20' name='criterio" + id + "' id='txt" + id + "'> <a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Borrar</a><p>");
-
-            $("#row" + id).highlightFade({
-                speed:1000
-            });
-
-            id = (id - 1) + 2;
-            document.getElementById("id").value = id;
-        }
-    
-        $("#nuevoCriterio").click(function(){    
-            var formularioA=$('#formAsigMue').serialize();
-            var formularioB=$('#formAsigMue3').serialize();
-            var Todo=formularioA+"&"+formularioB;
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/formController?action=pnuevoConglomeradoAI",
-                data: $('#formAsigMue3').serialize(),
-                success: function(data){
-                    $("#aceptarConglomerado").show();
-                    $("#nuevoCriterio").hide();
-                    $("#formCriterio").hide();
-                    $.ajax({
-                        type: 'POST',
-                        url: "<%=request.getContextPath()%>/ControllerAI?action=conglomeradoExistenteAI",
-                        data: $('#formAsigMue3').serialize(),
-                        success: function(data){
-                            alert("succes2");
-                            $("#selectConglomerado2").html(data);
-                        }
-                    }) 
-                }
-            }) 
-        });
-    
+        }) 
     });
+    
+ 
 </script>
 <form  id="formAsigMue3" method="post">
     <fieldset>
