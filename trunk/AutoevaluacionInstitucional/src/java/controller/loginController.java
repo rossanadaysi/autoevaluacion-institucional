@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -150,7 +149,7 @@ public class loginController extends HttpServlet {
 
                                     for (Proceso proceso : listProceso) {
                                         if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
-                                            session.setAttribute("aux_IniciarP", 0);
+                                            session.setAttribute("aux_IniciarP", 1);
 
                                             session.setAttribute("proceso", proceso);
                                             aux = 1;

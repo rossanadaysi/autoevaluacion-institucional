@@ -1,15 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
-    $(document).ready(function() {       
+    $(document).ready(function() {  
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select8 option:eq(0)").attr("selected", "selected");
-        alert(${aux_asignarM});
-        alert(${aux_IniciarP});
         if(${aux_asignarM == 1}){
             if(${aux_IniciarP == 0}){
-                alert("hola1");
                 if ($('#enlace').is (':visible') && $('#formula').is (':visible')){
                     $("#filtro").show();
                 }else{
@@ -17,10 +14,10 @@
                     $("#filtro").show();
                 }
             }else{
-                alert("hola2")
                 $("#resultadoAlert").hide();
                 $("#formula").hide();
                 $("#botonNuevaMuestra").hide();
+                $("#filtro").show();
             }
         }else{
             if(${aux_IniciarP == 1}){
@@ -30,13 +27,17 @@
                 $("#botonNuevaMuestra").hide();
                 $("#infoMuestra").show();
             }else{
-                $("#filtro").hide();
-                $("#formula").show();
-                $("option[rel=popover]")
-                .popover()
-                .click(function(e) {
-                    e.preventDefault()      
-                })
+                if ($('#enlace').is (':visible') && $('#formula').is (':visible')){
+                    $("#filtro").show();
+                }else{
+                    $("#filtro").hide();
+                    $("#formula").show();
+                    $("option[rel=popover]")
+                    .popover()
+                    .click(function(e) {
+                        e.preventDefault()      
+                    })
+                }
             }
         }
     });
