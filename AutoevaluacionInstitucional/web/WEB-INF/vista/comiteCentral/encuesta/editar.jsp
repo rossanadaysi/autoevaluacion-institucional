@@ -22,10 +22,21 @@
 
             var val = $this.val(); 
 
-            /*** Show all the listItems when the filter is cleared ***/ 
             if (!val) { 
                 $this.data('lastVal', val); 
-                $listItems.show(); 
+                var $tabItems2; 
+                switch($(".view_on").attr("id").replace("view_","")) { 
+                    case "all": 
+                        $tabItems2 = $listItems; 
+                        break; 
+                    case "selected": 
+                        $tabItems2 = $listItems.filter('[addedid]'); 
+                        break; 
+                    case "unselected": 
+                        $tabItems2 = $listItems.filter(':not([addedid])'); 
+                        break;   
+                } 
+                $tabItems2.show();  
                 return; 
             } 
 

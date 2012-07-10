@@ -19,54 +19,64 @@
         
         
         $('#filter').keyup(function (){ 
-    var $this = $(this); 
+            var $this = $(this); 
 
-    var val = $this.val(); 
+            var val = $this.val(); 
 
-    /*** Show all the listItems when the filter is cleared ***/ 
-    if (!val) { 
-      $this.data('lastVal', val); 
-      $listItems.show(); 
-      return; 
-    } 
+            if (!val) { 
+                $this.data('lastVal', val); 
+                var $tabItems2; 
+                switch($(".view_on").attr("id").replace("view_","")) { 
+                    case "all": 
+                        $tabItems2 = $listItems; 
+                        break; 
+                    case "selected": 
+                        $tabItems2 = $listItems.filter('[addedid]'); 
+                        break; 
+                    case "unselected": 
+                        $tabItems2 = $listItems.filter(':not([addedid])'); 
+                        break;   
+                } 
+                $tabItems2.show();  
+                return; 
+            }
+            var lastVal = $this.data('lastVal'); 
+            $this.data('lastVal', val); 
+            /*** If the filter hasn't changed, do nothing ***/ 
+            if(val === lastVal) { return; } 
 
-    var lastVal = $this.data('lastVal'); 
-    $this.data('lastVal', val); 
-    /*** If the filter hasn't changed, do nothing ***/ 
-    if(val === lastVal) { return; } 
+            /*** Hide the results of the previous filter ***/ 
+            $listItems.filter(':visible').hide(); 
 
-    /*** Hide the results of the previous filter ***/ 
-    $listItems.filter(':visible').hide(); 
-
-    /*** 
+            /*** 
       Show only the items of the current tab that match 
       the filter. 
-    ***/ 
-    var $tabItems; 
-    switch($(".view_on").attr("id").replace("view_","")) { 
-      case "all": 
-        $tabItems = $listItems; 
-        break; 
-      case "selected": 
-        $tabItems = $listItems.filter('[addedid]'); 
-        break; 
-      case "unselected": 
-        $tabItems = $listItems.filter(':not([addedid])'); 
-        break;   
-    } 
-    $tabItems.filter(':icontains(' + val + ')').show(); 
-  }); 
+             ***/ 
+            var $tabItems; 
+            switch($(".view_on").attr("id").replace("view_","")) { 
+                case "all": 
+                    $tabItems = $listItems; 
+                    break; 
+                case "selected": 
+                    $tabItems = $listItems.filter('[addedid]'); 
+                    break; 
+                case "unselected": 
+                    $tabItems = $listItems.filter(':not([addedid])'); 
+                    break;   
+            } 
+            $tabItems.filter(':icontains(' + val + ')').show(); 
+        }); 
 
-  /*** 
+        /*** 
     This is a custom pseudo-selector that selects 
     elements whose text contains the specified substring. 
     It is case-insensitive, unlike the built-in :contains selector. 
-  ***/ 
-  $.extend($.expr[':'], { 
-    icontains: function(elem, i, match){ 
-      return (new RegExp(match[3], 'im')).test($(elem).text()); 
-    } 
-  }); 
+         ***/ 
+        $.extend($.expr[':'], { 
+            icontains: function(elem, i, match){ 
+                return (new RegExp(match[3], 'im')).test($(elem).text()); 
+            } 
+        }); 
 
         
         
@@ -133,7 +143,7 @@
                 <fieldset>
                     <legend>Crear Factor</legend>
                     <div class="control-group">
-                        <label for="nombre"  class="control-label">Nombre</label>
+                        <label for="nombre"  class="control-label">Factor</label>
                         <div class="controls">
                             <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value=""/>
                         </div>
