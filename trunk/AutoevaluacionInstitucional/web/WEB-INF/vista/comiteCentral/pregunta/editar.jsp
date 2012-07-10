@@ -38,7 +38,7 @@
         <div class="span8">
             <form id="formEditarPreg" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Editar Pregunta</legend>
+                    <legend>Editar pregunta</legend>
                     <div class="control-group">
                         <label for="codigo" class="control-label">C&oacute;digo</label>
                         <div class="controls">

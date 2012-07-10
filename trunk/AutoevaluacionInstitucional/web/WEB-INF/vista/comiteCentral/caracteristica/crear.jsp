@@ -22,13 +22,23 @@
 
             var val = $this.val(); 
 
-            /*** Show all the listItems when the filter is cleared ***/ 
-            if (!val) { 
+        if (!val) { 
                 $this.data('lastVal', val); 
-                $listItems.show(); 
+                var $tabItems2; 
+                switch($(".view_on").attr("id").replace("view_","")) { 
+                    case "all": 
+                        $tabItems2 = $listItems; 
+                        break; 
+                    case "selected": 
+                        $tabItems2 = $listItems.filter('[addedid]'); 
+                        break; 
+                    case "unselected": 
+                        $tabItems2 = $listItems.filter(':not([addedid])'); 
+                        break;   
+                } 
+                $tabItems2.show();  
                 return; 
-            } 
-
+            }
             var lastVal = $this.data('lastVal'); 
             $this.data('lastVal', val); 
             /*** If the filter hasn't changed, do nothing ***/ 
@@ -131,9 +141,9 @@
         <div class="span8">
             <form id="formCrearCarac" class="form-horizontal" method="post">
                 <fieldset>
-                    <legend>Crear Caracteristica</legend>
+                    <legend>Crear Caracter&iacute;stica</legend>
                     <div class="control-group">
-                        <label for="nombre" class="control-label">Nombre</label>
+                        <label for="nombre" class="control-label">Caracter&iacute;stica</label>
                         <div class="controls">
                             <input type="text" name="nombre" id="nombre" class="input-xlarge {required:true}" value=""/>
                         </div>

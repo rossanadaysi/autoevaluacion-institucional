@@ -114,6 +114,9 @@
 
             }
 
+            .ui-layout-pane-west{
+                border-right: 1px solid #BBBBBB; 
+            }
 
         </style>
 
@@ -122,37 +125,44 @@
             var myLayout, innerLayout, middleLayout;
             $(document).ready( function() {
                 location ="/AutoevaluacionInstitucional/#inicio";
-                                    
+                
                 myLayout = $('body').layout({
                     //	enable showOverflow on west-pane so CSS popups will overlap north pane
                     west__size:			270
                     ,   center__paneSelector:  ".ui-layout-center"
                     ,   north__paneClass:    "ui-layout-pane2"
-                    ,   closable:				true	// pane can open & close
-
-
                     //	reference only - these options are NOT required because 'true' is the default
                     ,	closable:				true	// pane can open & close
                     ,	resizable:				false	// when open, pane can be resized 
                     ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
                     ,   north__size:            41
+                    ,   north__closable:        false
                     ,   north__maxSize:         41    
                     ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
                     ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
                     ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
+                    ,	south__closable:		false	
                     ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
-                    ,	west__spacing_open:	1		// no resizer-bar when open (zero height)
-                    ,       south__paneClass:               "ui-layout-pane"
-                  	
+                    ,	west__spacing_open:	0
+                    ,	west__spacing_closed:			20
+                    ,	west__togglerLength_closed:	35
+                    ,	west__togglerAlign_closed:	"top"
+                    ,	west__togglerContent_closed:	"<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                    ,	west__togglerTip_closed:	"Mostrar menú"
+                    ,	west__togglerTip_open:	        "Ocultar menú"
+                    ,   south__paneClass:               "ui-layout-pane"
+                    ,	west__togglerContent_open:      ""	
                     ,	west__minSize:			200
                     ,	west__maxSize:			350
                                                 
                      
                 });
-                
                 myLayout.allowOverflow('north'); 
                 // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
-               
+                // save selector strings to vars so we don't have to repeat it
+                // must prefix paneClass with "body > " to target ONLY the outerLayout panes
+                myLayout.addCloseBtn("#west-closer", "west");
+		
                
                
                
@@ -372,6 +382,7 @@
             <div class="ui-layout-content">
                 <div id="menu" style="padding: 8px 0pt;" class="well">
                     <ul class="nav nav-list">  
+                        <button id="west-closer" class="close">&laquo;</button>
                         <li class="nav-header">Factores</li>
                         <li><a href="#crearFactor"><i class="icon-plus"></i> Crear Factor</a></li>
                         <li><a href="#listarFactores"><i class="icon-th-list"></i> listar Factores</a></li>

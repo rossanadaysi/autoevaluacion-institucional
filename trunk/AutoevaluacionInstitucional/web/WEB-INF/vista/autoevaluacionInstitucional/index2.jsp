@@ -201,7 +201,9 @@
                 padding: 0;
                 overflow:	auto;
             }
-
+            .ui-layout-pane-west{
+                border-right: 1px solid #BBBBBB; 
+            }
 
         </style>
         <script type="text/javascript">
@@ -262,32 +264,35 @@
                     ,   closable:				true	// pane can open & close
 
                     //	reference only - these options are NOT required because 'true' is the default
-                    ,	closable:				true	// pane can open & close
+                   
                     ,	resizable:				false	// when open, pane can be resized 
                     ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
                     ,   north__size:            41
                     ,   north__maxSize:         41    
                     ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
                     ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
+                    ,   north__closable:        false
+                    ,	south__closable:		false	
                     ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
                     ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
-                    ,	west__spacing_open:	1		// no resizer-bar when open (zero height)
+                    ,	west__spacing_open:	0
+                    ,	west__spacing_closed:			20
+                    ,	west__togglerLength_closed:	35
+                    ,	west__togglerAlign_closed:	"top"
+                    ,	west__togglerContent_closed:	"<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                    ,	west__togglerTip_closed:	"Mostrar menú"
+                    ,	west__togglerTip_open:	        "Ocultar menú"
                     ,   south__paneClass:               "ui-layout-pane"
-                  	
+                    ,	west__togglerContent_open:      ""	
                     ,	west__minSize:			200
                     ,	west__maxSize:			350
                                                 
-                    ,       center__onresize: function (name, el, state, opts, Layout) { 
-                        $.publish("set_grid_height", [state.innerHeight]);
-                        $.publish("set_grid_width", [state.innerWidth]);
-                    }
-			
                      
                 });
                 
                 myLayout.allowOverflow('north'); 
                 // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
-               
+                myLayout.addCloseBtn("#west-closer", "west");
                
                
                
@@ -439,10 +444,23 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(data) 
                                     {
-                                       
-                                        $("div.ui-layout-center").append(data);
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+                                
+                            
                                         setTimeout(function(){
                                             $("div.ui-layout-center").scrollspy();   
                                         }, 500);
@@ -518,10 +536,22 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(data) 
-                                    { 
-                                                                 
-                                        $("div.ui-layout-center").append(data);
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+
                                         setTimeout(function(){
                                             $("div.ui-layout-center").scrollspy();   
                                         }, 500);
@@ -541,10 +571,22 @@
                                     $.ajax({ 
                                         type: "POST", 
                                         url: url3, 
+                                        beforeSend :function(){
+                                            $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                            $("#contenido").hide();
+                                            $("div.ui-layout-center").append("<div class='page_loading'>"
+                                                +"<span>Cargando</span>"
+                                                +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                                +"</div>");
+                                
+                                        },
                                         success: function(data) 
                                         {
-                                       
-                                            $("div.ui-layout-center").append(data);
+                                            $("#contenido").append(data);
+                                            $("#contenido").show(200, function(){
+                                                $(".page_loading").hide();
+                                            })     
+
                                     
                                             $("#formAsigEnc").submit(function(event){
                                                 event.preventDefault();
@@ -583,33 +625,22 @@
                                     $.ajax({ 
                                         type: "POST", 
                                         url: url3, 
+                                        beforeSend :function(){
+                                            $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                            $("#contenido").hide();
+                                            $("div.ui-layout-center").append("<div class='page_loading'>"
+                                                +"<span>Cargando</span>"
+                                                +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                                +"</div>");
+                                
+                                        },
                                         success: function(data) 
                                         {
-                                       
-                                            $("div.ui-layout-center").append(data);
-                                            /*
-                                            $("#formAsigMue").submit(function(event){
-                                                event.preventDefault();
-                                             
-                                                $.ajax({
-                                                    type: 'POST',
-                                                   
-                                                    data: $("#formAsigMue").serialize(),
-                                                    success: function(){
-                                                                                    
-                                                        $("#resultados2").hide();
-                                                        $("#select option:eq(0)").attr("selected","selected");
-                                                        $('#myModalM').modal();  
-                                                                                    
-                                                                                   
-                                                    } //fin success
+                                            $("#contenido").append(data);
+                                            $("#contenido").show(200, function(){
+                                                $(".page_loading").hide();
+                                            })     
                                             
-                                                }); //fin $.ajax
-                                            }); //fin submit
-                                             */
-                                        
-                                     
-                             
                                         } //fin success
                                     }); //fin del $.ajax
                          
@@ -625,9 +656,22 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(data) 
-                                    { 
-                                        $("div.ui-layout-center").append(data);
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+
                                         
                                         $("#formInfoDoc").submit(function(event){
                                             event.preventDefault();
@@ -654,9 +698,22 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(data) 
-                                    { 
-                                        $("div.ui-layout-center").append(data);
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+
                                         
                                         $("#formInfoNum").submit(function(event){
                                             event.preventDefault();
@@ -683,9 +740,22 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(data) 
                                     {
-                                        $("div.ui-layout-center").append(data);
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+
                                         setTimeout(function(){},200);
                                         $("#formCrearProc").validate({
                                             submitHandler: function(){
@@ -715,9 +785,22 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(data) 
                                     {
-                                        $("div.ui-layout-center").append(data);
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+
                                         setTimeout(function(){},200);
                                         $("#formCrearProc").validate({
                                             
@@ -838,12 +921,26 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarEvaluarDoc",
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarDoc",
-                                            success: function(data){
-                                                $("#center").html(data);
+                                            success: function(data) 
+                                            {
+                                                $("#contenido").append(data);
+                                                $("#contenido").show(200, function(){
+                                                    $(".page_loading").hide();
+                                                })     
+
                                             }
                                         })
                                     } //fin success
@@ -853,12 +950,25 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarEvaluarNum",
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarNum",
-                                            success: function(data){
-                                                $("#center").html(data);
+                                            success: function(data) 
+                                            {
+                                                $("#contenido").append(data);
+                                                $("#contenido").show(200, function(){
+                                                    $(".page_loading").hide();
+                                                })     
                                             }
                                         })
                                     } //fin success
@@ -875,8 +985,21 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    success: function(data){
-                                        $("div.ui-layout-center").append(data);
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
+                                    success: function(data) 
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
                                         
                                     } //fin success
                                 }); //fin $.ajax
@@ -891,9 +1014,21 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    success: function(data){
-                                        $("div.ui-layout-center").append(data);
-                                        
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
+                                    success: function(data) 
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
                                     } //fin success
                                 }); //fin $.ajax
                             
@@ -909,9 +1044,21 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    success: function(data){
-                                        $("div.ui-layout-center").append(data);
-                                        
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
+                                    success: function(data) 
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
                                     } //fin success
                                 }); //fin $.ajax
                             
@@ -926,8 +1073,21 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    success: function(data){
-                                        $("div.ui-layout-center").append(data);
+                                    beforeSend :function(){
+                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
+                                        $("#contenido").hide();
+                                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                                            +"<span>Cargando</span>"
+                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                                            +"</div>");
+                                
+                                    },
+                                    success: function(data) 
+                                    {
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
                                         
                                     } //fin success
                                 }); //fin $.ajax
@@ -1032,7 +1192,8 @@
         <div id="ui-layout-west" class="ui-layout-west">
             <div class="ui-layout-content">
                 <div id="menu" style="padding: 8px 0pt;" class="well">
-                    <ul class="nav nav-list">  
+                    <ul class="nav nav-list">
+                        <button id="west-closer" class="close">&laquo;</button>
                         <c:choose>
                             <c:when test="${aux_index2 == 1}">
                                 <c:choose>

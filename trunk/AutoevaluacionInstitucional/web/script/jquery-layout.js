@@ -33,7 +33,7 @@ $.layout = {
 ,	language: {
 	//	Tips and messages for resizers, togglers, custom buttons, etc.
 		Open:			"Open"	// eg: "Open Pane"
-	,	Close:			"Close"
+	,	Close:			"Ocultar menu"
 	,	Resize:			"Resize"
 	,	Slide:			"Slide Open"
 	,	Pin:			"Pin"

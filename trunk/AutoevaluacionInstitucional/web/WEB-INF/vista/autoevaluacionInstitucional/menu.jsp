@@ -17,6 +17,7 @@
            
 </script>
 <ul class="nav nav-list">  
+<button id="west-closer" class="close">&laquo;</button>
     <c:choose>
         <c:when test="${aux_index2 == 1}">
 
