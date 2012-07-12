@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
-<script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
 <script type="text/javascript">
     $(function(){
         $("#formAsigMue3").validate({

@@ -1,9 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
-<link type="text/css" rel="stylesheet" href="jQuery/dragDrop/fcbklistselection.css" />
-<script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
