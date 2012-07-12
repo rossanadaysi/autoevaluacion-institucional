@@ -77,7 +77,7 @@
                             <th>Semestre</th>
                             </thead>
                             <tbody>
-                                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
+                                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
                                     <c:set var="varaux" value="0"/>
                                     <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
                                         <c:if test="${item[0] == item2[0]}">
@@ -111,7 +111,7 @@
                                             <td style="background-color: #F2DEDE; color: #B94A48;">${item[4]}</td>
                                         </tr>
                                     </c:if>
-                                    <c:set var="iterador" value="${iter.index + 1}" />
+                                    <c:set var="iterador" value="${iter2.index + 1}" />
                                 </c:forEach>
                             </tbody>
                         </table>
@@ -144,7 +144,7 @@
                                 <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                     <c:set var="varaux" value="0"/>
 
-                                    <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
+                                    <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter2">
                                         <c:if test="${item[0] == item2[0]}">
                                             <c:set var="varaux" value="1"/>
                                             <c:if test="${item2[1] == 'terminado'}">
