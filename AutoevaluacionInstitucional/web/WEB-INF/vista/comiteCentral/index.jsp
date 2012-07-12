@@ -131,6 +131,16 @@
             $(document).ready( function() {
                 location ="/AutoevaluacionInstitucional/#inicio";
                 
+                $("div.ui-layout-center").ajaxStart(function(){
+                    $("div.ui-layout-center").append("<div id='contenido'></div>");
+                    $("#contenido").hide();
+                    $("div.ui-layout-center").append("<div class='page_loading'>"
+                        +"<span>Cargando</span>"
+                        +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                        +"</div>");
+           
+                });
+                
                 myLayout = $('body').layout({
                     //	enable showOverflow on west-pane so CSS popups will overlap north pane
                     west__size:			270
@@ -245,15 +255,6 @@
                         $.ajax({ 
                             type: "POST", 
                             url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                $("#contenido").hide();
-                                $("div.ui-layout-center").append("<div class='page_loading'>"
-                                    +"<span>Cargando</span>"
-                                    +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                    +"</div>");
-                                
-                            },
                             success: function(data) 
                             {
                                 $("#contenido").append(data);
@@ -279,15 +280,6 @@
                         $.ajax({ 
                             type: "POST", 
                             url: url3, 
-                            beforeSend :function(){
-                                $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                $("#contenido").hide();
-                                $("div.ui-layout-center").append("<div class='page_loading'>"
-                                    +"<span>Cargando</span>"
-                                    +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                    +"</div>");
-                                
-                            },
                             success: function(data) 
                             {
                                 $("#contenido").append(data);

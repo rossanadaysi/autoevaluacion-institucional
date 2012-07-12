@@ -306,6 +306,15 @@
             $(function()
             {
                 
+                $("div.ui-layout-center").ajaxStart(function(){
+                    $("div.ui-layout-center").append("<div id='contenido'></div>");
+                    $("#contenido").hide();
+                    $("div.ui-layout-center").append("<div class='page_loading'>"
+                        +"<span>Cargando</span>"
+                        +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                        +"</div>");
+           
+                });
                 //CERRAR PROCESO
                 $('#myModalCP2b1').click(function(){
                    
@@ -444,15 +453,6 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -536,15 +536,6 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -571,15 +562,6 @@
                                     $.ajax({ 
                                         type: "POST", 
                                         url: url3, 
-                                        beforeSend :function(){
-                                            $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                            $("#contenido").hide();
-                                            $("div.ui-layout-center").append("<div class='page_loading'>"
-                                                +"<span>Cargando</span>"
-                                                +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                                +"</div>");
-                                
-                                        },
                                         success: function(data) 
                                         {
                                             $("#contenido").append(data);
@@ -625,15 +607,6 @@
                                     $.ajax({ 
                                         type: "POST", 
                                         url: url3, 
-                                        beforeSend :function(){
-                                            $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                            $("#contenido").hide();
-                                            $("div.ui-layout-center").append("<div class='page_loading'>"
-                                                +"<span>Cargando</span>"
-                                                +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                                +"</div>");
-                                
-                                        },
                                         success: function(data) 
                                         {
                                             $("#contenido").append(data);
@@ -656,15 +629,6 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -698,15 +662,6 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -740,15 +695,6 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -785,15 +731,6 @@
                                 $.ajax({ 
                                     type: "POST", 
                                     url: url3, 
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -809,16 +746,6 @@
                                                     type: 'POST',
                                                     url: "<%=request.getContextPath()%>/formController?action=crearProcesoAIp",
                                                     data: $("#formCrearProc").serialize(),
-                                                    beforeSend: function(){
-                                                        $('#myModalLoading').modal();   
-                                                        $("#myModalLoading .bar").css("width","50%");
-                                                    },
-                                                    complete:function(){
-                                                        $("#myModalLoading .bar").css("width","100%");
-                                                        setTimeout(function(){
-                                                            $('#myModalLoading').modal("hide");
-                                                        },400);
-                                                    },
                                                     success: function(){
                                                         
                                                         setTimeout(function(){
@@ -850,13 +777,24 @@
                             
                                 
                                 url3 = url3.replace('#', "ControllerAI?action=")+"AI";
-                                $("div.ui-layout-center").load(url3);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url3,
+                                    success: function(data){
+                                        
+                                        $("#contenido").append(data);
+                                        $("#contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })
+                                    } //fin success
+                                }); //fin $.ajax
                             }
                             //fin si no es ---
                         }else{ //si sio es ---
                             
                             if(hash == "#detalleProceso")
                             {
+                                $("div.ui-layout-center").empty();
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=detalleProceso",
@@ -865,11 +803,14 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=detalleProceso",
                                             success: function(data){
-                                                $("#center").html(data);
-                                            }
-                                        })
-                                    } //fin success
-                                }); //fin $.ajax
+                                                $("#contenido").append(data);
+                                                $("#contenido").show(200, function(){
+                                                    $(".page_loading").hide();
+                                                })
+                                            } //fin success
+                                        }); //fin $.ajax
+                                    }
+                                });
                             }
                             if(hash == "#listarProcesos")
                             {               
@@ -888,6 +829,7 @@
                                 }); //fin $.ajax
                             }
                             if(hash == "#listarPonderacionFactor"){
+                                $("div.ui-layout-center").empty();
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarPonderacionFactor",
@@ -896,13 +838,17 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionFactor",
                                             success: function(data){
-                                                $("#center").html(data);
+                                                $("#contenido").append(data);
+                                                $("#contenido").show(200, function(){
+                                                    $(".page_loading").hide();
+                                                })
                                             }
                                         })
                                     } //fin success
                                 }); //fin $.ajax
                             }
                             if(hash == "#listarPonderacionCaracteristica"){
+                                $("div.ui-layout-center").empty();
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarPonderacionCaracteristica",
@@ -911,7 +857,10 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionCaracteristica",
                                             success: function(data){
-                                                $("#center").html(data);
+                                                $("#contenido").append(data);
+                                                $("#contenido").show(200, function(){
+                                                    $(".page_loading").hide();
+                                                })
                                             }
                                         })
                                     } //fin success
@@ -921,15 +870,6 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarEvaluarDoc",
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
@@ -950,15 +890,6 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: "<%=request.getContextPath()%>/jsonController?ejecucion=listarEvaluarNum",
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(){
                                         $.ajax({
                                             type: 'POST',
@@ -985,15 +916,6 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -1014,15 +936,6 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -1044,15 +957,6 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);
@@ -1073,15 +977,6 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: url4,
-                                    beforeSend :function(){
-                                        $("div.ui-layout-center").append("<div id='contenido'></div>");
-                                        $("#contenido").hide();
-                                        $("div.ui-layout-center").append("<div class='page_loading'>"
-                                            +"<span>Cargando</span>"
-                                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                                            +"</div>");
-                                
-                                    },
                                     success: function(data) 
                                     {
                                         $("#contenido").append(data);

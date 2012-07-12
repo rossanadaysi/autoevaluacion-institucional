@@ -22,7 +22,7 @@
                                 <c:forEach items="${indicadoresDocumental.rowsByIndex}" var="row" varStatus="iter">
                                     <tr id="InformacionDocumental${iter.index+1}">    
                                         <td>   
-                                            <c:out value="${row[0]}"/>
+                                            <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
                                             <textarea name="nombreDocumento${row[0]}" class="span2"></textarea>
