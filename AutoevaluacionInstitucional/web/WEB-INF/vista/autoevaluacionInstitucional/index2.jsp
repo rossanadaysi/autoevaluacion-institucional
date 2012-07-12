@@ -8,7 +8,6 @@
         <title>Autoevaluacion Institucional</title>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/layout2.css" />
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/footer.css" />
-        <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.css" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick.pager.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery-ui-1.8.5.custom.css" type="text/css" media="screen" charset="utf-8" />
@@ -20,10 +19,11 @@
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/fcbklistselection.js"></script>
         <script type="text/javascript"src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/highlightFade.js"></script>
+        <script src="<%=request.getContextPath()%>/script/highcharts.js"></script>
+        <script src="<%=request.getContextPath()%>/script/exporting.js"></script>
 
 
 

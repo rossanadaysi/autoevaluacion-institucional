@@ -1,6 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.pagination.js"></script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     var itemsxpagina=14;

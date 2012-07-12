@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script src="<%=request.getContextPath()%>/script/highcharts.js"></script>
-<script src="<%=request.getContextPath()%>/script/exporting.js"></script>
 <script type="text/javascript">
     $(function () {
         var chart = new Array(${preguntas.getRowCount()});

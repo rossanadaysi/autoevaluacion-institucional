@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link type="text/css" rel="stylesheet" href="jQuery/dragDrop/fcbklistselection.css" />
-<script type="text/javascript" src="jQuery/dragDrop/fcbklistselection.js"></script>
+<link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/jQuery/dragDrop/selector.css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/jQuery/dragDrop/selector.js"></script>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() { 
-        $.fcbkListSelection("#fcbklist", "1000","50","6");     
+        $.fcbkListSelection("#fcbklist", "1000","50","6");  
     });
     $("#botonActualizarMuestra").click(function(){
 
@@ -71,6 +71,18 @@
 </script>
 <h4> Editar Muestra Generada Para la Fuente Seleccionada</h4>
 <br>
+<div>
+    <span class="label label-success" style="background-color: #F2DEDE;
+          border-color: #EED3D7;
+          color: #B94A48;">Pendiente</span>
+    <span class="label label-success" style="background-color: #DFF0D8;
+          border-color: #D6E9C6;
+          color: #468847;">Terminado</span>
+    <span class="label label-success" style="background-color: #D9EDF7;
+          border-color: #BCE8F1;
+          color: #3A87AD; margin-bottom: 5px">Guardado</span>
+</div>
+<br>
 <c:if test="${aux_selectorAsignarM3 == 1}">
     <ul id="fcbklist">
         <c:forEach items="${muestras.rowsByIndex}" var="item" varStatus="iter">
@@ -82,15 +94,15 @@
                         <c:if test="${item[1] == item3[0]}">
                             <c:set var="varaux" value="1"/>
                             <c:if test="${item3[1] == 'terminado'}">
-                                <li style="background-color: #DFF0D8; color: #468847;">
+                                <li id="itemblockVerde">
                                     <c:set var="auxx" value="0"></c:set>
                                     <strong>${item[2]} ${item[3]}</strong><br/> 
-                                    <span class="fcbkitem_text">${item[1]}</span>
-                                    <input name="${item[0]}" type="hidden" checked="checked" value="0"/>
+                                    <span class="">${item[1]}</span>
+                                    <input id="itemblockinput" name="${item[0]}" type="hidden" checked="checked" value="0"/>
                                 </li>
                             </c:if>
                             <c:if test="${item3[1] == 'guardada'}">
-                                <li style="background-color: #D9EDF7; color: #3A87AD;">
+                                <li id="itemblockAzul">
                                     <c:set var="auxx" value="0"></c:set>
                                     <strong>${item[2]} ${item[3]}</strong><br/> 
                                     <span class="fcbkitem_text">${item[1]}</span>
@@ -100,7 +112,7 @@
                         </c:if>
                     </c:forEach>
                     <c:if test="${varaux == 0}">
-                        <li style="background-color: #F2DEDE; color: #B94A48;">
+                        <li id="itemblockRojo">
                             <c:set var="auxx" value="0"></c:set>
                             <strong>${item[2]} ${item[3]}</strong><br/> 
                             <span class="fcbkitem_text">${item[1]}</span>
