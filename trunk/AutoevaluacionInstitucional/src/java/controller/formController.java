@@ -624,7 +624,7 @@ public class formController extends HttpServlet {
                             while (rst.next()) {
                                 String conglomerado = rst.getString(1);
                                 session.setAttribute("conglomeradoFiltro", conglomerado);
-                                System.out.println("CLONGLOMERADOO :" + conglomerado);
+                                
                                 if (conglomerado.equals("programa")) {
                                     rs = null;
                                     sql = "Select* from programa";
@@ -647,7 +647,7 @@ public class formController extends HttpServlet {
                                     rs = conSql.CargarSql2(sql, bd);
                                     session.setAttribute("descripcionFiltro", rs);
                                 }
-                                System.out.println("CONSULTAAAAAAAAAAAAAAAAAAAAAAAA: + " + sql);
+                                
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
