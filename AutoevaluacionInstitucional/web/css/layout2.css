@@ -87,8 +87,8 @@
  *	TOGGLER-BUTTONS
  */
 .ui-layout-toggler {
-	border: 1px solid #BBB; /* match pane-border */
-	background-color: #BBB;
+	/*border: 1px solid #BBB; /* match pane-border */
+	/*background-color: #BBB;*/
 	}
 	.ui-layout-resizer-hover .ui-layout-toggler {
 		opacity: .60;
@@ -96,9 +96,9 @@
 	}
 	.ui-layout-toggler-hover , /* need when NOT resizable */
 	.ui-layout-resizer-hover .ui-layout-toggler-hover { /* need specificity when IS resizable */
-		background-color: #FC6;
+		/*background-color: #FC6;
 		opacity: 1.00;
-		filter:  alpha(opacity=100);
+		filter:  alpha(opacity=100);*/
 	}
 	.ui-layout-toggler-north ,
 	.ui-layout-toggler-south {
