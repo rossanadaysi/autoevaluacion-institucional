@@ -307,8 +307,7 @@
             {
                 
                 $("div.ui-layout-center").ajaxStart(function(){
-                    $("div.ui-layout-center").append("<div id='contenido'></div>");
-                    $("#contenido").hide();
+                    $("div.ui-layout-center").append("<div class='contenido'></div>");
                     $("div.ui-layout-center").append("<div class='page_loading'>"
                         +"<span>Cargando</span>"
                         +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
@@ -455,10 +454,11 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
                                 
                             
                                         setTimeout(function(){
@@ -538,10 +538,10 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
 
                                         setTimeout(function(){
                                             $("div.ui-layout-center").scrollspy();   
@@ -564,10 +564,10 @@
                                         url: url3, 
                                         success: function(data) 
                                         {
-                                            $("#contenido").append(data);
-                                            $("#contenido").show(200, function(){
+                                            $(".contenido").append(data);
+                                            setTimeout(function(){
                                                 $(".page_loading").hide();
-                                            })     
+                                            },200);     
 
                                     
                                             $("#formAsigEnc").submit(function(event){
@@ -609,10 +609,10 @@
                                         url: url3, 
                                         success: function(data) 
                                         {
-                                            $("#contenido").append(data);
-                                            $("#contenido").show(200, function(){
+                                            $(".contenido").append(data);
+                                            setTimeout(function(){
                                                 $(".page_loading").hide();
-                                            })     
+                                            },200)     
                                             
                                         } //fin success
                                     }); //fin del $.ajax
@@ -631,10 +631,10 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
 
                                         
                                         $("#formInfoDoc").submit(function(event){
@@ -664,10 +664,10 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
 
                                         
                                         $("#formInfoNum").submit(function(event){
@@ -697,10 +697,10 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
 
                                         setTimeout(function(){},200);
                                         $("#formCrearProc").validate({
@@ -733,10 +733,10 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
 
                                         setTimeout(function(){},200);
                                         $("#formCrearProc").validate({
@@ -782,10 +782,10 @@
                                     url: url3,
                                     success: function(data){
                                         
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })
+                                        },200)
                                     } //fin success
                                 }); //fin $.ajax
                             }
@@ -803,10 +803,10 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=detalleProceso",
                                             success: function(data){
-                                                $("#contenido").append(data);
-                                                $("#contenido").show(200, function(){
+                                                $(".contenido").append(data);
+                                                setTimeout(function(){
                                                     $(".page_loading").hide();
-                                                })
+                                                },200);
                                             } //fin success
                                         }); //fin $.ajax
                                     }
@@ -838,10 +838,10 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionFactor",
                                             success: function(data){
-                                                $("#contenido").append(data);
-                                                $("#contenido").show(200, function(){
+                                                $(".contenido").append(data);
+                                                setTimeout(function(){
                                                     $(".page_loading").hide();
-                                                })
+                                                },200)
                                             }
                                         })
                                     } //fin success
@@ -857,10 +857,10 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarPonderacionCaracteristica",
                                             success: function(data){
-                                                $("#contenido").append(data);
-                                                $("#contenido").show(200, function(){
+                                                $(".contenido").append(data);
+                                                setTimeout(function(){
                                                     $(".page_loading").hide();
-                                                })
+                                                },200);
                                             }
                                         })
                                     } //fin success
@@ -876,10 +876,10 @@
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarDoc",
                                             success: function(data) 
                                             {
-                                                $("#contenido").append(data);
-                                                $("#contenido").show(200, function(){
+                                                $(".contenido").append(data);
+                                                setTimeout(function(){
                                                     $(".page_loading").hide();
-                                                })     
+                                                },200);     
 
                                             }
                                         })
@@ -896,10 +896,10 @@
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=listarEvaluarNum",
                                             success: function(data) 
                                             {
-                                                $("#contenido").append(data);
-                                                $("#contenido").show(200, function(){
+                                                $(".contenido").append(data);
+                                                setTimeout(function(){
                                                     $(".page_loading").hide();
-                                                })     
+                                                },200);     
                                             }
                                         })
                                     } //fin success
@@ -918,10 +918,10 @@
                                     url: url4,
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
                                         
                                     } //fin success
                                 }); //fin $.ajax
@@ -938,10 +938,10 @@
                                     url: url4,
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
                                     } //fin success
                                 }); //fin $.ajax
                             
@@ -959,10 +959,10 @@
                                     url: url4,
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
                                     } //fin success
                                 }); //fin $.ajax
                             
@@ -979,10 +979,10 @@
                                     url: url4,
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        setTimeout(function(){
                                             $(".page_loading").hide();
-                                        })     
+                                        },200);     
                                         
                                     } //fin success
                                 }); //fin $.ajax
