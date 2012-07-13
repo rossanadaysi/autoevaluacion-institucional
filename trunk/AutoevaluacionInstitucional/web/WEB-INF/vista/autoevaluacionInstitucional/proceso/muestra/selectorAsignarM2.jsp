@@ -17,13 +17,6 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
-            beforeSend:function(){
-                $("#resultados4").html("<div class='alert alert-info' id='cargando' style='width: 221px;'>"
-                    +"<a class='close'>×</a>"
-                    +"<img src='<%=request.getContextPath()%>/css/images/wait.gif' style='float:center; padding: 1px 10px 0 0;'>"
-                    +"Cargando..."
-                    +"</div>");
-            },
             success: function(){
                 $.ajax({
                     type: 'POST',
@@ -32,7 +25,10 @@
                     success: function(data){
                         $("#resultados4").hide();
                         $("#resultados4").html(data);
-                        setTimeout(function(){$("#resultados4").show()}, 50);  
+                        setTimeout(function(){
+                            $(".page_loading").hide();
+                            $("#resultados4").show(); 
+                        },200);  
                     }
                 })
             } //fin success                    
@@ -215,8 +211,8 @@
                 </c:if>
                 <c:if test="${idFuenteMuestra != 1}">
                     <div id="tablax" style="z-index: 1;">
-                       <h4>Muestra generada para la fuente seleccionada</h4>
-                       <br>
+                        <h4>Muestra generada para la fuente seleccionada</h4>
+                        <br>
                         <table class="table table-striped table-bordered table-condensed">
                             <thead>
                             <th>Código</th>

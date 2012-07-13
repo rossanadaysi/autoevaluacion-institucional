@@ -43,7 +43,11 @@
                             success: function(data){
                                 $("#resultados4").hide();
                                 $("#resultados4").html(data);
-                                $("#resultados4").show(); 
+                                setTimeout(function(){
+                                    $(".page_loading").hide();
+                                    $("#resultados4").show(); 
+                                },200);     
+                                
                             }
                         })
                     } //fin success                                          
@@ -63,7 +67,11 @@
                 $("#filtro01").show();
                 $("#filtro02").hide();
                 $("#resultados4").html(data);
-                $("#resultados4").show();
+                setTimeout(function(){
+                    $(".page_loading").hide();
+                    $("#resultados4").show(); 
+                },200);     
+                
             }
         })
     }) 

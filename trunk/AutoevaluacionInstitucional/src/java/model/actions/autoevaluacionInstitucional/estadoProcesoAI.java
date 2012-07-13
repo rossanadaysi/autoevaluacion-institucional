@@ -23,7 +23,6 @@ public class estadoProcesoAI implements Action {
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession session = request.getSession();
-
         sqlController conSql = new sqlController();
         Proceso proceso2 = (Proceso) session.getAttribute("proceso");
         int idProceso = proceso2.getId();

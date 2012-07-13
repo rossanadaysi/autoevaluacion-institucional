@@ -20,25 +20,22 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=generarMuestra",
             data: $("#formAsigMue").serialize(),
-            beforeSend:function(){
-                //$("#enlace").hide();
-                $("#cargando").show();
-                // $("#resultados2").show();
-            },
             success: function(){
                 $.ajax({
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
                     data: $("#formAsigMue").serialize(),
-                    beforeSend:function(){
-                    },
                     success: function(data){
                         $.ajax({
                             type: 'POST',
                             url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
                             success: function(data){
                                 $("#cargando").hide();
-                                $("#filtro").html(data);
+                                setTimeout(function(){
+                                    $(".page_loading").hide();
+                                    $("#filtro").html(data);
+                                },200);     
+                                
                             }
                         })
                     } //fin success                              
@@ -63,6 +60,9 @@
                     type: 'POST',
                     url: "<%=request.getContextPath()%>/ControllerAI?action=configurarParametrosMuestraAI",
                     success: function(data){
+                        setTimeout(function(){
+                            $(".page_loading").hide();
+                        },200);         
                         $("#myModalConfigurarMuestra").html(data);
                         $('#myModalConfigurarMuestra').modal();
                     }
@@ -99,7 +99,11 @@
                 url: "<%=request.getContextPath()%>/ControllerAI?action=conglomerado",
                 success: function(data){
                     $("#conglomerado").html(data);
-                    $("#conglomerado").show();
+                    setTimeout(function(){
+                        $(".page_loading").hide();
+                        $("#conglomerado").show();
+                    },200);     
+                    
                 }
             })
             $("#conglomerado").show();
@@ -133,6 +137,9 @@
                 data: $("#formAsigMue").serialize(),
                 success: function(data){
                     $("#myModalNuevoConglomerado").html(data);
+                    setTimeout(function(){
+                        $(".page_loading").hide();
+                    },200);     
                     $('#myModalNuevoConglomerado').modal({
                         keyboard: false
                     })
@@ -172,17 +179,19 @@
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=calcularMuestraAI",
                 data: Todo,
-                beforeSend:function(){
-                },
                 success: function(){
                     $.ajax({
                         type: 'POST',
                         url: "<%=request.getContextPath()%>/ControllerAI?action=muestraCalculada",
                         success: function(data){
                             $("#resultados3").html(data);
-                            $("#resultados3").show();
-                            $("#resultados2").hide()
-                            $("#enlace").show();
+                            setTimeout(function(){
+                                $(".page_loading").hide();
+                                $("#resultados3").show(); 
+                                $("#resultados2").hide()
+                                $("#enlace").show();
+                            },200);     
+                            
                         }
                     })
                 } //fin success                                          
@@ -230,14 +239,15 @@
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestraAI",
                 data: $("#formAsigMue").serialize(),
-                beforeSend:function(){
-                },
                 success: function(data){
                     $.ajax({
                         type: 'POST',
                         url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestraAI",
                         success: function(data){
-                            $("#filtro").html(data);
+                            setTimeout(function(){
+                                $(".page_loading").hide();
+                                $("#filtro").html(data); 
+                            },200);     
                         }
                     })
                 } //fin success
@@ -261,7 +271,11 @@
                     url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
                     success: function(data){
                         $("#resultados4").html(data);
-                        $("#resultados4").show();
+                        setTimeout(function(){
+                            $(".page_loading").hide();
+                            $("#resultados4").show(); 
+                        },200);     
+                            
                     }
                 })
             } //fin success                                          
@@ -276,13 +290,6 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
             data: $("#formAsigMue").serialize(),
-            beforeSend:function(){
-                $("#resultados4").html("<div class='alert alert-info' id='cargando'>"
-                    +"<a class='close'>×</a>"
-                    +"<img src='<%=request.getContextPath()%>/css/images/wait.gif' style='float:center; padding: 1px 10px 0 0;'>"
-                    +"Cargando..."
-                    +"</div>");
-            },
             success: function(){
                 $.ajax({
                     type: 'POST',
@@ -290,7 +297,11 @@
                     success: function(data){
                         $("#resultados4").hide();
                         $("#resultados4").html(data);
-                        setTimeout(function(){$("#resultados4").show()}, 50);  
+                        $(".contenido").show(200, function(){
+                            $(".page_loading").hide();
+                            $("#resultados4").show();
+                        })
+                        
                     }
                 })
             } //fin success                                          

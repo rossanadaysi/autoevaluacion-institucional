@@ -15,8 +15,20 @@
                 url: "<%=request.getContextPath()%>/formController?action=selectorAsignarEncuestasAI",
                 data: $("#formAsigEnc").serialize(),
                 success: function(){
-                    $("#resultados").load("<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarEncuestasAI");
-                    $("#resultados").show();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarEncuestasAI",
+                        success: function(data){
+                            $("#resultados").html(data);
+                            $(".contenido").show(200, function(){
+                                $(".page_loading").hide();
+                            })     
+                            $("#resultados").show();
+                        }
+                    });
+                        
+                            
+                    
                 } //fin success
                                             
             }); //fin $.ajax
