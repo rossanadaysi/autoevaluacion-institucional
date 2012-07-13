@@ -277,7 +277,7 @@
                     ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
                     ,	west__spacing_open:	0
                     ,	west__spacing_closed:			20
-                    ,	west__togglerLength_closed:	35
+                    ,	west__togglerLength_closed:	75
                     ,	west__togglerAlign_closed:	"top"
                     ,	west__togglerContent_closed:	"<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
                     ,	west__togglerTip_closed:	"Mostrar menú"
@@ -374,14 +374,19 @@
                     if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
                     
                     }else{//else principal
-                    
+                        
                         if(hash=="#CerrarSesion"){//CerrarSesion
-                            $.post('<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion',
-                            function(data) {
-                                location = "<%=request.getContextPath()%>/";
-                                 
+                            $.ajax({ 
+                                type: "POST", 
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion", 
+                                beforeSend:function(){
+                                    $("div.ui-layout-center").hide();  
+                                },
+                                success: function() 
+                                { location = "<%=request.getContextPath()%>/";
+                                }
                             });
-                                                        
+                                  
                         }//fin CerrarSesion
                         if(hash=="#inicio"){//inicio
                             $("div.ui-layout-center").empty();
