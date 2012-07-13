@@ -204,13 +204,19 @@
                         $(".nav li").removeClass("active");
                         $("ul.nav-list li a").children("i").removeClass("icon-white");
                     }
-                    if(hash=="#CerrarSesion"){
-                        $.post('<%=request.getContextPath()%>/ControllerCC?action=CerrarSesion', function(data) {
-                            location = "<%=request.getContextPath()%>/";
-                                 
-                        });//fin post
-                                                        
-                    }
+                    if(hash=="#CerrarSesion"){//CerrarSesion
+                        $.ajax({ 
+                            type: "POST", 
+                            url: "<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion", 
+                            beforeSend:function(){
+                                $("div.ui-layout-center").hide();  
+                            },
+                            success: function() 
+                            { location = "<%=request.getContextPath()%>/";
+                            }
+                        });
+                                  
+                    }//fin CerrarSesion
                     
                     if(hash=="#inicio"){//inicio
                         $("div.ui-layout-center").empty();
