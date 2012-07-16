@@ -49,9 +49,31 @@
                     <th>Porcentaje de personas que faltan por evaluar las encuestas</th>
                     </thead>
                     <tbody>
+                        <c:forEach items="${tabla1.rowsByIndex}" var="row" varStatus="iter">
+                            <tr>  
+                                <td>   
+                                    <c:out value="${row[0]}"/>
+                                </td>
+                                <td>   
+                                    <c:out value="${row[1]}"/>
+                                </td>
+                                <td>   
+                                    <c:out value="${row[2]}%"/>
+                                </td>
+                                <td>   
+                                    <c:out value="${row[3]}"/>
+                                </td>
+                                <td>   
+                                    <c:out value="${row[4]}%"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
 
                     </tbody>
                 </table>
+
+
+
                 <p>Estado por fuente del proceso:</p>
                 <br>
                 <table class="table table-striped table-bordered table-condensed">
