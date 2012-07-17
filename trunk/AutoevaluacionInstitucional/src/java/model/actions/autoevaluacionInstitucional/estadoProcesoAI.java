@@ -40,9 +40,8 @@ public class estadoProcesoAI implements Action {
                 + " (select count(*) from muestraegresado where muestraegresado.muestra_id=1)+"
                 + " (select count(*) from muestradirector where muestradirector.muestra_id=1)+"
                 + " (select count(*) from muestraagencia where muestraagencia.muestra_id=1)+"
-                + " (select count(*) from muestraempleador where muestraempleador.muestra_id=1)+"
-                + " (select count(*) from muestracriterio where muestracriterio.muestra_id=1)) AS total "
-                + " , (select count(`persona_id`) as terminados from encabezado where "
+                + " (select count(*) from muestraempleador where muestraempleador.muestra_id=1)) AS total "
+                + " ,(select count(`persona_id`) as terminados from encabezado where "
                 + " `fuente_id` = 1 and estado='terminado') as terminados"
                 + " ) AS c1";
         tabla1 = conSql.CargarSql2(sql1, bd);
