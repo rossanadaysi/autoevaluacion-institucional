@@ -5,14 +5,7 @@
 package model.actions.navigation;
 
 import controller.sqlController;
-import entity.controller.CaracteristicaJpaController;
-import entity.controller.EncuestaJpaController;
-import entity.controller.FactorJpaController;
-import entity.controller.IndicadorJpaController;
-import entity.controller.PreguntaJpaController;
-import entity.controller.PrivilegioJpaController;
-import entity.controller.ProgramaJpaController;
-import entity.controller.RepresentanteJpaController;
+import entity.controller.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -10,7 +10,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -143,84 +148,96 @@ public class loginController extends HttpServlet {
 
                                     List<Proceso> listProceso = conProceso.findProcesoEntities();
 
-                                    int aux = 0;
+                                    int aux = 3;
+                                    Date d0 = null;
+                                    Date d1 = null;
+                                    Proceso elmasviejo = null;
 
-                                    for (Proceso proceso : listProceso) {
-                                        if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
-                                            session.setAttribute("aux_IniciarP", 0);
+                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    try {
+                                        d0 = dateFormat.parse("1000-01-01 15:18:19");
+                                    } catch (ParseException ex) {
+                                        Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
 
-                                            session.setAttribute("proceso", proceso);
-                                            aux = 1;
-                                            session.setAttribute("aux_index2", aux);
-                                            System.out.println("hay proceso en ejecucion");
-                                            session.setAttribute("msjLogIn1", "Existe un Proceso en Ejecución!");
-                                            session.setAttribute("msjLogIn2", "Detalle del Proceso.");
-                                            // session.setAttribute("msjLogIn2", "Se ha Encontrado Un Proceso de Autoevaluación Institucional en Ejecución!");
-                                            String nombreBd = programa.getNombre() + proceso.getId();
-                                            session.setAttribute("bd", nombreBd);
-                                            int aux1;
-                                            int idProceso = proceso.getId();
+                                    if (listProceso.size() > 0) {
+                                        for (Proceso proceso : listProceso) {
+                                            if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
+                                                session.setAttribute("proceso", proceso);
+                                                aux = 1;
+                                                System.out.println("hay proceso activo");
+                                                String nombreBd = programa.getNombre() + proceso.getId();
+                                                session.setAttribute("bd", nombreBd);
+                                                int idProceso = proceso.getId();
 
-                                            Result rs2 = null;
-                                            String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
-                                            rs2 = conSql.CargarSql2(sql, nombreBd);
+                                                Result rs2 = null;
+                                                String sql = "Select factor.id, ponderacion, justificacion, proceso_id, factor_id, nombre from ponderacionfactor inner join factor on ponderacionfactor.factor_id = factor.id where proceso_id = " + idProceso + "";
+                                                rs2 = conSql.CargarSql2(sql, nombreBd);
 
-                                            if (rs2.getRowCount() > 0) {
-                                                session.setAttribute("auxAsignarF", 1);
-                                            }
-
-                                            rs2 = null;
-                                            sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + "";
-                                            rs2 = conSql.CargarSql2(sql, nombreBd);
-
-                                            if (rs2.getRowCount() > 0) {
-                                                session.setAttribute("auxAsignarC", 1);
-                                            }
-
-
-                                            rs2 = null;
-
-                                            //Cambiar proceso
-                                            sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + proceso.getId() + "'";
-                                            rs2 = conSql.CargarSql2(sql, nombreBd);
-
-
-
-                                            if (rs2 != null) {
-                                                session.setAttribute("auxInfoDocumental", 1);
-                                            }
-
-                                            if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
-                                                aux1 = 1;
-                                                session.setAttribute("aux2_index2", aux1);
-                                                session.setAttribute("aux_IniciarP", 0);
-                                            } else {
-                                                aux1 = 2;
-                                                session.setAttribute("aux2_index2", aux1);
-                                                session.setAttribute("aux_IniciarP", 1);
-                                            }
-
-                                            ResultSet rs3 = conSql.CargarSql("select id, fechainicio from proceso where id = " + proceso.getId() + " and fechainicio <> null", nombreBd);
-                                            try {
-                                                if (rs3.next()) {
-                                                    if (rs3.getString(2).equals("Proceso en Configuración.")) {
-                                                        session.setAttribute("aux_IniciarP", 0);
-                                                        System.out.println("Proceso en configuración.");
-                                                    } else {
-                                                        session.setAttribute("aux_IniciarP", 0);
-                                                        System.out.println("Proceso en ejecucion.");
-                                                    }
+                                                if (rs2.getRowCount() > 0) {
+                                                    session.setAttribute("auxAsignarF", 1);
                                                 }
-                                            } catch (SQLException ex) {
-                                                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+
+                                                rs2 = null;
+                                                sql = "Select caracteristica.id, ponderacion, justificacion, proceso_id, caracteristica_id, nombre from ponderacioncaracteristica inner join caracteristica on ponderacioncaracteristica.caracteristica_id = caracteristica.id where proceso_id = " + idProceso + "";
+                                                rs2 = conSql.CargarSql2(sql, nombreBd);
+
+                                                if (rs2.getRowCount() > 0) {
+                                                    session.setAttribute("auxAsignarC", 1);
+                                                }
+
+
+                                                rs2 = null;
+
+                                                //Cambiar proceso
+                                                sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + proceso.getId() + "'";
+                                                rs2 = conSql.CargarSql2(sql, nombreBd);
+
+
+
+                                                if (rs2 != null) {
+                                                    session.setAttribute("auxInfoDocumental", 1);
+                                                }
+
+                                                if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
+                                                    session.setAttribute("aux_index2", 1);
+                                                    session.setAttribute("aux_IniciarP", 0);
+                                                    System.out.println("Proceso en configuración");
+                                                } else {
+                                                    session.setAttribute("aux_index2", 2);
+                                                    session.setAttribute("aux_IniciarP", 1);
+                                                    System.out.println("Proceso en ejecución");
+                                                }
+
+                                            } else if (proceso.getFechacierre() != null) {
+                                                String fe = proceso.getFechacierre();
+                                                DateFormat lFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+                                                try {
+                                                    d1 = (Date) lFormatter.parse(fe);
+                                                } catch (ParseException ex) {
+                                                    Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
+                                                int results = d0.compareTo(d1);
+
+                                                if (results < 0) {
+                                                    elmasviejo = proceso;
+                                                }
                                             }
                                         }
-                                    }
-                                    if (aux == 0) {
-                                        session.setAttribute("msjLogIn1", "No Existe Proceso en Ejecución!");
-                                        session.setAttribute("msjLogIn2", "Procesos Anteriores.");
-                                        System.out.println("No hay proceso en ejecucion");
+
+                                    } else {
+                                        System.out.println("No hay procesos");
+                                        aux = 0;
                                         session.setAttribute("aux_index2", 0);
+                                    }
+                                    if (aux == 3) {
+                                        System.out.println("No hay procesos acitvos");
+                                        session.setAttribute("aux_IniciarP", 2);
+                                        session.setAttribute("aux_index2", 3);
+                                        session.setAttribute("proceso", elmasviejo);
+                                        System.out.println("FEcha Escojida: " + elmasviejo.getFechacierre());
+                                        String nombreBd = programa.getNombre() + elmasviejo.getId();
+                                        session.setAttribute("bd", nombreBd);
                                     }
 
 
@@ -319,6 +336,9 @@ public class loginController extends HttpServlet {
                 session.setAttribute("errorLogIn", "[Usuario No Registrado!]");
 
             }
+            JOptionPane.showMessageDialog(null, "aux_IniciarP" + session.getAttribute("aux_IniciarP"));
+            JOptionPane.showMessageDialog(null, "aux_index2" + session.getAttribute("aux_index2"));
+
         } catch (java.lang.NumberFormatException e) {
             out.println(4);
         }

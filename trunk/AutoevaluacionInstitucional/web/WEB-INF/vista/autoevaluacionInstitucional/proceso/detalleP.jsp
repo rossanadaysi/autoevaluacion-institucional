@@ -16,26 +16,14 @@
                     <th>Fecha Inicio</th>
                     <th>Fecha Cierre</th>
                     <th>Programa</th>
-                    <th>Informes</th>
                     </thead>
                     <tbody>
-                        <c:forEach items="${detailProceso}" var="row" varStatus="iter">
-                            <tr>  
-                                <td>   
-                                    <c:out value="${row.descripcion}"/>
-                                </td>
-                                <td>   
-                                    <c:out value="${row.fechainicio}"/>
-                                </td>
-                                <td>   
-                                    <c:out value="${row.fechacierre}"/>
-                                </td>
-                                <td>   
-                                    <c:out value="${row.programaId.nombre}"/>
-                                </td>
-                                <td>   
-                                    link
-                                </td>
+                        <c:forEach items="${detailProceso.rowsByIndex}" var="item" varStatus="iter">
+                            <tr> 
+                                <td>${item[3]}</td>
+                                <td>${item[1]}</td>
+                                <td>${item[2]}</td>
+                                <td>Autoevaluación Institucional</td>
                             </tr>
                         </c:forEach>
                     </tbody>
