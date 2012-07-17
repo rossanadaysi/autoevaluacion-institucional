@@ -110,15 +110,12 @@ public class loginController extends HttpServlet {
 
             Persona persona = conPersona.findPersona(un);
 
-            System.out.println("Procesando..");
             if (persona != null) {
                 if (persona.getPassword().equals(pw)) {
-                    System.out.println("buen pass");
                     String tipo = tp;
                     if (tipo.equals("Autoevaluacion Institucional") || tipo.equals("Comite Central")) {
-
                         List<Representante> representantes = persona.getRepresentanteList();
-                        if (representantes != null) {
+                        if (representantes != null && representantes.size()>0) {
                             for (Representante r : representantes) {
                                 //int menu = 0;
                                 ///LOGIN AUTOEVALUACION INSTITUCIONALF
@@ -241,7 +238,6 @@ public class loginController extends HttpServlet {
                             }
                         } else {
                             out.println(1);
-                            System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
                             session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
 
                         }
@@ -281,6 +277,7 @@ public class loginController extends HttpServlet {
                                                 + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
                                                 + " WHERE persona.id = " + persona.getId() + ""
                                                 + " AND proceso.`FECHACIERRE` IS NULL"
+                                                + " AND proceso.fechainicio !='Proceso en Configuración.'"
                                                 + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + ""
                                                 + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
                                                 + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
