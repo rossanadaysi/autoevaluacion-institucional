@@ -118,8 +118,6 @@
         </script>
         <script type="text/javascript">
             $(function(){
-                location ="/AutoevaluacionInstitucional/#inicio"; 
-                
                 $(window).hashchange(function(){
                     
                     var hash = location.hash;
@@ -229,7 +227,7 @@
         </div><!--South-->
 
         <div class="ui-layout-center">
-            <div class="container-fluid">
+           <div class="container-fluid">
                 <div class="row-fluid">
                     <div class="span2"></div>
                     <div class="span8">

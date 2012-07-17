@@ -587,7 +587,13 @@
                                                         $("#resultados").hide();
                                                         $("#select option:eq(0)").attr("selected","selected");
                                                         $('#myModalE').modal();  
-                                                                                    
+                                                        
+                                                        
+                                                        $('#myModalE').on('hidden', function () {
+                                                            setTimeout(function(){
+                                                                $(".page_loading").hide();
+                                                            },200); 
+                                                         });
                                                                                    
                                                     } //fin success
                                             
