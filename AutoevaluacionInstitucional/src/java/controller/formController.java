@@ -624,7 +624,7 @@ public class formController extends HttpServlet {
                             while (rst.next()) {
                                 String conglomerado = rst.getString(1);
                                 session.setAttribute("conglomeradoFiltro", conglomerado);
-                                
+
                                 if (conglomerado.equals("programa")) {
                                     rs = null;
                                     sql = "Select* from programa";
@@ -647,7 +647,7 @@ public class formController extends HttpServlet {
                                     rs = conSql.CargarSql2(sql, bd);
                                     session.setAttribute("descripcionFiltro", rs);
                                 }
-                                
+
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1442,18 +1442,6 @@ public class formController extends HttpServlet {
                     try {
                         conSql.UpdateSql("UPDATE `proceso` SET `descripcion` = '" + request.getParameter("descripcion") + "' WHERE `proceso`.`id` = " + idProceso, bd);
                         conProceso.edit(proceso);
-
-
-
-
-
-
-
-
-
-
-
-
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {
@@ -1501,16 +1489,6 @@ public class formController extends HttpServlet {
 
                             int idMuestra = Integer.parseInt(rs3.getString(1));
                             session.setAttribute("idMuestra", idMuestra);
-
-
-
-
-
-
-
-
-
-
                         }
 
                     } catch (SQLException ex) {
@@ -1531,31 +1509,56 @@ public class formController extends HttpServlet {
                 Date d = new Date();
                 String date = String.valueOf(d);
                 p.setFechacierre(date);
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                int idProceso = proceso.getId();
+                String bd = (String) session.getAttribute("bd");
+                sqlController conSql = new sqlController();
+
+
                 try {
+                    conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
                     pc.edit(p);
-
-
-
-
-
-
-
-
-
-
-
-
                 } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                session.setAttribute("aux_index2", 0);
+                session.setAttribute("aux_index2", 2);
                 System.out.println("modificado");
                 session.setAttribute("estadoProceso", 2);
-                session.setAttribute("aux_IniciarP", 2);
+                session.setAttribute("aux_IniciarP", 3);
 
+
+            } else if (request.getParameter(
+                    "action").equals("verProceso")) {
+                String idPro = request.getParameter(
+                        "idPro");
+                ProcesoJpaController pc = new ProcesoJpaController();
+                HttpSession session = request.getSession();
+
+                System.out.println("idPro" + idPro);
+                Proceso p = pc.findProceso(Integer.valueOf(idPro));
+                Programa pro = (Programa) session.getAttribute("programa");
+
+                if (p.getFechacierre() == null && p.getProgramaId().getId() == pro.getId()) {
+                    if (p.getFechainicio().equals("Proceso en Configuración.")) {
+                        session.setAttribute("aux_index2", 1);
+                        session.setAttribute("aux_IniciarP", 0);
+                        System.out.println("Proceso en configuración");
+                    } else {
+                        session.setAttribute("aux_index2", 2);
+                        session.setAttribute("aux_IniciarP", 1);
+                        System.out.println("Proceso en ejecución");
+                    }
+                } else {
+                    session.setAttribute("aux_IniciarP", 2);
+                    session.setAttribute("aux_index2", 3);
+                }
+
+                session.setAttribute("proceso", p);
+                String nombreBd = pro.getNombre() + p.getId();
+                session.setAttribute("bd", nombreBd);
 
             } else if (request.getParameter(
                     "action").equals("IniciarProcesoAI")) {

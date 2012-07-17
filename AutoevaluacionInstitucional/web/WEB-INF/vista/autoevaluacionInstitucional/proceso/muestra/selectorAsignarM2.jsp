@@ -44,11 +44,13 @@
             <p>No existe información en la base de datos para generar la muestra requerida. Pruebe generando usuarios aleatorios.</p>
         </c:if>
         <c:if test="${selectorAsignarM2.getRowCount() != 0}">
-            <c:if test="${aux_IniciarP == 1}">
+            <c:if test="${aux_IniciarP == 1 || aux_IniciarP == 2}">
                 <c:if test="${idFuenteMuestra == 1}">
                     <div id="tablax" style="z-index: 1;">
+                        <c:if test="${aux_IniciarP == 1}">
                         <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
                         <br>
+                        </c:if>
                         <br>
                         <h4>Muestra generada para la fuente seleccionada</h4>
                         <br>

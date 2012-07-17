@@ -61,7 +61,7 @@
             </div>
         </c:if>
     </c:if>
-    <c:if test="${aux_IniciarP == 1}">
+    <c:if test="${aux_IniciarP == 1 || aux_IniciarP == 2}">
         <c:if test="${aux_asignarE == 1}">
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
@@ -90,7 +90,7 @@
             <div class="alert alert-error">
                 <a class="close">×</a>
                 <strong>Información!</strong>
-                Niguna encuesta ha sido asignada para la fuente seleccionada durante el proceso de configuración del Proceso en ejecución.
+                Niguna encuesta ha sido asignada para la fuente seleccionada.
             </div>
         </c:if>
     </c:if>

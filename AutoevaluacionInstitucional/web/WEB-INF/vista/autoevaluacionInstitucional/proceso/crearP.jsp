@@ -32,7 +32,7 @@
                     <div class="control-group">
                         <label for="descripcion" class="control-label">Descripción</label>
                         <div class="controls">
-                            <c:if test="${aux_index2 == 0}">
+                            <c:if test="${aux_index2 == 0 || aux_index2 == 3}">
                                 <textarea rows="3" name="descripcion" class="input-xlarge {required:true}"></textarea>
                             </div>
                         </div>
