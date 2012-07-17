@@ -760,6 +760,9 @@
                                                         },2000);
                                                                                 
                                                         $('#myModalP').on('hidden', function () {
+                                                            setTimeout(function(){
+                                                                $(".page_loading").hide();
+                                                            },200); 
                                                             $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");
                                                             setTimeout(function(){
                                                                 location = '<%=request.getContextPath()%>/';
@@ -1124,7 +1127,7 @@
                                         <li class="divider"></li>
                                         <li class="nav-header">Estado del Proceso</li>
                                         <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-time"></i> Estado del proceso</a></li>
-                                        
+
                                     </c:otherwise>
                                 </c:choose>
                                 <li class="nav-header">Procesos Anteriores</li>

@@ -6,7 +6,7 @@
  
     function presionSubmitGenerarMuestra()
     {
-        $("#filtro").hide(data);
+        $("#filtro").hide();
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select5 option:eq(0)").attr("selected", "selected");
