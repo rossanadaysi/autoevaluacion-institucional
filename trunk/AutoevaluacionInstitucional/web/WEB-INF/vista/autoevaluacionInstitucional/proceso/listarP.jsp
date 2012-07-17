@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
    
@@ -10,6 +11,8 @@
             <br/>
             <fieldset>
                 <legend>Listado de  procesos</legend>
+                <c:choose>
+                <c:when test="${fn:length(listProceso)!= 0}">
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Descripción</th>
@@ -36,6 +39,11 @@
                         </c:forEach>
                     </tbody>
                 </table>  
+                </c:when>
+                 <c:otherwise>
+                    No Existen Procesos Registrados en el Sistema.
+                </c:otherwise>
+                </c:choose>
             </fieldset>
         </div>
     </div>
