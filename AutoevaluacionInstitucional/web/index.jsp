@@ -396,7 +396,8 @@
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="#">Inicio</a></li>
-                                <li><a href="#">Contacto</a></li>
+                                <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">Contacto</a></li>
+                                <li><a href="#" class="about" >Acerda de</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
                     </div>
@@ -407,7 +408,7 @@
         <div class="ui-layout-south ui-widget-content">
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
-                    <a href="#">
+                    <a href="#" class="about">
                         <span>Acerca de</span>
                     </a>
 
@@ -415,7 +416,7 @@
                         <span>Derechos de Autor</span>
                     </a>
 
-                    <a href="#">
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">
                         <span>Ayuda</span>
                     </a>
                 </div>

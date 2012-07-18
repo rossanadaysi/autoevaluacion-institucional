@@ -204,7 +204,8 @@
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
-                                <li><a href="#">Contacto</a></li>
+                                <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">Contacto</a></li>
+                                <li><a href="#" class="about" >Acerda de</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
 
@@ -217,17 +218,17 @@
         <div class="ui-layout-south ui-widget-content"> 
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
-                    <a href="#"><span>Acerca de</span></a>
+                    <a href="#" class="about"><span>Acerca de</span></a>
 
                     <a href="#"><span>Derechos de Autor</span></a>
 
-                    <a href="#"><span>Ayuda</span></a>
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
                 </div>
             </div>
         </div><!--South-->
 
         <div class="ui-layout-center">
-           <div class="container-fluid">
+            <div class="container-fluid">
                 <div class="row-fluid">
                     <div class="span2"></div>
                     <div class="span8">
@@ -272,7 +273,7 @@
                 <p class="marketing-byline">Germán Sierra Anaya. Rector Universidad de Cartagena</p>
                 <div class="row-fluid">
                     <div style="position: absolute; bottom: 25px" class="span12" align="center" >
-               <hr class="soften"></hr>
+                        <hr class="soften"></hr>
                         <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
                         <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

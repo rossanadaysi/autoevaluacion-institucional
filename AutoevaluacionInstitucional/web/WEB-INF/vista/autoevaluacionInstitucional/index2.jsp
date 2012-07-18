@@ -335,6 +335,11 @@
                 });
             
              
+                $('.about').click(function(){
+                    
+                    $('#myModalAbout').modal();
+                });
+
                 
                 //INICIAR PROCESO
                 $('#myModalIP2b1').click(function(){
@@ -1043,7 +1048,8 @@
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
-                                <li><a href="#">Contacto</a></li>
+                                <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">Contacto</a></li>
+                                <li><a href="#" class="about" >Acerda de</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
 
@@ -1056,11 +1062,11 @@
         <div class="ui-layout-south ui-widget-content"> 
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
-                    <a href="#"><span>Acerca de</span></a>
+                    <a href="#" class="about"><span>Acerca de</span></a>
 
                     <a href="#"><span>Derechos de Autor</span></a>
 
-                    <a href="#"><span>Ayuda</span></a>
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
                 </div>
             </div>
         </div><!--South-->
@@ -1153,10 +1159,10 @@
                             <li class="divider"></li>
                             <li class="nav-header">Resultados del proceso</li>
                             <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-info-sign"></i> Estadísticas generales</a></li>                                     
-                        <%--     <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
-                            <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
-                            <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
-                          --%>   <li class="divider"></li>
+                            <%--     <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
+                                <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
+                                <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
+                            --%>   <li class="divider"></li>
                             <li class="nav-header">Procesos</li>
                             <c:if test="${proActivo == 0}">
                                 <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
@@ -1378,5 +1384,25 @@
         <div class="modal hide fade" id="myModalNuevoConglomerado">
         </div>
 
+        <div class="modal hide fade" id="myModalAbout">
+            <div class="modal-header"style="padding-bottom: 19px">
+                <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
+                <h3></h3>
+            </div>
+            <div class="modal-body" style="background-color: #282728" align="center">
+                <img src="<%=request.getContextPath()%>/css/images/SIA UDEC - LOGO_1.png"></img>
+                <br><br>
+                    <p style="color: #FFFFFF">El sistema de autoevaluación institucional se presenta como un apoyo
+
+                    fundamental a los proceso de acreditación que debe realizar la Universidad, con
+
+                    el propósito de aportar en forma representativa al aumento en la calidad de la
+
+                    Educación Superior, contribuyendo así al desarrollo del país.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
     </body>
 </html> 

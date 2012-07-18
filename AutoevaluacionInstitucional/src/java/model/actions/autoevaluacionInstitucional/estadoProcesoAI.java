@@ -31,6 +31,13 @@ public class estadoProcesoAI implements Action {
 
         Result tabla1 = null;
 
+        Result rs = null;
+        Proceso pro = (Proceso) session.getAttribute("proceso");
+        rs = conSql.CargarSql2("Select * from proceso where proceso.id = " + pro.getId(), bd);
+        session.setAttribute("detailProceso", rs);
+
+
+
         String sql1 = "select c1.total, c1.terminados, format((c1.terminados*100/c1.total),2) as porcentaje,(c1.total-c1.terminados) as faltantes, 100-format((c1.terminados*100/c1.total),2) as porFal "
                 + " from("
                 + " select ("
