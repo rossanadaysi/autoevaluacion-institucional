@@ -8,8 +8,6 @@ import entity.*;
 import entity.controller.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -120,7 +118,7 @@ public class loginController extends HttpServlet {
                     String tipo = tp;
                     if (tipo.equals("Autoevaluacion Institucional") || tipo.equals("Comite Central")) {
                         List<Representante> representantes = persona.getRepresentanteList();
-                        if (representantes != null && representantes.size()>0) {
+                        if (representantes != null && representantes.size() > 0) {
                             for (Representante r : representantes) {
                                 //int menu = 0;
                                 ///LOGIN AUTOEVALUACION INSTITUCIONALF
@@ -134,6 +132,8 @@ public class loginController extends HttpServlet {
                                     session.setAttribute("aux_IniciarP", 0);
                                     session.setAttribute("auxAsignarC1", 0);
                                     session.setAttribute("auxInfoDocumental", 0);
+                                    session.setAttribute("proActivo", 0);
+
 
                                     // menu = 1;
                                     //session.setAttribute("auxIndex2", menu);
@@ -166,6 +166,7 @@ public class loginController extends HttpServlet {
                                                 session.setAttribute("proceso", proceso);
                                                 aux = 1;
                                                 System.out.println("hay proceso activo");
+                                                session.setAttribute("proActivo", 1);
                                                 String nombreBd = programa.getNombre() + proceso.getId();
                                                 session.setAttribute("bd", nombreBd);
                                                 int idProceso = proceso.getId();
@@ -207,6 +208,7 @@ public class loginController extends HttpServlet {
                                                     session.setAttribute("aux_index2", 2);
                                                     session.setAttribute("aux_IniciarP", 1);
                                                     System.out.println("Proceso en ejecución");
+                                                    session.setAttribute("proActivo", 1);
                                                 }
 
                                             } else if (proceso.getFechacierre() != null) {

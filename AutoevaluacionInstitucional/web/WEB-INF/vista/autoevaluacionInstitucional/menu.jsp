@@ -47,10 +47,10 @@
         <li class="divider"></li>
         <li class="nav-header">Estado del proceso</li>
         <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-time"></i> Estado del proceso</a></li>                                     
-        <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
+    <%--    <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
         <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
         <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
-        <li class="divider"></li>
+      --%>  <li class="divider"></li>
         <li class="nav-header">Procesos Anteriores</li>
         <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
     </c:if>
@@ -68,12 +68,14 @@
         <li class="divider"></li>
         <li class="nav-header">Resultados del proceso</li>
         <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-info-sign"></i> Estadísticas generales</a></li>                                     
-        <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
+        <%-- <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
         <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
         <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
-        <li class="divider"></li>
+       --%>   <li class="divider"></li>
         <li class="nav-header">Procesos</li>
-        <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
+        <c:if test="${proActivo == 0}">
+            <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
+        </c:if>
         <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
     </c:if>
     <c:if test="${aux_index2 == 0}">

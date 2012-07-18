@@ -20,7 +20,7 @@
                 $("#filtro").show();
             }
         }else{
-            if(${aux_IniciarP == 1}){
+            if(${aux_IniciarP == 1} || ${aux_IniciarP == 2}){
                 $("#resultadoAlert").hide();
                 $("#formula").hide();
                 $("#filtro").hide();

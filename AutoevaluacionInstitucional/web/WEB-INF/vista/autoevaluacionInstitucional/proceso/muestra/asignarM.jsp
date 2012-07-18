@@ -371,7 +371,7 @@
                             <div class="alert alert-error" >
                                 <a class="close">×</a>
                                 <strong>Información!</strong>
-                                La muestra no fue asignada para la fuente seleccionada durante el proceso de configuración del Proceso en ejecución.
+                                La muestra no fue asignada para la fuente seleccionada durante el proceso de configuración.
                             </div>
                         </div>
                         <div id="resultadoAlert" style="display: none">
