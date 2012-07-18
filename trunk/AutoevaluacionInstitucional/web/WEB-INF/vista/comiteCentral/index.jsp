@@ -328,7 +328,7 @@
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
-                                <li><a href="#">Contacto</a></li>
+                                <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">Contacto</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
 
