@@ -18,20 +18,12 @@
                     <th>Informes</th>
                     </thead>
                     <tbody>
-                        <c:forEach items="${detailProceso2}" var="row" varStatus="iter">
-                            <tr>  
-                                <td>   
-                                    <c:out value="${row.descripcion}"/>
-                                </td>
-                                <td>   
-                                    <c:out value="${row.fechainicio}"/>
-                                </td>
-                                <td>   
-                                    <c:out value="${row.fechacierre}"/>
-                                </td>
-                                <td>   
-                                    <c:out value="${row.programaId.nombre}"/>
-                                </td>
+                        <c:forEach items="${detailProceso.rowsByIndex}" var="item" varStatus="iter">
+                            <tr> 
+                                <td>${item[3]}</td>
+                                <td>${item[1]}</td>
+                                <td>${item[2]}</td>
+                                <td>Autoevaluación Institucional</td>
                                 <td>   
                                     <a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1">Informe resultado por encuestas</a><br/>
                                     <a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz">Matriz de calidad por caracteristicas</a><br/>
@@ -289,7 +281,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <td>
-                                ${tabla2.rowsByIndex[0][11]-tabla2.rowsByIndex[0][10]}
+                                ${tabla2.rowsByIndex[0][10]-tabla2.rowsByIndex[0][11]}
                             </td>
                             <td>
                                 <c:choose>
@@ -324,7 +316,7 @@
                                 </c:choose>
                             </td>
                             <td>
-                                ${tabla2.rowsByIndex[0][13]-tabla2.rowsByIndex[0][12]}
+                                ${tabla2.rowsByIndex[0][12]-tabla2.rowsByIndex[0][13]}
                             </td>
                             <td>
                                 <c:choose>

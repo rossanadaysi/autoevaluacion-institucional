@@ -1478,6 +1478,8 @@ public class formController extends HttpServlet {
 
                     session.setAttribute("proceso", proceso);
                     session.setAttribute("bd", nombreBd);
+                    session.setAttribute("proActivo", 1);
+
 
                     conSql.UpdateSql("INSERT INTO `" + nombreBd + "`.`muestra` (`id`, `formula`, `proceso_id`) VALUES (NULL, NULL, '" + proceso.getId() + "')", nombreBd);
 
@@ -1518,16 +1520,16 @@ public class formController extends HttpServlet {
                 try {
                     conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
                     pc.edit(p);
+                    session.setAttribute("proActivo", 0);
+                    session.setAttribute("estadoProceso", 2);
+                    session.setAttribute("aux_IniciarP", 2);
+                    session.setAttribute("aux_index2", 3);
                 } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
                     Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                session.setAttribute("aux_index2", 2);
-                System.out.println("modificado");
-                session.setAttribute("estadoProceso", 2);
-                session.setAttribute("aux_IniciarP", 3);
 
 
             } else if (request.getParameter(
@@ -1711,6 +1713,9 @@ public class formController extends HttpServlet {
 
                 if (f != 0 && c != 0 && e != 0 && m != 0) {
                     try {
+                        session.setAttribute("aux_index2", 2);
+                        session.setAttribute("aux_IniciarP", 1);
+                        session.setAttribute("estadoProceso", 1);
                         pc.edit(p);
                     } catch (entity.controller.exceptions.NonexistentEntityException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
@@ -1719,9 +1724,7 @@ public class formController extends HttpServlet {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
                                 null, ex);
                     }
-                    session.setAttribute("aux_IniciarP", 1);
-                    session.setAttribute("aux2_index2", 0);
-                    session.setAttribute("estadoProceso", 1);
+
                 }
 
 
