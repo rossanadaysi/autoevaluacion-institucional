@@ -48,6 +48,7 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-carousel.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-transition.js"></script>
+        <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-modal.js"></script>
 
         <script type="text/javascript" src="script/jquery-layout.js"></script>
 
@@ -214,6 +215,13 @@
         </style>
         <script type="text/javascript">
             $().ready(function() {
+                
+                $('.about').click(function(){
+                    
+                    $('#myModalAbout').modal();
+                });
+
+
                 $("#home-carousel").carousel({
                     interval: 15000
                 });
@@ -397,7 +405,6 @@
                             <ul class="nav">
                                 <li class="active"><a href="#">Inicio</a></li>
                                 <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">Contacto</a></li>
-                                <li><a href="#" class="about" >Acerda de</a></li>
                             </ul>
                         </div><!-- /.nav-collapse -->
                     </div>
@@ -408,17 +415,11 @@
         <div class="ui-layout-south ui-widget-content">
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
-                    <a href="#" class="about">
-                        <span>Acerca de</span>
-                    </a>
+                    <a href="#" class="about"><span>Acerca de</span></a>
 
-                    <a href="#">
-                        <span>Derechos de Autor</span>
-                    </a>
+                    <a href="#"><span>Derechos de Autor</span></a>
 
-                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">
-                        <span>Ayuda</span>
-                    </a>
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
                 </div>
             </div>
         </div>
@@ -470,7 +471,24 @@
             </div>
 
         </div>
+        <div class="modal hide fade" id="myModalAbout">
+            <div class="modal-header" style="padding-bottom: 19px; background-color: #282728">
+                <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
+                <h3></h3>
+            </div>
+            <div class="modal-body" style="background-color: #282728" align="center">
+                <img src="<%=request.getContextPath()%>/css/images/SIA UDEC - LOGO_1.png"></img>
+            </div>
+            <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">
+                <%-- <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>--%>
+                <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación institucional es un apoyo
 
+                    fundamental para los procesos de acreditación que debe realizar la Universidad, con
 
+                    el propósito de aportar en forma representativa al aumento en la calidad de la
+
+                    Educación Superior, contribuyendo así al desarrollo del país.</p>
+            </div>
+        </div>
     </body>
 </html>
