@@ -146,6 +146,7 @@
                     $('#myModalNuevoConglomerado').on('hide', function () {
                         $("#selectConglomerado option:eq(0)").attr("selected", "selected");
                         $("#enlace").hide();
+                        $(".page_loading").hide();
                     });
                 }
             })
@@ -197,12 +198,13 @@
                 } //fin success                                          
             }); //fin $.ajax
         }
+        
     }
     
         
     function presionSubmitFuente()
     {
-        
+        $("#inputAux").attr('value', 'automatic');
         if($("#select option:selected").val() == "--"){
             $("#resultados2").hide();
             $("#resultados3").hide();

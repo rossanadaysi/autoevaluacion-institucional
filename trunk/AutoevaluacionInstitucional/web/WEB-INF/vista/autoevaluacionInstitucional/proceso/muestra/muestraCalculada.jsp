@@ -48,7 +48,7 @@
             Muestra Calculada Para la Fuente Seleccionada 
         </a> 
     </div>
-    <div class="accordion-body collapse" id="collapseOne" style="height: 0px; z-index:2;background-color: #FFFFFF;">
+    <div class="accordion-body collapse in" id="collapseOne" style="background-color: #FFFFFF;">
         <div class="accordion-inner">
             <c:if test="${muestraCalculada != null}">
                 <table class="table table-striped table-bordered table-condensed">
@@ -115,7 +115,7 @@
                                     <td>${muestraIndividual}</td>
                                 </c:if>
                                 <c:if test="${muestraIndividual == null}">
-                                    <td>No existen datos en la base de datos. Configure tamanio de la muestra manualmente.</td>
+                                    <td>No existen datos en la base de datos. Configure el tama&nacute;o de la muestra manualmente.</td>
                                 </c:if>
                             </tr>
                         </tbody>
@@ -129,7 +129,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>No existen datos en la base de datos. Configure tamanio de la muestra manualmente.</td>
+                            <td>No existen datos en la base de datos. Configure tama&nacute;o de la muestra manualmente.</td>
                         </tr>
                     </tbody>
                 </table>   
