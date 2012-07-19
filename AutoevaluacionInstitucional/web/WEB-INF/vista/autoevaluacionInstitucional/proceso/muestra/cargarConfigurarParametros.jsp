@@ -98,7 +98,7 @@
                         </tbody>
                     </table>
                 </c:if>
-                <c:if test="${conglomerado == 'cargo' || conglomerado == 'sector' || conglomerado == 'tipo'}">
+                <c:if test="${conglomerado == 'cargo' || conglomerado == 'sectorempresarial' || conglomerado == 'tipo'}">
                     <p>No existe información en la base de datos. Deber crear un nuevo criterio de conglomerado para asignar el tamaño de la población de forma manual.</p>
                 </c:if>
             </div>

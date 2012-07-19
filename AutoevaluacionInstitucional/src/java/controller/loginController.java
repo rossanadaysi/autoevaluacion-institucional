@@ -321,10 +321,6 @@ public class loginController extends HttpServlet {
                             System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
                             session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
                         }
-
-
-
-
                     }
                 } else {
                     out.println(2);
@@ -338,9 +334,6 @@ public class loginController extends HttpServlet {
                 session.setAttribute("errorLogIn", "[Usuario No Registrado!]");
 
             }
-            JOptionPane.showMessageDialog(null, "aux_IniciarP" + session.getAttribute("aux_IniciarP"));
-            JOptionPane.showMessageDialog(null, "aux_index2" + session.getAttribute("aux_index2"));
-
         } catch (java.lang.NumberFormatException e) {
             out.println(4);
         }
