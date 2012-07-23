@@ -323,9 +323,17 @@
                         url: "<%=request.getContextPath()%>/formController?action=CerrarProcesoAI",
                         success: function(data) 
                         {
-                            $("#menu").load("<%=request.getContextPath()%>/ControllerAI?action=menuAI");                                           
-                            location = "<%=request.getContextPath()%>/#listarProcesos";                                
-                                                             
+                            $.ajax({
+                                type: 'POST',
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
+                                success: function(data){
+                                    $("#menu").html(data);
+                                    setTimeout(function(){
+                                        location = "<%=request.getContextPath()%>/#detalleProceso";
+                                    }, 200);
+                        
+                                }
+                            });                                                                  
                         } //fin success
                     }); //fin del $.ajax*/
                 });
@@ -348,13 +356,23 @@
                     $.ajax({ 
                         type: "POST", 
                         url: "<%=request.getContextPath()%>/formController?action=IniciarProcesoAI", 
-                        success: function(data) 
+                        success: function() 
                         { 
                             $.ajax({
                                 type: 'POST',
                                 url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
-                                success: function(data){
-                                    $("#center").html(data);
+                                success: function(){
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
+                                        success: function(data){
+                                            $("#menu").html(data);
+                                            setTimeout(function(){
+                                                location = "<%=request.getContextPath()%>/#detalleProceso";
+                                            }, 200);
+                        
+                                        }
+                                    });
                                 }
                             })                              
                         } //fin success
@@ -1049,7 +1067,7 @@
                             <ul class="nav">
                                 <li class="active"><a href="<%=request.getContextPath()%>/#inicio">Inicio</a></li>
                                 <li><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto">Contacto</a></li>
-                             </ul>
+                            </ul>
                         </div><!-- /.nav-collapse -->
 
                     </div>

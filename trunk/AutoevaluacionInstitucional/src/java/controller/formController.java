@@ -1456,11 +1456,10 @@ public class formController extends HttpServlet {
 
                     conProceso.create(proceso);
 
+                    session.setAttribute("aux_IniciarP", 0);
                     session.setAttribute("proceso", proceso);
                     session.setAttribute("aux_index2", 1);
                     session.setAttribute("aux2_index2", 1);
-                    session.setAttribute("msjLogIn1", "Existe un Proceso en Ejecución!");
-                    session.setAttribute("msjLogIn2", "Detalle del Proceso.");
                     session.setAttribute("estadoProceso", 0);
 
                     try {
@@ -1712,6 +1711,7 @@ public class formController extends HttpServlet {
 
                 if (f != 0 && c != 0 && e != 0 && m != 0) {
                     try {
+                        conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
                         session.setAttribute("aux_index2", 2);
                         session.setAttribute("aux_IniciarP", 1);
                         session.setAttribute("estadoProceso", 1);
