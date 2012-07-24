@@ -8,6 +8,8 @@ import entity.Asignacionencuesta;
 import entity.Proceso;
 import entity.Programa;
 import entity.controller.ProcesoJpaController;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -1504,31 +1506,52 @@ public class formController extends HttpServlet {
                     "action").equals("CerrarProcesoAI")) {
 
                 HttpSession session = request.getSession();
-                Proceso p = (Proceso) session.getAttribute("proceso");
-                ProcesoJpaController pc = new ProcesoJpaController();
-                Date d = new Date();
-                String date = String.valueOf(d);
-                p.setFechacierre(date);
                 Proceso proceso = (Proceso) session.getAttribute("proceso");
                 int idProceso = proceso.getId();
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
 
+                Result rs1 = conSql.CargarSql2("Select indicador.id, indicador.codigo from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
+                int indis = rs1.getRowCount();
+                int doc = 0;
+                Result rs4 = null;
+                String sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 and numericadocumental.proceso_id = '" + idProceso + "'";
+                rs4 = conSql.CargarSql2(sql, bd);
+                if (((indis == 0) || (rs4.getRowCount() == indis))) {
+                    doc = 1;
+                    System.out.println("si hay info documental");
+                } else {
+                    System.out.println("no hay info documental");
+                }
 
-                try {
+
+                rs1 = conSql.CargarSql2("Select indicador.id, indicador.codigo from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 3 order by indicador.id", bd);
+                indis = rs1.getRowCount();
+                int num = 0;
+                rs4 = null;
+                sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + idProceso + "'";
+                rs4 = conSql.CargarSql2(sql, bd);
+                if ((indis == 0) || (rs4.getRowCount() == indis)) {
+                    num = 1;
+                    System.out.println("si hay info numerica");
+                } else {
+                    System.out.println("no hay info numerica");
+                }
+
+
+                if (doc != 0 && num != 0) {
+                    Date d = new Date();
+                    String date = String.valueOf(d);
                     conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
-                    pc.edit(p);
+                    conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, "autoevaluacion");
+                    proceso.setFechacierre(date);
+                    session.setAttribute("proceso", proceso);
                     session.setAttribute("proActivo", 0);
                     session.setAttribute("estadoProceso", 2);
                     session.setAttribute("aux_IniciarP", 2);
                     session.setAttribute("aux_index2", 3);
-                } catch (entity.controller.exceptions.NonexistentEntityException ex) {
-                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
-
-
 
             } else if (request.getParameter(
                     "action").equals("verProceso")) {
@@ -1569,7 +1592,6 @@ public class formController extends HttpServlet {
                 sqlController conSql = new sqlController();
                 Proceso p = (Proceso) session.getAttribute("proceso");
                 int idProceso = p.getId();
-                ProcesoJpaController pc = new ProcesoJpaController();
                 Date d = new Date();
                 String date = String.valueOf(d);
                 p.setFechainicio(date);
@@ -1710,23 +1732,14 @@ public class formController extends HttpServlet {
                 }
 
                 if (f != 0 && c != 0 && e != 0 && m != 0) {
-                    try {
-                        conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
-                        session.setAttribute("aux_index2", 2);
-                        session.setAttribute("aux_IniciarP", 1);
-                        session.setAttribute("estadoProceso", 1);
-                        pc.edit(p);
-                    } catch (entity.controller.exceptions.NonexistentEntityException ex) {
-                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
-                                null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE,
-                                null, ex);
-                    }
-
+                    p.setFechainicio(date);
+                    conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
+                    conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, "autoevaluacion");
+                    session.setAttribute("proceso", p);
+                    session.setAttribute("aux_index2", 2);
+                    session.setAttribute("aux_IniciarP", 1);
+                    session.setAttribute("estadoProceso", 1);
                 }
-
-
             } else if (request.getParameter(
                     "action").equals("evaluarInfoDocumentalAI")) {
 
@@ -1768,6 +1781,7 @@ public class formController extends HttpServlet {
                     rs = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
                     try {
                         while (rs.next()) {
+                            System.out.println("Hola");
                             int i = Integer.parseInt(rs.getString(1));
                             String id = request.getParameter("idIndicadorDoc" + i);
                             String nombreDoc = request.getParameter("nombreDocumento" + i);
@@ -1778,15 +1792,19 @@ public class formController extends HttpServlet {
                             String accion = request.getParameter("accionDocumento" + i);
                             int idNumDoc = 0;
 
-                            rs = conSql.CargarSql("Select id from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.indicador_id = '" + id + "'", bd);
+                            ResultSet rs2 = conSql.CargarSql("Select id from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.indicador_id = '" + id + "'", bd);
                             try {
-                                while (rs.next()) {
-                                    idNumDoc = Integer.parseInt(rs.getString(1));
+                                while (rs2.next()) {
+                                    System.out.println("Hola1");
+                                    idNumDoc = Integer.parseInt(rs2.getString(1));
+                                    System.out.println("ID: " + idNumDoc);
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            System.out.println("Hola2");
                             conSql.UpdateSql("UPDATE `numericadocumental` SET `evaluacion` = '" + evaluacion + "',`documento` = '" + nombreDoc + "',`accion` = '" + accion + "',`responsable` = '" + responsable + "', `medio` = '" + medio + "', `lugar` = '" + lugar + "' WHERE `numericadocumental`.`id` ='" + idNumDoc + "'", bd);
+                            System.out.println("UPDATE `numericadocumental` SET `evaluacion` = '" + evaluacion + "',`documento` = '" + nombreDoc + "',`accion` = '" + accion + "',`responsable` = '" + responsable + "', `medio` = '" + medio + "', `lugar` = '" + lugar + "' WHERE `numericadocumental`.`id` ='" + idNumDoc + "'");
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);

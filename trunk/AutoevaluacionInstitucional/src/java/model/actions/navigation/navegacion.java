@@ -84,6 +84,8 @@ public class navegacion implements Action {
             path = "autoevaluacionInstitucional/proceso/detalleP";
         } else if (path.equals("validar1")) {
             path = "autoevaluacionInstitucional/proceso/validar1";
+        } else if (path.equals("validar2")) {
+            path = "autoevaluacionInstitucional/proceso/validar2";
         } else if (path.equals("listarRepresentante")) {
             path = "comiteCentral/representante/listar";
             session.setAttribute("listrepresentantes", conRepresentante.findRepresentanteEntities());

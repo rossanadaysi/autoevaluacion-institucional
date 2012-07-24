@@ -325,15 +325,27 @@
                         {
                             $.ajax({
                                 type: 'POST',
-                                url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=validar2",
                                 success: function(data){
-                                    $("#menu").html(data);
-                                    setTimeout(function(){
-                                        location = "<%=request.getContextPath()%>/#detalleProceso";
-                                    }, 200);
-                        
+                                    if(data == 1){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
+                                            success: function(data){
+                                                $("#menu").html(data);
+                                                setTimeout(function(){
+                                                    location = "<%=request.getContextPath()%>/#detalleProceso";
+                                                }, 200);
+                                            }
+                                        });
+                                    }else{
+                                        $('#myModalIP3').modal(); 
+                                        setTimeout(function(){
+                                            location = "<%=request.getContextPath()%>/#detalleProceso";
+                                        }, 200);
+                                    }
                                 }
-                            });                                                                  
+                            })                                                             
                         } //fin success
                     }); //fin del $.ajax*/
                 });
@@ -361,20 +373,26 @@
                             $.ajax({
                                 type: 'POST',
                                 url: "<%=request.getContextPath()%>/ControllerAI?action=validar1",
-                                success: function(){
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
-                                        success: function(data){
-                                            $("#menu").html(data);
-                                            setTimeout(function(){
-                                                location = "<%=request.getContextPath()%>/#detalleProceso";
-                                            }, 200);
-                        
-                                        }
-                                    });
+                                success: function(data){
+                                    if(data == 1){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
+                                            success: function(data){
+                                                $("#menu").html(data);
+                                                setTimeout(function(){
+                                                    location = "<%=request.getContextPath()%>/#detalleProceso";
+                                                }, 200);
+                                            }
+                                        });
+                                    }else{
+                                        $('#myModalIP3').modal(); 
+                                        setTimeout(function(){
+                                            location = "<%=request.getContextPath()%>/#detalleProceso";
+                                        }, 200);
+                                    }
                                 }
-                            })                              
+                            })                         
                         } //fin success
                     }); //fin del $.ajax    });
                 });
@@ -1308,6 +1326,20 @@
                 <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
                 <br>
                     <p>Debe configurar todo el proceso para continuar.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
+        <div class="modal hide fade" id="myModalIP3">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close">×</a>
+                <h3>Atención!</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Finalizar Proceso de Autoevaluación Institucional.</h4>
+                <br>
+                    <p>Debe evaluar la información numérica y documental para continuar.</p>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
