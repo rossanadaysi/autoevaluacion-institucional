@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `instrumento` (
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 CREATE TABLE IF NOT EXISTS `instrumentohasindicador` (
   `instrumento_id` int(11) NOT NULL,
   `indicador_id` int(11) NOT NULL,
@@ -271,11 +271,12 @@ CREATE TABLE IF NOT EXISTS `numericadocumental` (
   `lugar` varchar(500) NOT NULL,
   `evaluacion` int(11) NOT NULL,
   `accion` varchar(500) NOT NULL,
-  `indicador_id` int(11) NOT NULL,
   `proceso_id` int(11) NOT NULL,
+  `instrumento_id` int(11) NOT NULL,
+  `indicador_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_numericadocumental_indicador1` (`indicador_id`),
-  KEY `fk_numericadocumental_proceso1` (`proceso_id`)
+  KEY `fk_numericadocumental_proceso1` (`proceso_id`),
+  KEY `fk_numericadocumental_instrumentohasindicador1` (`instrumento_id`,`indicador_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `persona` (
   `id` varchar(25) NOT NULL,
@@ -314,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `pregunta` (
   `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pregunta_indicador1` (`indicador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=143 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=144 ;
 CREATE TABLE IF NOT EXISTS `privilegio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -329,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `proceso` (
   `programa_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_proceso_programa1` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 CREATE TABLE IF NOT EXISTS `programa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -451,8 +452,8 @@ ALTER TABLE `muestraestudiante`
   ADD CONSTRAINT `fk_muestraestudiante_muestra1` FOREIGN KEY (`muestra_id`) REFERENCES `muestra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_muestraestudiante_estudiante1` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `numericadocumental`
-  ADD CONSTRAINT `fk_numericadocumental_indicador1` FOREIGN KEY (`indicador_id`) REFERENCES `indicador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_numericadocumental_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_numericadocumental_instrumentohasindicador1` FOREIGN KEY (`instrumento_id`, `indicador_id`) REFERENCES `instrumentohasindicador` (`instrumento_id`, `indicador_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE `ponderacioncaracteristica`
   ADD CONSTRAINT `fk_ponderacioncaracteristica_proceso1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_ponderacioncaracteristica_caracteristica1` FOREIGN KEY (`caracteristica_id`) REFERENCES `caracteristica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

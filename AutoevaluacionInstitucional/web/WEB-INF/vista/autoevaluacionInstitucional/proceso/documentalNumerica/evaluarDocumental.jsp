@@ -101,7 +101,7 @@
                                             <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span2">${row2[4]}</textarea>
+                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1">${row2[4]}</textarea>
                                         </td>
                                         <td>
                                             <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
