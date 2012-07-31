@@ -392,6 +392,10 @@
                                             <option>Estudiantes</option>
                                             <option>Docentes</option>
                                             <option>Administrativos</option>
+                                            <option>Egresados</option>
+                                            <option>Directivos</option>
+                                            <option>Agencias Gubernamentales</option>
+                                            <option>Empleadores</option>
                                         </optgroup>
                                     </select>
                                     <button type="submit" class="btn" name="submit_login" style="font-weight:700;margin-top: 15px;">Iniciar sesi&oacute;n</button>
