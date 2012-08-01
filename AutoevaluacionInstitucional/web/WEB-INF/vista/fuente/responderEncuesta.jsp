@@ -4,7 +4,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
 <script type="text/javascript">
-    var itemsxpagina=45;
+    var itemsxpagina=10;
     function pageselectCallback(page_index, jq){
         var num_entries = $("#preguntas tr").length;
         for(var i=0;i<num_entries;i++)
