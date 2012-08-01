@@ -28,7 +28,7 @@ public class PasswordGenerator {
 	}
  
 	public static String getPassword(int length) {
-		return getPassword(NUMEROS + MAYUSCULAS + MINUSCULAS, length);
+		return getPassword(NUMEROS + MAYUSCULAS, length);
 	}
  
 	public static String getPassword(String key, int length) {
