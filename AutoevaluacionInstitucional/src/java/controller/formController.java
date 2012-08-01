@@ -986,12 +986,11 @@ public class formController extends HttpServlet {
                                 for (int j = 0; j < d; j++) {
 
                                     String pass = PasswordGenerator.getPassword(
-                                            PasswordGenerator.MINUSCULAS
-                                            + PasswordGenerator.MAYUSCULAS
-                                            + PasswordGenerator.NUMEROS
-                                            + PasswordGenerator.ESPECIALES, 6);
+                                            PasswordGenerator.MAYUSCULAS
+                                            + PasswordGenerator.NUMEROS, 6);
 
                                     String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', '--')";
+                                    System.out.println(sql2);
                                     conSql.UpdateSql(sql2, bd);
                                     if (id == 1) {
                                         sql2 = "insert into " + tabla1 + " values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '--', '--', '--', '" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', '" + id + "', '" + programa + "')";
@@ -1014,10 +1013,8 @@ public class formController extends HttpServlet {
                             for (int j = 0; j < d; j++) {
 
                                 String pass = PasswordGenerator.getPassword(
-                                        PasswordGenerator.MINUSCULAS
-                                        + PasswordGenerator.MAYUSCULAS
-                                        + PasswordGenerator.NUMEROS
-                                        + PasswordGenerator.ESPECIALES, 6);
+                                        PasswordGenerator.MAYUSCULAS
+                                        + PasswordGenerator.NUMEROS, 6);
 
 
                                 String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', 'nuevoConglomerado')";
@@ -1074,10 +1071,8 @@ public class formController extends HttpServlet {
                                 for (int j = 0; j < d; j++) {
 
                                     String pass = PasswordGenerator.getPassword(
-                                            PasswordGenerator.MINUSCULAS
-                                            + PasswordGenerator.MAYUSCULAS
-                                            + PasswordGenerator.NUMEROS
-                                            + PasswordGenerator.ESPECIALES, 6);
+                                            PasswordGenerator.MAYUSCULAS
+                                            + PasswordGenerator.NUMEROS, 6);
 
 
                                     String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + x + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', '--')";
@@ -1123,11 +1118,8 @@ public class formController extends HttpServlet {
                                     for (int j = 0; j < d; j++) {
 
                                         String pass = PasswordGenerator.getPassword(
-                                                PasswordGenerator.MINUSCULAS
-                                                + PasswordGenerator.MAYUSCULAS
-                                                + PasswordGenerator.NUMEROS
-                                                + PasswordGenerator.ESPECIALES, 6);
-
+                                                PasswordGenerator.MAYUSCULAS
+                                                + PasswordGenerator.NUMEROS, 6);
 
                                         String sql2 = "insert into persona values ('" + id + "" + proceso.getId() + "" + id + "" + programa + "" + j + "', 'Fuente'  , '" + aux + "', '" + pass + "', '--')";
                                         conSql.UpdateSql(sql2, bd);
@@ -1543,13 +1535,13 @@ public class formController extends HttpServlet {
                     Date d = new Date();
                     String date = String.valueOf(d);
                     conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
-                    conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, "autoevaluacion");
                     proceso.setFechacierre(date);
                     session.setAttribute("proceso", proceso);
                     session.setAttribute("proActivo", 0);
                     session.setAttribute("estadoProceso", 2);
                     session.setAttribute("aux_IniciarP", 2);
                     session.setAttribute("aux_index2", 3);
+                    conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, "autoevaluacion");
 
                 }
 
@@ -1732,13 +1724,19 @@ public class formController extends HttpServlet {
                 }
 
                 if (f != 0 && c != 0 && e != 0 && m != 0) {
-                    p.setFechainicio(date);
-                    conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
-                    conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, "autoevaluacion");
-                    session.setAttribute("proceso", p);
-                    session.setAttribute("aux_index2", 2);
-                    session.setAttribute("aux_IniciarP", 1);
-                    session.setAttribute("estadoProceso", 1);
+                    try {
+                        conSql.UpdateSql("UPDATE `proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
+
+                        System.out.println("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso);
+                        System.out.println("BD : " + bd);
+                        session.setAttribute("proceso", p);
+                        session.setAttribute("aux_index2", 2);
+                        session.setAttribute("aux_IniciarP", 1);
+                        session.setAttribute("estadoProceso", 1);
+                        conSql.UpdateSql("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, "autoevaluacion");
+                    } catch (Error ee) {
+                        System.out.println("error: " + ee);
+                    }
                 }
             } else if (request.getParameter(
                     "action").equals("evaluarInfoDocumentalAI")) {

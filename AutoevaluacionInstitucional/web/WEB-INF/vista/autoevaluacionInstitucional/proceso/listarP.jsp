@@ -34,7 +34,7 @@
             <fieldset>
                 <legend>Listado de  procesos</legend>
                 <c:choose>
-                    <c:when test="${fn:length(listProceso)!= 0}">
+                    <c:when test="${listProceso.getRowCount() != 0}">
                         <table class="table table-striped table-bordered table-condensed">
                             <thead>
                             <th>Descripción</th>
@@ -44,20 +44,12 @@
                             <th></th>
                             </thead>
                             <tbody>
-                                <c:forEach items="${listProceso}" var="row" varStatus="iter">
-                                    <tr>  
-                                        <td>   
-                                            <c:out value="${row.descripcion}"/>
-                                        </td>
-                                        <td>   
-                                            <c:out value="${row.fechainicio}"/>
-                                        </td>
-                                        <td>   
-                                            <c:out value="${row.fechacierre}"/>
-                                        </td>
-                                        <td>   
-                                            <c:out value="${row.programaId.nombre}"/>
-                                        </td>
+                                <c:forEach items="${listProceso.rowsByIndex}" var="item" varStatus="iter">
+                                    <tr>
+                                        <td>${item[3]}</td>
+                                        <td>${item[1]}</td>
+                                        <td>${item[2]}</td>
+                                        <td>${programa.getNombre()}</td>
                                         <td><a class="verProceso" rel="${row.id}"> Ir al proceso.</a></td>
                                     </tr>
                                 </c:forEach>

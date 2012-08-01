@@ -6,12 +6,8 @@ package controller;
 
 import entity.Proceso;
 import entity.Programa;
-import entity.controller.ProcesoJpaController;
-import entity.controller.ProgramaJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,33 +75,19 @@ public class jsonController extends HttpServlet {
                         + " ponderacioncaracteristica.`caracteristica_id` ="
                         + " caracteristica.`id` where proceso_id = " + idProceso + "", bd);
                 session.setAttribute("listPonderacionCaracteristica", rs);
+               
 
             }
             if (request.getParameter("ejecucion").equals("listarProcesos")) {
 
-                ProgramaJpaController conPrograma = new ProgramaJpaController();
-                ProcesoJpaController conProceso = new ProcesoJpaController();
-
+               
                 Programa programa = (Programa) session.getAttribute("programa");
 
-                List<Proceso> listProceso = conProceso.findProcesoEntities();
-                List<Proceso> listProceso2 = new ArrayList<Proceso>();
-
-
-                int i = 0;
-
-                System.out.println(listProceso.size());
-
-                for (Proceso proceso : listProceso) {
-                    i++;
-                    int id1 = proceso.getProgramaId().getId();
-                    int id2 = programa.getId();
-                    if (id1 == id2) {
-                        listProceso2.add(proceso);
-                    }
-                }
-
-                session.setAttribute("listProceso", listProceso2);
+                Proceso proceso = (Proceso) session.getAttribute("proceso");
+                int idProceso = proceso.getId();
+                sqlController conSql = new sqlController();
+                Result rs = conSql.CargarSql2("Select * from proceso where proceso.programa_id = " + programa.getId() + "", "autoevaluacion");
+                session.setAttribute("listProceso", rs);
             }
             if (request.getParameter("ejecucion").equals("listarEvaluarDoc")) {
 
