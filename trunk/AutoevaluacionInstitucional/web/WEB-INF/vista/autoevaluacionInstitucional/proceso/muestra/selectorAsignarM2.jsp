@@ -48,8 +48,8 @@
                 <c:if test="${idFuenteMuestra == 1}">
                     <div id="tablax" style="z-index: 1;">
                         <c:if test="${aux_IniciarP == 1}">
-                        <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
-                        <br>
+                            <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
+                            <br>
                         </c:if>
                         <br>
                         <h4>Muestra generada para la fuente seleccionada</h4>

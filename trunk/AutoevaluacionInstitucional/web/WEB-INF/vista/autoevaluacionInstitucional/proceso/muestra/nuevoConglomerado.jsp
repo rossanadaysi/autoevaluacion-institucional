@@ -109,7 +109,7 @@
             </div>
             <div id="formCriterio" style="display: none">
                 <div class="control-group">
-                    Nuevo criterio de comglomerado:
+                    Nuevo criterio de conglomerado:
                     <label class="control-label" for="input">Nombre:</label>
                     <div class="controls">
                         <input type="text" id="input" name="nombreCriterio">

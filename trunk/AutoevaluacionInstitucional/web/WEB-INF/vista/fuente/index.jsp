@@ -38,6 +38,42 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-modal.js"></script>
 
         <style type="text/css">
+            .page_loading {
+                background-attachment: scroll;
+                background-clip: border-box;
+                background-color: #8F8F8F;
+                background-image: none;
+                background-origin: padding-box;
+                background-position: 0 0;
+                background-repeat: repeat;
+                background-size: auto auto;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                color: #FFFFFF;
+                height: 32px;
+                left: 45%;
+                line-height: 32px;
+                margin-bottom: 0;
+                margin-left: -62px;
+                margin-right: 0;
+                margin-top: -16px;
+                padding-bottom: 0;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 0;
+                position: absolute;
+                top: 30%;
+            }
+            .page_loading span {
+                color: #FFFFFF;
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 32px;
+                font-family: Helvetica,Arial,sans-serif;
+            }
+            
             .ui-layout-north {
                 /* Drop-Down */
                 bottom:		auto;
