@@ -143,7 +143,7 @@
 </script>
 <div class="hero-unit">
     <div class="row">
-        <div class="span8">
+        <div id="conte" class="span10">
             <form id="formCrearIndic" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Crear Indicador</legend>

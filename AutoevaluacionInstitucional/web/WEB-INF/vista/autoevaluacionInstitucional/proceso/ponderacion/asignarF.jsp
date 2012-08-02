@@ -74,7 +74,7 @@
     </div>
     <div class="hero-unit">
         <div class="row">
-            <div class="span10">
+            <div id="conte" class="span10">
                 <form id="formPondeFa" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Ponderación de Factores</legend>
@@ -165,7 +165,7 @@
     </div>
     <div class="hero-unit" >
         <div class="row">
-            <div class="span10">
+            <div id="conte" class="span10">
                 <form id="formPondeFa" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Ponderación de Factores</legend>

@@ -6,7 +6,7 @@
 </script>
 <div class="hero-unit">
     <div class="row">
-        <div class="span10">
+        <div id="conte" class="span10">
             <br/>
             <fieldset>
                 <legend>Detalle de Proceso</legend>

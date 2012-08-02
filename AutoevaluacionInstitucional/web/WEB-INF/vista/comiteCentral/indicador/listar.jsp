@@ -55,7 +55,7 @@
 </script> 
 <div class="hero-unit">
     <div class="row">
-        <div class="span10">
+        <div id="conte" class="span10">
             <br/>
             <h2>Listado de  Indicadores</h2>
             <c:choose>

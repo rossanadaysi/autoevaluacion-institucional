@@ -3,7 +3,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.verProceso').click(function(){
+        $('.verProceso').click(function(ev){
+            ev.stopPropagation();
+            ev.preventDefault();
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=verProceso&idPro="+$(this).attr("rel"),
@@ -29,7 +31,7 @@
 </script>
 <div class="hero-unit">
     <div class="row">
-        <div class="span10">
+        <div id="conte" class="span10">
             <br/>
             <fieldset>
                 <legend>Listado de  procesos</legend>
@@ -50,7 +52,7 @@
                                         <td>${item[1]}</td>
                                         <td>${item[2]}</td>
                                         <td>${programa.getNombre()}</td>
-                                        <td><a class="verProceso" rel="${row.id}"> Ir al proceso.</a></td>
+                                        <td><a class="verProceso" href="" rel="${item[0]}"> Ir al proceso.</a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

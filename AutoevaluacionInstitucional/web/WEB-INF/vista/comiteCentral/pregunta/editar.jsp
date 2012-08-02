@@ -33,7 +33,7 @@
 <br>
 <div class="hero-unit">
     <div class="row">
-        <div class="span8">
+        <div id="conte" class="span10">
             <form id="formEditarPreg" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Editar pregunta</legend>

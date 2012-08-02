@@ -3,7 +3,7 @@
 <br>
 <div class="hero-unit">
     <div class="row">
-        <div class="span8">
+        <div id="conte" class="span10">
             <form id="formCrearProc" class="form-horizontal" method="post">
                 <fieldset>
                     <legend>Nuevo Proceso de Autoevaluación</legend>
