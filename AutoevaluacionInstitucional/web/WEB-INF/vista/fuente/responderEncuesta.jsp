@@ -72,6 +72,13 @@
                     type: 'POST', 
                     url: "<%=request.getContextPath()%>/formController3?action=responderE",
                     data: $("#formResponderE").serialize(),
+                    beforeSend: function(){
+                        $("div.ui-layout-center").append("<div class='contenido'></div>");
+                        $("div.ui-layout-center").append("<div class='page_loading'>"
+                            +"<span>Enviando</span>"
+                            +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                            +"</div>");
+                    },
                     success: function(){
                         location = "<%=request.getContextPath()%>/#inicio"
                     } //fin success
