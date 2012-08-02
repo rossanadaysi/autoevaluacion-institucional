@@ -1,10 +1,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+    
+    $(function(){
+        $("textarea").focus(function(){
+            $(this).addClass("foco");
+        })
+        $("textarea").focusout(function() {
+            $(this).removeClass("foco");
+        })
+    })
+    
+</script>
+<style type="text/css"> 
+    .foco{
+        width: 350px !important;
+        height: 200px;
+        
+    }
+</style>
 <br>
 <c:if test="${auxInfoNumerica == 0}"><!--Si no se ha asignado nada-->
     <div class="hero-unit">
         <div class="row">
-            <div class="span10">
+            <div id="conte" class="span10">
                 <form id="formInfoNum" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Evaluar información numérica</legend>
@@ -68,7 +87,7 @@
 <c:if test="${auxInfoNumerica == 1}">
     <div class="hero-unit" >
         <div class="row">
-            <div class="span10">
+            <div id="conte" class="span10">
                 <form id="formInfoNum" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Evaluar información numérica</legend>

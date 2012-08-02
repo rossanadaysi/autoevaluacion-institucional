@@ -282,6 +282,8 @@
                     ,	west__togglerContent_closed:	"<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
                     ,	west__togglerTip_closed:	"Mostrar menú"
                     ,	west__togglerTip_open:	        "Ocultar menú"
+                    ,   west__onclose_end: function(){ $("#conte").removeClass("span10").addClass("span12")}
+                    ,   west__onopen_end: function(){$("#conte").removeClass("span12").addClass("span10")}
                     ,   south__paneClass:               "ui-layout-pane"
                     ,	west__togglerContent_open:      ""	
                     ,	west__minSize:			200
@@ -431,7 +433,7 @@
                         if(hash=="#inicio"){//inicio
                             $("div.ui-layout-center").empty();
                             $("div.ui-layout-center").append(
-                            "<div class='span10' style='text-align: justify'>"
+                            "<div id='conte' class='span10' style='text-align: justify'>"
                                 +"<div class='hero-unit'>"
                                 +"<h1>Autoevaluaci&oacute;n Institucional!</h1>"
                                 +"<p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>"
@@ -848,6 +850,7 @@
                             
                             if(hash == "#detalleProceso")
                             {
+                                myLayout.addCloseBtn("#west-closer", "west");
                                 $("div.ui-layout-center").empty();
                                 $.ajax({
                                     type: 'POST',
@@ -1108,7 +1111,7 @@
 
         <div id="center" class="ui-layout-center">
 
-            <div class="span10" style="text-align: justify">
+            <div id="conte" class="span10" style="text-align: justify">
                 <div class="hero-unit">
                     <h1>Autoevaluaci&oacute;n Institucional!</h1>
                     <p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>
