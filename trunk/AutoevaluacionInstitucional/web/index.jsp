@@ -57,9 +57,6 @@
 
         <style type="text/css">
             #home-carousel {
-                margin-top: -6px;
-                width: 400px;
-                float: right;
                 border: 2px solid #2C2C2C;
                 -webkit-border-radius: 6px;
                 -moz-border-radius: 6px;
@@ -428,7 +425,7 @@
             </div>
         </div>
         <div class="ui-layout-center">
-            <div style="height: 62%; background-color: #f77f00;">
+            <div style="height: 60%; background-color: #f77f00;">
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 20%; top: 5%"/>    
                 <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right"/>    
             </div>
@@ -438,9 +435,16 @@
                         <div class="span7">
                             <h2>Autoevaluaci&oacute;n Institucional</h2>
                             <p style="color: inherit;font-size: 18px;font-weight: 200;line-height: 27px;margin-bottom: -8px;text-align: justify;">La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</p>     
-                            <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank" style="float: right;"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
-                            <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank" style="float: right;margin-right: 100px;margin-top: 20px;"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img></a>
+                            <div class="span2"></div>
+                            <div class="span4" style="margin-top: 10px;">
+                                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank" ><img src="<%=request.getContextPath()%>/css/LogoUdeC.png"></img></a>
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span4">
+                                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank" ><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png"></img></a>
+                            </div>
                         </div>
+
                         <div class="span5">
                             <div class="carousel" id="home-carousel">
                                 <div class="carousel-inner">
@@ -471,6 +475,9 @@
                             </div>
                         </div>
                     </div> 
+
+
+
                 </div>
             </div>
 

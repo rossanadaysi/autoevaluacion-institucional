@@ -14,6 +14,18 @@ select (
 ) AS c1
 
 
+Select indicador.id, indicador.codigo, factor.id from indicador 
+inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id 
+inner join caracteristica on caracteristica.id = indicador.caracteristica_id
+inner join factor on factor.id = caracteristica.factor_id 
+where instrumentohasindicador.instrumento_id = 2 order by indicador.id
+
+select indicador.id, indicador.nombre, numericadocumental.documento, 
+numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar,
+ numericadocumental.evaluacion, numericadocumental.accion from numericadocumental
+ inner join indicador on numericadocumental.indicador_id = indicador.id 
+inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id 
+where instrumentohasindicador.instrumento_id = 2 and numericadocumental.proceso_id = 1
 
 
 select * from(

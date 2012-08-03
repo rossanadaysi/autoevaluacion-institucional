@@ -38,7 +38,11 @@ public class infoDocumentalAI implements Action {
         rs2 = conSql.CargarSql2(sql, bd);
 
         Result rs = null;
-        rs = conSql.CargarSql2("Select indicador.id, indicador.codigo from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
+        rs = conSql.CargarSql2("Select indicador.id, indicador.codigo, factor.id from indicador"
+                + " inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id"
+                + " inner join caracteristica on caracteristica.id = indicador.caracteristica_id"
+                + " inner join factor on factor.id = caracteristica.factor_id "
+                + " where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
         session.setAttribute("auxInfoDocumental", 1);
 
 

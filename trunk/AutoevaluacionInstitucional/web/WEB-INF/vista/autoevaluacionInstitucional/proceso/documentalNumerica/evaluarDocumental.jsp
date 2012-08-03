@@ -9,18 +9,52 @@
         $("textarea").focusout(function() {
             $(this).removeClass("foco");
         })
-    })
+        
+        $('a[href^=#InformacionDocumental]').click(function() {
+     
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+                && location.hostname == this.hostname) {
+
+                var $target2 = $(this.hash);
+             
+                $target2 = $target2.length && $target2 || $('[name=' + this.hash.slice(1) +']');
+                if ($target2.length) {
+                    var targetOffset = $target2.offset().top;
+                    var actual = $('div.ui-layout-center').scrollTop();
+                    if(actual!=0){
+                        $('div.ui-layout-center').animate({scrollTop: actual + targetOffset - 80}, 500);
+                    }else{
+                        $('div.ui-layout-center').animate({scrollTop: targetOffset - 118}, 500);
+                    }
+                    
+
+                    return false;
+                }
+
+            }
+        });
+        
+    });
     
 </script>
 <style type="text/css"> 
     .foco{
         width: 350px !important;
         height: 200px;
-        
+
     }
 </style>
 <br>
 <c:if test="${auxInfoDocumental == 0}"><!--Si no se ha asignado nada-->
+    <div class="subnav">
+        <ul class="nav nav-pills">
+            <c:forEach items="1,2,3,4,5,6,7,8,9,10" var="row" varStatus="iter">
+                <li><a href="#InformacionDocumental${iter.index+1}">Factor ${iter.index + 1}</a></li>
+            </c:forEach> 
+        </ul>
+    </div>
+
+
     <div class="hero-unit">
         <div class="row">
             <div id="conte" class="span10">
@@ -38,8 +72,19 @@
                             <th>Acción a implementar u observación</th>
                             </thead>
                             <tbody>
+
+                                <c:set var="fActual" value="0"></c:set>
                                 <c:forEach items="${indicadoresDocumental.rowsByIndex}" var="row" varStatus="iter">
-                                    <tr id="InformacionDocumental${iter.index+1}">    
+
+                                    <c:choose>
+                                        <c:when test="${fActual!=row[2]}">
+                                            <tr id="InformacionDocumental${row[2]}">    
+                                                <c:set var="fActual" value="${row[2]}"></c:set>
+                                            </c:when>    
+                                            <c:otherwise>
+                                            <tr>    
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td>   
                                             <c:out value="${row[1]}"/>
                                         </td>

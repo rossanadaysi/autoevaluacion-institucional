@@ -406,12 +406,13 @@
             
             
                 $(window).hashchange(function(){
-                    console.log("hp!!!");  
+                     
                     var hash = location.hash;
                     
                     if(hash.indexOf("PonderacionFactores")!=-1){
                         
                     }
+                   
                                                 
                     if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
                     
@@ -688,7 +689,12 @@
                                         setTimeout(function(){
                                             $(".page_loading").hide();
                                         },200);     
-
+                                        
+                                        setTimeout(function(){
+                                            $("div.ui-layout-center").scrollspy({
+                                                offset:80
+                                            });   
+                                        }, 500);
                                         
                                         $("#formInfoDoc").submit(function(event){
                                             event.preventDefault();
