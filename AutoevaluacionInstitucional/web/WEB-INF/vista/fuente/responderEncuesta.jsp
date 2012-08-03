@@ -62,7 +62,7 @@
         });
         
         var validator = $("#formResponderE").bind("invalid-form.validate", function() {
-            alert("usted ha dejado de contestar " + validator.numberOfInvalids() + " preguntas, por favor contesterlas todas.");
+            alert("usted ha dejado de contestar " + validator.numberOfInvalids() + " preguntas, por favor contestelas todas.");
         })
         .validate({
             ignore: "", 
