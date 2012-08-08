@@ -62,10 +62,10 @@
                                 <td>${item2[0]}</td>
                                 <c:choose>
                                     <c:when test="${item2[1]==0}">
-                                        <td>1</td>
+                                        <td style="text-align: right">-</td>
                                     </c:when>
                                     <c:otherwise>
-                                        <td>${item2[1]}</td>
+                                        <td style="text-align: right">${item2[1]}</td>
                                     </c:otherwise>
                                 </c:choose>
                             </tr>
@@ -75,7 +75,7 @@
                     <tfoot>
                         <tr>
                             <td><strong>Total Muestra</strong></td>
-                            <td><strong>${iterador}</strong></td>
+                            <td style="text-align: right"><strong>${iterador}</strong></td>
                         </tr>
                     </tfoot>
                 </table>   
@@ -92,16 +92,22 @@
                                     <td>${item2.programa}</td>
                                     <c:choose>
                                         <c:when test="${item2.tamanio == '0'}">
-                                            <td>1</td>
+                                            <td style="text-align: right">-</td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td>${item2.tamanio}</td>
+                                            <td style="text-align: right">${item2.tamanio}</td>
                                         </c:otherwise>
                                     </c:choose>
                                 </tr>
                                 <c:set var="iterador" value="${iterador + item2.tamanio}" />
                             </c:forEach>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total Muestra</strong></td>
+                                <td style="text-align: right"><strong>${iterador}</strong></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </c:if> 
                 <c:if test="${muestraIndividual != null}">
