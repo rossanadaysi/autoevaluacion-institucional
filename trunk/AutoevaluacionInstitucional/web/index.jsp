@@ -375,7 +375,7 @@
                                     </div>
 
                                     <label>Usuario</label>
-                                    <input id="codigo" type="text" name="codigo" class="span3 {required:true,number:true,maxlength:10,messages:{number:'Por favor ingrese un c&oacutedigo v&aacutelido',required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 numeros'}}"/>
+                                    <input id="codigo" type="text" name="codigo" class="span3 {required:true,maxlength:10,messages:{required:'El campo c&oacutedigo es requerido',maxlength:'El campo c&oacutedigo no admite m&aacutes de 10 caracteres'}}"/>
                                     <label>Contrase&ntilde;a</label>
                                     <input id="pass" type="password" name="pass" class="span3 {required:true,messages:{required:'El campo contrase&ntildea es requerido'}}"/>
                                     <label><a href="#" style="color: #F77F00;margin-top: -20px;margin-right:50%; padding-left: 0px;font-size: 12px">¿Olvidó su contrase&ntilde;a?</a></label>
