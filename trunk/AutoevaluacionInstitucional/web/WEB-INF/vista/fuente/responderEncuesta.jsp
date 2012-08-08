@@ -270,7 +270,7 @@
             </div>
             <div class="span4">
                 <div style="text-align: right;margin-top: 18px;">
-                    <button class="btn" id="guardar" type="button">Guardar</button>
+                    <button class="btn" id="guardar" type="button">Guardar y salir</button>
                     <button class="btn btn-primary" type="submit">Enviar</button>
                 </div>
             </div>

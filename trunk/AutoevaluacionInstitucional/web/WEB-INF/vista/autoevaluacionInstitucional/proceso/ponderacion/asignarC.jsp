@@ -74,10 +74,10 @@
         });
     });
 </script>
-<c:if test="${auxAsignarC1 != 0}">
+<c:if test="${auxAsignarC1 != 0 && aux_IniciarP==0}">
     <c:if test="${auxAsignarC == 0}">
         <br id="PonderacionCaracteristicas">
-        <div class="subnav">
+        <div class="subnav" data-top="80">
             <ul class="nav nav-pills" >
                 <li><a><strong>Ponderación de Características</strong></a></li>
                 <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">
@@ -167,7 +167,7 @@
     <c:if test="${auxAsignarC == 1}">
         <br id="PonderacionCaracteristicas">
 
-        <div class="subnav" >
+        <div class="subnav" data-top="80">
             <ul class="nav nav-pills">
                 <li><a><strong>Ponderación de Características</strong></a></li>
                 <c:forEach items="${caracteristicas.rowsByIndex}" var="row" varStatus="iter">

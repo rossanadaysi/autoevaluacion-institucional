@@ -46,10 +46,17 @@
 </style>
 <br>
 <c:if test="${auxInfoDocumental == 0}"><!--Si no se ha asignado nada-->
-    <div class="subnav">
+    <div class="subnav" data-top="80">
         <ul class="nav nav-pills">
             <c:forEach items="1,2,3,4,5,6,7,8,9,10" var="row" varStatus="iter">
-                <li><a href="#InformacionDocumental${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                <c:choose>
+                    <c:when test="${(iter.index == 0)}">
+                        <li class="active"><a href="#InformacionDocumental${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#InformacionDocumental${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                    </c:otherwise>
+                </c:choose>
             </c:forEach> 
         </ul>
     </div>

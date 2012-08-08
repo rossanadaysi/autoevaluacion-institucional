@@ -17,8 +17,15 @@ select (
 Select indicador.id, indicador.codigo, factor.id from indicador 
 inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id 
 inner join caracteristica on caracteristica.id = indicador.caracteristica_id
-inner join factor on factor.id = caracteristica.factor_id 
-where instrumentohasindicador.instrumento_id = 2 order by indicador.id
+inner join factor on factor.id=caracteristica.factor_id
+where instrumentohasindicador.instrumento_id = 3 order by indicador.id
+
+
+Select indicador.id, indicador.codigo, factor.id from indicador
+                 inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id
+                 inner join caracteristica on caracteristica.id = indicador.caracteristica_id
+                 inner join factor on factor.id = caracteristica.factor_id 
+                 where instrumentohasindicador.instrumento_id = 2 order by indicador.id
 
 select indicador.id, indicador.nombre, numericadocumental.documento, 
 numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar,
