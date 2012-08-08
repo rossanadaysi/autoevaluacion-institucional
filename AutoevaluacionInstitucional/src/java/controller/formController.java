@@ -592,10 +592,23 @@ public class formController extends HttpServlet {
                     }
 
                     session.setAttribute("idFuenteMuestra", id);
+                    ResultSet rsf = null;
+                    String sql = "Select nombre from fuente where id = " + id;
+                    rsf = conSql.CargarSql(sql, bd);
+                    
+                    try {
+                        while(rsf.next()){
+                        session.setAttribute("nombreFuenteMuestra", rsf.getString(1));
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
 
 
                     Result rs = null;
-                    String sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
+                   
+                    sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
                     rs = conSql.CargarSql2(sql, bd);
 
                     if (rs.getRowCount() != 0) {
@@ -977,14 +990,14 @@ public class formController extends HttpServlet {
                                         sql2 = "insert into " + tabla1 + " values (NULL, '--', '" + proceso.getId() + id + programa + "-" + j + "', '" + id + "', '" + programa + "')";
                                         conSql.UpdateSql(sql2, bd);
                                         conSql.UpdateSql(sql2, "autoevaluacion");
-                                       
+
                                     }
                                     if (id == 5) {
                                         sql2 = "insert into " + tabla1 + " values (NULL, '" + proceso.getId() + id + programa + "-" + j + "', '" + id + "', '" + programa + "')";
                                         conSql.UpdateSql(sql2, bd);
                                         conSql.UpdateSql(sql2, "autoevaluacion");
                                     }
-                                    
+
                                     sql2 = "insert into " + tabla + " values (null, '" + idMuestra + "', (SELECT id from " + tabla1 + " where persona_id = '" + proceso.getId() + id + programa + "-" + j + "' LIMIT 1), 'programa', 'aleatorio')";
                                     conSql.UpdateSql(sql2, bd);
                                 }

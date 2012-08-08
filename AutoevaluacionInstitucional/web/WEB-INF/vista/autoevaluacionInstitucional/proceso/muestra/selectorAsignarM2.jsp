@@ -3,8 +3,15 @@
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {  
         $("#filtro").show();
+        
+             
     });
        
+    $("#printEnlace").click( function() {
+        $('#printMuestra').jqprint();
+        return false;
+    });
+        
     $("#botonEditarMuestra").click(function(){
         var a = $("#select3 option:selected").index();
         var b = $("#select4 option:selected").index();
@@ -44,201 +51,197 @@
             <p>No existe información en la base de datos para generar la muestra requerida. Pruebe generando usuarios aleatorios.</p>
         </c:if>
         <c:if test="${selectorAsignarM2.getRowCount() != 0}">
-            <c:if test="${aux_IniciarP == 1 || aux_IniciarP == 2}">
-                <c:if test="${idFuenteMuestra == 1}">
-                    <div id="tablax" style="z-index: 1;">
-                        <c:if test="${aux_IniciarP == 1}">
+            <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a> 
+            <div id="printMuestra">
+                <br>
+                <h4>Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out> del programa <c:out value="${programa.nombre}"></c:out></h4>
+                <br>
+                <c:if test="${aux_IniciarP == 1 || aux_IniciarP == 2}">
+                    <c:if test="${idFuenteMuestra == 1}">
+                        <div id="tablax" style="z-index: 1;">
+                            <c:if test="${aux_IniciarP == 1}">
+                                <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
+                                <br>
+                            </c:if>
+                            <div>
+                                <span class="label label-success" style="background-color: #F2DEDE;
+                                      border-color: #EED3D7;
+                                      color: #B94A48;">Pendiente</span>
+                                <span class="label label-success" style="background-color: #DFF0D8;
+                                      border-color: #D6E9C6;
+                                      color: #468847;">Terminado</span>
+                                <span class="label label-success" style="background-color: #D9EDF7;
+                                      border-color: #BCE8F1;
+                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                            </div>
+                            <br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                <th>Semestre</th>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
+                                        <c:set var="varaux" value="0"/>
+                                        <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
+                                            <c:if test="${item[0] == item2[0]}">
+                                                <c:set var="varaux" value="1"/>
+                                                <c:if test="${item2[1] == 'terminado'}">
+                                                    <tr>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[0]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[1]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[2]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[3]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[4]}</td>
+                                                    </tr>
+                                                </c:if>
+                                                <c:if test="${item2[1] == 'guardada'}">
+                                                    <tr>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[0]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[1]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[2]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[3]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[4]}</td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:if test="${varaux == 0}">
+                                            <tr>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[0]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[1]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[2]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[3]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[4]}</td>
+                                            </tr>
+                                        </c:if>
+                                        <c:set var="iterador" value="${iter2.index + 1}" />
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <p><strong>Total Estudiantes: ${iterador}</strong></p>
+                        </div>
+                    </c:if>
+                    <c:if test="${idFuenteMuestra != 1}">
+                        <div id="tablax" style="z-index: 1;">
+                            <div>
+                                <span class="label label-success" style="background-color: #F2DEDE;
+                                      border-color: #EED3D7;
+                                      color: #B94A48;">Pendiente</span>
+                                <span class="label label-success" style="background-color: #DFF0D8;
+                                      border-color: #D6E9C6;
+                                      color: #468847;">Terminado</span>
+                                <span class="label label-success" style="background-color: #D9EDF7;
+                                      border-color: #BCE8F1;
+                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                            </div>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
+                                        <c:set var="varaux" value="0"/>
+
+                                        <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter2">
+                                            <c:if test="${item[0] == item2[0]}">
+                                                <c:set var="varaux" value="1"/>
+                                                <c:if test="${item2[1] == 'terminado'}">
+                                                    <tr>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[0]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[1]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[2]}</td>
+                                                        <td style="background-color: #DFF0D8; color: #468847;">${item[3]}</td>
+                                                    </tr>
+                                                </c:if>
+                                                <c:if test="${item2[1] == 'guardada'}">
+                                                    <tr>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[0]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[1]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[2]}</td>
+                                                        <td style="background-color: #D9EDF7; color: #3A87AD;">${item[3]}</td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:if test="${varaux == 0}">
+                                            <tr>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[0]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[1]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[2]}</td>
+                                                <td style="background-color: #F2DEDE; color: #B94A48;">${item[3]}</td>
+                                            </tr>
+                                        </c:if>
+                                        <c:set var="iterador" value="${iter.index + 1}" />
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <p><strong>Total: ${iterador}</strong></p>
+                        </div>
+                    </c:if>
+                </c:if>
+                <c:if test="${aux_IniciarP == 0}">
+                    <c:if test="${idFuenteMuestra == 1}">
+                        <div id="tablax" style="z-index: 1;">
                             <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
                             <br>
-                        </c:if>
-                        <br>
-                        <h4>Muestra generada para la fuente seleccionada</h4>
-                        <br>
-                        <div>
-                            <span class="label label-success" style="background-color: #F2DEDE;
-                                  border-color: #EED3D7;
-                                  color: #B94A48;">Pendiente</span>
-                            <span class="label label-success" style="background-color: #DFF0D8;
-                                  border-color: #D6E9C6;
-                                  color: #468847;">Terminado</span>
-                            <span class="label label-success" style="background-color: #D9EDF7;
-                                  border-color: #BCE8F1;
-                                  color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                        </div>
-                        <br>
-                        <table class="table table-striped table-bordered table-condensed">
-                            <thead>
-                            <th>Código</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Password</th>
-                            <th>Semestre</th>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
-                                    <c:set var="varaux" value="0"/>
-                                    <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
-                                        <c:if test="${item[0] == item2[0]}">
-                                            <c:set var="varaux" value="1"/>
-                                            <c:if test="${item2[1] == 'terminado'}">
-                                                <tr>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[0]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[1]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[2]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[3]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[4]}</td>
-                                                </tr>
-                                            </c:if>
-                                            <c:if test="${item2[1] == 'guardada'}">
-                                                <tr>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[0]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[1]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[2]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[3]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[4]}</td>
-                                                </tr>
-                                            </c:if>
-                                        </c:if>
-                                    </c:forEach>
-                                    <c:if test="${varaux == 0}">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                <th>Semestre</th>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[0]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[1]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[2]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[3]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[4]}</td>
+                                            <td>${item[0]}</td>
+                                            <td>${item[1]}</td>
+                                            <td>${item[2]}</td>
+                                            <td>${item[3]}</td>
+                                            <td>${item[4]}</td>
                                         </tr>
-                                    </c:if>
-                                    <c:set var="iterador" value="${iter2.index + 1}" />
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <p><strong>Total Estudiantes: ${iterador}</strong></p>
-                    </div>
-                </c:if>
-                <c:if test="${idFuenteMuestra != 1}">
-                    <div id="tablax" style="z-index: 1;">
-                        <h4>Muestra generada para la fuente seleccionada</h4>
-                        <br>
-                        <div>
-                            <span class="label label-success" style="background-color: #F2DEDE;
-                                  border-color: #EED3D7;
-                                  color: #B94A48;">Pendiente</span>
-                            <span class="label label-success" style="background-color: #DFF0D8;
-                                  border-color: #D6E9C6;
-                                  color: #468847;">Terminado</span>
-                            <span class="label label-success" style="background-color: #D9EDF7;
-                                  border-color: #BCE8F1;
-                                  color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                        </div>
-                        <table class="table table-striped table-bordered table-condensed">
-                            <thead>
-                            <th>Código</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Password</th>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
-                                    <c:set var="varaux" value="0"/>
-
-                                    <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter2">
-                                        <c:if test="${item[0] == item2[0]}">
-                                            <c:set var="varaux" value="1"/>
-                                            <c:if test="${item2[1] == 'terminado'}">
-                                                <tr>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[0]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[1]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[2]}</td>
-                                                    <td style="background-color: #DFF0D8; color: #468847;">${item[3]}</td>
-                                                </tr>
-                                            </c:if>
-                                            <c:if test="${item2[1] == 'guardada'}">
-                                                <tr>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[0]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[1]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[2]}</td>
-                                                    <td style="background-color: #D9EDF7; color: #3A87AD;">${item[3]}</td>
-                                                </tr>
-                                            </c:if>
-                                        </c:if>
+                                        <c:set var="iterador" value="${iter.index + 1}" />
                                     </c:forEach>
-                                    <c:if test="${varaux == 0}">
+                                </tbody>
+                            </table>
+                            <p><strong>Total Estudiantes: ${iterador}</strong></p>
+                        </div>
+                    </c:if>
+                    <c:if test="${idFuenteMuestra != 1}">
+                        <div id="tablax" style="z-index: 1;">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[0]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[1]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[2]}</td>
-                                            <td style="background-color: #F2DEDE; color: #B94A48;">${item[3]}</td>
+                                            <td>${item[0]}</td>
+                                            <td>${item[1]}</td>
+                                            <td>${item[2]}</td>
+                                            <td>${item[3]}</td>
                                         </tr>
-                                    </c:if>
-                                    <c:set var="iterador" value="${iter.index + 1}" />
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <p><strong>Total: ${iterador}</strong></p>
-                    </div>
+                                        <c:set var="iterador" value="${iter.index + 1}" />
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <p><strong>Total: ${iterador}</strong></p>
+                        </div>
+                    </c:if>
                 </c:if>
             </c:if>
-            <c:if test="${aux_IniciarP == 0}">
-                <c:if test="${idFuenteMuestra == 1}">
-                    <div id="tablax" style="z-index: 1;">
-                        <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
-                        <br>
-                        <br>
-                        <h4>Muestra generada para la fuente seleccionada</h4>
-                        <br>
-                        <table class="table table-striped table-bordered table-condensed">
-                            <thead>
-                            <th>Código</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Password</th>
-                            <th>Semestre</th>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
-                                    <tr>
-                                        <td>${item[0]}</td>
-                                        <td>${item[1]}</td>
-                                        <td>${item[2]}</td>
-                                        <td>${item[3]}</td>
-                                        <td>${item[4]}</td>
-                                    </tr>
-                                    <c:set var="iterador" value="${iter.index + 1}" />
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <p><strong>Total Estudiantes: ${iterador}</strong></p>
-                    </div>
-                </c:if>
-                <c:if test="${idFuenteMuestra != 1}">
-                    <div id="tablax" style="z-index: 1;">
-                        <h4>Muestra generada para la fuente seleccionada</h4>
-                        <br>
-                        <table class="table table-striped table-bordered table-condensed">
-                            <thead>
-                            <th>Código</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Password</th>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
-                                    <tr>
-                                        <td>${item[0]}</td>
-                                        <td>${item[1]}</td>
-                                        <td>${item[2]}</td>
-                                        <td>${item[3]}</td>
-                                    </tr>
-                                    <c:set var="iterador" value="${iter.index + 1}" />
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <p><strong>Total: ${iterador}</strong></p>
-                    </div>
-                </c:if>
-            </c:if>
-        </c:if>
+        </div>
     </c:otherwise>
 </c:choose>
 

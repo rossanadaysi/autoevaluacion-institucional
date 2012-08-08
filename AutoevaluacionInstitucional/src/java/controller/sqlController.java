@@ -6,17 +6,11 @@ package controller;
 
 import connection.sqlConnection;
 import entity.Proceso;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.jsp.jstl.sql.Result;
 import javax.servlet.jsp.jstl.sql.ResultSupport;
 
@@ -68,8 +62,7 @@ public class sqlController {
 
         String nombre = proceso.getProgramaId().getNombre();
         int id = proceso.getId();
-        System.out.println("el id : " + id);
-
+       
         sqlConnection conSql = new sqlConnection();
         conSql.conectarMySQL("autoevaluacion");
 

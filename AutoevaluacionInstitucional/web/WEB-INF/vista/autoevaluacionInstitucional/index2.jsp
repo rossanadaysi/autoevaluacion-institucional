@@ -21,6 +21,8 @@
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
         <script type="text/javascript"src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.jqprint-0.3.js"></script>
+
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/highlightFade.js"></script>
         <script src="<%=request.getContextPath()%>/script/highcharts.js"></script>
         <script src="<%=request.getContextPath()%>/script/exporting.js"></script>
@@ -65,6 +67,7 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-popover.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-button.js"></script>
+        
 
         <style type="text/css">
 
@@ -211,6 +214,7 @@
       
              
             $(document).ready(function() {
+                
                 location ="/AutoevaluacionInstitucional/#inicio"; 
                 
                 $("ul.nav-list li a").click(function(event){
@@ -307,7 +311,7 @@
                      
             $(function()
             {
-                
+            
                 $("div.ui-layout-center").ajaxStart(function(){
                     $("div.ui-layout-center").append("<div class='contenido'></div>");
                     $("div.ui-layout-center").append("<div class='page_loading'>"
