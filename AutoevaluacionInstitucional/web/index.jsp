@@ -6,7 +6,6 @@
     <%
         HttpSession session1 = request.getSession();
         String aux = (String) session1.getAttribute("tipoLogin");
-        System.out.println("aux: " + session1.getAttribute("tipoLogin"));
         if (aux == null || aux.equals("")) {
         } else {
             if (aux.equals("autoevaluacionInstitucional")) {
