@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript">
@@ -50,9 +51,9 @@
 
     
 </script>
-<c:if test="${auxAsignarF == 0}"><!--Si no se ha asignado nada-->
+<c:if test="${auxAsignarF == 0 && aux_IniciarP==0}"><!--Si no se ha asignado nada-->
     <br/>
-    <div class="subnav">
+    <div class="subnav" data-top="80">
         <ul class="nav nav-pills">
             <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
             <c:forEach items="${factores.rowsByIndex}" var="row" varStatus="iter">
@@ -140,9 +141,9 @@
         </div><!--/row-->    
     </div><!--/hero-unit--> 
 </c:if>
-<c:if test="${auxAsignarF == 1}">
+<c:if test="${auxAsignarF == 1 && aux_IniciarP==0}">
     <br/>
-    <div class="subnav" >
+    <div class="subnav" data-top="80">
         <ul class="nav nav-pills">
             <li><a href="#PonderacionFactores"><strong>Ponderación de Factores</strong></a></li>
             <c:forEach items="${pondeFactores.rowsByIndex}" var="row" varStatus="iter">

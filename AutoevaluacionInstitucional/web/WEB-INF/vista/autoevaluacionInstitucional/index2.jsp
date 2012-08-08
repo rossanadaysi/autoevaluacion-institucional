@@ -239,7 +239,7 @@
                             $('.subnav').attr('data-top', offset.top);
                         }
 
-                        if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop())
+                        if ($('.subnav').attr('data-top') - $('.subnav').outerHeight() <= $(this).scrollTop()) 
                         {
                             $('.subnav').addClass('subnav-fixed');
                                                           
@@ -418,7 +418,9 @@
                     }
                    
                                                 
-                    if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1 || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
+                    if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1
+                        || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
+                    
                     
                     }else{//else principal
                         
@@ -518,7 +520,7 @@
                                         }, 500);
                                                                     
                                         $("div.ui-layout-center").scrollspy('refresh');
-                                        //{offset:80}                            
+                                                           
 
 
                                         $("#formPondeFa").validate({
@@ -695,9 +697,7 @@
                                         },200);     
                                         
                                         setTimeout(function(){
-                                            $("div.ui-layout-center").scrollspy({
-                                                offset:80
-                                            });   
+                                            $("div.ui-layout-center").scrollspy();   
                                         }, 500);
                                         
                                         $("#formInfoDoc").submit(function(event){
@@ -731,7 +731,9 @@
                                         setTimeout(function(){
                                             $(".page_loading").hide();
                                         },200);     
-
+                                        setTimeout(function(){
+                                            $("div.ui-layout-center").scrollspy();   
+                                        }, 500);
                                         
                                         $("#formInfoNum").submit(function(event){
                                             event.preventDefault();
