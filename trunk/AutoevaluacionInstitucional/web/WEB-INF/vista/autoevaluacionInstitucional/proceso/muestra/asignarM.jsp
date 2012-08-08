@@ -399,12 +399,12 @@
                             <button style="display: none" id="botonCalcularMuestra2" class="btn btn-secundary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
                             <button id="botonCalcularMuestra" class="btn btn-primary" onclick="presionSubmitCalcularMuestra()" type="button">Calcular Muestra</button>
                             <button id="botonConfigurarFormula" class="btn btn-secundary" onclick="presionSubmitConfigurarFormula()" type="button">Configurar Parametros de Fórmula</button>
-                            <p class="help-block">Utilize la opción de configurar parámetro de fórmula si desea generar una muestra de usuarios aleatorios a partir de un tamaño de población ingresado.</p>
+                            <p class="help-block">Utilize la opción de configurar parámetro de fórmula si desea aginar tamaño de población  manualmente.</p>
                             <br>
                             <div style="display: none" id="botonGenerarMuestra">
                                 <button  class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra</button>
                                 <br> <input type="checkbox" id="checkbox2"> Generar Usuarios Aleatorios.<br>
-                                <p id="help1" class="help-block">Active ésta opción si desea generar usuarios y contraseñas aleatorias.</p>
+                                <p id="help1" class="help-block">Active ésta opción si desea generar usuarios y contraseñas aleatorias. Ésta opción puede tardar varios segundos.</p>
                                 <input type="text" id="metodo" name="metodo"  style="display: none"  value="normal">
                             </div>
                             <br>

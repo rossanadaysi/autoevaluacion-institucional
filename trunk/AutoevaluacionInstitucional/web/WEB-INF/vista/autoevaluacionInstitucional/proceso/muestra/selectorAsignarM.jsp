@@ -2,6 +2,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {  
+      
+                
         $("#select3 option:eq(0)").attr("selected", "selected");
         $("#select4 option:eq(0)").attr("selected", "selected");
         $("#select8 option:eq(0)").attr("selected", "selected");
@@ -175,4 +177,3 @@
     <div style="width: 500px;"><p class="help-block">Seleccione una opción para ver la muestra asignada al mismo.</p></div>
     <br>
 </c:if>
-
