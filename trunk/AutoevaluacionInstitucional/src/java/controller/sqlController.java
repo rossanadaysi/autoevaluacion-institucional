@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.jsp.jstl.sql.Result;
 import javax.servlet.jsp.jstl.sql.ResultSupport;
 
@@ -60,8 +62,7 @@ public class sqlController {
      *
      * } catch (SQLException ex) { System.out.println(ex); } finally { try {
      * con.close(); System.out.println("sqlConnection Cerrada con Exito..."); }
-     * catch (SQLException ex) { System.out.println(ex); } } return rs;
-    }
+     * catch (SQLException ex) { System.out.println(ex); } } return rs; }
      */
     public void newDb(Proceso proceso, String str, String str2) throws IOException, SQLException, FileNotFoundException {
 
@@ -196,13 +197,11 @@ public class sqlController {
     public void UpdateSql(String sql, String bd) {
 
 
-
+        String id = "";
         Connection con = null;
         sqlConnection sqlCon = new sqlConnection();
 
         try {
-
-
             sqlCon.conectarMySQL(bd);
             con = (Connection) sqlCon.getConnection();
 
@@ -224,6 +223,5 @@ public class sqlController {
                 System.out.println(ex);
             }
         }
-
     }
 }

@@ -50,7 +50,6 @@ public class AsignacionMuestraAI implements Action {
                 ayu = 1;
                 idMuestra = Integer.parseInt(rs3.getString(1));
                 session.setAttribute("idMuestra", idMuestra);
-                System.out.println("ID MUESTRAAA : " + idMuestra);
             }
             
         } catch (SQLException ex) {
