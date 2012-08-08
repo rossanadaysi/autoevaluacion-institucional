@@ -1054,7 +1054,7 @@ public class formController extends HttpServlet {
                                 conSql.UpdateSql(sql2, bd);
 
 
-                                sql2 = "insert into muestracriterio values (null, '" + idMuestra + "', '" + proceso.getId() + id + programa + "-" + j + "')";
+                                sql2 = "insert into muestracriterio values (null, '" + idMuestra + "', '" + id + "', '" + programa + "' ,'" + proceso.getId() + id + programa + "-" + j + "')";
                                 conSql.UpdateSql(sql2, bd);
 
                             }
