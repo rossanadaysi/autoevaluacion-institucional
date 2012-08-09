@@ -67,7 +67,7 @@
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-popover.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-collapse.js"></script>
         <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap-button.js"></script>
-        
+
 
         <style type="text/css">
 
@@ -392,7 +392,7 @@
                                             }
                                         });
                                     }else{
-                                        $('#myModalIP3').modal(); 
+                                        $('#myModalIP').modal(); 
                                         setTimeout(function(){
                                             location = "<%=request.getContextPath()%>/#detalleProceso";
                                         }, 200);
@@ -1112,9 +1112,11 @@
         <div class="ui-layout-south ui-widget-content"> 
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
-                    <a href="#" class="about"><span>Acerca de</span></a>
+                    <a style="font-weight: normal"><span class="muted">&copy; Universidad de Cartagena 2012</span></a>
 
-                    <a href="#"><span>Derechos de Autor</span></a>
+                    <a href="#" class="about"><span>Acerca de</span></a>
+                    
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Contacto</span></a>
 
                     <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
                 </div>
@@ -1227,11 +1229,12 @@
                 </div>
             </div>
             <div align="center">
-                <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
-                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
-                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
+                <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>
+                  <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 118px;"></img></a>
+                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 236px;"></img></a>
+                --%>
+                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 200px;"></img></a>
             </div>
-            <br>  
         </div><!--/West-->
 
         <div class="modal hide fade" id="myModalF">
@@ -1368,7 +1371,7 @@
             <div class="modal-body">
                 <h4>Iniciar Proceso de Autoevaluación Institucional.</h4>
                 <br>
-                    <p>Esta seguro que desea ejecutar el Proceso?. Tenga en cuenta que sólo la asignación de muestra será editable al ejecutar el proceso.</p>
+                    <p>Esta seguro que desea ejecutar el Proceso?. Tenga en cuenta que sólo la asignación de muestra para la fuente estudiante será editable al ejecutar el proceso. Los demás parámetros no podrán ser modificados.</p>
             </div>
             <div class="modal-footer">
                 <a id="myModalIP2b2" class="btn btn-secundary" data-dismiss="modal" href="#">Cancelar</a>

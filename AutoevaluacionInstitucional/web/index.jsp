@@ -434,13 +434,14 @@
                         <div class="span7">
                             <h2>Autoevaluaci&oacute;n Institucional</h2>
                             <p style="color: inherit;font-size: 18px;font-weight: 200;line-height: 27px;margin-bottom: -8px;text-align: justify;">La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</p>     
-                            <div class="span2"></div>
                             <div class="span4" style="margin-top: 10px;">
                                 <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank" ><img src="<%=request.getContextPath()%>/css/LogoUdeC.png"></img></a>
                             </div>
-                            <div class="span1"></div>
-                            <div class="span4">
+                            <div class="span3">
                                 <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank" ><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png"></img></a>
+                            </div>
+                            <div class="span4">
+                                <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG"></img></a>
                             </div>
                         </div>
 
