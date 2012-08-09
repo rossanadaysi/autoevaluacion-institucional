@@ -1115,7 +1115,7 @@
                     <a style="font-weight: normal"><span class="muted">&copy; Universidad de Cartagena 2012</span></a>
 
                     <a href="#" class="about"><span>Acerca de</span></a>
-                    
+
                     <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Contacto</span></a>
 
                     <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
@@ -1148,12 +1148,8 @@
                         <p>Los Lineamientos de Autoevaluación para la Acreditación Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y El Modelo de Autoevaluación Institucional con fines de acreditación de la Universidad de Cartagena, se fundamentan en normas externas y normas internas. </p>
                         <p><a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/marco-normativo" class="btn">Ver detalles »</a></p>
                     </div><!--/span-->
-
-
                 </div><!--/row-->
-
             </div>      
-
         </div><!--/Center-->
 
         <div id="ui-layout-west" class="ui-layout-west">
@@ -1459,9 +1455,10 @@
             </div>
             <div class="modal-body" style="background-color: #282728" align="center">
                 <img src="<%=request.getContextPath()%>/css/images/SIA UDEC - LOGO_1.png"></img>
-            </div>
-            <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">
+                <br>
+                <%--    <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">--%>
                 <%-- <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>--%>
+                <p style="color: #FFFFFF; text-align: right">SIA-UdeC v1.0</p>
                 <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación institucional es un apoyo
 
                     fundamental para los procesos de acreditación que debe realizar la Universidad, con
@@ -1469,6 +1466,9 @@
                     el propósito de aportar en forma representativa al aumento en la calidad de la
 
                     Educación Superior, contribuyendo así al desarrollo del país.</p>
+                <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
+                <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
+                <%--  </div>--%>
             </div>
         </div>
     </body>

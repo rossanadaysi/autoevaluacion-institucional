@@ -73,7 +73,7 @@
                 line-height: 32px;
                 font-family: Helvetica,Arial,sans-serif;
             }
-            
+
             .ui-layout-north {
                 /* Drop-Down */
                 bottom:		auto;
@@ -260,9 +260,11 @@
         <div class="ui-layout-south ui-widget-content"> 
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
+                    <a style="font-weight: normal"><span class="muted">&copy; Universidad de Cartagena 2012</span></a>
+
                     <a href="#" class="about"><span>Acerca de</span></a>
 
-                    <a href="#"><span>Derechos de Autor</span></a>
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Contacto</span></a>
 
                     <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
                 </div>
@@ -313,14 +315,14 @@
                 <h1 style="margin: 76px 0 27px;
                     text-align: center;">"Te invito a participar del proceso. Animate!!"</h1>
                 <p class="marketing-byline">Germán Sierra Anaya. Rector Universidad de Cartagena</p>
-                <div class="row-fluid">
-                    <div style="position: absolute; bottom: 25px" class="span12" align="center" >
-                        <hr class="soften"></hr>
-                        <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
-                        <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img>
-                    </div>
+                <div  style="bottom: 25px" align="center" class="row-fluid">
+                    <hr class="soften"></hr>
+                    <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>--%>
+                    <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 224px; height: 128px"></img></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 224px; height: 80px"></img></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 224px;"></img></a>
                 </div>
             </div>
         </div><!--/Center-->
