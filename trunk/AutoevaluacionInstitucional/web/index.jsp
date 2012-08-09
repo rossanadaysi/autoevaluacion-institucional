@@ -415,9 +415,11 @@
         <div class="ui-layout-south ui-widget-content">
             <div class="contenedor_footer fondo_footer" id="footer">
                 <div class="links">
+                    <a style="font-weight: normal"><span class="muted">&copy; Universidad de Cartagena 2012</span></a>
+
                     <a href="#" class="about"><span>Acerca de</span></a>
 
-                    <a href="#"><span>Derechos de Autor</span></a>
+                    <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Contacto</span></a>
 
                     <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/contacto"><span>Ayuda</span></a>
                 </div>
