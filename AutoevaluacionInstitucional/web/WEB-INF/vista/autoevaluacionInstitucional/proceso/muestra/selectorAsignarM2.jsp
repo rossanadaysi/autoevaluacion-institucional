@@ -6,7 +6,27 @@
         
         $("#title").append(" " + $("select[name='programas'] :selected").text());
    
-         
+        $("#generarAltIndi").click(function(){
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/formController?action=generarMuestraIndividual",
+                data: $("#formAsigMue").serialize(),    
+                success: function(data){
+                    $.ajax({
+                        type: 'POST',
+                        url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                        success: function(data){
+                            $("#resultados4").hide();
+                            $("#resultados4").html(data);
+                            setTimeout(function(){
+                                $(".page_loading").hide();
+                                $("#resultados4").show(); 
+                            },200);  
+                        }
+                    })
+                }
+            })
+        })
     });
        
     $("#printEnlace").click( function() {
@@ -58,7 +78,7 @@
                     <div id="tablax" style="z-index: 1;">
                         <c:if test="${aux_IniciarP == 1}">
                             <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
-                            <br>
+                            <p></p>
                         </c:if>
                         <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
@@ -199,8 +219,15 @@
             <c:if test="${aux_IniciarP == 0}">
                 <c:if test="${idFuenteMuestra == 1}">
                     <div id="tablax" style="z-index: 1;">
-                        <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
-                        <br>
+                        <div class="span5" style="margin-left: 0px;">
+                            <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
+                        </div>
+                        <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                            <%--  <form id="formGenearAleatorio">--%>
+                            <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn">Generar usuarios aleatorio</button>
+                            <%--   </form>--%>
+                        </div>
+                        <br><br><br>
                         <table class="table table-striped table-bordered table-condensed">
                             <thead>
                             <th>Código</th>
