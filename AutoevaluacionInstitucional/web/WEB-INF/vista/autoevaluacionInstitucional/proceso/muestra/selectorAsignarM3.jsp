@@ -79,19 +79,21 @@
 </script>
 <h4> Editar Muestra Generada Para la Fuente Seleccionada</h4>
 <br>
-<div>
-    <span class="label label-success" style="background-color: #F2DEDE;
-          border-color: #EED3D7;
-          color: #B94A48;">Pendiente</span>
-    <span class="label label-success" style="background-color: #DFF0D8;
-          border-color: #D6E9C6;
-          color: #468847;">Terminado</span>
-    <span class="label label-success" style="background-color: #D9EDF7;
-          border-color: #BCE8F1;
-          color: #3A87AD; margin-bottom: 5px">Guardado</span>
-</div>
-<br>
 <c:if test="${aux_selectorAsignarM3 == 1}">
+    <c:if test="${aux_IniciarP != 0}">
+        <div>
+            <span class="label label-success" style="background-color: #F2DEDE;
+                  border-color: #EED3D7;
+                  color: #B94A48;">Pendiente</span>
+            <span class="label label-success" style="background-color: #DFF0D8;
+                  border-color: #D6E9C6;
+                  color: #468847;">Terminado</span>
+            <span class="label label-success" style="background-color: #D9EDF7;
+                  border-color: #BCE8F1;
+                  color: #3A87AD; margin-bottom: 5px">Guardado</span>
+        </div>
+        <br>
+    </c:if>
     <ul id="fcbklist">
         <c:forEach items="${muestras.rowsByIndex}" var="item" varStatus="iter">
             <c:set var="auxx" value="1"></c:set>
@@ -145,6 +147,9 @@
     </div>
 </c:if>
 <c:if test="${aux_selectorAsignarM3 == 0}">
-    <p class="help-block">Debe seleccionar un programa y un semestre.</p>
+    <div class="alert">
+        <a class="close">×</a>
+        <strong>Alerta!</strong>
+        Debe seleccionar un programa y un semestre.  </div>
     <button class="btn btn-secundary" id="botonCancelar" type="button">Cancelar</button>
 </c:if>

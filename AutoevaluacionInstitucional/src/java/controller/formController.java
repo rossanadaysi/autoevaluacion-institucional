@@ -604,8 +604,6 @@ public class formController extends HttpServlet {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-
-
                     Result rs = null;
 
                     sql = "Select* from " + tabla + " where muestra_id = " + idMuestra;
@@ -622,10 +620,12 @@ public class formController extends HttpServlet {
                             while (rst.next()) {
                                 String conglomerado = rst.getString(1);
                                 session.setAttribute("conglomeradoFiltro", conglomerado);
+                                session.setAttribute("conglomerado", conglomerado);
+
 
                                 if (conglomerado.equals("programa")) {
                                     rs = null;
-                                    sql = "Select* from programa";
+                                    sql = "Select* from programa order by programa.nombre";
                                     rs = conSql.CargarSql2(sql, bd);
                                     session.setAttribute("descripcionFiltro", rs);
                                 } else if (conglomerado.equals("tipo")) {
@@ -1146,7 +1146,7 @@ public class formController extends HttpServlet {
                             if (metodo.equals("normal")) {
                                 String sql;
                                 if (id == 1) {
-                                    sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre != 10 ORDER BY Rand() LIMIT " + muestra;
+                                    sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ORDER BY Rand() LIMIT " + muestra;
                                 } else {
                                     sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
                                 }
@@ -1461,7 +1461,7 @@ public class formController extends HttpServlet {
                                 if (inputAux.equals("automatic")) {
                                     ArrayList l = new ArrayList();
                                     String s;
-                                    sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.2,0), programa.id from " + tabla1 + " inner join programa on " + tabla1 + ".programa_id = programa.id group by " + tabla1 + ".programa_id order by programa.nombre";
+                                    sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.4,0), programa.id from " + tabla1 + " inner join programa on " + tabla1 + ".programa_id = programa.id group by " + tabla1 + ".programa_id order by programa.nombre";
                                     result = conSql.CargarSql2(sql2, bd);
                                     session.setAttribute("muestraCalculada", result);
                                     session.setAttribute("muestraIndividual", null);
