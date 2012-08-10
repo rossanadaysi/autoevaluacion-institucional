@@ -50,17 +50,7 @@
         $("#insp").append(inst);
         
         
-        $("#guardar").click(function(){
-            $.ajax({
-                type: 'POST', 
-                url: "<%=request.getContextPath()%>/formController3?action=guardarE",
-                data: $("#formResponderE").serialize(),
-                success: function(){
-                    location = "<%=request.getContextPath()%>/#inicio"
-                } //fin success
-            })
-        });
-        
+               
         var validator = $("#formResponderE").bind("invalid-form.validate", function() {
             alert("usted ha dejado de contestar " + validator.numberOfInvalids() + " preguntas, por favor contestelas todas.");
         })
@@ -73,7 +63,6 @@
                     url: "<%=request.getContextPath()%>/formController3?action=responderE",
                     data: $("#formResponderE").serialize(),
                     beforeSend: function(){
-                        $("div.ui-layout-center").append("<div class='contenido'></div>");
                         $("div.ui-layout-center").append("<div class='page_loading'>"
                             +"<span>Enviando</span>"
                             +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
@@ -87,10 +76,29 @@
         });
         
         $("button[rel=popover1]")
+        .popover({placement:'left'})
+        .click(function(e){
+            e.preventDefault();
+    
+            
+            $(this).popover('hide');
+            $(this).button('loading');
+                
+            $.ajax({
+                type: 'POST', 
+                url: "<%=request.getContextPath()%>/formController3?action=guardarE",
+                data: $("#formResponderE").serialize(),
+                success: function(){
+                    $("button[rel=popover1]").button('reset');
+                } //fin success
+            })
+            
+        });
+        
+        $("button[rel=popover2]")
         .popover({placement:'left'});
-      
     });
-</script>
+    </script>
 <style type="text/css">
     label.error{
         color:#B94A48;
@@ -272,8 +280,8 @@
             </div>
             <div class="span4">
                 <div style="text-align: right;margin-top: 18px;">
-                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta y regresa a la p&aacute;gina de inicio. De este modo podr&aacute; seguir realizando la encuesta en otro momento.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button">Guardar y salir</button>
-                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Envia la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover1"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta y regresa a la p&aacute;gina de inicio. De este modo podr&aacute; seguir realizando la encuesta en otro momento.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
+                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Envia la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
                 </div>
             </div>
         </div>

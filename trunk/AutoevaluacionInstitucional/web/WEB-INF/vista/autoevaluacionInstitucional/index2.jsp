@@ -1234,7 +1234,7 @@
         </div><!--/West-->
 
         <div class="modal hide fade" id="myModalF">
-            <div class="modal-header">
+            <div class="modal-header" >
                 <a data-dismiss="modal" class="close">×</a>
                 <h3>Información</h3>
             </div>
@@ -1449,7 +1449,7 @@
         </div>
 
         <div class="modal hide fade" id="myModalAbout">
-            <div class="modal-header" style="padding-bottom: 19px; background-color: #282728">
+            <div class="modal-header" style="padding-bottom: 19px; border-bottom:0;background-color: #282728">
                 <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
                 <h3></h3>
             </div>
