@@ -2,7 +2,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
     
-    $(document).ready(function() {$('#botonGenerarMuestra').button()})
+    $(document).ready(function() {
+     
+        $("a[rel=tooltip]")
+        .tooltip({placement:'right'});
+      
+    })
  
     function presionSubmitGenerarMuestra()
     {
@@ -403,8 +408,7 @@
                             <br>
                             <div style="display: none" id="botonGenerarMuestra">
                                 <button  class="btn btn-primary" onclick="presionSubmitGenerarMuestra()" data-loading-text="loading..." type="button">Generar Muestra</button>
-                                <br> <input type="checkbox" id="checkbox2"> Generar Usuarios Aleatorios.<br>
-                                <p id="help1" class="help-block">Active ésta opción si desea generar usuarios y contraseñas aleatorias. Ésta opción puede tardar varios segundos.</p>
+                                <br><input type="checkbox" id="checkbox2"><a href="#" rel="tooltip" title="Active ésta opción si desea generar usuarios y contraseñas aleatoria las cuales se deberán asignar de forma manual a los evaluadores de las encuestas. Ésta opción puede tardar varios segundos.">Generar Usuarios Aleatorios.</a><br>
                                 <input type="text" id="metodo" name="metodo"  style="display: none"  value="normal">
                             </div>
                             <br>

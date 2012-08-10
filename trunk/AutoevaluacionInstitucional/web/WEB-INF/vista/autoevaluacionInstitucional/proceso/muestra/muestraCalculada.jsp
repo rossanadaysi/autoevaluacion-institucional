@@ -22,12 +22,14 @@
 
             $("#checkbox2").removeAttr("disabled");
 
+           
             if(${conglomerado == "nuevoCriterio"}){
                 $("#checkbox2").attr("checked", true);
                 $("#checkbox2").attr("disabled", true);
-
+            }else{
+                $("#checkbox2").attr("checked", false);
+                $("#checkbox2").attr("disabled", false);
             }
-            
             
             $("#botonGenerarMuestra").show();
             $("#botonCalcularMuestra2").show();
@@ -42,6 +44,7 @@
                
     });
 </script>
+
 <div class="accordion-group">
     <div class="accordion-heading">
         <a href="#collapseOne" data-parent="#resultados3" data-toggle="collapse" class="accordion-toggle"><i class="icon-arrow-down"></i>
