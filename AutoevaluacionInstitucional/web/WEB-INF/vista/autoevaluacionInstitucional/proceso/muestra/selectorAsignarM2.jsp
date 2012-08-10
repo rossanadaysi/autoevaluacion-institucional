@@ -14,16 +14,22 @@
                 success: function(data){
                     $.ajax({
                         type: 'POST',
-                        url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
-                        success: function(data){
-                            $("#resultados4").hide();
-                            $("#resultados4").html(data);
-                            setTimeout(function(){
-                                $(".page_loading").hide();
-                                $("#resultados4").show(); 
-                            },200);  
-                        }
-                    })
+                        url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
+                        data: $("#formAsigMue").serialize(),
+                        success: function(){
+                            $.ajax({
+                                type: 'POST',
+                                url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                                success: function(data){
+                                    $("#resultados4").html(data);
+                                    setTimeout(function(){
+                                        $(".page_loading").hide();
+                                        $("#resultados4").show(); 
+                                    },200);  
+                                }
+                            })
+                        } //fin success                    
+                    }); //fin $.ajax
                 }
             })
         })
@@ -78,7 +84,12 @@
                     <div id="tablax" style="z-index: 1;">
                         <c:if test="${aux_IniciarP == 1}">
                             <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
-                            <p></p>
+                            <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                                <%--  <form id="formGenearAleatorio">--%>
+                                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn">Generar usuarios aleatorio</button>
+                                <%--   </form>--%>
+                            </div>
+                            <br><br><br>
                         </c:if>
                         <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
@@ -155,6 +166,12 @@
                         <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
                         <br>
                         <div id="tablax" style="z-index: 1;">
+                            <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                                <%--  <form id="formGenearAleatorio">--%>
+                                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn">Generar usuarios aleatorio</button>
+                                <%--   </form>--%>
+                            </div>
+                            <br><br><br>
                             <div>
                                 <span class="label label-success" style="background-color: #F2DEDE;
                                       border-color: #EED3D7;
@@ -254,6 +271,12 @@
                 </c:if>
                 <c:if test="${idFuenteMuestra != 1}">
                     <div id="tablax" style="z-index: 1;">
+                        <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                            <%--  <form id="formGenearAleatorio">--%>
+                            <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn">Generar usuarios aleatorio</button>
+                            <%--   </form>--%>
+                        </div>
+                        <br><br><br>
                         <table class="table table-striped table-bordered table-condensed">
                             <thead>
                             <th>Código</th>
