@@ -62,7 +62,7 @@ public class sqlController {
 
         String nombre = proceso.getProgramaId().getNombre();
         int id = proceso.getId();
-       
+
         sqlConnection conSql = new sqlConnection();
         conSql.conectarMySQL("autoevaluacion");
 
@@ -187,9 +187,9 @@ public class sqlController {
         return result;
     }
 
-    public void UpdateSql(String sql, String bd) {
+    public boolean UpdateSql(String sql, String bd) {
 
-
+        boolean aux = true;
         String id = "";
         Connection con = null;
         sqlConnection sqlCon = new sqlConnection();
@@ -205,6 +205,7 @@ public class sqlController {
 
 
         } catch (SQLException ex) {
+            aux = false;
             System.out.println(ex);
         } catch (Error ex) {
             System.out.println(ex);
@@ -216,5 +217,6 @@ public class sqlController {
                 System.out.println(ex);
             }
         }
+        return aux;
     }
 }
