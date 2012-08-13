@@ -69,7 +69,12 @@
                             +"</div>");
                     },
                     success: function(){
-                        location = "<%=request.getContextPath()%>/#inicio"
+                        $(".page_loading").hide();
+                        $("#myModalGracias").modal();
+                        $('#myModalGracias').on('hidden', function () {
+                            location = "<%=request.getContextPath()%>/#inicio"
+                        })
+                        
                     } //fin success
                 }); //fin $.ajax    
             }
@@ -98,7 +103,7 @@
         $("button[rel=popover2]")
         .popover({placement:'left'});
     });
-    </script>
+</script>
 <style type="text/css">
     label.error{
         color:#B94A48;

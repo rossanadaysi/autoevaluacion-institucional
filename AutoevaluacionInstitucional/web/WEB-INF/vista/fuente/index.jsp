@@ -345,5 +345,17 @@
                     Educación Superior, contribuyendo así al desarrollo del país.</p>
             </div>
         </div>
+        <div class="modal hide fade" id="myModalGracias">
+            <div class="modal-header" style="padding-bottom: 19px; background-color: #282728">
+                <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
+                <h3>Gracias</h3>
+            </div>
+            <div class="modal-body">
+                Muchas gracias por participar del proceso de autoevaluaci&oacute;n.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>
+            </div>
+        </div>
     </body>
 </html> 
