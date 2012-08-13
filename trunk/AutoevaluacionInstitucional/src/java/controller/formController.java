@@ -1142,9 +1142,7 @@ public class formController extends HttpServlet {
                         String muestra = campos[campos.length - 1];
                         String programa = campos[campos.length - 2];
 
-                        System.out.println("Programa: " + programa);
-                        System.out.println("Muestra: " + muestra);
-
+                       
                         if (conglomerado.equals("programa")) {
                             if (metodo.equals("normal")) {
                                 String sql;
