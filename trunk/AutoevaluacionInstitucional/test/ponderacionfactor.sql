@@ -39,3 +39,13 @@ INSERT INTO `ponderacionfactor` (`id`, `ponderacion`, `justificacion`, `proceso_
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SELECT facultad.nombre AS 'FACULTAD', programa.nombre AS 'PROGRAMA POSTGRADO', COUNT( * ) AS 'POBLACION', ROUND( (
+count( * ) * 0.06193092419200908 ) * 1.4, 0
+) AS 'MUESTRA'
+FROM estudiante
+INNER JOIN programa ON estudiante.programa_id = programa.id
+INNER JOIN facultad ON programa.facultad_id = facultad.id
+WHERE programa.descripcion = 'Postgrado'
+GROUP BY estudiante.programa_id
+ORDER BY `facultad`.`nombre` ASC
+LIMIT 0 , 30

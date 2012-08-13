@@ -798,11 +798,11 @@ public class formController extends HttpServlet {
                         String idP = request.getParameter("programas");
                         String idS = request.getParameter("semestres");
                         if (!idP.equals("--") && !idS.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS + " order by estudiante.semestre";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " and estudiante.semestre = " + idS + " order by estudiante.semestre, persona.id";
                         } else if (!idP.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " order by estudiante.semestre";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.programa_id = " + idP + " order by estudiante.semestre, persona.id";
                         } else if (!idS.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.semestre";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " and estudiante.semestre = " + idS + " order by estudiante.semestre, persona.id";
                         } else if (idP.equals("--") && idS.equals("--")) {
                             //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
                         }
@@ -811,9 +811,9 @@ public class formController extends HttpServlet {
                         String idP = request.getParameter("programas");
 
                         if (!idP.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by persona.id";
                         } else if (!idP.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by docente.id";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.programa_id = " + idP + " order by persona.id";
                         } else if (idP.equals("--")) {
                             //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
                         }
@@ -821,9 +821,9 @@ public class formController extends HttpServlet {
                         String idP = request.getParameter("programas");
 
                         if (!idP.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraegresado inner join egresado on muestraegresado.egresado_id = egresado.id inner join persona on egresado.persona_id = persona.id where muestraegresado.muestra_id = " + idMuestra + " and egresado.programa_id = " + idP + " order by egresado.id";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraegresado inner join egresado on muestraegresado.egresado_id = egresado.id inner join persona on egresado.persona_id = persona.id where muestraegresado.muestra_id = " + idMuestra + " and egresado.programa_id = " + idP + " order by persona.id";
                         } else if (!idP.equals("--")) {
-                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraegresado inner join egresado on muestraegresado.egresado_id = egresado.id inner join persona on egresado.persona_id = persona.id where muestraegresado.muestra_id = " + idMuestra + " and egresado.programa_id = " + idP + " order by egresado.id";
+                            sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraegresado inner join egresado on muestraegresado.egresado_id = egresado.id inner join persona on egresado.persona_id = persona.id where muestraegresado.muestra_id = " + idMuestra + " and egresado.programa_id = " + idP + " order by persona.id";
                         } else if (idP.equals("--")) {
                             //sql = "select persona.id, estudiante.id, persona.nombre, persona.apellido, estudiante.semestre from muestraestudiante inner join estudiante on muestraestudiante.estudiante_id = estudiante.id inner join persona on estudiante.persona_id = persona.id where muestraestudiante.muestra_id = " + idMuestra + " order by estudiante.id";
                         }
@@ -832,24 +832,24 @@ public class formController extends HttpServlet {
                 } else if (conglomerado.equals("tipo")) {
                     String idP = request.getParameter("programas");
                     if (!idP.equals("--")) {
-                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.tipo = '" + idP + "'order by muestradocente.id";
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestradocente inner join docente on muestradocente.docente_id = docente.id inner join persona on docente.persona_id = persona.id where muestradocente.muestra_id = " + idMuestra + " and docente.tipo = '" + idP + "'order by persona.id";
                     }
 
                 } else if (conglomerado.equals("cargo")) {
                     String idP = request.getParameter("programas");
                     if (!idP.equals("--")) {
-                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraadministrativo inner join administrativo on muestraadministrativo.administrativo = administrativo.id inner join persona on administrativo.persona_id = persona.id where muestraadministrativo.muestra_id = " + idMuestra + " and administrativo.cargo = '" + idP + "'order by muestraadministrativo.id";
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraadministrativo inner join administrativo on muestraadministrativo.administrativo = administrativo.id inner join persona on administrativo.persona_id = persona.id where muestraadministrativo.muestra_id = " + idMuestra + " and administrativo.cargo = '" + idP + "'order by persona.id";
                     }
 
                 } else if (conglomerado.equals("sectorempresarial")) {
                     String idP = request.getParameter("programas");
                     if (!idP.equals("--")) {
-                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraempleador inner join empleador on muestraempleador.empleador_id = empleador.id inner join persona on empleador.persona_id = persona.id where muestraempleador.muestra_id = " + idMuestra + " and empleador.sectorempresarial = '" + idP + "'order by muestraempleador.id";
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestraempleador inner join empleador on muestraempleador.empleador_id = empleador.id inner join persona on empleador.persona_id = persona.id where muestraempleador.muestra_id = " + idMuestra + " and empleador.sectorempresarial = '" + idP + "'order by persona.id";
                     }
                 } else if (conglomerado.equals("nuevoCriterio")) {
                     String idP = request.getParameter("programas");
                     if (!idP.equals("--")) {
-                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestracriterio inner join persona on muestracriterio.persona_id = persona.id where muestracriterio.muestra_id = " + idMuestra + " and muestracriterio.descripcioncriterio_id = '" + idP + "'order by persona.id";
+                        sql = "select persona.id, persona.nombre, persona.apellido, persona.password from muestracriterio inner join persona on muestracriterio.persona_id = persona.id where muestracriterio.muestra_id = " + idMuestra + " and muestracriterio.descripcioncriterio_id = '" + idP + "'and muestracriterio.fuente_id = '"+id+"' order by persona.id";
                     }
                 } else if (conglomerado.equals("ninguno")) {
                     String idP = request.getParameter("programas");
@@ -1141,12 +1141,16 @@ public class formController extends HttpServlet {
 
                         String muestra = campos[campos.length - 1];
                         String programa = campos[campos.length - 2];
+                        
+                        System.out.println("Programa: " + programa);
+                        System.out.println("Muestra: " + muestra);
 
                         if (conglomerado.equals("programa")) {
                             if (metodo.equals("normal")) {
                                 String sql;
                                 if (id == 1) {
-                                    sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ORDER BY Rand() LIMIT " + muestra;
+                                    sql = "SELECT * FROM " + tabla1 + " inner join programa on estudiante.programa_id=programa.id where (" + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ) or programa.descripcion='Postgrado' ORDER BY Rand() LIMIT " + muestra;
+                                    
                                 } else {
                                     sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
                                 }
@@ -1458,6 +1462,7 @@ public class formController extends HttpServlet {
                             } else if (conglomerado.equals("programa")) {
                                 double cociente = n / N;
                                 Result result = null;
+                                System.out.println("COCIENTE + " + cociente);
                                 if (inputAux.equals("automatic")) {
                                     ArrayList l = new ArrayList();
                                     String s;
@@ -1472,11 +1477,11 @@ public class formController extends HttpServlet {
 
                                     while (rs1.next()) {
 
-                                        if (rs1.getString(2).equals("0")) {
-                                            s = rs1.getString(3) + "/" + "1";
-                                        } else {
+                                      //  if (rs1.getString(2).equals("0")) {
+                                        //    s = rs1.getString(3) + "/" + "0";
+                                        //} else {
                                             s = rs1.getString(3) + "/" + rs1.getString(2);
-                                        }
+                                        //}
                                         l.add(s);
                                     }
                                     session.setAttribute("muestraCalculada2", l);
@@ -1495,11 +1500,11 @@ public class formController extends HttpServlet {
                                             bean.setTamanio(String.valueOf(d));
                                             l2.add(bean);
 
-                                            if (request.getParameter("tamanioPobla" + rs.getString(1)).equals("0")) {
-                                                s = rs.getString(1) + "/" + "1";
-                                            } else {
+                                           // if (request.getParameter("tamanioPobla" + rs.getString(1)).equals("0")) {
+                                             //   s = rs.getString(1) + "/" + "1";
+                                            //} else {
                                                 s = rs.getString(1) + "/" + d;
-                                            }
+                                            //}
                                             l.add(s);
                                         }
                                     }
@@ -1526,11 +1531,11 @@ public class formController extends HttpServlet {
                                         bean.setTamanio(String.valueOf(d));
                                         l2.add(bean);
 
-                                        if (request.getParameter("tamanioPoblaCriterio" + rs.getString(1)).equals("0")) {
-                                            s = rs.getString(1) + "/" + "1";
-                                        } else {
+                                     //   if (request.getParameter("tamanioPoblaCriterio" + rs.getString(1)).equals("0")) {
+                                       //     s = rs.getString(1) + "/" + "1";
+                                        //} else {
                                             s = rs.getString(1) + "/" + d;
-                                        }
+                                        //}
                                         l.add(s);
                                     }
                                 }
@@ -1559,11 +1564,11 @@ public class formController extends HttpServlet {
 
                                 while (rs1.next()) {
 
-                                    if (rs1.getString(2).equals("0")) {
-                                        s = rs1.getString(1) + "/" + "1";
-                                    } else {
+                                   // if (rs1.getString(2).equals("0")) {
+                                     //   s = rs1.getString(1) + "/" + "1";
+                                    //} else {
                                         s = rs1.getString(1) + "/" + rs1.getString(2);
-                                    }
+                                    //}
                                     l.add(s);
                                 }
                                 session.setAttribute("muestraCalculada2", l);
