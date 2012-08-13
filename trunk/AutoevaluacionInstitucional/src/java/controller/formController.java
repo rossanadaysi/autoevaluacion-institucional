@@ -1149,7 +1149,7 @@ public class formController extends HttpServlet {
                             if (metodo.equals("normal")) {
                                 String sql;
                                 if (id == 1) {
-                                    sql = "SELECT * FROM " + tabla1 + " inner join programa on estudiante.programa_id=programa.id where (" + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ) or programa.descripcion='Postgrado' ORDER BY Rand() LIMIT " + muestra;
+                                    sql = "SELECT * FROM " + tabla1 + " inner join programa on estudiante.programa_id=programa.id where (" + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ) or (programa.descripcion='Postgrado' AND estudiante.programa_id ="+programa+" ) ORDER BY Rand() LIMIT " + muestra;
 
                                 } else {
                                     sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
