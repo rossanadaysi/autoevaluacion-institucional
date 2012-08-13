@@ -3,14 +3,14 @@
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() { 
         
-        $("button[rel=popover2]")
+        $(".generarAltIndi")
         .popover({placement:'left'});
       
         $("#filtro").show();
         
         $("#title").append(" " + $("select[name='programas'] :selected").text());
    
-        $("#generarAltIndi").click(function(){
+        $(".generarAltIndi").click(function(){
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=generarMuestraIndividual",
@@ -91,7 +91,7 @@
             </div>
             <div class="input-append span10 input-prepend" style="text-align: right; ">
                 <%--  <form id="formGenearAleatorio">--%>
-                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
+                <span class="add-on">#</span><input name="pobla" type="text" size="1" class="span1"><button type="button" class="btn generarAltIndi" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
                 <%--   </form>--%>
             </div>
             <br><br><br>
