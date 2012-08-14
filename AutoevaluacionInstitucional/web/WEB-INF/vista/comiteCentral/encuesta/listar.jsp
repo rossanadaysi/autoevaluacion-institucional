@@ -23,8 +23,10 @@
                                     <td>
                                         <c:out value="${row.descripcion}"/>
                                     </td>
-                                    <td class="action icon16">
-                                        <a title="Editar" href="#editarEncuesta&${row.id}" class="edit"></a>
+                                    <td class="action">
+                                        <a title="Editar" href="#editarEncuesta&${row.id}"><i class="icon-edit"></i></a>
+                                        <!--<a title="Imprimir" href="#imprimirEncuesta&${row.id}" class="icon-print"></a>-->
+                                        <a title="Vista previa" href="#verEncuesta&${row.id}"><i class="icon-eye-open"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>

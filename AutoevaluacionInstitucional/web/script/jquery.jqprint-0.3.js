@@ -72,7 +72,7 @@
             });
         }
         
-        doc.write("<p>Generado por el Sistema de Atuevaluación Institucional SIA - UdeC</p>");
+        doc.write("<p>Generado por el Sistema de Autoevaluación Institucional SIA - UdeC</p>");
         doc.close();
         
         (opt.operaSupport && $.browser.opera ? tab : $iframe[0].contentWindow).focus();

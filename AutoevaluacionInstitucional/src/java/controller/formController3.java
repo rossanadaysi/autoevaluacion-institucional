@@ -55,11 +55,11 @@ public class formController3 extends HttpServlet {
             String nombreBd = (String) session.getAttribute("bd");
             String estado = "guardada";
             sqlController conSql = new sqlController();
-            if(request.getParameter("action").equals("responderE")){
-            estado = "terminado";
+            if (request.getParameter("action").equals("responderE")) {
+                estado = "terminado";
             }
-            
-            
+
+
 
 
             String sqlPreguntando = "SELECT `id`"
@@ -70,7 +70,7 @@ public class formController3 extends HttpServlet {
                     + " AND `persona_id` =" + per.getId() + "";
 
             ResultSet rs44 = conSql.CargarSql(sqlPreguntando, nombreBd);
-            
+
             int idEncabezadoExistente = 0;
             try {
                 while (rs44.next()) {
@@ -118,64 +118,104 @@ public class formController3 extends HttpServlet {
                     conSql.UpdateSql(sqlResultado, nombreBd);
 
                 }
-
-
-                String EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
-                        + " FROM encuesta"
-                        + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
-                        + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
-                        + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
-                        + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
-                        + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
-                        + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
-                        + " WHERE persona.id = " + per.getId() + ""
-                        + " AND proceso.`FECHACIERRE` IS NULL"
-                        + " AND asignacionencuesta.fuente_id=" + idF + ""
-                        + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
-                        + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where estado='terminado') "
-                        + "";
-
-
-
-
-                Result encuestasDisponibles = conSql.CargarSql2(EncuestasDisp, nombreBd);
-                session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles);
-            }else{
-            String actualizarEnca = "UPDATE `encabezado` SET `fecha` = '"+new Date(new java.util.Date().getTime())+"', `estado` = '"+estado+"' WHERE `encabezado`.`id` ="+idEncabezadoExistente+";";
-            conSql.UpdateSql(actualizarEnca, nombreBd);
-            
-            
-            for (int i = 0; i < preguntas.getRowCount(); i++) {
                 
-                    String res = request.getParameter("pregunta" + preguntas.getRowsByIndex()[i][0] + "");
-                    String actualizaResultado = "UPDATE `resultadoevaluacion` SET `respuesta` = '"+res +"' WHERE `resultadoevaluacion`.`encabezado_id` ="+idEncabezadoExistente+" and `resultadoevaluacion`.`pregunta_id` ="+preguntas.getRowsByIndex()[i][0]+";";  
-                    conSql.UpdateSql(actualizaResultado, nombreBd);
+                String EncuestasDisp = "";
+                if (idF.equals("1")) {
+                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                            + " FROM encuesta"
+                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                            + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
+                            + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
+                            + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
+                            + " WHERE persona.id = " + per.getId() + ""
+                            + " AND proceso.`FECHACIERRE` IS NULL"
+                            + " AND asignacionencuesta.fuente_id=" + idF + ""
+                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where estado='terminado') "
+                            + "";
+
+                } else {
+
+                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                            + " FROM encuesta"
+                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                            + " INNER JOIN muestradocente ON muestra.ID = muestradocente.MUESTRA_ID"
+                            + " INNER JOIN docente ON muestradocente.DOCENTE_ID = docente.ID"
+                            + " INNER JOIN persona ON docente.PERSONA_ID = persona.ID"
+                            + " WHERE persona.id = '" + per.getId() + "'"
+                            + " AND proceso.`FECHACIERRE` IS NULL"
+                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                            + " AND asignacionencuesta.fuente_id=" + idF + ""
+                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                            + "";
 
                 }
 
 
-                String EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
-                        + " FROM encuesta"
-                        + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
-                        + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
-                        + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
-                        + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
-                        + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
-                        + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
-                        + " WHERE persona.id = " + per.getId() + ""
-                        + " AND proceso.`FECHACIERRE` IS NULL"
-                        + " AND asignacionencuesta.fuente_id=" + idF + ""
-                        + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
-                        + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where estado='terminado') "
-                        + "";
+
+
+                Result encuestasDisponibles = conSql.CargarSql2(EncuestasDisp, nombreBd);
+                session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles);
+            } else {
+                String actualizarEnca = "UPDATE `encabezado` SET `fecha` = '" + new Date(new java.util.Date().getTime()) + "', `estado` = '" + estado + "' WHERE `encabezado`.`id` =" + idEncabezadoExistente + ";";
+                conSql.UpdateSql(actualizarEnca, nombreBd);
+
+
+                for (int i = 0; i < preguntas.getRowCount(); i++) {
+
+                    String res = request.getParameter("pregunta" + preguntas.getRowsByIndex()[i][0] + "");
+                    String actualizaResultado = "UPDATE `resultadoevaluacion` SET `respuesta` = '" + res + "' WHERE `resultadoevaluacion`.`encabezado_id` =" + idEncabezadoExistente + " and `resultadoevaluacion`.`pregunta_id` =" + preguntas.getRowsByIndex()[i][0] + ";";
+                    conSql.UpdateSql(actualizaResultado, nombreBd);
+
+                }
+                    String EncuestasDisp="";
+                if (idF.equals("1")) {//es estudiante
+                     EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                            + " FROM encuesta"
+                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                            + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
+                            + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
+                            + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
+                            + " WHERE persona.id = " + per.getId() + ""
+                            + " AND proceso.`FECHACIERRE` IS NULL"
+                            + " AND asignacionencuesta.fuente_id=" + idF + ""
+                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where estado='terminado') "
+                            + "";
+
+                } else {
+                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                            + " FROM encuesta"
+                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                            + " INNER JOIN muestradocente ON muestra.ID = muestradocente.MUESTRA_ID"
+                            + " INNER JOIN docente ON muestradocente.DOCENTE_ID = docente.ID"
+                            + " INNER JOIN persona ON docente.PERSONA_ID = persona.ID"
+                            + " WHERE persona.id = '" + per.getId() + "'"
+                            + " AND proceso.`FECHACIERRE` IS NULL"
+                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                            + " AND asignacionencuesta.fuente_id=" + idF + ""
+                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                            + "";
+
+                }
 
 
 
 
                 Result encuestasDisponibles = conSql.CargarSql2(EncuestasDisp, nombreBd);
                 session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles);
-            
-            
+
+
             }
 
 
@@ -183,7 +223,7 @@ public class formController3 extends HttpServlet {
 
         }
 
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
