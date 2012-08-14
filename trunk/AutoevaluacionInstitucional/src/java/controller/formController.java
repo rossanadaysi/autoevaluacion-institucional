@@ -1147,7 +1147,7 @@ public class formController extends HttpServlet {
                             if (metodo.equals("normal")) {
                                 String sql;
                                 if (id == 1) {
-                                    sql = "SELECT * FROM " + tabla1 + " inner join programa on estudiante.programa_id=programa.id where (" + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ) or (programa.descripcion='Postgrado' AND estudiante.programa_id ="+programa+" ) ORDER BY Rand() LIMIT " + muestra;
+                                    sql = "SELECT * FROM " + tabla1 + " inner join programa on estudiante.programa_id = programa.id where (" + tabla1 + ".programa_id = " + programa + " and " + tabla1 + ".semestre != 1 and " + tabla1 + ".semestre != 2 and " + tabla1 + ".semestre < 10 ) or (programa.descripcion='Postgrado' and " + tabla1 + ".programa_id = " + programa + ") ORDER BY Rand() LIMIT " + muestra;
 
                                 } else {
                                     sql = "SELECT * FROM " + tabla1 + " where " + tabla1 + ".programa_id = " + programa + " ORDER BY Rand() LIMIT " + muestra;
@@ -1464,13 +1464,16 @@ public class formController extends HttpServlet {
                                 if (inputAux.equals("automatic")) {
                                     ArrayList l = new ArrayList();
                                     String s;
-                                    sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.4,0), programa.id from " + tabla1 + " inner join programa on " + tabla1 + ".programa_id = programa.id group by " + tabla1 + ".programa_id order by programa.nombre";
+                                    sql2 = "SELECT facultad.nombre AS 'FACULTAD', programa.nombre AS 'PROGRAMA POSTGRADO', programa.descripcion, COUNT( * ) AS 'POBLACION', IF(programa.descripcion = 'Pregrado', ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0), (ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0)+2)), programa.id FROM " + tabla1 + " INNER JOIN programa ON " + tabla1 + ".programa_id = programa.id INNER JOIN facultad ON programa.facultad_id = facultad.id GROUP BY " + tabla1 + ".programa_id ORDER BY `facultad`.`nombre` ASC, programa.descripcion";
+                                    //sql2 = "Select programa.nombre, ROUND((count(*)*" + cociente + ")*1.4,0), programa.id from " + tabla1 + " inner join programa on " + tabla1 + ".programa_id = programa.id group by " + tabla1 + ".programa_id order by programa.nombre";
                                     result = conSql.CargarSql2(sql2, bd);
                                     session.setAttribute("muestraCalculada", result);
                                     session.setAttribute("muestraIndividual", null);
                                     session.setAttribute("muestraCalculada3", null);
                                     var1 = 1;
 
+
+                                   // String sql3 = "SELECT facultad.nombre AS 'FACULTAD', programa.nombre AS 'PROGRAMA POSTGRADO', programa.descripcion, COUNT( * ) AS 'POBLACION', IF(programa.descripcion = 'Pregrado', ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0), (ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0)+2)) FROM " + tabla1 + " INNER JOIN programa ON " + tabla1 + ".programa_id = programa.id INNER JOIN facultad ON programa.facultad_id = facultad.id GROUP BY " + tabla1 + ".programa_id ORDER BY `facultad`.`nombre` ASC, programa.descripcion";
                                     ResultSet rs1 = conSql.CargarSql(sql2, bd);
 
                                     while (rs1.next()) {
@@ -1478,7 +1481,7 @@ public class formController extends HttpServlet {
                                         //  if (rs1.getString(2).equals("0")) {
                                         //    s = rs1.getString(3) + "/" + "0";
                                         //} else {
-                                        s = rs1.getString(3) + "/" + rs1.getString(2);
+                                        s = rs1.getString(6) + "/" + rs1.getString(5);
                                         //}
                                         l.add(s);
                                     }

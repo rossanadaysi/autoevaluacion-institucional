@@ -56,28 +56,38 @@
             <c:if test="${muestraCalculada != null}">
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
+                    <th>Facultad</th>
                     <th>Programa</th>
+                    <th>Descripción</th>
+                    <th>Población</th>
                     <th>Muestra</th>
                     </thead>
                     <tbody>
                         <c:forEach items="${muestraCalculada.rowsByIndex}" var="item2" varStatus="iter">
                             <tr>
                                 <td>${item2[0]}</td>
+                                <td>${item2[1]}</td>
+                                <td>${item2[2]}</td>
+                                <td style="text-align: right">${item2[3]}</td>
                                 <c:choose>
-                                    <c:when test="${item2[1]==0}">
+                                    <c:when test="${item2[4]==0}">
                                         <td style="text-align: right">-</td>
                                     </c:when>
                                     <c:otherwise>
-                                        <td style="text-align: right">${item2[1]}</td>
+                                        <td style="text-align: right">${item2[4]}</td>
                                     </c:otherwise>
                                 </c:choose>
                             </tr>
-                            <c:set var="iterador" value="${iterador + item2[1]}" />
+                            <c:set var="iterador" value="${iterador + item2[4]}" />
+                            <c:set var="iterador2" value="${iterador2 + item2[3]}" />
                         </c:forEach>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td><strong>Total Muestra</strong></td>
+                            <td><strong>Total</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: right"><strong>${iterador2}</strong></td>
                             <td style="text-align: right"><strong>${iterador}</strong></td>
                         </tr>
                     </tfoot>

@@ -49,3 +49,11 @@ WHERE programa.descripcion = 'Postgrado'
 GROUP BY estudiante.programa_id
 ORDER BY `facultad`.`nombre` ASC
 LIMIT 0 , 30
+
+
+SELECT facultad.nombre AS 'FACULTAD', programa.nombre AS 'PROGRAMA POSTGRADO', programa.descripcion, COUNT( * ) AS 'POBLACION', IF(programa.descripcion = 'Pregrado', ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0
+), (ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0)+3)) FROM estudiante INNER JOIN programa ON estudiante.programa_id = programa.id INNER JOIN facultad ON programa.facultad_id = facultad.id GROUP BY estudiante.programa_id ORDER BY `facultad`.`nombre` ASC, programa.descripcion
+
+
+       
+                             

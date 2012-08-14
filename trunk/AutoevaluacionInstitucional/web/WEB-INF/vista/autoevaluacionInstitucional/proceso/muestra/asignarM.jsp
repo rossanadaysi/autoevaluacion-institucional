@@ -357,7 +357,7 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td class="span8">
+                                    <td class="span6">
                                         <p>Fuente</p>
                                         <select class="span3" id="select" name="fuente" onchange="presionSubmitFuente()">
                                             <option value="--">Seleccione una Fuente</option>
@@ -366,9 +366,9 @@
                                             </c:forEach>
                                         </select>
                                     </td>
-                                    <td class="span6" valign="top">
-                                        <div class="span6">
-                                            <div  class="span6" id="resultados3" class="accordion" style="position: absolute;"></div>
+                                    <td class="span8" valign="top">
+                                        <div class="span8">
+                                            <div  class="span8" id="resultados3" class="accordion" style="position: absolute;"></div>
                                         </div>
                                     </td>
                                 </tr>
