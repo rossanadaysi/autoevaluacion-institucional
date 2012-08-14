@@ -2,15 +2,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() { 
-        
-        $(".generarAltIndi")
+        $("button[rel=popover2]")
         .popover({placement:'left'});
       
         $("#filtro").show();
         
         $("#title").append(" " + $("select[name='programas'] :selected").text());
    
-        $(".generarAltIndi").click(function(){
+        $("#generarAltIndi").click(function(){
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/formController?action=generarMuestraIndividual",
@@ -91,8 +90,7 @@
             </div>
             <div class="input-append span10 input-prepend" style="text-align: right; ">
                 <%--  <form id="formGenearAleatorio">--%>
-                <span class="add-on">#</span><input name="pobla" type="text" size="1" class="span1"><button type="button" class="btn generarAltIndi" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
-                <%--   </form>--%>
+                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button> <%--   </form>--%>
             </div>
             <br><br><br>
         </c:if>
@@ -115,28 +113,28 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                            <br>
-                            <div>
-                                <span class="label label-success" style="background-color: #F2DEDE;
-                                      border-color: #EED3D7;
-                                      color: #B94A48;">Pendiente</span>
-                                <span class="label label-success" style="background-color: #DFF0D8;
-                                      border-color: #D6E9C6;
-                                      color: #468847;">Terminado</span>
-                                <span class="label label-success" style="background-color: #D9EDF7;
-                                      border-color: #BCE8F1;
-                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                            </div>
-                            <br>
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                <th>Código</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Password</th>
-                                <th>Semestre</th>
-                                </thead>
-                                <tbody>
+                                <br>
+                                <div>
+                                    <span class="label label-success" style="background-color: #F2DEDE;
+                                          border-color: #EED3D7;
+                                          color: #B94A48;">Pendiente</span>
+                                    <span class="label label-success" style="background-color: #DFF0D8;
+                                          border-color: #D6E9C6;
+                                          color: #468847;">Terminado</span>
+                                    <span class="label label-success" style="background-color: #D9EDF7;
+                                          border-color: #BCE8F1;
+                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                                </div>
+                                <br>
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                    <th>Código</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Password</th>
+                                    <th>Semestre</th>
+                                    </thead>
+                                    <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
                                         <c:set var="varaux" value="0"/>
                                         <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
