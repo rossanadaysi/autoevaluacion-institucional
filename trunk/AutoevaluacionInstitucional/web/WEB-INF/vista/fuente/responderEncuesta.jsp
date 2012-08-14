@@ -285,8 +285,8 @@
             </div>
             <div class="span4">
                 <div style="text-align: right;margin-top: 18px;">
-                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta y regresa a la p&aacute;gina de inicio. De este modo podr&aacute; seguir realizando la encuesta en otro momento.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
-                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Envia la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
+                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
                 </div>
             </div>
         </div>
