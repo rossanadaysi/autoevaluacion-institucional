@@ -15,6 +15,22 @@ AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, 
 
 
 
+select c1.total, c1.terminados, format((c1.terminados*100/c1.total),2) as porcentaje,(c1.total-c1.terminados) as faltantes, 100-format((c1.terminados*100/c1.total),2) as porFal 
+from(
+select (
+(select count(*) from muestraestudiante where muestraestudiante.muestra_id=1)+
+(select count(*) from muestradocente where muestradocente.muestra_id=1) +
+(select count(*) from muestraadministrativo where muestraadministrativo.muestra_id=1)+
+(select count(*) from muestraegresado where muestraegresado.muestra_id=1)+
+(select count(*) from muestradirector where muestradirector.muestra_id=1)+
+(select count(*) from muestraagencia where muestraagencia.muestra_id=1)+
+(select count(*) from muestraempleador where muestraempleador.muestra_id=1)) AS total 
+,(select count(`persona_id`) as terminados from encabezado where
+ estado='terminado') as terminados
+) AS c1
+
+
+
 
 SELECT encuesta.id , encuesta.nombre
 FROM encuesta
