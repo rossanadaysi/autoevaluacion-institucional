@@ -6,106 +6,139 @@
         inst = inst.replace(/\n/gi,"<br/>");
         
         $("#insp").append(inst);
-        
-        
-        $("#printEnlace").click( function() {
-            $('#divImprimible').jqprint();
-            return false;
-        });
     });
     
     
 </script>
+<style type="text/css">
+    @media all {
+        div.saltopagina{
+            display: none;
+        }
+    }
+</style>
+
 <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
-<div id="divImprimible">
-    <div class="row">
-        <div id="conte" class="span10">
-            <table class="table table-bordered table-striped" style="font-weight: bold;">
-                <tbody>
-                    <tr>
-                        <td rowspan="3" style="width: 25%; text-align: center;"><img style="width: 224px; height: 80px" src="/AutoevaluacionInstitucional/css/LogoUdeC.png"></td>
-                        <td style="width: 50%; text-align: center;">UNIVERSIDAD DE CARTAGENA</td>
-                        <td style="width: 25%;">CÓDIGO: FO-DO/AA-002</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 50%; text-align: center;">AUTOEVALUACIÓN Y ACREDITACIÓN</td>
-                        <td>VERSIÓN:00</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 50%; text-align: center;">${encuesta.getNombre()}</td>
-                        <td>FECHA:18/04/2012</td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="hero-unit">
+    <div style="margin-left: -30px;">
+        <div id="conte" class="span10" style="text-align: justify">
+            <div class="row">
+                <table class="table table-bordered table-striped" style="font-weight: bold;">
+                    <tbody>
+                        <tr>
+                            <td rowspan="3" style="width: 25%; text-align: center;"><img style="width: 224px; height: 80px" src="/AutoevaluacionInstitucional/css/LogoUdeC.png"></td>
+                            <td style="width: 50%; text-align: center;">UNIVERSIDAD DE CARTAGENA</td>
+                            <td style="width: 25%;">CÓDIGO: FO-DO/AA-002</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; text-align: center;">AUTOEVALUACIÓN Y ACREDITACIÓN</td>
+                            <td>VERSIÓN:00</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; text-align: center;">${encuesta.getNombre()}</td>
+                            <td>FECHA:18/04/2012</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Objetivo:</h3>
+                <p style="text-align: justify;">${encuesta.getDescripcion()}</p>
+                <h3>Instrucciones:</h3>
+                <textarea id="ins" style="display: none;" rows="9" class="span8">${encuesta.getInstrucciones()}</textarea>
+                <p id="insp" style="text-align: justify;"></p>
+                <br/>
+            </div>
 
+            <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
 
-
-            <h3>Objetivo:</h3>
-            <p style="text-align: justify;">${encuesta.getDescripcion()}</p>
-
-
-
-
-            <h3>Instrucciones:</h3>
-            <textarea id="ins" style="display: none;" rows="9" class="span8">${encuesta.getInstrucciones()}</textarea>
-            <p id="insp" style="text-align: justify;"></p>
-      
-    
-
-    
-        <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
-
-            <c:choose>
-                <c:when test="${status.count%2==1}">
-                        <c:choose>
-                            <c:when test="${pregunta.getTipo() != 'Elegir 1-5'}">
-                                <div class="span5">
-                                    <p>${status.count} ${pregunta.getPregunta()}</p>
-                                    <label class="radio"><input type="radio">Si</label>
-                                    <label class="radio"><input type="radio">No</label>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="span5">
-                                    <p>${status.count} ${pregunta.getPregunta()}</p>
-                                    <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
-                                    <label class="radio"><input type="radio">4 De acuerdo</label>
-                                    <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
-                                    <label class="radio"><input type="radio">2 En desacuerdo</label>
-                                    <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
-                                    <label class="radio"><input type="radio">0 No sabe</label>
-                                </div>
-                            </c:otherwise>    
-                        </c:choose>
-                    </c:when>
-                
-                <c:otherwise>
-
-                    <c:choose>
-                        <c:when test="${pregunta.getTipo() != 'Elegir 1-5'}">
-                            <div class="span5">
-                                <p>${status.count} ${pregunta.getPregunta()}</p>
-                                <label class="radio"><input type="radio">Si</label>
-                                <label class="radio"><input type="radio">No</label>
-                            </div>
+                <c:choose>
+                    <c:when test="${status.count%2==1}">
+                        <div class="row printDiv">
+                            <c:choose>
+                                <c:when test="${pregunta.getTipo() != 'Elegir 1-5'}">
+                                    <div class="span5">
+                                        <p>${status.count} ${pregunta.getPregunta()}</p>
+                                        <label class="radio"><input type="radio">Si</label>
+                                        <label class="radio"><input type="radio">No</label>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="span5">
+                                        <p>${status.count} ${pregunta.getPregunta()}</p>
+                                        <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
+                                        <label class="radio"><input type="radio">4 De acuerdo</label>
+                                        <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
+                                        <label class="radio"><input type="radio">2 En desacuerdo</label>
+                                        <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
+                                        <label class="radio"><input type="radio">0 No sabe</label>
+                                    </div>
+                                </c:otherwise>    
+                            </c:choose>
                         </c:when>
+
                         <c:otherwise>
-                            <div class="span5">
-                                <p>${status.count} ${pregunta.getPregunta()}</p>
-                                <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
-                                <label class="radio"><input type="radio">4 De acuerdo</label>
-                                <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
-                                <label class="radio"><input type="radio">2 En desacuerdo</label>
-                                <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
-                                <label class="radio"><input type="radio">0 No sabe</label>
-                            </div>
-                        </c:otherwise>    
-                    </c:choose>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>  
+
+                            <c:choose>
+                                <c:when test="${pregunta.getTipo() != 'Elegir 1-5'}">
+                                    <div class="span5">
+                                        <p>${status.count} ${pregunta.getPregunta()}</p>
+                                        <label class="radio"><input type="radio">Si</label>
+                                        <label class="radio"><input type="radio">No</label>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="span5">
+                                        <p>${status.count} ${pregunta.getPregunta()}</p>
+                                        <label class="radio"><input type="radio">5 Completamente deacuerdo</label>
+                                        <label class="radio"><input type="radio">4 De acuerdo</label>
+                                        <label class="radio"><input type="radio">3 Parcialmente de acuerdo</label>
+                                        <label class="radio"><input type="radio">2 En desacuerdo</label>
+                                        <label class="radio"><input type="radio">1 Completamente en desacuerdo</label>
+                                        <label class="radio"><input type="radio">0 No sabe</label>
+                                    </div>
+                                </c:otherwise>    
+                            </c:choose>
+                        </div><!--jaja-->
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>  
 
         </div>
     </div>
 </div>
 
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            var altura=0; 
+            var primer=true;
+            $("#conte .row").each(function(ind,el){
+                altura+=$(el).height();
+                if(primer){
+                    if(altura > 800){
+                        $("<div class='saltopagina'></div>").insertBefore($(el));
+                        altura=$(el).height();
+                        primer=false;
+                    }
+                    
+                }else{
+                    if(altura > 910){
+                        $("<div class='saltopagina'></div>").insertBefore($(el));
+                        altura=$(el).height();   
+                    }    
+                }
+                
+        
+            });   
+            
+        }, 1000);
+        
+        setTimeout(function(){
+            $("#printEnlace").click( function() {
+                $('.hero-unit').jqprint();
+                return false;
+            });
+        }, 1000);
+        
+        
+    })
+</script>

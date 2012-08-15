@@ -22,6 +22,7 @@
         <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive3.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/css/docs2.css" rel="stylesheet"/>
         <link href="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet"/>
+        <link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
 
 
 
