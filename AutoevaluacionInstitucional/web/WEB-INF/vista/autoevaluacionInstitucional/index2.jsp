@@ -106,68 +106,7 @@
                 line-height: 32px;
                 font-family: Helvetica,Arial,sans-serif;
             }
-            .slick-cell .options a {
-                cursor: pointer;
-                display: block;
-                float: left;
-                height: 18px;
-                width: 18px;
-            }
-
-            .options {
-                background: none repeat scroll 0 0 transparent;
-                float: right;
-                height: 18px;
-                margin: 2px;
-                position: relative;
-                width: auto !important;
-                z-index: 1;
-            }
-
-            a.more {
-                visibility: hidden;
-            }
-
-            .slick-row:hover a.more {
-                visibility: visible;
-                background-position: 0 -54px;
-            }   
-            .slick-row:hover a.more:hover {
-                background-position: -18px -54px;
-            }
-
-            div.selected:hover a.more, div.selected.hover a.more {
-                background-position: 0 -198px;
-                visibility: visible;
-            }
-            .grid-canvas div.selected .slick-cell a.more:hover, .grid-canvas div.selected .slick-cell a.hover  {
-                background-position: -36px -198px;
-            }
-
-
-            .grid-canvas .slick-cell .rowOption {
-                background: url("/AutoevaluacionInstitucional/css/images/songRow_18px.png") repeat scroll 0 0 transparent;
-            }
-
-            .cell-effort-driven {
-                text-align: center;
-
-            }
-
-            .cell-selection {
-                border-right-color: silver;
-                border-right-style: solid;
-                background: #f5f5f5;
-                color: gray;
-                text-align: right;
-                font-size: 10px;
-            }
-
-            .slick-row.selected .cell-selection {
-                background-color: transparent; /* show default selected row background */
-            }
-        </style>
-        <style type="text/css">
+           
             .ui-layout-north {
                 /* Drop-Down */
                 bottom:		auto;
@@ -494,8 +433,6 @@
                             var auxAsignarC1;
                         
                             
-                        
-                
                             $("div.ui-layout-center").empty();
                             var url3 = "<%=request.getContextPath()%>/"+hash;
                             
@@ -1194,7 +1131,7 @@
                             <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
                         </c:if>
                         <c:if test="${aux_index2 == 3}">
-                            <li class="nav-header">Proceso finzalizado</li>
+                            <li class="nav-header">Proceso finalizado</li>
                             <li class="divider"></li>
                             <li class="nav-header">Información del proceso</li>
                             <li><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-th"></i> Detalle Proceso</a></li>

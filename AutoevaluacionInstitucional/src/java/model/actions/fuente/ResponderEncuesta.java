@@ -20,7 +20,6 @@ public class ResponderEncuesta implements Action {
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        System.out.println("procesando");
         HttpSession session = request.getSession();
         String idencuesta = request.getParameter("idE");
         String bd = (String) session.getAttribute("bd");
