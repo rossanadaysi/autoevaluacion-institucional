@@ -49,7 +49,6 @@
             </div>
 
             <c:forEach items="${encuesta.getPreguntaList()}" var="pregunta" varStatus="status">
-
                 <c:choose>
                     <c:when test="${status.count%2==1}">
                         <div class="row printDiv">

@@ -30,7 +30,8 @@ public class informeMatrizFactAI implements Action {
                 + " INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id"
                 + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
                 + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
-                + " WHERE pregunta.tipo = 'elegir 1-5'"
+                + " INNER JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id"
+                + " WHERE pregunta.tipo = 'elegir 1-5' and encabezado.estado='terminado'"
                 + " GROUP BY caracteristica.id"
                 + " ) AS c1"
                 + " GROUP BY c1.fid";

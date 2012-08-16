@@ -30,7 +30,8 @@ public class informeMatrizAI implements Action{
 +" INNER JOIN indicador on indicador.caracteristica_id = caracteristica.id"
 +" INNER JOIN pregunta on pregunta.indicador_id = indicador.id"
 +" INNER JOIN resultadoevaluacion on resultadoevaluacion.pregunta_id=pregunta.id"
-+" where pregunta.tipo='elegir 1-5'"
++" INNER JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id"
++" WHERE pregunta.tipo = 'elegir 1-5' and encabezado.estado='terminado'"
 +" group by caracteristica.id";
         matriz = conSql.CargarSql2(sql2, bd);
         session.setAttribute("matriz", matriz);
