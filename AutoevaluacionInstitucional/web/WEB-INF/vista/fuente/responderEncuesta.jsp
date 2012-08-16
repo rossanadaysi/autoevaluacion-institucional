@@ -95,6 +95,22 @@
                 data: $("#formResponderE").serialize(),
                 success: function(){
                     $("button[rel=popover1]").button('reset');
+                    marcacion = new Date() 
+                    Hora = marcacion.getHours() 
+                    Minutos = marcacion.getMinutes() 
+                    Segundos = marcacion.getSeconds() 
+                    if (Hora<=9)
+                        Hora = "0" + Hora
+                    if (Minutos<=9)
+                        Minutos = "0" + Minutos
+                    if (Segundos<=9)
+                        Segundos = "0" + Segundos
+                    var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+                    var Mes = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                    var Hoy = new Date();
+                    var Anio = Hoy.getFullYear();
+                    var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
+                    $("#hora2").html(" " + Fecha);
                 } //fin success
             })
             
@@ -280,13 +296,25 @@
             </tbody>
         </table>
         <div class="row"> 
-            <div class="span8">
+            <div class="span6">
                 <div class="pagination"></div>
             </div>
-            <div class="span4">
+            <div class="span6">
                 <div style="text-align: right;margin-top: 18px;">
-                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
-                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                    <div>
+                        <div class="span1" style="margin-left: 90px;">
+                            <span class="label label-info span1" style="margin-left: 0px;">Guardado:</span>
+                        </div>
+                        <div class="span3" style="margin-left: 0px;">
+                            <p class="help-block" id="hora2"></p>
+                        </div>
+                        <div class="span1" style="margin-left: 0px;">
+                            <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
+                        </div>
+                        <div class="span1" style="margin-left: 0px;">  
+                            <button class="btn btn-primary" data-content="<p style='text-align: justify'>Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
