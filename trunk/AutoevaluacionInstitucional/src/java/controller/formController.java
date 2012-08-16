@@ -641,7 +641,7 @@ public class formController extends HttpServlet {
                                     rs = conSql.CargarSql2(sql, bd);
                                     session.setAttribute("descripcionFiltro", rs);
                                 } else if (conglomerado.equals("nuevoCriterio")) {
-                                    sql = "Select distinct descripcioncriterio.id, descripcioncriterio.nombre from muestracriterio inner join descripcioncriterio on muestracriterio.`descripcioncriterio_id` = descripcioncriterio.id where muestracriterio.fuente_id = '" + id + "'";
+                                    sql = "Select descripcioncriterio.id, descripcioncriterio.nombre from descripcioncriterio where criterio_id = 1";
                                     rs = conSql.CargarSql2(sql, bd);
                                     session.setAttribute("descripcionFiltro", rs);
                                 }
@@ -967,8 +967,20 @@ public class formController extends HttpServlet {
                         String sql2;
 
                         sql2 = "insert into persona values ('" + proceso.getId() + id + programa + "-" + j + "', '" + f.getNombre() + "'  , 'Usuario aleatorio', '" + pass + "', 'nuevoConglomerado')";
-                        conSql.UpdateSql(sql2, bd);
+
+                        boolean auxxx = conSql.UpdateSql(sql2, bd);
+
+                        while (auxxx == false) {
+                            j++;
+                            d++;
+                            sql2 = "insert into persona values ('" + proceso.getId() + id + programa + "-" + j + "', '" + f.getNombre() + "'  , 'Usuario aleatorio', '" + pass + "', 'nuevoConglomerado')";
+                            auxxx = conSql.UpdateSql(sql2, bd);
+                        }
+
                         conSql.UpdateSql(sql2, "autoevaluacion");
+
+
+
                         if (id == 1) {
                             sql2 = "insert into " + tabla1 + " values ('" + proceso.getId() + id + programa + "-" + j + "', '--', '--', '--', '" + proceso.getId() + id + programa + "-" + j + "', '" + id + "', '1')";
                             conSql.UpdateSql(sql2, bd);
@@ -1022,7 +1034,17 @@ public class formController extends HttpServlet {
 
 
                         String sql2 = "insert into persona values ('" + proceso.getId() + id + programa + "-" + j + "', '" + f.getNombre() + "'  , 'Usuario aleatorio', '" + pass + "', '--')";
-                        conSql.UpdateSql(sql2, bd);
+
+
+                        boolean auxxx = conSql.UpdateSql(sql2, bd);
+
+                        while (auxxx == false) {
+                            j++;
+                            d++;
+                            sql2 = "insert into persona values ('" + proceso.getId() + id + programa + "-" + j + "', '" + f.getNombre() + "'  , 'Usuario aleatorio', '" + pass + "', '--')";
+                            auxxx = conSql.UpdateSql(sql2, bd);
+                        }
+
                         conSql.UpdateSql(sql2, "autoevaluacion");
 
                         if (id == 3) {
@@ -1142,7 +1164,7 @@ public class formController extends HttpServlet {
                         String muestra = campos[campos.length - 1];
                         String programa = campos[campos.length - 2];
 
-                       
+
                         if (conglomerado.equals("programa")) {
                             if (metodo.equals("normal")) {
                                 String sql;
@@ -1473,7 +1495,7 @@ public class formController extends HttpServlet {
                                     var1 = 1;
 
 
-                                   // String sql3 = "SELECT facultad.nombre AS 'FACULTAD', programa.nombre AS 'PROGRAMA POSTGRADO', programa.descripcion, COUNT( * ) AS 'POBLACION', IF(programa.descripcion = 'Pregrado', ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0), (ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0)+2)) FROM " + tabla1 + " INNER JOIN programa ON " + tabla1 + ".programa_id = programa.id INNER JOIN facultad ON programa.facultad_id = facultad.id GROUP BY " + tabla1 + ".programa_id ORDER BY `facultad`.`nombre` ASC, programa.descripcion";
+                                    // String sql3 = "SELECT facultad.nombre AS 'FACULTAD', programa.nombre AS 'PROGRAMA POSTGRADO', programa.descripcion, COUNT( * ) AS 'POBLACION', IF(programa.descripcion = 'Pregrado', ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0), (ROUND( (count( * ) * 0.06193092419200908 ) * 1.4, 0)+2)) FROM " + tabla1 + " INNER JOIN programa ON " + tabla1 + ".programa_id = programa.id INNER JOIN facultad ON programa.facultad_id = facultad.id GROUP BY " + tabla1 + ".programa_id ORDER BY `facultad`.`nombre` ASC, programa.descripcion";
                                     ResultSet rs1 = conSql.CargarSql(sql2, bd);
 
                                     while (rs1.next()) {
