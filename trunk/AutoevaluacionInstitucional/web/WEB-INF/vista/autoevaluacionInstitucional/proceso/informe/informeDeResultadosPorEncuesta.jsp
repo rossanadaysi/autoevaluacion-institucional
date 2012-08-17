@@ -8,8 +8,8 @@
                 url: "<%=request.getContextPath()%>/ControllerAI?action=informeRealAI",
                 data: "encuesta="+$("#encuesta option:selected").val(),
                 beforeSend :function(){
-                    $("div.ui-layout-center").append("<div id='contenido'></div>");
-                    $("#contenido").hide();
+                    $("div.ui-layout-center").append("<div class='contenido'></div>");
+                    $(".contenido").hide();
                     $("div.ui-layout-center").append("<div class='page_loading'>"
                         +"<span>Cargando</span>"
                         +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
@@ -18,8 +18,8 @@
                 },
                 success: function(data) 
                 {
-                    $("#contenido").append(data);
-                    $("#contenido").show(200, function(){
+                    $(".contenido").append(data);
+                    $(".contenido").show(200, function(){
                         $(".page_loading").hide();
                     })     
                                 

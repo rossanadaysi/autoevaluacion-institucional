@@ -924,8 +924,8 @@
                                     url: url3, 
                                     success: function(data) 
                                     {
-                                        $("#contenido").append(data);
-                                        $("#contenido").show(200, function(){
+                                        $(".contenido").append(data);
+                                        $(".contenido").show(200, function(){
                                             $(".page_loading").hide();
                                         })     
                                 
