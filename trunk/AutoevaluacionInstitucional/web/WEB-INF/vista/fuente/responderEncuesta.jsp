@@ -110,6 +110,7 @@
                     var Hoy = new Date();
                     var Anio = Hoy.getFullYear();
                     var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
+                    $("#spanGuardado").show();
                     $("#hora2").html(" " + Fecha);
                 } //fin success
             })
@@ -295,14 +296,14 @@
 
             </tbody>
         </table>
-        <div class="row"> 
+        <%--<div class="row"> 
             <div class="span6">
                 <div class="pagination"></div>
             </div>
             <div class="span6">
                 <div style="text-align: right;margin-top: 18px;">
                     <div>
-                        <div class="span1" style="margin-left: 90px;">
+                        <div class="span1" style="margin-left: 90px; display: none" id="spanGuardado">
                             <span class="label label-info span1" style="margin-left: 0px;">Guardado:</span>
                         </div>
                         <div class="span3" style="margin-left: 0px;">
@@ -316,7 +317,26 @@
                         </div>
                     </div>
                 </div>
+            </div>--%>
+        <div class="row"> 
+            <div class="span6">
+                <div class="pagination"></div>
+            </div>
+            <div class="span4" style="margin-top: 5px;">
+                <div style="margin-top: 22px;">
+                    <div class="span1" id="spanGuardado" style=" display: none">
+                    <span class="label label-info" style="margin-left: 0px">Guardado:</span>
+                    </div>
+                    <p class="help-block" id="hora2"></p>
+                </div>
+            </div>
+            <div class="span2">
+                <div style="text-align: right; margin-top: 22px;">
+                    <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
+                    <button class="btn btn-primary" data-content="<p style='text-align: justify'>Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
+                </div>
             </div>
         </div>
-    </form>
+</div>
+</form>
 </div>

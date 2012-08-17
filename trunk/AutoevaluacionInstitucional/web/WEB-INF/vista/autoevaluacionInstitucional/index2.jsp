@@ -325,7 +325,7 @@
                                             type: 'POST',
                                             url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
                                             success: function(data){
-                                                $("#menu").html(data);
+                                                $("#menu2").html(data);
                                                 setTimeout(function(){
                                                     location = "<%=request.getContextPath()%>/#detalleProceso";
                                                 }, 200);
@@ -1091,7 +1091,7 @@
         </div><!--/Center-->
 
         <div id="ui-layout-west" class="ui-layout-west">
-            <div class="ui-layout-content">
+            <div class="ui-layout-content" id="menu2">
                 <div id="menu" style="padding: 8px 0pt;" class="well">
                     <ul class="nav nav-list">
                         <button id="west-closer" class="close">&laquo;</button>
@@ -1161,13 +1161,22 @@
                         </c:if>
                     </ul>
                 </div>
-            </div>
-            <div align="center">
-                <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>
-                  <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 118px;"></img></a>
-                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 236px;"></img></a>
-                --%>
-                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 200px;"></img></a>
+                <div align="center" style="bottom: 0px;  position: absolute;">
+                    <c:choose>
+                        <c:when test="${aux_index2 == 0 || aux_index2 == 1}">
+                            <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 230px;"></img></a>
+                            <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 230px;"></img></a>
+                            <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 230px;"></img></a>
+                        </c:when>
+                        <c:otherwise>
+                            <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 200px;"></img></a>
+                        </c:otherwise>
+                    </c:choose>
+                    <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>
+                           <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 118px;"></img></a>
+                         <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 236px;"></img></a>
+                    --%>
+                </div>
             </div>
         </div><!--/West-->
 

@@ -113,7 +113,7 @@ public class filterAI implements Filter {
             HttpServletRequest hsr = (HttpServletRequest) request;
             String aux = (String) hsr.getSession().getAttribute("tipoLogin");
 
-            if (aux != null && aux.equals("autoevaluacionInstitucional")) {
+            if (aux != null && aux.equals("autoevaluacionInstitucional") || aux.equals("comitefacultad")) {
                 chain.doFilter(request, response);
             } else {
              //   System.out.println("oscarnuleNO");

@@ -114,6 +114,8 @@ public class navegacion implements Action {
             path = "fuente/index";
         } else if (path.equals("inicio")) {
             path = "fuente/inicio";
+        }else if (path.equals("indexCF")) {
+            path = "autoevaluacionInstitucional/indexEspecial";
         }
 
 

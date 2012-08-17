@@ -70,6 +70,9 @@
             type: 'POST',
             url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
             data: $("#formAsigMue").serialize(),
+            beforeSend: function(){
+                $("#spanActualizado").html('Cargando..');
+            },
             success: function(){
                 $.ajax({
                     type: 'POST',
@@ -95,6 +98,7 @@
                             var Hoy = new Date();
                             var Anio = Hoy.getFullYear();
                             var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
+                            $("#spanActualizado").html('Actualizado');
                             $("#hora").html(" " + Fecha);
                         },200);  
                     }
@@ -149,10 +153,12 @@
                 <strong>Alerta!</strong>
                 No existe información en la base de datos para generar la muestra requerida. Pruebe generando usuarios aleatorios.
             </div>
-            <div class="input-append span10 input-prepend" style="text-align: right; ">
-                <%--  <form id="formGenearAleatorio">--%>
-                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button> <%--   </form>--%>
-            </div>
+            <c:if test="${tipoLogin != 'comitefacultad'}">
+                <div class="input-append span10 input-prepend" style="text-align: right; ">
+                    <%--  <form id="formGenearAleatorio">--%>
+                    <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button> <%--   </form>--%>
+                </div>
+            </c:if>
             <br><br><br>
         </c:if>
         <c:if test="${selectorAsignarM2.getRowCount() != 0}">
@@ -160,48 +166,50 @@
                 <c:if test="${idFuenteMuestra == 1}">
                     <div id="tablax" style="z-index: 1;">
                         <c:if test="${aux_IniciarP == 1}">
-                            <div class="span5" style="margin-left: 0px;">
-                                <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
-                            </div>
-                            <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
-                                <%--  <form id="formGenearAleatorio">--%>
-                                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
-                                <%--   </form>--%>
-                            </div>
-                            <br><br><br>
+                            <c:if test="${tipoLogin != 'comitefacultad'}">
+                                <div class="span5" style="margin-left: 0px;">
+                                    <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
+                                </div>
+                                <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                                    <%--  <form id="formGenearAleatorio">--%>
+                                    <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
+                                    <%--   </form>--%>
+                                </div>
+                                <br><br><br>
+                            </c:if>
                         </c:if>
                         <a class="span9" style="text-align: right; margin-left: 60px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
                         <a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                            <br>
-                            <div>
-                                <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" style="margin-left: 0px;">Actualizado: </span></div>
-                                <div class="span9"><p class="help-block" id="hora"></p></div>
-                            </div>
-                            <br>
-                            <div>
-                                <span class="label label-success" style="background-color: #F2DEDE;
-                                      border-color: #EED3D7;
-                                      color: #B94A48;">Pendiente</span>
-                                <span class="label label-success" style="background-color: #DFF0D8;
-                                      border-color: #D6E9C6;
-                                      color: #468847;">Terminado</span>
-                                <span class="label label-success" style="background-color: #D9EDF7;
-                                      border-color: #BCE8F1;
-                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                            </div>
-                            <br>
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                <th>Código</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Password</th>
-                                <th>Semestre</th>
-                                </thead>
-                                <tbody>
+                                <br>
+                                <div>
+                                    <div class="span1" style="margin-left: 0px;"><span class="label label-info span1"id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
+                                    <div class="span9"><p class="help-block" id="hora"></p></div>
+                                </div>
+                                <br>
+                                <div>
+                                    <span class="label label-success" style="background-color: #F2DEDE;
+                                          border-color: #EED3D7;
+                                          color: #B94A48;">Pendiente</span>
+                                    <span class="label label-success" style="background-color: #DFF0D8;
+                                          border-color: #D6E9C6;
+                                          color: #468847;">Terminado</span>
+                                    <span class="label label-success" style="background-color: #D9EDF7;
+                                          border-color: #BCE8F1;
+                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                                </div>
+                                <br>
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                    <th>Código</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Password</th>
+                                    <th>Semestre</th>
+                                    </thead>
+                                    <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
                                         <c:set var="varaux" value="0"/>
                                         <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
@@ -246,37 +254,41 @@
                 </c:if>
                 <c:if test="${idFuenteMuestra != 1}">
                     <div id="tablax" style="z-index: 1;">
-                        <div class="input-append span10 input-prepend" style="text-align: right;">
-                            <%--  <form id="formGenearAleatorio">--%>
-                            <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
-                            <%--   </form>--%>
-                        </div>
+                        <c:if test="${tipoLogin == 'comitefacultad'}">
+
+                            <div class="input-append span10 input-prepend" style="text-align: right;">
+                                <%--  <form id="formGenearAleatorio">--%>
+                                <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
+                                <%--   </form>--%>
+                            </div>
+                        </c:if>
                         <br><br><br>
-                        <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+                        <a class="span9" style="text-align: right; margin-left: 60px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
+                        <a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                            <br>
-                            <div>
-                                <span class="label label-success" style="background-color: #F2DEDE;
-                                      border-color: #EED3D7;
-                                      color: #B94A48;">Pendiente</span>
-                                <span class="label label-success" style="background-color: #DFF0D8;
-                                      border-color: #D6E9C6;
-                                      color: #468847;">Terminado</span>
-                                <span class="label label-success" style="background-color: #D9EDF7;
-                                      border-color: #BCE8F1;
-                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                            </div>
-                            <br>
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                <th>Código</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Password</th>
-                                </thead>
-                                <tbody>
+                                <br>
+                                <div>
+                                    <span class="label label-success" style="background-color: #F2DEDE;
+                                          border-color: #EED3D7;
+                                          color: #B94A48;">Pendiente</span>
+                                    <span class="label label-success" style="background-color: #DFF0D8;
+                                          border-color: #D6E9C6;
+                                          color: #468847;">Terminado</span>
+                                    <span class="label label-success" style="background-color: #D9EDF7;
+                                          border-color: #BCE8F1;
+                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                                </div>
+                                <br>
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                    <th>Código</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Password</th>
+                                    </thead>
+                                    <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <c:set var="varaux" value="0"/>
 
@@ -334,16 +346,16 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                            <br><br><br>
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                <th>Código</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Password</th>
-                                <th>Semestre</th>
-                                </thead>
-                                <tbody>
+                                <br><br><br>
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                    <th>Código</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Password</th>
+                                    <th>Semestre</th>
+                                    </thead>
+                                    <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
                                             <td>${item[0]}</td>
@@ -372,15 +384,15 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                            <br><br><br>
-                            <table class="table table-striped table-bordered table-condensed">
-                                <thead>
-                                <th>Código</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Password</th>
-                                </thead>
-                                <tbody>
+                                <br><br><br>
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                    <th>Código</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Password</th>
+                                    </thead>
+                                    <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
                                             <td>${item[0]}</td>

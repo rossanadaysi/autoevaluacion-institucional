@@ -5,7 +5,12 @@
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function() {
         //id(ul id),width,height(element height),row(elements in row)        
-        $.fcbkListSelection("#fcbklist","600","50","3");       
+        $.fcbkListSelection("#fcbklist","600","50","3");
+        
+        
+        
+        
+        
     });         
    
 </script>
@@ -68,6 +73,7 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Fecha</th>
+                <th></th>
                 </thead>
                 <tbody>
                 <tbody>
@@ -78,6 +84,8 @@
                                     <td>${item[1]}</td>
                                     <td>${item[2]}</td>
                                     <td>${item[5]}</td>
+                                    <td><a title="Vista previa" href="#verEncuesta&${item[0]}"><i class="icon-eye-open"></i></a>
+                                    </td>
                                 </tr>
                             </c:if>
                         </c:forEach>   
