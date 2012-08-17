@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/slick-default-theme.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/styl.css" type="text/css" media="screen" charset="utf-8" />
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css" type="text/css" media="screen" charset="utf-8" />
+        <link media="print" href="<%=request.getContextPath()%>/css/print.css" rel="stylesheet"/>
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
@@ -106,7 +107,7 @@
                 line-height: 32px;
                 font-family: Helvetica,Arial,sans-serif;
             }
-           
+
             .ui-layout-north {
                 /* Drop-Down */
                 bottom:		auto;
@@ -1385,7 +1386,7 @@
         <div class="modal hide fade" id="myModalNuevoConglomerado">
         </div>
 
-      <div class="modal hide fade" id="myModalAbout">
+        <div class="modal hide fade" id="myModalAbout">
             <div class="modal-header" style="padding-bottom: 19px; border-bottom:0;background-color: #282728">
                 <a data-dismiss="modal" style="margin-top: 0px; padding: 0px" class="close">×</a>
                 <h3></h3>
@@ -1393,19 +1394,19 @@
             <div class="modal-body" style="background-color: #282728" align="center">
                 <img src="<%=request.getContextPath()%>/css/images/SIA UDEC - LOGO_1.png"></img>
                 <br>
-                <%--    <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">--%>
-                <%-- <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>--%>
-                <p style="color: #FFFFFF; text-align: right">SIA-UdeC v1.0</p>
-                <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación institucional es un apoyo
+                    <%--    <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">--%>
+                    <%-- <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>--%>
+                    <p style="color: #FFFFFF; text-align: right">SIA-UdeC v1.0</p>
+                    <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación institucional es un apoyo
 
-                    fundamental para los procesos de acreditación que debe realizar la Universidad, con
+                        fundamental para los procesos de acreditación que debe realizar la Universidad, con
 
-                    el propósito de aportar en forma representativa al aumento en la calidad de la
+                        el propósito de aportar en forma representativa al aumento en la calidad de la
 
-                    Educación Superior, contribuyendo así al desarrollo del país.</p>
-                <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
-                <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
-                <%--  </div>--%>
+                        Educación Superior, contribuyendo así al desarrollo del país.</p>
+                    <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
+                    <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
+                    <%--  </div>--%>
             </div>
         </div>
     </body>

@@ -1,3 +1,22 @@
+SELECT encuesta.id , encuesta.nombre
+ FROM encuesta
+ INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID
+ INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID
+INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID
+ INNER JOIN muestradirector ON muestra.ID = muestradirector.MUESTRA_ID
+ INNER JOIN directorprograma ON muestradirector.DIRECTORPROGRAMA_ID = directorprograma.ID
+ INNER JOIN persona ON directorprograma.PERSONA_ID = persona.ID
+ WHERE persona.id = '147-0'
+ AND proceso.`FECHACIERRE` IS NULL
+ AND proceso.fechainicio !='Proceso en Configuración.'
+ AND asignacionencuesta.fuente_id=4
+ AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN 
+(select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') 
+
+
+
+
+
 SELECT c1.fid, c1.fno, c1.fpo, format( SUM( c1.ponderacion * c1.cumplimiento ) / SUM( c1.ponderacion ) , 2 ) AS cumplimiento, format( SUM( c1.ponderacion * c1.cumplimiento ) / SUM( c1.ponderacion ) * c1.fpo, 2 ) AS evaluacion, c1.fpo *5 AS ideal, format( c1.cumplimiento *20, 2 ) AS relacion
                  FROM (
                  SELECT factor.id AS fid, factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, ponderacioncaracteristica.ponderacion, avg( respuesta ) AS cumplimiento
