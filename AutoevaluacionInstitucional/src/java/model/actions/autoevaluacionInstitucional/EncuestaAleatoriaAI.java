@@ -32,8 +32,7 @@ public class EncuestaAleatoriaAI implements Action {
             int idsEncuestas[] = {1, 2, 3, 4, 5, 6, 7};
             Random generador = new Random();
             idencuesta = idsEncuestas[generador.nextInt(idsEncuestas.length)];
-            System.out.println("idencuesta+++++++++++++" + idencuesta);
-
+            
             //
 
             Result encuesta = null;

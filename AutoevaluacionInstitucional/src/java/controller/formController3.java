@@ -118,7 +118,7 @@ public class formController3 extends HttpServlet {
                     conSql.UpdateSql(sqlResultado, nombreBd);
 
                 }
-                
+
                 String EncuestasDisp = "";
                 if (idF.equals("1")) {
                     EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
@@ -137,22 +137,81 @@ public class formController3 extends HttpServlet {
                             + "";
 
                 } else {
+                    if (idF.equals("2")) {
+                        EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                + " FROM encuesta"
+                                + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                + " INNER JOIN muestradocente ON muestra.ID = muestradocente.MUESTRA_ID"
+                                + " INNER JOIN docente ON muestradocente.DOCENTE_ID = docente.ID"
+                                + " INNER JOIN persona ON docente.PERSONA_ID = persona.ID"
+                                + " WHERE persona.id = '" + per.getId() + "'"
+                                + " AND proceso.`FECHACIERRE` IS NULL"
+                                + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                + "";
 
-                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
-                            + " FROM encuesta"
-                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
-                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
-                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
-                            + " INNER JOIN muestradocente ON muestra.ID = muestradocente.MUESTRA_ID"
-                            + " INNER JOIN docente ON muestradocente.DOCENTE_ID = docente.ID"
-                            + " INNER JOIN persona ON docente.PERSONA_ID = persona.ID"
-                            + " WHERE persona.id = '" + per.getId() + "'"
-                            + " AND proceso.`FECHACIERRE` IS NULL"
-                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
-                            + " AND asignacionencuesta.fuente_id=" + idF + ""
-                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
-                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
-                            + "";
+                    } else {
+                        if (idF.equals("3")) {
+                            EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                    + " FROM encuesta"
+                                    + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                    + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                    + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                    + " INNER JOIN muestraadministrativo ON muestra.ID = muestraadministrativo.MUESTRA_ID"
+                                    + " INNER JOIN administrativo ON muestraadministrativo.ADMINISTRATIVO_ID = administrativo.ID"
+                                    + " INNER JOIN persona ON administrativo.PERSONA_ID = persona.ID"
+                                    + " WHERE persona.id = '" + per.getId() + "'"
+                                    + " AND proceso.`FECHACIERRE` IS NULL"
+                                    + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                    + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                    + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                    + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                    + "";
+                        } else {
+                            if (idF.equals("5")) {
+                                EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                        + " FROM encuesta"
+                                        + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                        + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                        + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                        + " INNER JOIN muestraegresado ON muestra.ID = muestraegresado.MUESTRA_ID"
+                                        + " INNER JOIN egresado ON muestraegresado.EGRESADO_ID = egresado.ID"
+                                        + " INNER JOIN persona ON egresado.PERSONA_ID = persona.ID"
+                                        + " WHERE persona.id = '" + per.getId() + "'"
+                                        + " AND proceso.`FECHACIERRE` IS NULL"
+                                        + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                        + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                        + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                        + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                        + "";
+                            } else {
+                                if (idF.equals("4")) {
+                                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                            + " FROM encuesta"
+                                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                            + " INNER JOIN muestradirector ON muestra.ID = muestradirector.MUESTRA_ID"
+                                            + " INNER JOIN directorprograma ON muestradirector.DIRECTORPROGRAMA_ID = directorprograma.ID"
+                                            + " INNER JOIN persona ON directorprograma.PERSONA_ID = persona.ID"
+                                            + " WHERE persona.id = '" + per.getId() + "'"
+                                            + " AND proceso.`FECHACIERRE` IS NULL"
+                                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                            + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                            + "";
+                                }
+                            }
+                        }
+
+
+                    }
+
 
                 }
 
@@ -175,7 +234,7 @@ public class formController3 extends HttpServlet {
                 }
                     String EncuestasDisp="";
                 if (idF.equals("1")) {//es estudiante
-                     EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
                             + " FROM encuesta"
                             + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
                             + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
@@ -191,24 +250,83 @@ public class formController3 extends HttpServlet {
                             + "";
 
                 } else {
-                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
-                            + " FROM encuesta"
-                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
-                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
-                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
-                            + " INNER JOIN muestradocente ON muestra.ID = muestradocente.MUESTRA_ID"
-                            + " INNER JOIN docente ON muestradocente.DOCENTE_ID = docente.ID"
-                            + " INNER JOIN persona ON docente.PERSONA_ID = persona.ID"
-                            + " WHERE persona.id = '" + per.getId() + "'"
-                            + " AND proceso.`FECHACIERRE` IS NULL"
-                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
-                            + " AND asignacionencuesta.fuente_id=" + idF + ""
-                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
-                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
-                            + "";
+                    if (idF.equals("2")) {
+                        EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                + " FROM encuesta"
+                                + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                + " INNER JOIN muestradocente ON muestra.ID = muestradocente.MUESTRA_ID"
+                                + " INNER JOIN docente ON muestradocente.DOCENTE_ID = docente.ID"
+                                + " INNER JOIN persona ON docente.PERSONA_ID = persona.ID"
+                                + " WHERE persona.id = '" + per.getId() + "'"
+                                + " AND proceso.`FECHACIERRE` IS NULL"
+                                + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                + "";
+
+                    } else {
+                        if (idF.equals("3")) {
+                            EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                    + " FROM encuesta"
+                                    + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                    + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                    + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                    + " INNER JOIN muestraadministrativo ON muestra.ID = muestraadministrativo.MUESTRA_ID"
+                                    + " INNER JOIN administrativo ON muestraadministrativo.ADMINISTRATIVO_ID = administrativo.ID"
+                                    + " INNER JOIN persona ON administrativo.PERSONA_ID = persona.ID"
+                                    + " WHERE persona.id = '" + per.getId() + "'"
+                                    + " AND proceso.`FECHACIERRE` IS NULL"
+                                    + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                    + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                    + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                    + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                    + "";
+                        } else {
+                            if (idF.equals("5")) {
+                                EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                        + " FROM encuesta"
+                                        + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                        + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                        + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                        + " INNER JOIN muestraegresado ON muestra.ID = muestraegresado.MUESTRA_ID"
+                                        + " INNER JOIN egresado ON muestraegresado.EGRESADO_ID = egresado.ID"
+                                        + " INNER JOIN persona ON egresado.PERSONA_ID = persona.ID"
+                                        + " WHERE persona.id = '" + per.getId() + "'"
+                                        + " AND proceso.`FECHACIERRE` IS NULL"
+                                        + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                        + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                        + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                        + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                        + "";
+                            } else {
+                                if (idF.equals("4")) {
+                                    EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
+                                            + " FROM encuesta"
+                                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                            + " INNER JOIN muestradirector ON muestra.ID = muestradirector.MUESTRA_ID"
+                                            + " INNER JOIN directorprograma ON muestradirector.DIRECTORPROGRAMA_ID = directorprograma.ID"
+                                            + " INNER JOIN persona ON directorprograma.PERSONA_ID = persona.ID"
+                                            + " WHERE persona.id = '" + per.getId() + "'"
+                                            + " AND proceso.`FECHACIERRE` IS NULL"
+                                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                            + " AND asignacionencuesta.fuente_id=" + idF + ""
+                                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                            + "";
+                                }
+                            }
+                        }
+
+
+                    }
+
 
                 }
-
 
 
 

@@ -374,9 +374,198 @@ public class loginController extends HttpServlet {
 
 
                             } else {
-                                out.println(1);
-                                System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
-                                session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+
+                                if (tipo.equals("Administrativos")) {
+
+                                    List<Administrativo> admL = persona.getAdministrativoList();
+
+                                    if (admL.size() > 0) {
+                                        out.println(0);
+                                        session.setAttribute("tipoLogin", "Fuente");
+                                        session.setAttribute("listAdministrativo", admL);
+                                        session.setAttribute("persona", persona);
+
+                                        ProgramaJpaController conPrograma2 = new ProgramaJpaController();
+                                        ProcesoJpaController conProceso2 = new ProcesoJpaController();
+                                        Programa programa2 = conPrograma2.findPrograma(1);
+                                        session.setAttribute("programa2", programa2);
+
+
+                                        List<Proceso> listProceso2 = conProceso2.findProcesoEntities();
+
+                                        int aux = 0;
+
+                                        for (Proceso proceso2 : listProceso2) {
+                                            if (proceso2.getFechacierre() == null && proceso2.getProgramaId().getId() == programa2.getId()) {
+                                                session.setAttribute("proceso", proceso2); // session------------------------------
+                                                String nombreBd2 = programa2.getNombre() + proceso2.getId();
+                                                session.setAttribute("bd", nombreBd2); //session------------------------------------
+                                                String idFuenteAdministrativo = "3";
+                                                String sql2 = "SELECT encuesta.id , encuesta.nombre"
+                                                        + " FROM encuesta"
+                                                        + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                                        + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                                        + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                                        + " INNER JOIN muestraadministrativo ON muestra.ID = muestraadministrativo.MUESTRA_ID"
+                                                        + " INNER JOIN administrativo ON muestraadministrativo.ADMINISTRATIVO_ID = administrativo.ID"
+                                                        + " INNER JOIN persona ON administrativo.PERSONA_ID = persona.ID"
+                                                        + " WHERE persona.id = '" + persona.getId() + "'"
+                                                        + " AND proceso.`FECHACIERRE` IS NULL"
+                                                        + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                                        + " AND asignacionencuesta.fuente_id=" + idFuenteAdministrativo + ""
+                                                        + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                                        + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                                        + "";
+
+                                                Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
+                                                session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
+                                                session.setAttribute("idfuente", idFuenteAdministrativo); //session---------------------------------
+
+                                            }
+                                        }
+                                    } else {
+                                        out.println(1);
+                                        System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
+                                        session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                                    }
+
+
+
+
+
+                                } else {
+
+                                    if (tipo.equals("Egresados")) {
+
+                                        List<Egresado> egreL = persona.getEgresadoList();
+
+                                        if (egreL.size() > 0) {
+                                            out.println(0);
+                                            session.setAttribute("tipoLogin", "Fuente");
+                                            session.setAttribute("listEgresado", egreL);
+                                            session.setAttribute("persona", persona);
+
+                                            ProgramaJpaController conPrograma2 = new ProgramaJpaController();
+                                            ProcesoJpaController conProceso2 = new ProcesoJpaController();
+                                            Programa programa2 = conPrograma2.findPrograma(1);
+                                            session.setAttribute("programa2", programa2);
+
+
+                                            List<Proceso> listProceso2 = conProceso2.findProcesoEntities();
+
+                                            int aux = 0;
+
+                                            for (Proceso proceso2 : listProceso2) {
+                                                if (proceso2.getFechacierre() == null && proceso2.getProgramaId().getId() == programa2.getId()) {
+                                                    session.setAttribute("proceso", proceso2); // session------------------------------
+                                                    String nombreBd2 = programa2.getNombre() + proceso2.getId();
+                                                    session.setAttribute("bd", nombreBd2); //session------------------------------------
+                                                    String idFuenteEgresado = "5";
+                                                    String sql2 = "SELECT encuesta.id , encuesta.nombre"
+                                                            + " FROM encuesta"
+                                                            + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                                            + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                                            + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                                            + " INNER JOIN muestraegresado ON muestra.ID = muestraegresado.MUESTRA_ID"
+                                                            + " INNER JOIN egresado ON muestraegresado.EGRESADO_ID = egresado.ID"
+                                                            + " INNER JOIN persona ON egresado.PERSONA_ID = persona.ID"
+                                                            + " WHERE persona.id = '" + persona.getId() + "'"
+                                                            + " AND proceso.`FECHACIERRE` IS NULL"
+                                                            + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                                            + " AND asignacionencuesta.fuente_id=" + idFuenteEgresado + ""
+                                                            + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                                            + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                                            + "";
+
+                                                    Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
+                                                    session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
+                                                    session.setAttribute("idfuente", idFuenteEgresado); //session---------------------------------
+
+                                                }
+                                            }
+                                        } else {
+                                            out.println(1);
+                                            System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
+                                            session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                                        }
+
+
+
+
+
+                                    } else {
+
+                                        if (tipo.equals("Directivos")) {
+
+                                            List<Directorprograma> dirL = persona.getDirectorprogramaList();
+
+                                            if (dirL.size() > 0) {
+                                                out.println(0);
+                                                session.setAttribute("tipoLogin", "Fuente");
+                                                session.setAttribute("listDirectivo", dirL);
+                                                session.setAttribute("persona", persona);
+
+                                                ProgramaJpaController conPrograma2 = new ProgramaJpaController();
+                                                ProcesoJpaController conProceso2 = new ProcesoJpaController();
+                                                Programa programa2 = conPrograma2.findPrograma(1);
+                                                session.setAttribute("programa2", programa2);
+
+
+                                                List<Proceso> listProceso2 = conProceso2.findProcesoEntities();
+
+                                                int aux = 0;
+
+                                                for (Proceso proceso2 : listProceso2) {
+                                                    if (proceso2.getFechacierre() == null && proceso2.getProgramaId().getId() == programa2.getId()) {
+                                                        session.setAttribute("proceso", proceso2); // session------------------------------
+                                                        String nombreBd2 = programa2.getNombre() + proceso2.getId();
+                                                        session.setAttribute("bd", nombreBd2); //session------------------------------------
+                                                        String idFuenteDirectivo = "4";
+                                                        String sql2 = "SELECT encuesta.id , encuesta.nombre"
+                                                                + " FROM encuesta"
+                                                                + " INNER JOIN asignacionencuesta ON asignacionencuesta.ENCUESTA_ID = encuesta.ID"
+                                                                + " INNER JOIN proceso ON asignacionencuesta.PROCESO_ID = proceso.ID"
+                                                                + " INNER JOIN muestra ON asignacionencuesta.PROCESO_ID = muestra.PROCESO_ID"
+                                                                + " INNER JOIN muestradirector ON muestra.ID = muestradirector.MUESTRA_ID"
+                                                                + " INNER JOIN directorprograma ON muestradirector.DIRECTORPROGRAMA_ID = directorprograma.ID"
+                                                                + " INNER JOIN persona ON directorprograma.PERSONA_ID = persona.ID"
+                                                                + " WHERE persona.id = '" + persona.getId() + "'"
+                                                                + " AND proceso.`FECHACIERRE` IS NULL"
+                                                                + " AND proceso.fechainicio !='Proceso en Configuración.'"
+                                                                + " AND asignacionencuesta.fuente_id=" + idFuenteDirectivo + ""
+                                                                + " AND (asignacionencuesta.PROCESO_ID, persona.id, asignacionencuesta.ENCUESTA_ID, asignacionencuesta.FUENTE_ID) NOT IN "
+                                                                + " (select encabezado.PROCESO_ID, encabezado.PERSONA_ID, encabezado.ENCUESTA_ID, encabezado.FUENTE_ID from encabezado where encabezado.estado ='terminado') "
+                                                                + "";
+
+                                                        Result encuestasDisponibles = conSql.CargarSql2(sql2, nombreBd2);
+                                                        session.setAttribute("listaEncuestasDisponibles", encuestasDisponibles); //session--------------
+                                                        session.setAttribute("idfuente", idFuenteDirectivo); //session---------------------------------
+
+                                                    }
+                                                }
+                                            } else {
+                                                out.println(1);
+                                                System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
+                                                session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                                            }
+
+
+
+
+
+                                        } else {
+                                            out.println(1);
+                                            System.out.println("Usuario No Posee Permisos Para Ingresas bajo ese perfil.");
+                                            session.setAttribute("errorLogIn", "[Usuario No Posee Permisos Para Ingresas bajo ese perfil!]");
+                                        }
+
+
+                                    }
+
+
+
+
+                                }
                             }
                         }
                     }
