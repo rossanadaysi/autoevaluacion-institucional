@@ -48,7 +48,10 @@ public class ResponderEncuesta implements Action {
                 + " WHERE `proceso_id` =" + p.getId() + ""
                 + " AND `encuesta_id` =" + encuesta.getRowsByIndex()[0][3] + ""
                 + " AND `fuente_id` =" + idF + ""
-                + " AND `persona_id` =" + per.getId() + "";
+                + " AND `persona_id` ='" + per.getId() + "'";
+        
+        
+        System.out.println("preguntando:"+sqlPreguntando);
 
         ResultSet rs44 = conSql.CargarSql(sqlPreguntando, bd);
 
@@ -70,7 +73,7 @@ public class ResponderEncuesta implements Action {
                  +" INNER JOIN resultadoevaluacion ON (encabezado.id  = resultadoevaluacion.encabezado_id) AND (pregunta.id  = resultadoevaluacion.pregunta_id)"
                  +" where encuesta.id =" + idencuesta + " and encabezado.id="+idEncabezadoExistente+"";
                        
-
+                System.out.println("ResultadosEvaluacion+"+ResultadosEvaluacion);
                 Result respuestas = conSql.CargarSql2(ResultadosEvaluacion, bd);
                 session.setAttribute("respuestas", respuestas);
             
