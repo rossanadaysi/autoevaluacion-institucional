@@ -19,10 +19,14 @@
                     if (aux.equals("Fuente")) {
                         RequestDispatcher rd = request.getRequestDispatcher("/ControllerF?action=indexF");
                         rd.forward(request, response);
+                    } else {
+                        if (aux.equals("comitefacultad")) {
+                            RequestDispatcher rd = request.getRequestDispatcher("/ControllerAI?action=indexCF");
+                            rd.forward(request, response);
+                        }
                     }
                 }
             }
-
         }
 
     %>
@@ -384,6 +388,7 @@
                                     <select id="tipo" name="tipo" class="span3">
                                         <option>Autoevaluacion Institucional</option>
                                         <option>Comite Central</option>
+                                        <option>Comite Facultad</option>
                                         <optgroup label="Fuentes">
                                             <option>Estudiantes</option>
                                             <option>Docentes</option>
@@ -492,19 +497,19 @@
             <div class="modal-body" style="background-color: #282728" align="center">
                 <img src="<%=request.getContextPath()%>/css/images/SIA UDEC - LOGO_1.png"></img>
                 <br>
-                <%--    <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">--%>
-                <%-- <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>--%>
-                <p style="color: #FFFFFF; text-align: right">SIA-UdeC v1.0</p>
-                <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación institucional es un apoyo
+                    <%--    <div style="background-color: #282728;border-top: 0px;border-radius:0;" class="modal-footer">--%>
+                    <%-- <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>--%>
+                    <p style="color: #FFFFFF; text-align: right">SIA-UdeC v1.0</p>
+                    <p style="color: #FFFFFF; text-align: justify">El sistema de autoevaluación institucional es un apoyo
 
-                    fundamental para los procesos de acreditación que debe realizar la Universidad, con
+                        fundamental para los procesos de acreditación que debe realizar la Universidad, con
 
-                    el propósito de aportar en forma representativa al aumento en la calidad de la
+                        el propósito de aportar en forma representativa al aumento en la calidad de la
 
-                    Educación Superior, contribuyendo así al desarrollo del país.</p>
-                <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
-                <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
-                <%--  </div>--%>
+                        Educación Superior, contribuyendo así al desarrollo del país.</p>
+                    <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
+                    <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
+                    <%--  </div>--%>
             </div>
         </div>
     </body>

@@ -12,7 +12,7 @@
                         <thead>
                         <th>Nombre</th>
                         <th>Objetivo</th>
-                        <th></th>
+                        <th>Vista previa</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${listencuestas}" var="row" varStatus="iter">

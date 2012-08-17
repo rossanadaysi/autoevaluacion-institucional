@@ -1,10 +1,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript">
-   
-
+<script>
+    $(document).ready(function() { 
+        $("#printEnlace").click( function() {
+            $('#conte').jqprint();
+            return false;
+        }); 
+    });
+    
 </script>
 <div class="hero-unit">
+    <a  class="span10" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
     <div class="row">
         <div id="conte" class="span10">
             <br/>
