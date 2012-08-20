@@ -27,7 +27,8 @@ public class EncuestaAleatoriaAI implements Action {
         int idEncabezadoExistente = 0;
         sqlController conSql = new sqlController();
         boolean busca = true;
-        while (busca) {
+        int limite = 0;
+        while (busca && limite<20) {
 
             int idsEncuestas[] = {1, 2, 3, 4, 5, 6, 7};
             Random generador = new Random();
@@ -76,6 +77,7 @@ public class EncuestaAleatoriaAI implements Action {
             if (idEncabezadoExistente != 0) {
                 busca = false;
             }
+            limite++;
         }
 
 
