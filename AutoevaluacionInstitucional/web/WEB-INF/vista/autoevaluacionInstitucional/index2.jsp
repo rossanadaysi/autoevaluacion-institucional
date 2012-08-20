@@ -415,7 +415,7 @@
            
                         if(hash != "#detalleProceso" && hash !="#listarPonderacionFactor" && hash !="#listarPonderacionCaracteristica" 
                             && hash !="#listarProcesos" && hash !="#listarEvaluarDoc" && hash !="#listarEvaluarNum" && hash.indexOf("#detalleFactor")==-1 
-                            && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1 && hash != "#CerrarSesion" && hash.indexOf("#detallePregunta")==-1)
+                            && hash.indexOf("#detalleCaracteristica")==-1 && hash.indexOf("#detalleIndicador")==-1 && hash != "#CerrarSesion" && hash.indexOf("#detallePregunta")==-1 && hash.indexOf("#verEncuesta")==-1)
                         { //si no es ---
                             
                             $.unsubscribe("set_grid_width");
@@ -996,6 +996,28 @@
                                 }); //fin $.ajax
                             
                             }
+                            
+                            
+                            else if(hash.indexOf("#verEncuesta")!=-1){
+                                var cual = hash.split("&");
+                                var url3 = "<%=request.getContextPath()%>/ControllerCC?action=";
+                                url3 = url3.concat(cual[0].substring(1),"CC&id=",cual[1]);
+                                $("div.ui-layout-center").empty();
+                                $.ajax({ 
+                                    type: "POST", 
+                                    url: url3, 
+                                    success: function(data) 
+                                    {
+                                        $(".contenido").append(data);
+                                        $(".contenido").show(200, function(){
+                                            $(".page_loading").hide();
+                                        })     
+                                
+                                    } //fin success
+                                }); //fin del $.ajax
+                            }
+                            
+                            
                         } //fin si si es ---
                     
                     } //fin else principal

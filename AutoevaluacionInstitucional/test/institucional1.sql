@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-08-2012 a las 21:22:29
--- Versión del servidor: 5.5.16
--- Versión de PHP: 5.3.8
+-- Tiempo de generación: 20-08-2012 a las 19:58:09
+-- Versión del servidor: 5.5.24-log
+-- Versión de PHP: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -3180,6 +3180,13 @@ INSERT INTO `encuestahaspregunta` (`encuesta_id`, `pregunta_id`) VALUES
 (1, 136),
 (1, 137),
 (1, 138),
+(1, 141),
+(1, 143),
+(1, 144),
+(1, 145),
+(1, 146),
+(1, 147),
+(1, 148),
 (2, 1),
 (2, 2),
 (2, 3),
@@ -3284,6 +3291,14 @@ INSERT INTO `encuestahaspregunta` (`encuesta_id`, `pregunta_id`) VALUES
 (2, 136),
 (2, 137),
 (2, 139),
+(2, 141),
+(2, 142),
+(2, 143),
+(2, 144),
+(2, 145),
+(2, 146),
+(2, 147),
+(2, 148),
 (3, 1),
 (3, 2),
 (3, 3),
@@ -3309,6 +3324,8 @@ INSERT INTO `encuestahaspregunta` (`encuesta_id`, `pregunta_id`) VALUES
 (3, 77),
 (3, 78),
 (3, 79),
+(3, 140),
+(3, 141),
 (4, 1),
 (4, 2),
 (4, 3),
@@ -3352,6 +3369,12 @@ INSERT INTO `encuestahaspregunta` (`encuesta_id`, `pregunta_id`) VALUES
 (4, 136),
 (4, 137),
 (4, 138),
+(4, 143),
+(4, 144),
+(4, 145),
+(4, 146),
+(4, 147),
+(4, 148),
 (5, 1),
 (5, 2),
 (5, 3),
@@ -3395,6 +3418,12 @@ INSERT INTO `encuestahaspregunta` (`encuesta_id`, `pregunta_id`) VALUES
 (5, 136),
 (5, 137),
 (5, 138),
+(5, 143),
+(5, 144),
+(5, 145),
+(5, 146),
+(5, 147),
+(5, 148),
 (6, 44),
 (6, 45),
 (6, 53),
@@ -28805,7 +28834,7 @@ CREATE TABLE IF NOT EXISTS `pregunta` (
   `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pregunta_indicador1` (`indicador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=140 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=149 ;
 
 --
 -- Volcado de datos para la tabla `pregunta`
@@ -28950,7 +28979,16 @@ INSERT INTO `pregunta` (`id`, `pregunta`, `tipo`, `indicador_id`, `codigo`) VALU
 (136, 'La distribución y  organización  de las instalaciones deportivas y recreativas son suficientes y adecuadas', 'Elegir 1-5', 392, '9.30.16.1'),
 (137, 'Los procedimientos y trámites financieros establecidos en la Universidad son efectivos y eficientes', 'Elegir 1-5', 413, '10.32.10.2'),
 (138, 'La organización y el manejo presupuestal cumple con criterios claros y da respuesta a los procesos misionales de la Universidad', 'Elegir 1-5', 418, '10.33.5.2'),
-(139, 'La organización y el manejo presupuestal  responden a los procesos misionales de la Universidad.', 'Elegir 1-5', 418, '10.33.5.1');
+(139, 'La organización y el manejo presupuestal  responden a los procesos misionales de la Universidad.', 'Elegir 1-5', 418, '10.33.5.1'),
+(140, 'La Universidad realiza un adecuado seguimiento a sus egresados, es decir mantiene una buena relación con ellos.', 'Elegir 1-5', 217, '5.17.7.1'),
+(141, 'El sistema de consultas bibliograficas como bases de datos, publicaciones seriadas, bibliografia especializada que posee la universidad está actualizado, es disponible y accesible a la comunidad universitaria.', 'Elegir 1-5', 341, '9.29.17.1'),
+(142, 'la infraestructura y los equipos de apoyo para el desarrollo de los programas de educación virtual estan actualizados y son suficientes.', 'Elegir 1-5', 369, '9.29.45.1'),
+(143, 'Los diferentes espacios fisicos de la universidad son accesibles.', 'Elegir 1-5', 387, '9.30.11.1'),
+(144, 'Los diferentes espacios fisicos de la universidad poseen la capacidad adecuada para el desarrollo de las actividades academicas.', 'Elegir 1-5', 387, '9.30.11.2'),
+(145, 'Los diferentes espacios fisicos de la universidad tienen buena iluminación.', 'Elegir 1-5', 387, '9.30.11.3'),
+(146, 'Los diferentes espacios fisicos de la universidad tienen buena ventilación.', 'Elegir 1-5', 387, '9.30.11.4'),
+(147, 'Los diferentes espacios fisicos de la universidad tienen condiciones de seguridad apropiadas.', 'Elegir 1-5', 387, '9.30.11.5'),
+(148, 'Los diferentes espacios fisicos de la universidad tienen condiciones de higiene apropiadas.', 'Elegir 1-5', 387, '9.30.11.6');
 
 -- --------------------------------------------------------
 
