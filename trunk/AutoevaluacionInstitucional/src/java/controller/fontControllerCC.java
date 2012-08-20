@@ -7,6 +7,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -62,25 +63,14 @@ public class fontControllerCC extends HttpServlet {
 
             rd.forward(request, response);
 
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
+            String ruta = "error.jsp";
+            RequestDispatcher rd = request.getRequestDispatcher(ruta);
+            rd.forward(request, response);
+            //throw new ServletException("ha ocurrido un error");
 
-            ex.printStackTrace();
-            throw new ServletException("Accion no encontrada");
+            // System.out.println("action: '" + action + "' procesada.");
 
-        } catch (ClassNotFoundException ex) {
-
-            ex.printStackTrace();
-            throw new ServletException("class no encontrada");
-
-        } catch (InstantiationException ex) {
-
-            ex.printStackTrace();
-            throw new ServletException("error al instanciar");
-
-        } catch (IllegalAccessException ex) {
-
-            ex.printStackTrace();
-            throw new ServletException("acceso ilegal");
 
         }
     }

@@ -6,6 +6,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,8 +21,11 @@ import model.Action;
  */
 public class fontControllerAI extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -55,7 +59,7 @@ public class fontControllerAI extends HttpServlet {
 
             String ruta = objeto.procesar(request);
 
-           // System.out.println("action: '" + action + "' procesada.");
+            // System.out.println("action: '" + action + "' procesada.");
 
             RequestDispatcher rd = request.getRequestDispatcher(ruta);
 
@@ -65,33 +69,24 @@ public class fontControllerAI extends HttpServlet {
 
             rd.forward(request, response);
 
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
+            String ruta = "error.jsp";
+            RequestDispatcher rd = request.getRequestDispatcher(ruta);
+            rd.forward(request, response);
+            //throw new ServletException("ha ocurrido un error");
 
-            ex.printStackTrace();
-            throw new ServletException("Accion no encontrada");
+            // System.out.println("action: '" + action + "' procesada.");
 
-        } catch (ClassNotFoundException ex) {
-
-            ex.printStackTrace();
-            throw new ServletException("class no encontrada");
-
-        } catch (InstantiationException ex) {
-
-            ex.printStackTrace();
-            throw new ServletException("error al instanciar");
-
-        } catch (IllegalAccessException ex) {
-
-            ex.printStackTrace();
-            throw new ServletException("acceso ilegal");
 
         }
 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -103,8 +98,10 @@ public class fontControllerAI extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
+    /**
+     * Handles the HTTP
+     * <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -116,8 +113,9 @@ public class fontControllerAI extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
