@@ -1,14 +1,57 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function() { 
+        marcacion = new Date() 
+        Hora = marcacion.getHours() 
+        Minutos = marcacion.getMinutes() 
+        Segundos = marcacion.getSeconds() 
+        if (Hora<=9)
+            Hora = "0" + Hora
+        if (Minutos<=9)
+            Minutos = "0" + Minutos
+        if (Segundos<=9)
+            Segundos = "0" + Segundos
+        var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+        var Mes = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        var Hoy = new Date();
+        var Anio = Hoy.getFullYear();
+        var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
+        $("#horaEstado").html(" " + Fecha);
+        
+        $("#actEnlaceEstado").click( function() {
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=estadoProcesoAI",
+                success: function(data){             
+                    $(".contenido").html(data);
+                    setTimeout(function(){
+                        $(".page_loading").hide();
+                    },200)
+                } //fin success
+            }); //fin $.ajaxF          
+        }); //fin $.ajax
+    });                     
+</script>
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
             <br/>
             <fieldset>
-                <legend>Estado del proceso en ejecución</legend>
-                <p>Detalle:</p>
-                <br>
+                <legend>
+                    Estado del proceso en ejecución
+                </legend>
+                <div class="span10">
+                    <div class="span1" style="margin-left: -30px;"><span class="label label-info span1" id="spanActualizadoEstado" style="margin-left: 0px;">Actualizado</span></div>
+                    <div class="span7" style="margin-left: 30px;"><p class="help-block" id="horaEstado"></p></div>
+                    <div class="span2" style="margin-left: 60px; text-align: right;"><a style="cursor: pointer" id="actEnlaceEstado"><i class="icon-refresh"></i> Actualizar</a></div>
+                </div>
+
+                <p>
+                    Detalle:
+                </p>
+
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <th>Descripción</th>

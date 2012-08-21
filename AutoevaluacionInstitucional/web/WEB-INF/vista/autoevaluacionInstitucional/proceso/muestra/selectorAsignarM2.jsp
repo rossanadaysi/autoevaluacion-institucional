@@ -18,7 +18,8 @@
         var Anio = Hoy.getFullYear();
         var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#hora").html(" " + Fecha);
-                            
+                          
+                 
         $("button[rel=popover2]")
         .popover({placement:'left'}).click(function(e){
             e.preventDefault();
@@ -43,6 +44,23 @@
                                     setTimeout(function(){
                                         $(".page_loading").hide();
                                         $("#resultados4").show(); 
+                                        marcacion = new Date() 
+                                        Hora = marcacion.getHours() 
+                                        Minutos = marcacion.getMinutes() 
+                                        Segundos = marcacion.getSeconds() 
+                                        if (Hora<=9)
+                                            Hora = "0" + Hora
+                                        if (Minutos<=9)
+                                            Minutos = "0" + Minutos
+                                        if (Segundos<=9)
+                                            Segundos = "0" + Segundos
+                                        var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+                                        var Mes = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                                        var Hoy = new Date();
+                                        var Anio = Hoy.getFullYear();
+                                        var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
+                                        $("#hora").html(" " + Fecha);
+         
                                     },200);  
                                 }
                             })
@@ -98,7 +116,7 @@
                             var Hoy = new Date();
                             var Anio = Hoy.getFullYear();
                             var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
-                            $("#spanActualizado").html('Actualizado');
+                          
                             $("#hora").html(" " + Fecha);
                         },200);  
                     }
@@ -183,33 +201,33 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br>
-                                <div>
-                                    <div class="span1" style="margin-left: 0px;"><span class="label label-info span1"id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
-                                    <div class="span9"><p class="help-block" id="hora"></p></div>
-                                </div>
-                                <br>
-                                <div>
-                                    <span class="label label-success" style="background-color: #F2DEDE;
-                                          border-color: #EED3D7;
-                                          color: #B94A48;">Pendiente</span>
-                                    <span class="label label-success" style="background-color: #DFF0D8;
-                                          border-color: #D6E9C6;
-                                          color: #468847;">Terminado</span>
-                                    <span class="label label-success" style="background-color: #D9EDF7;
-                                          border-color: #BCE8F1;
-                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                                </div>
-                                <br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    <th>Semestre</th>
-                                    </thead>
-                                    <tbody>
+                            <br>
+                            <div>
+                                <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
+                                <div class="span9"><p class="help-block" id="hora"></p></div>
+                            </div>
+                            <br>
+                            <div>
+                                <span class="label label-success" style="background-color: #F2DEDE;
+                                      border-color: #EED3D7;
+                                      color: #B94A48;">Pendiente</span>
+                                <span class="label label-success" style="background-color: #DFF0D8;
+                                      border-color: #D6E9C6;
+                                      color: #468847;">Terminado</span>
+                                <span class="label label-success" style="background-color: #D9EDF7;
+                                      border-color: #BCE8F1;
+                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                            </div>
+                            <br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                <th>Semestre</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
                                         <c:set var="varaux" value="0"/>
                                         <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
@@ -268,27 +286,27 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br>
-                                <div>
-                                    <span class="label label-success" style="background-color: #F2DEDE;
-                                          border-color: #EED3D7;
-                                          color: #B94A48;">Pendiente</span>
-                                    <span class="label label-success" style="background-color: #DFF0D8;
-                                          border-color: #D6E9C6;
-                                          color: #468847;">Terminado</span>
-                                    <span class="label label-success" style="background-color: #D9EDF7;
-                                          border-color: #BCE8F1;
-                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                                </div>
-                                <br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    </thead>
-                                    <tbody>
+                            <br>
+                            <div>
+                                <span class="label label-success" style="background-color: #F2DEDE;
+                                      border-color: #EED3D7;
+                                      color: #B94A48;">Pendiente</span>
+                                <span class="label label-success" style="background-color: #DFF0D8;
+                                      border-color: #D6E9C6;
+                                      color: #468847;">Terminado</span>
+                                <span class="label label-success" style="background-color: #D9EDF7;
+                                      border-color: #BCE8F1;
+                                      color: #3A87AD; margin-bottom: 5px">Guardado</span>
+                            </div>
+                            <br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <c:set var="varaux" value="0"/>
 
@@ -346,16 +364,16 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br><br><br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    <th>Semestre</th>
-                                    </thead>
-                                    <tbody>
+                            <br><br><br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                <th>Semestre</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
                                             <td>${item[0]}</td>
@@ -384,15 +402,15 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br><br><br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    </thead>
-                                    <tbody>
+                            <br><br><br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
                                             <td>${item[0]}</td>
