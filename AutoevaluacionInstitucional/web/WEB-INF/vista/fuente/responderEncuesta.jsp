@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.pagination.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.validate.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.metadata.js"></script>
@@ -296,29 +297,7 @@
 
             </tbody>
         </table>
-        <%--<div class="row"> 
-            <div class="span6">
-                <div class="pagination"></div>
-            </div>
-            <div class="span6">
-                <div style="text-align: right;margin-top: 18px;">
-                    <div>
-                        <div class="span1" style="margin-left: 90px; display: none" id="spanGuardado">
-                            <span class="label label-info span1" style="margin-left: 0px;">Guardado:</span>
-                        </div>
-                        <div class="span3" style="margin-left: 0px;">
-                            <p class="help-block" id="hora2"></p>
-                        </div>
-                        <div class="span1" style="margin-left: 0px;">
-                            <button class="btn" id="guardar" data-content="<p style='text-align: justify'>Guarda la encuesta sin salir de ella, de esta manera usted podr&aacute; seguir contestando la encuesta cuando desee.<p>" rel="popover1"  value="1" data-original-title="Guardar encuesta" type="button" data-loading-text="Guardando..." autocomplete="off">Guardar</button>
-                        </div>
-                        <div class="span1" style="margin-left: 0px;">  
-                            <button class="btn btn-primary" data-content="<p style='text-align: justify'>Env&iacute;a la encuesta evaluada. Verifique que todas las preguntas han sido respondidas correctamente. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Enviar encuesta" type="submit">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>--%>
-        <div class="row"> 
+         <div class="row"> 
             <div class="span6">
                 <div class="pagination"></div>
             </div>
@@ -337,6 +316,5 @@
                 </div>
             </div>
         </div>
-</div>
-</form>
+    </form>
 </div>

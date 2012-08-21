@@ -71,7 +71,7 @@ public class formController3 extends HttpServlet {
 
 
 
-            System.out.println("sql0: "+ sqlPreguntando);
+           
             ResultSet rs44 = conSql.CargarSql(sqlPreguntando, nombreBd);
 
             int idEncabezadoExistente = 0;

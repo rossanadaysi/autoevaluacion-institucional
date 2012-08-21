@@ -164,7 +164,7 @@ public class loginController extends HttpServlet {
                                             if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
                                                 session.setAttribute("proceso", proceso);
                                                 aux = 1;
-                                                System.out.println("hay proceso activo");
+                                              
                                                 session.setAttribute("proActivo", 1);
                                                 String nombreBd = programa.getNombre() + proceso.getId();
                                                 session.setAttribute("bd", nombreBd);
@@ -208,7 +208,6 @@ public class loginController extends HttpServlet {
                                                     out.println(0);
                                                     session.setAttribute("aux_index2", 2);
                                                     session.setAttribute("aux_IniciarP", 1);
-                                                    System.out.println("Proceso en ejecución");
                                                     session.setAttribute("proActivo", 1);
                                                 }
 
@@ -289,7 +288,7 @@ public class loginController extends HttpServlet {
                                             if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
                                                 session.setAttribute("proceso", proceso);
                                                 aux = 1;
-                                                System.out.println("hay proceso activo");
+                                                
                                                 session.setAttribute("proActivo", 1);
                                                 String nombreBd = programa.getNombre() + proceso.getId();
                                                 session.setAttribute("bd", nombreBd);
@@ -331,7 +330,7 @@ public class loginController extends HttpServlet {
                                                 } else {
                                                     session.setAttribute("aux_index2", 2);
                                                     session.setAttribute("aux_IniciarP", 1);
-                                                    System.out.println("Proceso en ejecución");
+                                                   
                                                     session.setAttribute("proActivo", 1);
                                                 }
 
