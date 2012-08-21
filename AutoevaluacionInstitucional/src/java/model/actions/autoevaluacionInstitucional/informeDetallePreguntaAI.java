@@ -22,21 +22,11 @@ public class informeDetallePreguntaAI implements Action {
         sqlController conSql = new sqlController();
         Result detallePregunta = null;
 
-        /*
-        SELECT * FROM pregunta 
-        * INNER JOIN encuestahaspregunta on encuestahaspregunta.pregunta_id = pregunta.id 
-        * INNER JOIN encuesta on encuesta.id = encuestahaspregunta.encuesta_id 
-        * where pregunta.id=5
-        */
-
-
-        String sql2 = "SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, format(avg(respuesta),2)"
-                + " FROM Indicador"
-                + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
-                + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
-                + " WHERE pregunta.tipo = 'elegir 1-5' and resultadoevaluacion.respuesta != 0"
-                + " AND indicador.id =" + idP
-                + " GROUP BY pregunta.id";
+        String sql2 = "SELECT pregunta.pregunta, encuesta.nombre, format(avg(respuesta),2)  FROM `resultadoevaluacion`"
+                + " INNER JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id"
+                + " INNER JOIN encuesta ON encuesta.id = encabezado.encuesta_id"
+                + " INNER JOIN pregunta ON pregunta.id = resultadoevaluacion.pregunta_id"
+                + " WHERE pregunta.id ="+idP+" group by encuesta.id";
         detallePregunta = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detallePregunta", detallePregunta);
 
