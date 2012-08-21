@@ -51,7 +51,7 @@ public class ResponderEncuesta implements Action {
                 + " AND `persona_id` ='" + per.getId() + "'";
         
         
-        System.out.println("preguntando:"+sqlPreguntando);
+     
 
         ResultSet rs44 = conSql.CargarSql(sqlPreguntando, bd);
 

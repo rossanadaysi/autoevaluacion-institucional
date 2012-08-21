@@ -206,8 +206,12 @@
                             },
                             success: function(data) 
                             {
-                                $("div.ui-layout-center").append(data);
-                                $("div.ui-layout-center").show(100);
+                               
+                                $("div.ui-layout-center").html(data);
+                                setTimeout(function(){
+                                    $("div.ui-layout-center").show();
+                                }, 100);
+                                
                                         
                             } //fin success
                         }); //fin del $.ajax
