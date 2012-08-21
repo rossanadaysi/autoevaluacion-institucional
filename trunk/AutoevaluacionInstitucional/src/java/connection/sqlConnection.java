@@ -59,6 +59,7 @@ public class sqlConnection {
         String nombreBD = bd;
         String usuario = "root";
         String clave = "123456";
+        /*autoeval2012*/
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {

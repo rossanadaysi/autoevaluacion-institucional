@@ -12,7 +12,6 @@
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id pregunta</th>
                         <th>Pregunta</th>
                         <th>Encuesta</th>
                         <th>Promedio respuesta</th>
@@ -26,22 +25,20 @@
                                             <td rowspan="${detallePregunta.getRowCount()}">   
                                                 <c:out value="${row[0]}"/>
                                             </td>
-                                            <td rowspan="${detallePregunta.getRowCount()}">   
+                                            <td>   
                                                 <c:out value="${row[1]}"/>
                                             </td>
                                             <td>   
                                                 <c:out value="${row[2]}"/>
                                             </td>
-                                            <td>   
-                                                <c:out value="${row[3]}"/>
-                                            </td>
+                                            
                                         </c:when>
                                         <c:otherwise>
                                             <td>   
-                                                <c:out value="${row[2]}"/>
+                                                <c:out value="${row[1]}"/>
                                             </td>
                                             <td>   
-                                                <c:out value="${row[3]}"/>
+                                                <c:out value="${row[2]}"/>
                                             </td>
                                         </c:otherwise>    
                                     </c:choose>
