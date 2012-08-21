@@ -23,11 +23,11 @@ public class informeDetallePreguntaAI implements Action {
         Result detallePregunta = null;
 
         /*
-         * encuestas donde aparece una pregunta X SELECT * FROM pregunta INNER
-         * JOIN encuestahaspregunta on encuestahaspregunta.pregunta_id =
-         * pregunta.id INNER JOIN encuesta on encuesta.id =
-         * encuestahaspregunta.encuesta_id where pregunta.id=5
-         */
+        SELECT * FROM pregunta 
+        * INNER JOIN encuestahaspregunta on encuestahaspregunta.pregunta_id = pregunta.id 
+        * INNER JOIN encuesta on encuesta.id = encuestahaspregunta.encuesta_id 
+        * where pregunta.id=5
+        */
 
 
         String sql2 = "SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, format(avg(respuesta),2)"
