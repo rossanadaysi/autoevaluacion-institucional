@@ -34,6 +34,7 @@ public class informeDetalleFactorAI implements Action{
                 + " GROUP BY caracteristica.id";
         detalleFactor = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detalleFactor", detalleFactor);
+        
 
         String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/informe/informeDetalleFactor.jsp";
         return url;
