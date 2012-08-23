@@ -43,7 +43,7 @@
     <a  class="span10 printEnlace" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer"><i class="icon-print"></i> Imprimir</a>  
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
+            <br>
             <fieldset>
                 <legend>
                     Estado del proceso en ejecución

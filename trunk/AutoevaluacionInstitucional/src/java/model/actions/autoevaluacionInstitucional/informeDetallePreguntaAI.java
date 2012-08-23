@@ -22,7 +22,7 @@ public class informeDetallePreguntaAI implements Action {
         sqlController conSql = new sqlController();
         Result detallePregunta = null;
 
-        String sql2 = "SELECT pregunta.pregunta, encuesta.nombre, format(avg(respuesta),2)  FROM `resultadoevaluacion`"
+        String sql2 = "SELECT pregunta.pregunta, encuesta.nombre, format(avg(respuesta),2), pregunta.codigo FROM `resultadoevaluacion`"
                 + " INNER JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id"
                 + " INNER JOIN encuesta ON encuesta.id = encabezado.encuesta_id"
                 + " INNER JOIN pregunta ON pregunta.id = resultadoevaluacion.pregunta_id"

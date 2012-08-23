@@ -206,6 +206,11 @@
         <div id="conte" class="span10">
             <br/>
             <legend>Matriz de Calidad de Factores</legend>
+            <ul class="breadcrumb">
+                <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
+            </ul>
+            <br>
             <c:choose>
                 <c:when test="${matrizFactores.getRowCount()!= 0}">
 

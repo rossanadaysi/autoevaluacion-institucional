@@ -1,6 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style type="text/css">
+
+    .table td {
+        text-align: right;
+    }
+</style>
 <script type="text/javascript">
     $(function () {
         var chart;
@@ -32,7 +38,7 @@
                     categories: [
     <c:forEach items="${detalleIndicador.rowsByIndex}" var="detalleI" varStatus="status">
         <c:choose>
-                <c:when test="${detalleIndicador.getRowCount()!=status.index+1}">
+            <c:when test="${detalleIndicador.getRowCount()!=status.index+1}">
                                     '${detalleI[2]}-${detalleI[3]}',
             </c:when>
             <c:otherwise>
@@ -114,38 +120,38 @@
             <c:when test="${detalleIndicador.getRowCount()!=status33.index+1}">
                 <c:choose>
                     <c:when test="${detalleI2[4]>=4.5}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#89A54E'
-                                                    },
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#89A54E'
+                                                },
                                                 
                     </c:when>
                     <c:when test="${detalleI2[4]<4.5 && detalleI2[4]>=4.0}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#B5CA92'
-                                                    },
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#B5CA92'
+                                                },
                                                 
                     </c:when>
                     <c:when test="${detalleI2[4]<4.0 && detalleI2[4]>=3.5}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#3D96AE'
-                                                    },
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#3D96AE'
+                                                },
                                                 
                     </c:when>
                     <c:when test="${detalleI2[4]<3.5 && detalleI2[4]>=3.0}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#DB843D'
-                                                    },
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#DB843D'
+                                                },
                                                 
                     </c:when>
                     <c:otherwise>
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#AA4643'
-                                                    },
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#AA4643'
+                                                },
                     </c:otherwise>
                 </c:choose>
                                             
@@ -158,38 +164,38 @@
             <c:otherwise>
                 <c:choose>
                     <c:when test="${detalleI2[4]>=4.5}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#89A54E'
-                                                    }
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#89A54E'
+                                                }
                                                 
                     </c:when>
                     <c:when test="${detalleI2[4]<4.5 && detalleI2[4]>=4.0}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#B5CA92'
-                                                    }
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#B5CA92'
+                                                }
                                                 
                     </c:when>
                     <c:when test="${detalleI2[4]<4.0 && detalleI2[4]>=3.5}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#3D96AE'
-                                                    }
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#3D96AE'
+                                                }
                                                 
                     </c:when>
                     <c:when test="${detalleI2[4]<3.5 && detalleI2[4]>=3.0}">
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#DB843D'
-                                                    }
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#DB843D'
+                                                }
                                                 
                     </c:when>
                     <c:otherwise>
-                                                    {
-                                                        y: ${detalleI2[4]},
-                                                        color: '#AA4643'
-                                                    }
+                                                {
+                                                    y: ${detalleI2[4]},
+                                                    color: '#AA4643'
+                                                }
                     </c:otherwise>
                 </c:choose>
                 
@@ -230,34 +236,33 @@
     <div class="row">
         <div id="conte" class="span10">
             <br/>
-            <legend>Detalle indicador</legend>
+            <legend>Indicador: ${detalleIndicador.rowsByIndex[0][1]}</legend>
+            <ul class="breadcrumb">
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
+                <li><a href="#detalleFactor&${detalleFactor.rowsByIndex[0][0]}">Factor ${detalleCaracteristica.rowsByIndex[0][5]}</a> <span class="divider">/</span></li>
+                <li><a href="#detalleCaracteristica&${detalleCaracteristica.rowsByIndex[0][0]}" data="${detalleCaracteristica.rowsByIndex[0][1]}">Característica ${detalleCaracteristica.rowsByIndex[0][0]}</a><span class="divider">/</span></li>
+                <li class="active">Indicador ${detalleIndicador.rowsByIndex[0][0]}</li>
+            </ul>
+            <br>
             <c:choose>
                 <c:when test="${detalleIndicador.getRowCount()!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id indicador</th>
-                        <th>Indicador</th>
-                        <th>Id Pregunta</th>
+                        <th>Id</th>
                         <th>Pregunta</th>
                         <th>Promedio respuesta</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${detalleIndicador.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
-
                                     <c:choose>
                                         <c:when test="${iter.index == 0}">
-                                            <td rowspan="${detalleIndicador.getRowCount()}">   
-                                                <c:out value="${row[0]}"/>
-                                            </td>
-                                            <td rowspan="${detalleIndicador.getRowCount()}">   
-                                                <c:out value="${row[1]}"/>
-                                            </td>
                                             <td>   
                                                 <c:out value="${row[2]}"/>
                                             </td>
-                                            <td>   
+                                            <td style="text-align: left">   
                                                 <a href="#detallePregunta&${row[2]}" data="${row[3]}">${row[3]}</a> 
                                             </td>
                                             <td>   
@@ -268,7 +273,7 @@
                                             <td>   
                                                 <c:out value="${row[2]}"/>
                                             </td>
-                                            <td>   
+                                            <td style="text-align: left">   
                                                 <a href="#detallePregunta&${row[2]}" data="${row[3]}">${row[3]}</a> 
                                             </td>
                                             <td>   

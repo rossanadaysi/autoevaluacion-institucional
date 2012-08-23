@@ -60,8 +60,6 @@
             </c:forEach> 
         </ul>
     </div>
-
-
     <div class="hero-unit">
         <div class="row">
             <div id="conte" class="span10">
