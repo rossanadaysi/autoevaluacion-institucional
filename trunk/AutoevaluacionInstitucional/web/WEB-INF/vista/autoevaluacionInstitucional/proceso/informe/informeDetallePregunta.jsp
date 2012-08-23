@@ -23,7 +23,7 @@
                 chart: {
                     renderTo: 'grafica',
                     type: 'column',
-                    margin: [ 50, 30, 100, 120]
+                    margin: [ 50, 30, 100, 50]
                 },
                 title: {
                     text: ""+ finali  +""
@@ -238,6 +238,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <br/>
                     <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
                 </c:when>
                 <c:otherwise>
