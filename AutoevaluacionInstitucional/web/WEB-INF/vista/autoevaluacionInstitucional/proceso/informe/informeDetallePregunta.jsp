@@ -78,7 +78,7 @@
                             data: [
     <c:forEach items="${detallePregunta.rowsByIndex}" var="detalleP2" varStatus="status33">
         <c:choose>
-            <c:when test="${detalleFactor.getRowCount()!=status33.index+1}">
+            <c:when test="${detallePregunta.getRowCount()!=status33.index+1}">
                 <c:choose>
                     <c:when test="${detalleP2[2]>=4.5}">
                                                     {

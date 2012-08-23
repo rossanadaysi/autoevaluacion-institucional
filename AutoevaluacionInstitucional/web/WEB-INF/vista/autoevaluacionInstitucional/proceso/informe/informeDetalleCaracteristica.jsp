@@ -98,7 +98,7 @@
                             data: [
     <c:forEach items="${detalleCaracteristica.rowsByIndex}" var="detalleC2" varStatus="status33">
         <c:choose>
-            <c:when test="${detalleFactor.getRowCount()!=status33.index+1}">
+            <c:when test="${detalleCaracteristica.getRowCount()!=status33.index+1}">
                 <c:choose>
                     <c:when test="${detalleC2[4]>=4.5}">
                                                     {
