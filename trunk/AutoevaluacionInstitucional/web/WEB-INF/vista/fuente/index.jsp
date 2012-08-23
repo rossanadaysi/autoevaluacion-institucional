@@ -361,7 +361,7 @@
             </div>
             <div class="modal-body">
                 La encuesta se ha enviado correctamente.
-                Muchas gracias por participar del proceso de autoevaluaci&oacute;n institucional.
+                Muchas gracias por participar del proceso de autoevaluaci&oacute;n Institucional.
             </div>
             <div class="modal-footer">
                 <a class="btn btn-primary" data-dismiss="modal" href="#">Cerrar</a>

@@ -436,8 +436,8 @@
                         </div>
                         <div id="filtro" style="display: none;"></div>
                         <div  id="resultados2"></div>
-                        <div  class="span10">
-                            <div id="resultados4" class="accordion" style="margin-left: -30px;"></div> 
+                        <div  class="span10" style="margin-left: 0px;"> 
+                            <div id="resultados4" class="accordion" style="margin-left: 0px;"></div> 
                         </div>
                 </fieldset>
             </form>
