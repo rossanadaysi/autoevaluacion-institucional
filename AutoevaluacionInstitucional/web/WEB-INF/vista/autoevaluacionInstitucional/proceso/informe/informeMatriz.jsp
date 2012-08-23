@@ -1,6 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style type="text/css">
+
+    .table td {
+        text-align: right;
+    }
+</style>
 <script type="text/javascript">
     $(function () {
         var chart;
@@ -19,7 +25,7 @@
                     categories: [
     <c:forEach items="${matriz.rowsByIndex}" var="caracteristica" varStatus="status">
         <c:choose>
-                <c:when test="${matriz.getRowCount()!=status.index+1}">
+            <c:when test="${matriz.getRowCount()!=status.index+1}">
                                     '${caracteristica[0]}-${caracteristica[1]}',
             </c:when>
             <c:otherwise>
@@ -86,38 +92,38 @@
             <c:when test="${matriz.getRowCount()!=status33.index+1}">
                 <c:choose>
                     <c:when test="${caracteristica2[4]>=4.5}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#89A54E'
-                                                    },
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#89A54E'
+                                                },
                                                 
                     </c:when>
                     <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#B5CA92'
-                                                    },
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#B5CA92'
+                                                },
                                                 
                     </c:when>
                     <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.5}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#3D96AE'
-                                                    },
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#3D96AE'
+                                                },
                                                 
                     </c:when>
                     <c:when test="${caracteristica2[4]<3.5 && caracteristica2[4]>=3.0}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#DB843D'
-                                                    },
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#DB843D'
+                                                },
                                                 
                     </c:when>
                     <c:otherwise>
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#AA4643'
-                                                    },
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#AA4643'
+                                                },
                     </c:otherwise>
                 </c:choose>
                                             
@@ -130,38 +136,38 @@
             <c:otherwise>
                 <c:choose>
                     <c:when test="${caracteristica2[4]>=4.5}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#89A54E'
-                                                    }
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#89A54E'
+                                                }
                                                 
                     </c:when>
                     <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#B5CA92'
-                                                    }
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#B5CA92'
+                                                }
                                                 
                     </c:when>
                     <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.5}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#3D96AE'
-                                                    }
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#3D96AE'
+                                                }
                                                 
                     </c:when>
                     <c:when test="${caracteristica2[4]<3.5 && caracteristica2[4]>=3.0}">
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#DB843D'
-                                                    }
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#DB843D'
+                                                }
                                                 
                     </c:when>
                     <c:otherwise>
-                                                    {
-                                                        y: ${caracteristica2[4]},
-                                                        color: '#AA4643'
-                                                    }
+                                                {
+                                                    y: ${caracteristica2[4]},
+                                                    color: '#AA4643'
+                                                }
                     </c:otherwise>
                 </c:choose>
                 
@@ -202,13 +208,19 @@
     <div class="row">
         <div id="conte" class="span10">
             <br/>
-            <legend>Matriz de Calidad Caracteristicas</legend>
+            <legend>Matriz de Calidad de Caracteristicas</legend>
+            <ul class="breadcrumb">
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li class="active">Matriz de Calidad de Características</li>
+            </ul>
+            <br>
             <c:choose>
                 <c:when test="${matriz.getRowCount()!= 0}">
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id caracteristica</th>
+                        <th>Id Factor</th>
+                        <th>Id</th>
                         <th>Caracteristica</th>
                         <th>Nivel de importacia</th>
                         <th>Ponderacion caracteristica</th>
@@ -221,9 +233,12 @@
                             <c:forEach items="${matriz.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
                                     <td>   
-                                        <c:out value="${row[0]}"/>
+                                        <c:out value="${row[8]}"/>
                                     </td>
                                     <td>   
+                                        <c:out value="${row[0]}"/>
+                                    </td>
+                                    <td style="text-align: left">   
                                         <a href="#detalleCaracteristica&${row[0]}" data="${row[1]}">${row[1]}</a> 
                                     </td>
                                     <td>   
