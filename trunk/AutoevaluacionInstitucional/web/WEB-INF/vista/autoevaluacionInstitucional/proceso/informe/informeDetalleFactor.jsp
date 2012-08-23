@@ -275,13 +275,13 @@
                                                 <c:out value="${row[6]}"/>
                                             </td>
                                             <td>   
-                                                <c:out value="${row[7]}%"/>
+                                                <c:out value="${row[7]}"/>
                                             </td>
                                             <td>   
-                                                <c:out value="${row[8]}%"/>
+                                                <c:out value="${row[8]}"/>
                                             </td>
                                             <td>   
-                                                <c:out value="${row[9]}%"/>
+                                                <c:out value="${row[9]}"/>
                                             </td>
                                             <td>   
                                                 <c:out value="${row[10]}%"/>
