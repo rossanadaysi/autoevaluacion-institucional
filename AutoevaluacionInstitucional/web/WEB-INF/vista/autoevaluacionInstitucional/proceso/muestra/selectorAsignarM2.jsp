@@ -172,7 +172,7 @@
                 No existe información en la base de datos para generar la muestra requerida. Pruebe generando usuarios aleatorios.
             </div>
             <c:if test="${tipoLogin != 'comitefacultad'}">
-                <div class="input-append span10 input-prepend" style="text-align: right; ">
+                <div class="input-append span10 input-prepend" style="text-align: right; margin-left: 0px;">
                     <%--  <form id="formGenearAleatorio">--%>
                     <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button> <%--   </form>--%>
                 </div>
@@ -188,7 +188,7 @@
                                 <div class="span5" style="margin-left: 0px;">
                                     <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
                                 </div>
-                                <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                                <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 30px;">
                                     <%--  <form id="formGenearAleatorio">--%>
                                     <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
                                     <%--   </form>--%>
@@ -196,7 +196,7 @@
                                 <br><br><br>
                             </c:if>
                         </c:if>
-                        <a class="span9" style="text-align: right; margin-left: 60px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
+                        <a class="span9" style="text-align: right; margin-left: 30px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
                         <a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
                             <br>
@@ -273,14 +273,14 @@
                 <c:if test="${idFuenteMuestra != 1}">
                     <div id="tablax" style="z-index: 1;">
                         <c:if test="${tipoLogin != 'comitefacultad'}">
-                            <div class="input-append span10 input-prepend" style="text-align: right;">
+                            <div class="input-append span10 input-prepend" style="text-align: right; margin-left: 0px;">
                                 <%--  <form id="formGenearAleatorio">--%>
                                 <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
                                 <%--   </form>--%>
                             </div>
-                            <br><br>
+                            <br><br><br>
                         </c:if>
-                        <a class="span9" style="text-align: right; margin-left: 60px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
+                        <a class="span9" style="text-align: right; margin-left: 30px; text-align: right; cursor: pointer" id="actEnlace"><i class="icon-refresh"></i> Actualizar</a>  
                         <a  class="span1" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
                             <br>
@@ -358,7 +358,7 @@
                         <div class="span5" style="margin-left: 0px;">
                             <button class="btn btn-primary" id="botonEditarMuestra"  type="button">Editar Muestra Asignada</button>
                         </div>
-                        <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 60px;">
+                        <div class="input-append span5 input-prepend" style="text-align: right; margin-left: 30px;">
                             <%--  <form id="formGenearAleatorio">--%>
                             <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
                             <%--   </form>--%>
@@ -396,7 +396,7 @@
                 </c:if>
                 <c:if test="${idFuenteMuestra != 1}">
                     <div id="tablax" style="z-index: 1;">
-                        <div class="input-append span10 input-prepend" style="text-align: right;">
+                        <div class="input-append span10 input-prepend" style="text-align: right; margin-left: 0px;">
                             <%--  <form id="formGenearAleatorio">--%>
                             <span class="add-on">#</span><input name="pobla" type="text" size="1" id="appendedInputButtons" class="span1"><button id="generarAltIndi" type="button" class="btn" data-content="<p style='text-align: justify'>Genera y añade a la muestra listada el número especificado de usuarios aleatorios en la caja de texto. Esta operación no se podrá deshacer.<p>" rel="popover2"  value="1" data-original-title="Generar usuarios aleatorios">Generar usuarios aleatorio</button>
                             <%--   </form>--%>

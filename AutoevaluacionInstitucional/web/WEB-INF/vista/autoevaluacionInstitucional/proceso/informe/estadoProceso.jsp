@@ -32,9 +32,15 @@
                 } //fin success
             }); //fin $.ajaxF          
         }); //fin $.ajax
+        
+        $(".printEnlace").click( function() {
+            $('#conte').jqprint();
+            return false;
+        }); 
     });                     
 </script>
 <div class="hero-unit">
+    <a  class="span10 printEnlace" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer"><i class="icon-print"></i> Imprimir</a>  
     <div class="row">
         <div id="conte" class="span10">
             <br/>
@@ -42,10 +48,10 @@
                 <legend>
                     Estado del proceso en ejecución
                 </legend>
-                <div class="span10">
-                    <div class="span1" style="margin-left: -30px;"><span class="label label-info span1" id="spanActualizadoEstado" style="margin-left: 0px;">Actualizado</span></div>
+                <div class="span10" style="margin-left: 0px;">
+                    <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizadoEstado" style="margin-left: 0px;">Actualizado</span></div>
                     <div class="span7" style="margin-left: 30px;"><p class="help-block" id="horaEstado"></p></div>
-                    <div class="span2" style="margin-left: 60px; text-align: right;"><a style="cursor: pointer" id="actEnlaceEstado"><i class="icon-refresh"></i> Actualizar</a></div>
+                    <div class="span2" style="margin-left: 30px; text-align: right;"><a style="cursor: pointer" id="actEnlaceEstado"><i class="icon-refresh"></i> Actualizar</a></div>
                 </div>
 
                 <p>

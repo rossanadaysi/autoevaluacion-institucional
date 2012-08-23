@@ -18,7 +18,8 @@
     }
 </style>
 
-<a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+<a class="span10" style="text-align: right;  margin-left: 60px" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+<br>
 <div class="hero-unit">
     <div style="margin-left: -30px;">
         <div id="conte" class="span10" style="text-align: justify">
