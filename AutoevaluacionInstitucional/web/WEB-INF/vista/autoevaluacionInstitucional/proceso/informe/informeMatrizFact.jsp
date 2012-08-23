@@ -11,21 +11,21 @@
                 chart: {
                     renderTo: 'grafica',
                     type: 'column',
-                    margin: [ 50, 30, 200, 120]
+                    margin: [ 50, 30, 100, 120]
                 },
                 title: {
-                    text: 'Matriz de calidad factores'
+                    text: 'Matriz de calidad de factores'
                 },
 
                 xAxis: {
                     categories: [
     <c:forEach items="${matrizFactores.rowsByIndex}" var="factor" varStatus="status">
         <c:choose>
-                <c:when test="${matrizFactores.getRowCount()!=status.index+1}">
-                                        '${factor[1]}',
+            <c:when test="${matrizFactores.getRowCount()!=status.index+1}">
+                                        '${factor[0]}-${factor[1]}',
             </c:when>
             <c:otherwise>
-                                    '${factor[1]}'
+                                    '${factor[0]}-${factor[1]}'
             </c:otherwise>
         </c:choose>             
             
@@ -33,10 +33,15 @@
                         ],
                         
                         labels: {
-                            rotation:-50,
+                            formatter: function() {
+                                var partes = this.value.split("-");
+                                
+                                return "Factor "+partes[0];
+                            },
+                            rotation:-45,
                             align: 'right',
                             style: {
-                                fontSize: '10px',
+                                fontSize: '12px',
                                 fontFamily: 'Verdana, sans-serif'
                             }
                         }
@@ -44,12 +49,14 @@
                     
                     plotOptions: {
                         series: {
+                            colorByPoint: true,
                             cursor: 'pointer',
                             point: {
                                 events: {
                                     click: function() {
-                                        $("a[data='"+this.category+"']").click();
-                                        console.log("a[data='"+this.category+"']");
+                                        var partes2 = this.category.split("-");
+                                        var a = $("a[data='"+partes2[1]+"']");
+                                        location = a.attr("href");
                                     }
                                 }
                             }
@@ -59,6 +66,7 @@
                     
                     yAxis: {
                         min: 0,
+                        max: 5,
                         title: {
                             text: 'Grado de cumplimiento'
                         }
@@ -75,21 +83,45 @@
                     },
                     series: [{
                             name: 'Factores',
-                            data: [
+                            data: [     
     <c:forEach items="${matrizFactores.rowsByIndex}" var="factor2" varStatus="status33">
         <c:choose>
             <c:when test="${matrizFactores.getRowCount()!=status33.index+1}">
-                ${factor2[3]},
+                <c:choose>
+                        <c:when test="${factor2[3]>4}">
+                                                {
+                                                    y: ${factor2[3]},
+                                                    color: '#BF0B23'
+                                                },
+                                                
+                    </c:when>
+                        <c:otherwise>
+                                                {
+                                                    y: ${factor2[3]},
+                                                    color: '#BF0B23'
+                                                },
+                    </c:otherwise>
+                </c:choose>
+                                            
+                                            
+                                            
+                
+                     
+                
             </c:when>
             <c:otherwise>
-                ${factor2[3]}
+                
+                
+                                        { y:${factor2[3]}}
+                
+        
             </c:otherwise>
         </c:choose>             
             
     </c:forEach>
                                 
                                 
-                            ],
+                            ], 
                             
                             dataLabels: {
                                 enabled: true,
@@ -116,7 +148,7 @@
     <div class="row">
         <div id="conte" class="span10">
             <br/>
-            <h2>Matriz de Calidad de Factores</h2>
+            <legend>Matriz de Calidad de Factores</legend>
             <c:choose>
                 <c:when test="${matrizFactores.getRowCount()!= 0}">
 
