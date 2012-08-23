@@ -21,7 +21,7 @@
                     categories: [
     <c:forEach items="${matrizFactores.rowsByIndex}" var="factor" varStatus="status">
         <c:choose>
-            <c:when test="${matrizFactores.getRowCount()!=status.index+1}">
+                <c:when test="${matrizFactores.getRowCount()!=status.index+1}">
                                         '${factor[0]}-${factor[1]}',
             </c:when>
             <c:otherwise>
@@ -88,18 +88,39 @@
         <c:choose>
             <c:when test="${matrizFactores.getRowCount()!=status33.index+1}">
                 <c:choose>
-                        <c:when test="${factor2[3]>4}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#BF0B23'
-                                                },
+                    <c:when test="${factor2[3]>=4.5}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#89A54E'
+                                                    },
                                                 
                     </c:when>
-                        <c:otherwise>
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#BF0B23'
-                                                },
+                    <c:when test="${factor2[3]<4.5 && factor2[3]>=4.0}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#B5CA92'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${factor2[3]<4.0 && factor2[3]>=3.5}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#3D96AE'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${factor2[3]<3.5 && factor2[3]>=3.0}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#DB843D'
+                                                    },
+                                                
+                    </c:when>
+                    <c:otherwise>
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#AA4643'
+                                                    },
                     </c:otherwise>
                 </c:choose>
                                             
@@ -110,9 +131,45 @@
                 
             </c:when>
             <c:otherwise>
+                <c:choose>
+                    <c:when test="${factor2[3]>=4.5}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#89A54E'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${factor2[3]<4.5 && factor2[3]>=4.0}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#B5CA92'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${factor2[3]<4.0 && factor2[3]>=3.5}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#3D96AE'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${factor2[3]<3.5 && factor2[3]>=3.0}">
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#DB843D'
+                                                    }
+                                                
+                    </c:when>
+                    <c:otherwise>
+                                                    {
+                                                        y: ${factor2[3]},
+                                                        color: '#AA4643'
+                                                    }
+                    </c:otherwise>
+                </c:choose>
                 
                 
-                                        { y:${factor2[3]}}
+                                        
                 
         
             </c:otherwise>

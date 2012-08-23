@@ -84,10 +84,91 @@
     <c:forEach items="${matriz.rowsByIndex}" var="caracteristica2" varStatus="status33">
         <c:choose>
             <c:when test="${matriz.getRowCount()!=status33.index+1}">
-                ${caracteristica2[4]},
+                <c:choose>
+                    <c:when test="${caracteristica2[4]>=4.5}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#89A54E'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#B5CA92'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.5}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#3D96AE'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${caracteristica2[4]<3.5 && caracteristica2[4]>=3.0}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#DB843D'
+                                                    },
+                                                
+                    </c:when>
+                    <c:otherwise>
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#AA4643'
+                                                    },
+                    </c:otherwise>
+                </c:choose>
+                                            
+                                            
+                                            
+                
+                     
+                
             </c:when>
             <c:otherwise>
-                ${caracteristica2[4]}
+                <c:choose>
+                    <c:when test="${caracteristica2[4]>=4.5}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#89A54E'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#B5CA92'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.5}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#3D96AE'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${caracteristica2[4]<3.5 && caracteristica2[4]>=3.0}">
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#DB843D'
+                                                    }
+                                                
+                    </c:when>
+                    <c:otherwise>
+                                                    {
+                                                        y: ${caracteristica2[4]},
+                                                        color: '#AA4643'
+                                                    }
+                    </c:otherwise>
+                </c:choose>
+                
+                
+                                        
+                
+        
             </c:otherwise>
         </c:choose>             
             

@@ -78,11 +78,92 @@
                             data: [
     <c:forEach items="${detallePregunta.rowsByIndex}" var="detalleP2" varStatus="status33">
         <c:choose>
-            <c:when test="${detallePregunta.getRowCount()!=status33.index+1}">
-                ${detalleP2[2]},
+            <c:when test="${detalleFactor.getRowCount()!=status33.index+1}">
+                <c:choose>
+                    <c:when test="${detalleP2[2]>=4.5}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#89A54E'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${detalleP2[2]<4.5 && detalleP2[2]>=4.0}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#B5CA92'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${detalleP2[2]<4.0 && detalleP2[2]>=3.5}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#3D96AE'
+                                                    },
+                                                
+                    </c:when>
+                    <c:when test="${detalleP2[2]<3.5 && detalleP2[2]>=3.0}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#DB843D'
+                                                    },
+                                                
+                    </c:when>
+                    <c:otherwise>
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#AA4643'
+                                                    },
+                    </c:otherwise>
+                </c:choose>
+                                            
+                                            
+                                            
+                
+                     
+                
             </c:when>
             <c:otherwise>
-                ${detalleP2[2]}
+                <c:choose>
+                    <c:when test="${detalleP2[2]>=4.5}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#89A54E'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${detalleP2[2]<4.5 && detalleP2[2]>=4.0}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#B5CA92'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${detalleP2[2]<4.0 && detalleP2[2]>=3.5}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#3D96AE'
+                                                    }
+                                                
+                    </c:when>
+                    <c:when test="${detalleP2[2]<3.5 && detalleP2[2]>=3.0}">
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#DB843D'
+                                                    }
+                                                
+                    </c:when>
+                    <c:otherwise>
+                                                    {
+                                                        y: ${detalleP2[2]},
+                                                        color: '#AA4643'
+                                                    }
+                    </c:otherwise>
+                </c:choose>
+                
+                
+                                        
+                
+        
             </c:otherwise>
         </c:choose>             
             
