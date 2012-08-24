@@ -433,25 +433,24 @@
         <div class="ui-layout-center">
             <div style="height: 60%; background-color: #f77f00;">
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 20%; top: 5%"/>    
-                <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 23%; position: relative;right:15%;top: 13%;float: right"/>    
+                <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 25%; position: relative;right:15%;top: 13%;float: right"/>    
             </div>
             <div class="container-fluid">
                 <div class="hero-unit">
                     <div class="row-fluid">
                         <div class="span7">
-                            <h2>Autoevaluaci&oacute;n Institucional</h2>
+                            <h2>Autoevaluación Institucional</h2>
                             <p style="color: inherit;font-size: 18px;font-weight: 200;line-height: 27px;margin-bottom: -8px;text-align: justify;">La Universidad de Cartagena cuenta con el Sistema Institucional de Autoevaluación SIA-UdeC, el cual apoya los procesos de autoevaluación con fines de acreditación institucional.</p>     
+                            <div style="margin-top: 10px; margin-left: 5px;" class="span4">
+                                <a target="_blank" href="http://www.unicartagena.edu.co/" title="Universidad de Cartagena"><img src="/AutoevaluacionInstitucional/css/LogoUdeC.png"></a>
+                            </div>
                             <div class="span4" style="margin-top: 10px;">
-                                <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank" ><img src="<%=request.getContextPath()%>/css/LogoUdeC.png"></img></a>
+                                <a target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" title="Autoevaluación Institucional"><img src="/AutoevaluacionInstitucional/css/selloAcreditacion.png"></a>
                             </div>
-                            <div class="span3">
-                                <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank" ><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png"></img></a>
-                            </div>
-                            <div class="span4">
-                                <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG"></img></a>
+                            <div class="span4" style="margin-top: 20px; margin-left: 10px;">
+                                <a target="_blank" href="http://www.iesoluciones.com/esoluciones/index.php" title="Esoluciones"><img src="/AutoevaluacionInstitucional/css/images/esoluciones.PNG"></a>
                             </div>
                         </div>
-
                         <div class="span5">
                             <div class="carousel" id="home-carousel">
                                 <div class="carousel-inner">
