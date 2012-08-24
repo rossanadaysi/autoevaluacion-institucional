@@ -4,11 +4,19 @@
     
     $(function(){
         $("textarea").focus(function(){
-            $(this).addClass("foco");
+            $(this).css("position","absolute");
+            $(this).animate({
+                width: 350,
+                height: 200,
+                left: '-=100'
+            }, 500);     
         })
         $("textarea").focusout(function() {
-            $(this).removeClass("foco");
+            $(this).removeAttr("style");
         })
+        
+        
+        
         
         $('a[href^=#InformacionDocumental]').click(function() {
      
@@ -38,11 +46,11 @@
     
 </script>
 <style type="text/css"> 
-    .foco{
-        width: 350px !important;
-        height: 200px;
-
-    }
+    /*    .foco{
+            width: 350px !important;
+            height: 200px;
+    
+        }*/
 </style>
 <br>
 <c:if test="${auxInfoDocumental == 0}"><!--Si no se ha asignado nada-->
@@ -68,7 +76,7 @@
                         <legend>Evaluar información documental</legend>
                         <table class="table table-striped">
                             <thead>
-                            <th>Cod.</th>
+                            <th>Indicador</th>
                             <th>Documento asociado</th>
                             <th>Responsable</th>
                             <th>Medio</th>
@@ -90,8 +98,8 @@
                                             <tr>    
                                             </c:otherwise>
                                         </c:choose>
-                                        <td>   
-                                            <c:out value="${row[1]}"/>
+                                        <td style="text-align: justify;">   
+                                            <c:out value="${row[1]} ${row[3]}"/>
                                         </td>
                                         <td>
                                             <textarea name="nombreDocumento${row[0]}" class="span2"></textarea>
@@ -149,7 +157,7 @@
                         <br>
                         <table class="table table-striped">
                             <thead>
-                            <th>Código del indicador</th>
+                            <th>Indicador</th>
                             <th>Documento asociado</th>
                             <th>Responsable</th>
                             <th>Medio</th>
@@ -161,7 +169,7 @@
                                 <c:forEach items="${evaluarcionDocumental.rowsByIndex}" var="row2" varStatus="iter">
                                     <tr id="InformacionDocumental${iter.index+1}">
                                         <td>   
-                                            <c:out value="${row2[0]}"/>
+                                            <c:out value="${row2[0]} ${row2[1]}"/>
                                         </td>
                                         <td>
                                             <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[2]}</textarea>
