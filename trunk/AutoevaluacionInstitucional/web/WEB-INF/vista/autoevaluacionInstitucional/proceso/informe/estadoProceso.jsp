@@ -48,12 +48,13 @@
                 <legend>
                     Estado del proceso en ejecución
                 </legend>
-                <div class="span10" style="margin-left: 0px;">
-                    <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizadoEstado" style="margin-left: 0px;">Actualizado</span></div>
-                    <div class="span7" style="margin-left: 30px;"><p class="help-block" id="horaEstado"></p></div>
-                    <div class="span2" style="margin-left: 30px; text-align: right;"><a style="cursor: pointer" id="actEnlaceEstado"><i class="icon-refresh"></i> Actualizar</a></div>
-                </div>
-
+                <c:if test="${aux_index2 != 3}">
+                    <div class="span10" style="margin-left: 0px;">
+                        <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizadoEstado" style="margin-left: 0px;">Actualizado</span></div>
+                        <div class="span7" style="margin-left: 30px;"><p class="help-block" id="horaEstado"></p></div>
+                        <div class="span2" style="margin-left: 30px; text-align: right;"><a style="cursor: pointer" id="actEnlaceEstado"><i class="icon-refresh"></i> Actualizar</a></div>
+                    </div>
+                </c:if>
                 <p>
                     Detalle:
                 </p>

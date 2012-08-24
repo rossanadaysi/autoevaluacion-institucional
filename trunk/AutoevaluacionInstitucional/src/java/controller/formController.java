@@ -1725,8 +1725,12 @@ public class formController extends HttpServlet {
                 if (doc != 0 && num != 0) {
                     Date d = new Date();
                     String date = String.valueOf(d);
-                    conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
+                    ProcesoJpaController pj = new ProcesoJpaController();
                     proceso.setFechacierre(date);
+                    pj.create(proceso);
+
+
+                    conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
                     session.setAttribute("proceso", proceso);
                     session.setAttribute("proActivo", 0);
                     session.setAttribute("estadoProceso", 2);
@@ -1916,6 +1920,9 @@ public class formController extends HttpServlet {
 
                 if (f != 0 && c != 0 && e != 0 && m != 0) {
                     try {
+
+                        ProcesoJpaController pj = new ProcesoJpaController();
+                        pj.create(p);
                         conSql.UpdateSql("UPDATE `proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
 
                         System.out.println("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso);

@@ -364,7 +364,7 @@
                             <%--   </form>--%>
                         </div>
                         <br><br><br>
-                        <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+                        <a class="span10" style="text-align: right; margin-left: 0px;" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
@@ -402,7 +402,7 @@
                             <%--   </form>--%>
                         </div>
                         <br><br><br>
-                        <a class="span10" style="text-align: right" id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
+                        <a class="span10" style="text-align: right; margin-left: 0px; id="printEnlace"><i class="icon-print"></i> Imprimir</a>  
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
