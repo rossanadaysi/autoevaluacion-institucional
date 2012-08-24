@@ -165,7 +165,12 @@
                     $(this).children("i").addClass("icon-white");
                     location = $(this).attr("href");
                 })
-                                                  
+                $('a#infoDocumental').click(function() {
+                    setTimeout(function(){
+                        $("#west-closer").trigger("click"); 
+                    }, 500);
+                    
+                });
                 $(".ui-layout-center").scroll(function(){
                     // If has not activated (has no attribute "data-top"
 

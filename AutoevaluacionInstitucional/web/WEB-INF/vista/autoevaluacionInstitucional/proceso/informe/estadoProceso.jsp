@@ -21,6 +21,7 @@
         $("#horaEstado").html(" " + Fecha);
         
         $("#actEnlaceEstado").click( function() {
+            $("div.ui-layout-center").empty();
             $.ajax({
                 type: 'POST',
                 url: "<%=request.getContextPath()%>/ControllerAI?action=estadoProcesoAI",

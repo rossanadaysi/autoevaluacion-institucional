@@ -1954,7 +1954,6 @@ public class formController extends HttpServlet {
                 }
             } else if (request.getParameter(
                     "action").equals("evaluarInfoDocumentalAI")) {
-
                 HttpSession session = request.getSession();
                 sqlController conSql = new sqlController();
 
@@ -1966,7 +1965,7 @@ public class formController extends HttpServlet {
 
                 if (session.getAttribute("auxInfoDocumental").equals(0)) {
 
-
+                    
                     rs = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
                     try {
                         while (rs.next()) {
@@ -1979,7 +1978,13 @@ public class formController extends HttpServlet {
                             String evaluacion = request.getParameter("evaluacionDoc" + i);
                             String accion = request.getParameter("accionDocumento" + i);
 
-                            conSql.UpdateSql("INSERT INTO `numericadocumental` (`id`, `documento`, `responsable`, `medio`, `lugar`, `evaluacion`, `accion`, `indicador_id`, `proceso_id`) VALUES (NULL, '" + nombreDoc + "', '" + responsable + "', '" + medio + "', '" + lugar + "', '" + evaluacion + "', '" + accion + "','" + id + "', '" + idProceso + "')", bd);
+                            if (!id.equals("") && !nombreDoc.equals("")
+                                    && !responsable.equals("") && !medio.equals("")
+                                    && !lugar.equals("") && !evaluacion.equals("") && !accion.equals("")) {
+                                conSql.UpdateSql("INSERT INTO `numericadocumental` (`id`, `documento`, `responsable`, `medio`, `lugar`, `evaluacion`, `accion`, `proceso_id`,`instrumento_id`,`indicador_id`, ) VALUES (NULL, '" + nombreDoc + "', '" + responsable + "', '" + medio + "', '" + lugar + "', '" + evaluacion + "', '" + accion + "','" + id + "', '" + idProceso + "')", bd);
+                            }
+
+
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
