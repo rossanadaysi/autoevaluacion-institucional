@@ -14,7 +14,8 @@
                         type: 'POST',
                         url: "<%=request.getContextPath()%>/ControllerAI?action=menuAI",
                         success: function(data){
-                            $("#menu").html(data);
+                            $("#menu2").empty();
+                            $("#menu2").html(data);
                             setTimeout(function(){
                                 location = "<%=request.getContextPath()%>/#detalleProceso";
                             }, 200);
