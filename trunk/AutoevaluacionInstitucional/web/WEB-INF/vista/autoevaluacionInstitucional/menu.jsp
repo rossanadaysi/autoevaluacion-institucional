@@ -56,7 +56,7 @@
             <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
         </c:if>
         <c:if test="${aux_index2 == 3}">
-            <li class="nav-header">Proceso finzalizado</li>
+            <li class="nav-header">Proceso finalizado</li>
             <li class="divider"></li>
             <li class="nav-header">Información del proceso</li>
             <li><a id="detalle" href="<%=request.getContextPath()%>/#detalleProceso"><i class="icon-th"></i> Detalle Proceso</a></li>

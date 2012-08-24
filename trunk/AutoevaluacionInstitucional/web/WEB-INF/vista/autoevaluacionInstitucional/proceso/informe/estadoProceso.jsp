@@ -127,7 +127,7 @@
                     <th>Fuente</th>
                     <th>Número total de muestra</th>
                     <th>Número de personas que han evaluado las encuestas</th>
-                    <th>Procentaje de personas que han evaluado las encuestas</th>
+                    <th>Porcentaje de personas que han evaluado las encuestas</th>
                     <th>Número de personas que faltan por evaluar las encuestas</th>
                     <th>Porcentaje de personas que faltan por evaluar las encuestas</th>
                     </thead>
