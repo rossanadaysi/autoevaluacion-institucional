@@ -10,6 +10,8 @@ import entity.Proceso;
 import entity.Programa;
 import entity.controller.FuenteJpaController;
 import entity.controller.ProcesoJpaController;
+import entity.controller.exceptions.IllegalOrphanException;
+import entity.controller.exceptions.NonexistentEntityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -1727,9 +1729,15 @@ public class formController extends HttpServlet {
                     String date = String.valueOf(d);
                     ProcesoJpaController pj = new ProcesoJpaController();
                     proceso.setFechacierre(date);
-                    pj.create(proceso);
-
-
+                    try {
+                        pj.edit(proceso);
+                    } catch (IllegalOrphanException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     conSql.UpdateSql("UPDATE `proceso` SET `fechacierre` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
                     session.setAttribute("proceso", proceso);
                     session.setAttribute("proActivo", 0);
@@ -1922,7 +1930,16 @@ public class formController extends HttpServlet {
                     try {
 
                         ProcesoJpaController pj = new ProcesoJpaController();
-                        pj.create(p);
+                        try {
+                            pj.edit(p);
+                        } catch (IllegalOrphanException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (NonexistentEntityException ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
                         conSql.UpdateSql("UPDATE `proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
 
                         System.out.println("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso);
