@@ -8,6 +8,8 @@ import entity.*;
 import entity.controller.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -123,7 +125,7 @@ public class loginController extends HttpServlet {
                                 ///LOGIN AUTOEVALUACION INSTITUCIONALF
                                 if (r.getRol().equals("Comite Facultad") && tipo.equals("Comite Facultad")) {
 
-                                    
+
                                     session.setAttribute("tipoLogin", "comitefacultad");
                                     System.out.println("Usuario de comite de facultad autorizado");
                                     session.setAttribute("auxAsignarF", 0);
@@ -164,7 +166,7 @@ public class loginController extends HttpServlet {
                                             if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
                                                 session.setAttribute("proceso", proceso);
                                                 aux = 1;
-                                              
+
                                                 session.setAttribute("proActivo", 1);
                                                 String nombreBd = programa.getNombre() + proceso.getId();
                                                 session.setAttribute("bd", nombreBd);
@@ -202,13 +204,56 @@ public class loginController extends HttpServlet {
                                                 if (proceso.getFechainicio().equals("Proceso en Configuración.")) {
                                                     session.setAttribute("aux_index2", 1);
                                                     session.setAttribute("aux_IniciarP", 0);
-                                                    System.out.println("Proceso en configuración");
                                                     out.println(1);
                                                 } else {
+                                                    System.out.println("ingresa");
                                                     out.println(0);
                                                     session.setAttribute("aux_index2", 2);
                                                     session.setAttribute("aux_IniciarP", 1);
                                                     session.setAttribute("proActivo", 1);
+
+                                                    String idMuestra = "";
+                                                    String sql2 = "Select id from muestra where proceso_id = " + idProceso;
+                                                    ResultSet rs3 = conSql.CargarSql(sql2, nombreBd);
+                                                    try {
+
+                                                        while (rs3.next()) {
+                                                            idMuestra = rs3.getString(1);
+                                                            session.setAttribute("idMuestra", idMuestra);
+                                                        }
+
+                                                    } catch (SQLException ex) {
+                                                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                                    }
+
+
+                                                    String sql1 = "select c1.total, c1.terminados, format((c1.terminados*100/c1.total),2)'%' as porcentaje,(c1.total-c1.terminados) as faltantes, 100-format((c1.terminados*100/c1.total),2) as porFal "
+                                                            + " from("
+                                                            + " select ("
+                                                            + " (select count(*) from muestraestudiante where muestraestudiante.muestra_id=" + idMuestra + ")+"
+                                                            + " (select count(*) from muestradocente where muestradocente.muestra_id=" + idMuestra + ") +"
+                                                            + " (select count(*) from muestraadministrativo where muestraadministrativo.muestra_id=" + idMuestra + ")+"
+                                                            + " (select count(*) from muestraegresado where muestraegresado.muestra_id=" + idMuestra + ")+"
+                                                            + " (select count(*) from muestradirector where muestradirector.muestra_id=" + idMuestra + ")+"
+                                                            + " (select count(*) from muestraagencia where muestraagencia.muestra_id=" + idMuestra + ")+"
+                                                            + " (select count(*) from muestraempleador where muestraempleador.muestra_id=" + idMuestra + ")) AS total "
+                                                            + " ,(select count(`persona_id`) as terminados from encabezado where "
+                                                            + " estado='terminado') as terminados"
+                                                            + " ) AS c1";
+                                                    ResultSet rs = conSql.CargarSql(sql1, nombreBd);
+
+                                                    try {
+
+                                                        while (rs.next()) {
+                                                            String por = rs.getString(3);
+                                                            session.setAttribute("porceEstadoProceso", por);
+                                                            System.out.println("Porcentaje: " + por);
+                                                        }
+
+                                                    } catch (SQLException ex) {
+                                                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                                                    }
+
                                                 }
 
                                             } else if (proceso.getFechacierre() != null) {
@@ -288,7 +333,7 @@ public class loginController extends HttpServlet {
                                             if (proceso.getFechacierre() == null && proceso.getProgramaId().getId() == programa.getId()) {
                                                 session.setAttribute("proceso", proceso);
                                                 aux = 1;
-                                                
+
                                                 session.setAttribute("proActivo", 1);
                                                 String nombreBd = programa.getNombre() + proceso.getId();
                                                 session.setAttribute("bd", nombreBd);
@@ -330,7 +375,7 @@ public class loginController extends HttpServlet {
                                                 } else {
                                                     session.setAttribute("aux_index2", 2);
                                                     session.setAttribute("aux_IniciarP", 1);
-                                                   
+
                                                     session.setAttribute("proActivo", 1);
                                                 }
 
