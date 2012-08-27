@@ -112,18 +112,15 @@ public class sqlConnection {
         } else {
             return true;
         }
-    } //Fin de VerificaciÃ³n
+    } //Fin de Verificacion
 
     /**
      * Da informacion basica acerca de la conexion.  La informacion la arroja por consola.
      */
     public void informacionConexion() {
         try {
-            System.out.println("Modo auto-commit:" + conexion.getAutoCommit());
-            System.out.println("Catalogo:" + conexion.getCatalog());
             System.out.println("Conexion cerrada:" + conexion.isClosed());
-            System.out.println("Conexion de solo lectura:"
-                    + conexion.isReadOnly());
+            System.out.println("Conexion de solo lectura:"+ conexion.isReadOnly());
         } catch (SQLException e) {
             error = "'informacionConexion()' [Error al intentar dar informacion basica acerca de la conexion. "
                     + (String) e.getMessage() + "]";
