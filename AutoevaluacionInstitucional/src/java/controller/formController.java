@@ -1942,7 +1942,7 @@ public class formController extends HttpServlet {
 
                         conSql.UpdateSql("UPDATE `proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso, bd);
 
-                        System.out.println("UPDATE `autoevaluacion`.`proceso` SET `fechainicio` = '" + date + "' WHERE `proceso`.`id` = " + idProceso);
+                     //   session.setAttribute("porceEstadoProceso", "0" + "%");
                         session.setAttribute("proceso", p);
                         session.setAttribute("aux_index2", 2);
                         session.setAttribute("aux_IniciarP", 1);
@@ -1965,7 +1965,7 @@ public class formController extends HttpServlet {
 
                 if (session.getAttribute("auxInfoDocumental").equals(0)) {
 
-                    
+
                     rs = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
                     try {
                         while (rs.next()) {

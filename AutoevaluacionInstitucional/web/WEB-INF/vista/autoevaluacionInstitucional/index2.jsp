@@ -149,11 +149,24 @@
             }
 
         </style>
-        <script type="text/javascript">
-            
-      
-             
+        <script type="text/javascript">     
             $(document).ready(function() {
+                
+                var auto_refresh = setInterval(
+                function ()
+                {
+                    if(${aux_index2 == 2}){
+                        $.ajax({
+                            type: 'POST',
+                            url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
+                            success: function(data){
+                                $("#estado").empty();
+                                $("#estado").html(data);
+                            }
+                        });
+                    }
+                }, 10000); // refresh every 10000 milliseconds
+            
                 
                 location ="/AutoevaluacionInstitucional/#inicio"; 
                 
@@ -1196,17 +1209,16 @@
                             <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 230px;"></img></a>
                         </c:when>
                         <c:otherwise>
-                            <div class="alert alert-success" style="bottom: 0px; position: absolute; right: 0px; margin-right: 10px; margin-left: 10px; left: 0px; margin-bottom: 0px;">
-                                <p>Estado del proceso: </p>
+                            <div id="estado" class="alert alert-success" style="bottom: 0px; position: absolute; right: 0px; margin-right: 10px; margin-left: 10px; left: 0px; margin-bottom: 0px;">
+                                <p>Estado del proceso: <c:out value="${porceEstadoProceso}"></c:out></p>
                                 <div class="progress progress-success progress-striped active">
-                                    <div class="bar" style="width: ${aux_index2 == 0}"></div>
+                                    <div class="bar" style="width: ${porceEstadoProceso}"></div>
                                 </div>
                             </div>  
                         </c:otherwise>
                     </c:choose>
                 </div>
             </div>
-
         </div><!--/West-->
 
         <div class="modal hide fade" id="myModalF">
