@@ -45,13 +45,6 @@
     });
     
 </script>
-<style type="text/css"> 
-    /*    .foco{
-            width: 350px !important;
-            height: 200px;
-    
-        }*/
-</style>
 <br>
 <c:if test="${auxInfoDocumental == 0}"><!--Si no se ha asignado nada-->
     <div class="subnav" data-top="80">
@@ -70,10 +63,10 @@
     </div>
     <div class="hero-unit">
         <div class="row">
-            <div id="conte" class="span10">
+            <div id="conte" class="span12">
                 <form id="formInfoDoc" class="form-horizontal" method="post">
                     <fieldset>
-                        <legend>Evaluar información documental</legend>
+                        <legend>Evaluar informaci&oacute;n documental</legend>
                         <table class="table table-striped">
                             <thead>
                             <th>Indicador</th>
@@ -102,16 +95,16 @@
                                             <c:out value="${row[1]} ${row[3]}"/>
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row[0]}" class="span2"></textarea>
+                                            <textarea name="nombreDocumento${row[0]}" class="span2" placeholder="Documento asociado"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="responsableDocumento${row[0]}" class="span2"></textarea>
+                                            <textarea name="responsableDocumento${row[0]}" class="span2" placeholder="Responsable"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${row[0]}" class="span1"></textarea>
+                                            <textarea name="medioDocumento${row[0]}" class="span1" placeholder="Medio"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="lugarDocumento${row[0]}" class="span2"></textarea>
+                                            <textarea name="lugarDocumento${row[0]}" class="span2" placeholder="Lugar"></textarea>
                                         </td>
                                         <td>
                                             <select class="span1"  name="evaluacionDoc${row[0]}">
@@ -124,7 +117,7 @@
                                             <input type="hidden"  value="${row[0]}" name="idIndicadorDoc${row[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                            <textarea name="accionDocumento${row[0]}" rows="4" class="span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n"></textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
@@ -145,7 +138,7 @@
 <c:if test="${auxInfoDocumental == 1}">
     <div class="hero-unit" >
         <div class="row">
-            <div id="conte" class="span10">
+            <div id="conte" class="span12">
                 <form id="formInfoDoc" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Evaluar información documental</legend>
@@ -163,7 +156,7 @@
                             <th>Medio</th>
                             <th>Lugar</th>
                             <th>Estado</th>
-                            <th>Acción a implementar u observación</th>
+                            <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                             </thead>
                             <tbody>
                                 <c:forEach items="${evaluarcionDocumental.rowsByIndex}" var="row2" varStatus="iter">
@@ -229,7 +222,7 @@
                                             <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[6]}</textarea>
+                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[7]}</textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}"/>

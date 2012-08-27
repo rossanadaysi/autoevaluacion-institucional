@@ -30,11 +30,16 @@ public class infoDocumentalAI implements Action {
         String bd = (String) session.getAttribute("bd");
         String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/documentalNumerica/evaluarDocumental.jsp";
 
-
+        String instrumentoId="2";
         Result rs2 = null;
 
         //Cambiar proceso
-        String sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 and numericadocumental.proceso_id = '" + idProceso + "'";
+        String sql= "SELECT indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, "
+                + "numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion  FROM indicador "
+                + "LEFT JOIN numericadocumental ON indicador.id = numericadocumental.indicador_id "
+                + "INNER JOIN instrumentohasindicador ON indicador.id = instrumentohasindicador.indicador_id "
+                + "WHERE instrumentohasindicador.instrumento_id ='" + instrumentoId + "' AND (proceso_id ='" + idProceso + "' OR proceso_id IS NULL)";       
+        
         rs2 = conSql.CargarSql2(sql, bd);
 
         Result rs = null;

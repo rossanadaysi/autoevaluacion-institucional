@@ -9,13 +9,13 @@
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>  
                         <tr>
-                            <th>Código del indicador</th>
+                            <th>C&oacute;digo del indicador</th>
                             <th>Documento asociado</th>
                             <th>Responsable</th>
                             <th>Medio</th>
                             <th>Lugar</th>
                             <th>Estado</th>
-                            <th>Acción a implementar u observación</th>
+                            <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                         </tr>
                     </thead>
                     <tbody>

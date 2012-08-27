@@ -1962,7 +1962,7 @@ public class formController extends HttpServlet {
                 String bd = (String) session.getAttribute("bd");
                 Proceso p = (Proceso) session.getAttribute("proceso");
                 int idProceso = p.getId();
-
+                String instrumentoId = "2";
                 if (session.getAttribute("auxInfoDocumental").equals(0)) {
 
 
@@ -1981,7 +1981,9 @@ public class formController extends HttpServlet {
                             if (!id.equals("") && !nombreDoc.equals("")
                                     && !responsable.equals("") && !medio.equals("")
                                     && !lugar.equals("") && !evaluacion.equals("") && !accion.equals("")) {
-                                conSql.UpdateSql("INSERT INTO `numericadocumental` (`id`, `documento`, `responsable`, `medio`, `lugar`, `evaluacion`, `accion`, `proceso_id`,`instrumento_id`,`indicador_id`, ) VALUES (NULL, '" + nombreDoc + "', '" + responsable + "', '" + medio + "', '" + lugar + "', '" + evaluacion + "', '" + accion + "','" + id + "', '" + idProceso + "')", bd);
+                                conSql.UpdateSql("INSERT INTO `numericadocumental` (`id` ,`documento` ,`responsable` ,`medio` ,`lugar` ,`evaluacion` ,`accion` ,`proceso_id` ,`instrumento_id` ,`indicador_id`) "
+                                        + "VALUES (NULL , '" + nombreDoc + "', '" + responsable + "', '" + medio + "', '" + lugar + "', '" + evaluacion + "', '" + accion + "', '" + idProceso + "', '" + instrumentoId + "', '" + id + "')", bd);
+
                             }
 
 
@@ -2008,17 +2010,25 @@ public class formController extends HttpServlet {
                             int idNumDoc = 0;
 
                             ResultSet rs2 = conSql.CargarSql("Select id from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.indicador_id = '" + id + "'", bd);
-                            try {
-                                while (rs2.next()) {
-                                    idNumDoc = Integer.parseInt(rs2.getString(1));
-                                }
-                            } catch (SQLException ex) {
-                                Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                            if (rs2.absolute (1)) {
+                                System.out.println("pillao");
                             }
-                            conSql.UpdateSql("UPDATE `numericadocumental` SET `evaluacion` = '" + evaluacion + "',`documento` = '" + nombreDoc + "',`accion` = '" + accion + "',`responsable` = '" + responsable + "', `medio` = '" + medio + "', `lugar` = '" + lugar + "' WHERE `numericadocumental`.`id` ='" + idNumDoc + "'", bd);
+                             try {
+                                while (rs2.next()) {
+                                   
+                                    idNumDoc = Integer.parseInt(rs2.getString(1));
+                                    conSql.UpdateSql("UPDATE `numericadocumental` SET `evaluacion` = '" + evaluacion + "',`documento` = '" + nombreDoc + "',`accion` = '" + accion + "',`responsable` = '" + responsable + "', `medio` = '" + medio + "', `lugar` = '" + lugar + "' WHERE `numericadocumental`.`id` ='" + idNumDoc + "'", bd);
+                                    
+                                }
+                            } catch (Exception ex) {
+                                System.out.println("error");
+                                
+                            }
+                            
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("errror!");
+                        
                     }
                 }
             } else if (request.getParameter(
