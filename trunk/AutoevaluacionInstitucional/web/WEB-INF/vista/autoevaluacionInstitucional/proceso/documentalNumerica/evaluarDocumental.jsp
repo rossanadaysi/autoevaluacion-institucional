@@ -224,6 +224,7 @@
                                         <td>
                                             <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[7]}</textarea>
                                         </td>
+                                        <input type="hidden" name="idnumericaDoc${row2[0]}" value="${row2[8]}">
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}"/>
                                 </c:forEach>

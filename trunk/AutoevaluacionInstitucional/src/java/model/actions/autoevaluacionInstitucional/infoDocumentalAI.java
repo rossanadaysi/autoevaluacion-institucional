@@ -34,11 +34,11 @@ public class infoDocumentalAI implements Action {
         Result rs2 = null;
 
         //Cambiar proceso
-        String sql= "SELECT indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, "
-                + "numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion  FROM indicador "
-                + "LEFT JOIN numericadocumental ON indicador.id = numericadocumental.indicador_id "
-                + "INNER JOIN instrumentohasindicador ON indicador.id = instrumentohasindicador.indicador_id "
-                + "WHERE instrumentohasindicador.instrumento_id ='" + instrumentoId + "' AND (proceso_id ='" + idProceso + "' OR proceso_id IS NULL)";       
+         String sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion "
+                 + "from numericadocumental "
+                 + "inner join indicador on numericadocumental.indicador_id = indicador.id "
+                 + "inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id "
+                 + "where instrumentohasindicador.instrumento_id = '" + instrumentoId + "' and numericadocumental.proceso_id = '" + idProceso + "'";
         
         rs2 = conSql.CargarSql2(sql, bd);
 
@@ -52,6 +52,14 @@ public class infoDocumentalAI implements Action {
 
 
         if (rs2.getRowCount() > 0) {
+            
+                sql= "SELECT indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, "
+                + "numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion,numericadocumental.id  FROM indicador "
+                + "LEFT JOIN numericadocumental ON indicador.id = numericadocumental.indicador_id "
+                + "INNER JOIN instrumentohasindicador ON indicador.id = instrumentohasindicador.indicador_id "
+                + "WHERE instrumentohasindicador.instrumento_id ='" + instrumentoId + "' AND (proceso_id ='" + idProceso + "' OR proceso_id IS NULL)";
+            
+            rs2 = conSql.CargarSql2(sql, bd);
             session.setAttribute("auxInfoDocumental", 1);
             session.setAttribute("evaluarcionDocumental", rs2);
             session.setAttribute("indicadoresDocumental", rs);

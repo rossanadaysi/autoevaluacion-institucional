@@ -152,21 +152,7 @@
         <script type="text/javascript">     
             $(document).ready(function() {
                 
-                var auto_refresh = setInterval(
-                function ()
-                {
-                    if(${aux_index2 == 2}){
-                        $.ajax({
-                            type: 'POST',
-                            url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
-                            success: function(data){
-                                $("#estado").empty();
-                                $("#estado").html(data);
-                            }
-                        });
-                    }
-                }, 10000); // refresh every 10000 milliseconds
-            
+               
                 
                 location ="/AutoevaluacionInstitucional/#inicio"; 
                 
