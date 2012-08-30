@@ -251,7 +251,6 @@ public class loginController extends HttpServlet {
 
                                     out.println(0);
                                     session.setAttribute("tipoLogin", "autoevaluacionInstitucional");
-                                    System.out.println("Usuario de autoevaluacion institucional autorizado");
                                     session.setAttribute("auxAsignarF", 0);
                                     session.setAttribute("auxAsignarC", 0);
                                     session.setAttribute("aux_IniciarP", 0);

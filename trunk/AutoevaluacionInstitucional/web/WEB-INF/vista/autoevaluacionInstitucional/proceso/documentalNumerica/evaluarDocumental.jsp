@@ -15,7 +15,17 @@
             $(this).removeAttr("style");
         })
         
-        
+        $("#actualiza").click(function(){
+            $(this).button('loading');
+            $("#formInfoDoc").submit();
+            
+        });
+    
+        $("textarea").keypress(function(e){
+            if(e.which==0){
+                $(this).blur();
+            }
+        });
         
         
         $('a[href^=#InformacionDocumental]').click(function() {
@@ -136,6 +146,20 @@
     </div><!--/hero-unit--> 
 </c:if>
 <c:if test="${auxInfoDocumental == 1}">
+    <div class="subnav" data-top="80">
+        <ul class="nav nav-pills">
+            <c:forEach items="1,2,3,4,5,6,7,8,9,10" var="row" varStatus="iter">
+                <c:choose>
+                    <c:when test="${(iter.index == 0)}">
+                        <li class="active"><a href="#InformacionDocumental${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#InformacionDocumental${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach> 
+        </ul>
+    </div>
     <div class="hero-unit" >
         <div class="row">
             <div id="conte" class="span12">
@@ -159,10 +183,20 @@
                             <th>Acci&oacute;n a implementar u observaci&oacute;n</th>
                             </thead>
                             <tbody>
+                                <c:set var="fActual" value="0"></c:set>
                                 <c:forEach items="${evaluarcionDocumental.rowsByIndex}" var="row2" varStatus="iter">
-                                    <tr id="InformacionDocumental${iter.index+1}">
+                                    <c:choose>
+                                        <c:when test="${fActual!=row2[10]}">
+                                            <tr id="InformacionDocumental${row2[10]}">    
+                                                <c:set var="fActual" value="${row2[10]}"></c:set>
+                                            </c:when>    
+                                            <c:otherwise>
+                                            <tr>    
+                                            </c:otherwise>
+                                        </c:choose>
+
                                         <td>   
-                                            <c:out value="${row2[0]} ${row2[1]}"/>
+                                            <c:out value="${row2[9]} ${row2[1]}"/>
                                         </td>
                                         <td>
                                             <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[2]}</textarea>
@@ -224,15 +258,15 @@
                                         <td>
                                             <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[7]}</textarea>
                                         </td>
-                                        <input type="hidden" name="idnumericaDoc${row2[0]}" value="${row2[8]}">
-                                    </tr>
-                                    <c:set var="iterador" value="${iter.index + 1}"/>
-                                </c:forEach>
+                                <input type="hidden" name="idnumericaDoc${row2[0]}" value="${row2[8]}">
+                                </tr>
+                                <c:set var="iterador" value="${iter.index + 1}"/>
+                            </c:forEach>
                             </tbody>
                         </table>
                         <input type="hidden" name="count" id="count" value="${iterador}">
                         <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Actualizar Evaluación</button>
+                            <button id="actualiza" class="btn btn-primary" data-original-title="Actualizar Evaluación" type="button" data-loading-text="Actualizando..." autocomplete="off">Actualizar Evaluación</button>
                             <button class="btn" type="reset">Cancelar</button>
                         </div>
                     </fieldset>

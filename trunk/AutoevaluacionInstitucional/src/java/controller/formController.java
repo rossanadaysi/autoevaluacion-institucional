@@ -418,7 +418,7 @@ public class formController extends HttpServlet {
                     String sql = "Select* from asignacionencuesta where proceso_id = " + idProceso + " and fuente_id = " + id;
                     rs = conSql.CargarSql2(sql, bd);
                     if (rs.getRowCount() != 0) {
-                        
+
                         session.setAttribute("encuestasSeleccionadas", rs);
                         session.setAttribute("aux_asignarE", 1);
                     } else {
@@ -1992,19 +1992,28 @@ public class formController extends HttpServlet {
 
                 } else {
                     rs = conSql.CargarSql("Select * from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.instrumento_id = '" + instrumentoId + "'", bd);
-                    List<String> viejasDocumental = new ArrayList<String>();
+                    List<String[]> viejasDocumental = new ArrayList<String[]>();
                     try {
+
                         while (rs.next()) {
-                            String documental = "" + rs.getInt(1) + "," + rs.getString(2) + "," + rs.getString(3) + "," + rs.getString(4) + "," + rs.getString(5) + "," + rs.getInt(6) + "," + rs.getString(7) + "," + rs.getInt(10) + "";
+                            String[] documental = new String[8];
+                            documental[0] = "" + rs.getInt(1);//idNumericaDocumental
+                            documental[1] = "" + rs.getString(2);//documento
+                            documental[2] = "" + rs.getString(3);//responsable
+                            documental[3] = "" + rs.getString(4);//medio
+                            documental[4] = "" + rs.getString(5);//lugar
+                            documental[5] = "" + rs.getInt(6);//evaluacion
+                            documental[6] = "" + rs.getString(7);//accion
+                            documental[7] = "" + rs.getInt(10);//indicador_Id
                             viejasDocumental.add(documental);
                         }
                     } catch (Exception e) {
                         System.out.println("errr22");
                     }
-                    
+
                     ResultSet rs2 = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 order by indicador.id", bd);
 
-                    List<String> nuevasDocumental = new ArrayList<String>();
+                    List<String[]> nuevasDocumental = new ArrayList<String[]>();
 
                     try {
                         while (rs2.next()) {
@@ -2020,42 +2029,43 @@ public class formController extends HttpServlet {
 
                             if (!id.equals("") && !nombreDoc.equals("") && !responsable.equals("") && !medio.equals("")
                                     && !lugar.equals("") && !evaluacion.equals("") && !accion.equals("")) {
-                                String documentalN = "" + idNumericaDoc + "," + nombreDoc + "," + responsable + "," + medio + "," + lugar + "," + evaluacion + "," + accion + "," + id;
-                        
+
+                                String[] documentalN = new String[8];
+                                documentalN[0] = "" + idNumericaDoc;//idNumericaDocumental
+                                documentalN[1] = "" + nombreDoc;//documento
+                                documentalN[2] = "" + responsable;//responsable
+                                documentalN[3] = "" + medio;//medio
+                                documentalN[4] = "" + lugar;//lugar
+                                documentalN[5] = "" + evaluacion;//evaluacion
+                                documentalN[6] = "" + accion;//accion
+                                documentalN[7] = "" + id;//indicador_Id
                                 nuevasDocumental.add(documentalN);
+
+
                             }
 
 
                         }
-                        
+
                     } catch (SQLException ex) {
                         System.out.println("errror!" + ex.getMessage());
 
                     }
 
-                    
+
                     //Borramos registros viejos que ya no esten!
-                    for (String itemVieja : viejasDocumental) {
-                        boolean sapu = true;
-                        for (int i = 0; i < nuevasDocumental.size() && sapu; i++) {
-                            if (nuevasDocumental.get(i).equals(itemVieja)) {
-                                sapu = false;
-                            }
-                        }
-                        if (sapu) {
-                            String sep[] = itemVieja.split(",");
-                            String sql = "DELETE  from numericadocumental where numericadocumental.id = '" + sep[0] + "'";
+                    for (String[] itemVieja : viejasDocumental) {
+                        if (!nuevasDocumental.contains(itemVieja)) {
+                            String sql = "DELETE  from numericadocumental where numericadocumental.id = '" + itemVieja[0] + "'";
                             conSql.UpdateSql(sql, bd);
                         }
-
                     }
 
 
-                    for (String itemNueva : nuevasDocumental) {
+                    for (String[] itemNueva : nuevasDocumental) {
                         if (!viejasDocumental.contains(itemNueva)) {
-                            String sep[] = itemNueva.split(",");
                             conSql.UpdateSql("INSERT INTO `numericadocumental` (`id` ,`documento` ,`responsable` ,`medio` ,`lugar` ,`evaluacion` ,`accion` ,`proceso_id` ,`instrumento_id` ,`indicador_id`) "
-                                    + "VALUES (NULL , '" + sep[1] + "', '" + sep[2] + "', '" + sep[3] + "', '" + sep[4] + "', '" + sep[5] + "', '" + sep[6] + "', '" + idProceso + "', '" + instrumentoId + "', '" + sep[7] + "')", bd);
+                                    + "VALUES (NULL , '" + itemNueva[1] + "', '" + itemNueva[2] + "', '" + itemNueva[3] + "', '" + itemNueva[4] + "', '" + itemNueva[5] + "', '" + itemNueva[6] + "', '" + idProceso + "', '" + instrumentoId + "', '" + itemNueva[7] + "')", bd);
                         }
                     }
 
