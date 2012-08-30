@@ -52,14 +52,15 @@ public class infoDocumentalAI implements Action {
 
 
         if (rs2.getRowCount() > 0) {
-            
-                sql= "SELECT indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, "
-                + "numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion,numericadocumental.id  FROM indicador "
-                + "LEFT JOIN numericadocumental ON indicador.id = numericadocumental.indicador_id "
-                + "INNER JOIN instrumentohasindicador ON indicador.id = instrumentohasindicador.indicador_id "
-                + "WHERE instrumentohasindicador.instrumento_id ='" + instrumentoId + "' AND (proceso_id ='" + idProceso + "' OR proceso_id IS NULL)";
-            
-            rs2 = conSql.CargarSql2(sql, bd);
+            sql="SELECT indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion, numericadocumental.id, indicador.codigo, factor.id "
+                        + "FROM indicador "
+                        + "LEFT JOIN numericadocumental ON indicador.id = numericadocumental.indicador_id "
+                        + "INNER JOIN instrumentohasindicador ON indicador.id = instrumentohasindicador.indicador_id "
+                        + "INNER JOIN caracteristica ON caracteristica.id = indicador.caracteristica_id "
+                        + "INNER JOIN factor ON factor.id = caracteristica.factor_id "
+                        + "WHERE instrumentohasindicador.instrumento_id ='"+instrumentoId+"' AND (proceso_id ='"+idProceso+"' OR proceso_id IS NULL)";
+                
+                        rs2 = conSql.CargarSql2(sql, bd);
             session.setAttribute("auxInfoDocumental", 1);
             session.setAttribute("evaluarcionDocumental", rs2);
             session.setAttribute("indicadoresDocumental", rs);
