@@ -4,11 +4,30 @@
     
     $(function(){
         $("textarea").focus(function(){
-            $(this).addClass("foco");
+            $(this).css("position","absolute");
+            $(this).animate({
+                width: 350,
+                height: 200,
+                left: '-=100'
+            }, 500);     
         })
         $("textarea").focusout(function() {
-            $(this).removeClass("foco");
+            $(this).removeAttr("style");
         })
+        
+        /*$("#actualiza").click(function(){
+            $(this).button('loading');
+            $("#formInfoDoc").submit();
+            
+        });*/
+    
+        $("textarea").keyup(function(e){
+            
+            if (e.keyCode == 27){
+                $(this).blur();
+            }
+        });
+        
         
         
             $('a[href^=#InformacionNumerica]').click(function() {

@@ -21,8 +21,9 @@
             
         });
     
-        $("textarea").keypress(function(e){
-            if(e.which==0){
+        $("textarea").keyup(function(e){
+            
+            if (e.keyCode == 27){
                 $(this).blur();
             }
         });
@@ -199,16 +200,16 @@
                                             <c:out value="${row2[9]} ${row2[1]}"/>
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[2]}</textarea>
+                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2" placeholder="Documento asociado">${row2[2]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
+                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2" placeholder="Responsable">${row2[3]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1">${row2[4]}</textarea>
+                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1"placeholder="Medio">${row2[4]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
+                                            <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2" placeholder="Lugar">${row2[5]}</textarea>
                                         </td>
                                         <td>
                                             <select  class="span1" name="evaluacionDoc${row2[0]}">
@@ -256,7 +257,7 @@
                                             <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[7]}</textarea>
+                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n">${row2[7]}</textarea>
                                         </td>
                                 <input type="hidden" name="idnumericaDoc${row2[0]}" value="${row2[8]}">
                                 </tr>
