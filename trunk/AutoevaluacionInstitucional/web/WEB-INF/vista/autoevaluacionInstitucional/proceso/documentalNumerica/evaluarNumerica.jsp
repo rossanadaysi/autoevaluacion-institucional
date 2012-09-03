@@ -15,11 +15,11 @@
             $(this).removeAttr("style");
         })
         
-        /*$("#actualiza").click(function(){
+        $("#actualiza").click(function(){
             $(this).button('loading');
-            $("#formInfoDoc").submit();
+            $("#formInfoNum").submit();
             
-        });*/
+        });
     
         $("textarea").keyup(function(e){
             
@@ -30,7 +30,7 @@
         
         
         
-            $('a[href^=#InformacionNumerica]').click(function() {
+        $('a[href^=#InformacionNumerica]').click(function() {
      
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
                 && location.hostname == this.hostname) {
@@ -53,18 +53,9 @@
 
             }
         });
-        
-        
     });
     
 </script>
-<style type="text/css"> 
-    .foco{
-        width: 350px !important;
-        height: 200px;
-        
-    }
-</style>
 <br>
 <c:if test="${auxInfoNumerica == 0}"><!--Si no se ha asignado nada-->
     <div class="subnav" data-top="80">
@@ -83,7 +74,7 @@
     </div>
     <div class="hero-unit">
         <div class="row">
-            <div id="conte" class="span10">
+            <div id="conte" class="span12">
                 <form id="formInfoNum" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Evaluar información numérica</legend>
@@ -109,20 +100,20 @@
                                             <tr>    
                                             </c:otherwise>
                                         </c:choose>
-                                        <td>   
+                                        <td style="text-align: justify;">    
                                             <c:out value="${row[1]}"/>
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                            <textarea name="nombreDocumento${row[0]}" rows="4" class="span2" placeholder="Documento asociado"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="responsableDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                            <textarea name="responsableDocumento${row[0]}" rows="4" class="span2" placeholder="Responsable"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${row[0]}" rows="4" class="span1"></textarea>
+                                            <textarea name="medioDocumento${row[0]}" rows="4" class="span1" placeholder="Medio"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="lugarDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                            <textarea name="lugarDocumento${row[0]}" rows="4" class="span2" placeholder="Lugar"></textarea>
                                         </td>
                                         <td>
                                             <select class="span1"  name="evaluacionDoc${row[0]}">
@@ -135,7 +126,7 @@
                                             <input type="hidden"  value="${row[0]}" name="idIndicadorDoc${row[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${row[0]}" rows="4" class="span2"></textarea>
+                                            <textarea name="accionDocumento${row[0]}" rows="4" class="span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n"></textarea>
                                         </td>
                                     </tr>
                                     <c:set var="iterador" value="${iter.index + 1}" />
@@ -154,9 +145,23 @@
     </div><!--/hero-unit--> 
 </c:if>
 <c:if test="${auxInfoNumerica == 1}">
+    <div class="subnav" data-top="80">
+        <ul class="nav nav-pills">
+            <c:forEach items="1,2,3,4,5,6,7,8,9,10" var="row" varStatus="iter">
+                <c:choose>
+                    <c:when test="${(iter.index == 0)}">
+                        <li class="active"><a href="#InformacionNumerica${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="#InformacionNumerica${iter.index+1}">Factor ${iter.index + 1}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach> 
+        </ul>
+    </div>
     <div class="hero-unit" >
         <div class="row">
-            <div id="conte" class="span10">
+            <div id="conte" class="span12">
                 <form id="formInfoNum" class="form-horizontal" method="post">
                     <fieldset>
                         <legend>Evaluar información numérica</legend>
@@ -179,22 +184,31 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <c:set var="fActual" value="0"></c:set>
                                 <c:forEach items="${evaluarcionNumerica.rowsByIndex}" var="row2" varStatus="iter">
-                                    <tr id="InformacionNumerica${iter.index+1}">
+                                    <c:choose>
+                                        <c:when test="${fActual!=row2[10]}">
+                                            <tr id="InformacionNumerica${row2[10]}">    
+                                                <c:set var="fActual" value="${row2[10]}"></c:set>
+                                            </c:when>
+                                            <c:otherwise>
+                                            <tr>    
+                                            </c:otherwise>
+                                        </c:choose>
                                         <td>   
-                                            <c:out value="${row2[0]}"/>
+                                            <c:out value="${row2[9]} ${row2[1]}"/>
                                         </td>
                                         <td>
-                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2">${row2[2]}</textarea>
+                                            <textarea name="nombreDocumento${row2[0]}" rows="4" class="span2" placeholder="Documento asociado">${row2[2]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2">${row2[3]}</textarea>
+                                            <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2" placeholder="Responsable">${row2[3]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1">${row2[4]}</textarea>
+                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1" placeholder="Medio">${row2[4]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2">${row2[5]}</textarea>
+                                            <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2" placeholder="Lugar">${row2[5]}</textarea>
                                         </td>
                                         <td>
                                             <select  class="span1" name="evaluacionDoc${row2[0]}">
@@ -242,16 +256,17 @@
                                             <input type="hidden"  value="${row2[0]}" name="idIndicadorDoc${row2[0]}">
                                         </td>
                                         <td>
-                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2">${row2[6]}</textarea>
+                                            <textarea name="accionDocumento${row2[0]}" rows="4" class="span2" placeholder="Acci&oacute;n a implementar u observaci&oacute;n">${row2[7]}</textarea>
                                         </td>
-                                    </tr>
-                                    <c:set var="iterador" value="${iter.index + 1}"/>
-                                </c:forEach>
+                                <input type="hidden" name="idnumericaDoc${row2[0]}" value="${row2[8]}">
+                                </tr>
+                                <c:set var="iterador" value="${iter.index + 1}"/>
+                            </c:forEach>
                             </tbody>
                         </table>
                         <input type="hidden" name="count" id="count" value="${iterador}">
                         <div class="form-actions">
-                            <button class="btn btn-primary" type="submit">Actualizar Evaluación</button>
+                            <button class="btn btn-primary" id="actualiza" data-original-title="Actualizar Evaluaci&oacute;n" type="button" data-loading-text="Actualizando..." autocomplete="off">Actualizar Evaluación</button>
                             <button class="btn" type="reset">Cancelar</button>
                         </div>
                     </fieldset>

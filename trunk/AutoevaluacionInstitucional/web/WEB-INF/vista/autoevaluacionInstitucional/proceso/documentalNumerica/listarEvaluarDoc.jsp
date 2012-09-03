@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="hero-unit">
     <div class="row">
-        <div id="conte" class="span10">
+        <div id="conte" class="span12">
             <br/>
             <fieldset>
                 <legend>Listado de evaluación información documental</legend>
@@ -22,7 +22,7 @@
                     <tbody>
                         <c:forEach items="${listEvaluacionDocs.rowsByIndex}" var="item" varStatus="iter">
                             <tr>
-                                <td>${item[0]}</td>
+                                <td>${item[8]}</td>
                                 <td>${item[2]}</td>
                                 <td>${item[3]}</td>
                                 <td>${item[4]}</td>
