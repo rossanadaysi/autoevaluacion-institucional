@@ -170,6 +170,12 @@
                     }, 500);
               
                 });
+                $('a#infoNumerica').click(function() {
+                    setTimeout(function(){
+                        $("#west-closer").trigger("click"); 
+                    }, 500);
+              
+                });
                 $(".ui-layout-center").scroll(function(){
                     // If has not activated (has no attribute "data-top"
 
@@ -643,6 +649,7 @@
                                         setTimeout(function(){
                                             $("div.ui-layout-center").scrollspy();   
                                         }, 500);
+                                        $("div.ui-layout-center").scrollspy('refresh');
                                         
                                         $("#formInfoDoc").submit(function(event){
                                             event.preventDefault();
@@ -678,7 +685,7 @@
                                         setTimeout(function(){
                                             $("div.ui-layout-center").scrollspy();   
                                         }, 500);
-                                        
+                                        $("div.ui-layout-center").scrollspy('refresh');   
                                         $("#formInfoNum").submit(function(event){
                                             event.preventDefault();
                                             $.ajax({
@@ -1197,8 +1204,8 @@
                         <c:otherwise>
                             <div id="estado" class="alert alert-success" style="bottom: 0px; position: absolute; right: 0px; margin-right: 10px; margin-left: 10px; left: 0px; margin-bottom: 0px;">
                                 <p>Estado del proceso: <c:out value="${porceEstadoProceso}"></c:out></p>
-                                <div class="progress progress-success progress-striped active">
-                                    <div class="bar" style="width: ${porceEstadoProceso}"></div>
+                                    <div class="progress progress-success progress-striped active">
+                                        <div class="bar" style="width: ${porceEstadoProceso}"></div>
                                 </div>
                             </div>  
                         </c:otherwise>

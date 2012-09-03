@@ -89,10 +89,8 @@
                             <th>Acción a implementar u observación</th>
                             </thead>
                             <tbody>
-
                                 <c:set var="fActual" value="0"></c:set>
                                 <c:forEach items="${indicadoresDocumental.rowsByIndex}" var="row" varStatus="iter">
-
                                     <c:choose>
                                         <c:when test="${fActual!=row[2]}">
                                             <tr id="InformacionDocumental${row[2]}">    
@@ -206,7 +204,7 @@
                                             <textarea name="responsableDocumento${row2[0]}" rows="4" class="span2" placeholder="Responsable">${row2[3]}</textarea>
                                         </td>
                                         <td>
-                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1"placeholder="Medio">${row2[4]}</textarea>
+                                            <textarea name="medioDocumento${row2[0]}" rows="4" class="span1" placeholder="Medio">${row2[4]}</textarea>
                                         </td>
                                         <td>
                                             <textarea name="lugarDocumento${row2[0]}" rows="4" class="span2" placeholder="Lugar">${row2[5]}</textarea>

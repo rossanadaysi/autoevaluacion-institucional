@@ -96,7 +96,10 @@ public class jsonController extends HttpServlet {
                 int idProceso = proceso.getId();
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
-                rs = conSql.CargarSql2("select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 and numericadocumental.proceso_id = '" + idProceso + "'", bd);
+                rs = conSql.CargarSql2("select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion, indicador.codigo "
+                        + "from numericadocumental "
+                        + "inner join indicador on numericadocumental.indicador_id = indicador.id "
+                        + "where numericadocumental.instrumento_id = 2 and numericadocumental.proceso_id = '"+idProceso+"' order by indicador.id", bd);
                 session.setAttribute("listEvaluacionDocs", rs);
             }
             if (request.getParameter("ejecucion").equals("listarEvaluarNum")) {
@@ -106,7 +109,10 @@ public class jsonController extends HttpServlet {
                 int idProceso = proceso.getId();
                 String bd = (String) session.getAttribute("bd");
                 sqlController conSql = new sqlController();
-                rs = conSql.CargarSql2("select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 3 and numericadocumental.proceso_id = '" + idProceso + "'", bd);
+                rs = conSql.CargarSql2("select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion, indicador.codigo "
+                        + "from numericadocumental "
+                        + "inner join indicador on numericadocumental.indicador_id = indicador.id "
+                        + "where numericadocumental.instrumento_id = 3 and numericadocumental.proceso_id = '"+idProceso+"' order by indicador.id", bd);
                 session.setAttribute("listEvaluacionNum", rs);
             }
         } finally {
