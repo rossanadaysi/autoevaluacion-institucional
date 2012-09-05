@@ -236,37 +236,22 @@
                 <c:when test="${detalleCaracteristica.getRowCount()!= 0}">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id</th>
+                        <th>C&oacute;digo</th>
                         <th>Indicador</th>
                         <th>Cumplimiento</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${detalleCaracteristica.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
-                                    <c:choose>
-                                        <c:when test="${iter.index == 0}">
-                                            <td>   
-                                                <c:out value="${row[2]}"/>
-                                            </td>
-                                            <td style="text-align: left">   
-                                                <a  href="#detalleIndicador&${row[2]}" data="${row[3]}">${row[3]}</a> 
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[4]}"/>
-                                            </td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td>   
-                                                <c:out value="${row[2]}"/>
-                                            </td>
-                                            <td style="text-align: left">   
-                                                <a style="text-align: left" href="#detalleIndicador&${row[2]}"data="${row[3]}">${row[3]}</a> 
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[4]}"/>
-                                            </td>
-                                        </c:otherwise>    
-                                    </c:choose>
+                                    <td style="text-align: left">   
+                                        <c:out value="${row[6]}"/>
+                                    </td>
+                                    <td style="text-align: left">   
+                                        <a style="text-align: left" href="#detalleIndicador&${row[2]}"data="${row[3]}">${row[3]}</a> 
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[4]}"/>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>

@@ -220,7 +220,7 @@
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id</th>
+                        <th>C&oacute;digo</th>
                         <th>Caracteristica</th>
                         <th>Nivel de importacia</th>
                         <th>Ponderacion caracteristica</th>
@@ -233,61 +233,32 @@
                             <c:forEach items="${detalleFactor.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
 
-                                    <c:choose>
-                                        <c:when test="${iter.index == 0}">
-                                            <td>   
-                                                <c:out value="${row[3]}"/>
-                                            </td>
-                                            <td style="text-align: left">   
-                                                <a href="#detalleCaracteristica&${row[3]}" data="${row[4]}">${row[4]}</a> 
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[5]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[6]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[7]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[8]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[9]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[10]}%"/>
-                                            </td>
 
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td>   
-                                                <c:out value="${row[3]}"/>
-                                            </td>
-                                            <td style="text-align: left">   
-                                                <a href="#detalleCaracteristica&${row[3]}" data="${row[4]}">${row[4]}</a> 
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[5]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[6]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[7]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[8]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[9]}"/>
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[10]}%"/>
-                                            </td>
-                                        </c:otherwise>    
-                                    </c:choose>
+                                    <td style="text-align: left">   
+                                        <c:out value="${row[3]}"/>
+                                    </td>
+                                    <td style="text-align: left">   
+                                        <a href="#detalleCaracteristica&${row[3]}" data="${row[4]}">${row[4]}</a> 
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[5]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[6]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[7]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[8]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[9]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[10]}%"/>
+                                    </td>
+
 
 
 

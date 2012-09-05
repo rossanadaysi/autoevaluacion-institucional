@@ -3,6 +3,16 @@
 <script type="text/javascript">
     
     $(function(){
+        if(${aux_index2 == 2}){
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
+                success: function(data){
+                    $("#estado").empty();
+                    $("#estado").html(data);
+                }
+            });
+        }
         $("textarea").focus(function(){
             $(this).css("position","absolute");
             $(this).animate({

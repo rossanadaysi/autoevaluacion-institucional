@@ -242,7 +242,7 @@
                 <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
                 <li><a href="#detalleFactor&${detalleCaracteristica.rowsByIndex[0][5]}">Factor ${detalleCaracteristica.rowsByIndex[0][5]}</a> <span class="divider">/</span></li>
                 <li><a href="#detalleCaracteristica&${detalleCaracteristica.rowsByIndex[0][0]}" data="${detalleCaracteristica.rowsByIndex[0][1]}">Característica ${detalleCaracteristica.rowsByIndex[0][0]}</a><span class="divider">/</span></li>
-                <li class="active">Indicador ${detalleIndicador.rowsByIndex[0][0]}</li>
+                <li class="active">Indicador ${detalleIndicador.rowsByIndex[0][7]}</li>
             </ul>
             <br>
             <c:choose>
@@ -250,40 +250,22 @@
 
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
-                        <th>Id</th>
+                        <th>C&oacute;digo</th>
                         <th>Pregunta</th>
                         <th>Promedio respuesta</th>
                         </thead>
                         <tbody>
                             <c:forEach items="${detalleIndicador.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
-                                    <c:choose>
-                                        <c:when test="${iter.index == 0}">
-                                            <td>   
-                                                <c:out value="${row[2]}"/>
-                                            </td>
-                                            <td style="text-align: left">   
-                                                <a href="#detallePregunta&${row[2]}" data="${row[3]}">${row[3]}</a> 
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[4]}"/>
-                                            </td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td>   
-                                                <c:out value="${row[2]}"/>
-                                            </td>
-                                            <td style="text-align: left">   
-                                                <a href="#detallePregunta&${row[2]}" data="${row[3]}">${row[3]}</a> 
-                                            </td>
-                                            <td>   
-                                                <c:out value="${row[4]}"/>
-                                            </td>
-                                        </c:otherwise>    
-                                    </c:choose>
-
-
-
+                                    <td style="text-align: left">   
+                                        <c:out value="${row[6]}"/>
+                                    </td>
+                                    <td style="text-align: left">   
+                                        <a href="#detallePregunta&${row[2]}" data="${row[3]}">${row[3]}</a> 
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[4]}"/>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>

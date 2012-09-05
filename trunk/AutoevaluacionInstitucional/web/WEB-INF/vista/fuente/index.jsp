@@ -235,7 +235,8 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/logoSIA.png"></img>&nbsp;&nbsp;&nbsp; Recolecci&oacute;n de informaci&oacute;n</a>
+                        <a class="brand" style="padding-bottom: 3px;width: 360px; padding-top: 6px" href="#">
+                            <img src="css/images/logoSIA.png"></img>&nbsp;&nbsp;&nbsp; Recolecci&oacute;n de informaci&oacute;n</a>
 
                         <div class="btn-group pull-right">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
