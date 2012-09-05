@@ -21,7 +21,7 @@ public class informeDetalleCaracteristicaAI implements Action {
         String idC = (String) request.getParameter("idC");
         sqlController conSql = new sqlController();
         Result detalleCaracteristica = null;
-        String sql2 = "SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, format(avg(respuesta),2), factor.id"
+        String sql2 = "SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, format(avg(respuesta),2), factor.id, indicador.codigo"
                 + " FROM Caracteristica"
                 + " INNER JOIN factor ON caracteristica.factor_id = factor.id"
                 + " INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id"

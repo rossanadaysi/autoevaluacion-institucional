@@ -232,10 +232,10 @@
                         <tbody>
                             <c:forEach items="${matriz.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
-                                    <td>   
+                                    <td style="text-align: left">   
                                         <c:out value="${row[8]}"/>
                                     </td>
-                                    <td>   
+                                    <td style="text-align: left">   
                                         <c:out value="${row[0]}"/>
                                     </td>
                                     <td style="text-align: left">   

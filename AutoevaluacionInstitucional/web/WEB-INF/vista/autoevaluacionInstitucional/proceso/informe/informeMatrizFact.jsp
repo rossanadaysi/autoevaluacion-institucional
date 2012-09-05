@@ -2,7 +2,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<style type="text/css">
 
+    .table td {
+        text-align: right;
+    }
+</style>
 <script type="text/javascript">
     $(function () {
         var chart;
@@ -229,10 +234,10 @@
                             <c:set var="cumplimiento" value="0" />
                             <c:forEach items="${matrizFactores.rowsByIndex}" var="row" varStatus="iter">
                                 <tr>
-                                    <td>   
+                                    <td style="text-align: left">   
                                         <c:out value="${row[0]}"/>
                                     </td>
-                                    <td>   
+                                    <td style="text-align: left">   
                                         <a href="#detalleFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
                                     </td>
                                     <td>   

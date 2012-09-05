@@ -20,6 +20,16 @@
         var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#horaEstado").html(" " + Fecha);
         
+        if(${aux_index2 == 2}){
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
+                success: function(data){
+                    $("#estado").empty();
+                    $("#estado").html(data);
+                }
+            });
+        }
         $("#actEnlaceEstado").click( function() {
             $("div.ui-layout-center").empty();
             $.ajax({
@@ -32,7 +42,17 @@
                     },200)
                 } //fin success
             }); //fin $.ajaxF          
-        }); //fin $.ajax
+            
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
+                success: function(data){
+                    $("#estado").empty();
+                    $("#estado").html(data);
+                }
+            });
+            
+        }); //fin eventoClick #actEnlaceEstado
         
         $(".printEnlace").click( function() {
             $('#conte').jqprint();
