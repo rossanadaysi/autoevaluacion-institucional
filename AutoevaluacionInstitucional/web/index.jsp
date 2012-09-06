@@ -2,6 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+    <style type="text/css">
+        .icon{
+            text-align:center;
+            padding:10px;
+        }  
+        td.btn{
+            margin-left: 10px;
+            text-align: right;
+        }
+    </style>
 
     <%
         HttpSession session1 = request.getSession();
@@ -133,9 +143,6 @@
 
 
         </style>
-
-
-
         <style type="text/css">
 
             /* remove padding and scrolling from elements that contain an Accordion OR a content-div */
@@ -215,6 +222,43 @@
         </style>
         <script type="text/javascript">
             $().ready(function() {
+                
+                // if ($.browser.msie && $.browser.version < 7 ){
+                if ($.browser.msie && $.browser.version < 8){
+                    // url = "/AutoevaluacionInstitucional/actualizarNavegador.jsp";  
+                    //$(location).attr('href',url);  
+                    $("#inicioSesion").hide();
+                    $(".ui-layout-center")
+                    .html("<div class='container-fluid'><div class='hero-unit'><div class='row-fluid'><div class='span3'></div>"
+                        +"<div class='container span6' style='margin-top:60px;' id='browsers'> "
+                        +"<br/>"
+                        +"<div class='alert alert-error'>"
+                        +"<strong>¡Vaya!</strong> Parece que estás usando un navegador no compatible."
+                        +"</div>"
+                        +"<P align='justify'>Los navegadores antiguos ponen en riesgo tu seguridad, son lentos y no son compatibles con las funciones del SIA-UdeC. "
+                        +"Para disfrutar de todas las funcionalidades del SIA-UdeC, debes cambiar a un <A href='http://www.whatbrowser.org/' target=_blank>navegador moderno</A>"
+                        +"</P>"   
+                        +"<div class='span12'>"   
+                        +"<TABLE>"
+                        +"<TBODY>"
+                        +"<TR>"
+                        +"<TD class=icon><A href='https://www.google.com/intl/es/chrome/browser/?hl=es' target=_blank><IMG src='https://ssl.gstatic.com/ui/v1/icons/mail/browser_chrome.png'> </A></TD>"
+                        +"<TD><STRONG>Instalar Google Chrome gratis</STRONG> "
+                        +"<DIV>Google Chrome es rápido y siempre está actualizado. </DIV></TD>"
+                        +"<TD class=button><A  style='margin-left: 50px;' class='btn btn-primary' href='https://www.google.com/intl/es/chrome/browser/?hl=es' target=_blank>Instalar </A></TD></TR>"
+                        +"<TR>"
+                        +"<TD class=icon><A href='http://www.mozilla.org/es-ES/download/?product=firefox-15.0&os=win&lang=es-ES' target=_blank><IMG style='width:45px; height:46px;' src='<%=request.getContextPath()%>/css/images/firefox.png'> </A></TD>"
+                        +"<TD><STRONG>Instalar Mozilla Firefox gratis</STRONG> "
+                        +"<DIV>Mozilla Firefox es rápido y siempre está actualizado. </DIV></TD>"
+                        +"<TD class=button><A style='margin-left: 50px;' class='btn btn-primary' href='http://www.mozilla.org/es-ES/download/?product=firefox-15.0&os=win&lang=es-ES' target=_blank>Instalar </A></TD></TR>"
+                        +"<TR>"
+                        +"<TD class=icon><A href='http://windows.microsoft.com/es-ES/internet-explorer/products/ie/home' target=_blank><IMG src='https://ssl.gstatic.com/ui/v1/icons/mail/browser_ie.png'> </A></TD>"
+                        +"<TD><STRONG>Actualizar Internet Explorer gratis</STRONG></TD>"
+                        +"<TD align='center' class=button><A style='margin-left: 50px;' href='http://windows.microsoft.com/es-ES/internet-explorer/products/ie/home' target=_blank>Actualizar </A></TD></TR>"
+                        +" </TBODY></TABLE>"
+                        +"</div></div></div></div></div>");    
+                }
+           
                 
                 $('.about').click(function(){
                     
@@ -350,7 +394,6 @@
          
         </script>
     </head>
-
     <body>
         <div class="ui-layout-north ui-widget-content">
             <div class="navbar navbar-fixed-top">
@@ -361,7 +404,7 @@
                             <span class="icon-bar"></span>
                         </a>
                         <a class="brand" style="padding-bottom: 3px; padding-top: 6px" href="#"><img src="css/images/logoSIA.png"></img></a>
-                        <div class="btn-group pull-right">
+                        <div class="btn-group pull-right" id="inicioSesion">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="icon-user"></i> Iniciar sesi&oacute;n
                                 <span class="caret"></span>
@@ -430,7 +473,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui-layout-center">
+        <div id="centerIndex" class="ui-layout-center">
             <div style="height: 60%; background-color: #f77f00;">
                 <IMG SRC="css/images/torre.png" border=0 style="z-index: 5;height: 95%; position: relative; left: 20%; top: 5%"/>    
                 <IMG SRC="css/images/SIA UDEC - LOGO_1.png" border=0 style="z-index: 5;height: 25%; position: relative;right:15%;top: 13%;float: right"/>    
