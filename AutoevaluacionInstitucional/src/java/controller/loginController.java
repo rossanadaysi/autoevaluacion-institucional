@@ -460,7 +460,7 @@ public class loginController extends HttpServlet {
                                                 + " INNER JOIN muestraestudiante ON muestra.ID = muestraestudiante.MUESTRA_ID"
                                                 + " INNER JOIN estudiante ON muestraestudiante.ESTUDIANTE_ID = estudiante.ID"
                                                 + " INNER JOIN persona ON estudiante.PERSONA_ID = persona.ID"
-                                                + " WHERE persona.id = " + persona.getId() + ""
+                                                + " WHERE persona.id = '" + persona.getId() + "'"
                                                 + " AND proceso.`FECHACIERRE` IS NULL"
                                                 + " AND proceso.fechainicio !='Proceso en Configuración.'"
                                                 + " AND asignacionencuesta.fuente_id=" + idFuenteEstudiante + ""
