@@ -71,7 +71,7 @@ public class formController3 extends HttpServlet {
 
 
 
-           
+
             ResultSet rs44 = conSql.CargarSql(sqlPreguntando, nombreBd);
 
             int idEncabezadoExistente = 0;
@@ -110,19 +110,20 @@ public class formController3 extends HttpServlet {
                 } catch (SQLException ex) {
                     Logger.getLogger(formController3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                String sqlResultado = "INSERT INTO resultadoevaluacion ("
+                        + "`idResultadoEvaluacion` ,`respuesta` ,`encabezado_id` ,`pregunta_id` )"
+                        + "VALUES ";
                 for (int i = 0; i < preguntas.getRowCount(); i++) {
                     String res = request.getParameter("pregunta" + preguntas.getRowsByIndex()[i][0] + "");
-                    String sqlResultado = "INSERT INTO resultadoevaluacion ("
-                            + "`idResultadoEvaluacion` ,`respuesta` ,`encabezado_id` ,`pregunta_id` )"
-                            + "VALUES ("
-                            + "NULL , '" + res + "', '" + idEncabezado + "', '" + preguntas.getRowsByIndex()[i][0] + "'"
-                            + ");";
-                    System.out.println("sql: " + sqlResultado);
-                    conSql.UpdateSql(sqlResultado, nombreBd);
-
+                    if (i + 1 != preguntas.getRowCount()) {
+                        sqlResultado += " (" + "NULL , '" + res + "', '" + idEncabezado + "', '" + preguntas.getRowsByIndex()[i][0] + "'"
+                                + "),";
+                    } else {
+                        sqlResultado += " (" + "NULL , '" + res + "', '" + idEncabezado + "', '" + preguntas.getRowsByIndex()[i][0] + "'"
+                                + ");";
+                    }
                 }
-
+                conSql.UpdateSql(sqlResultado, nombreBd);
                 String EncuestasDisp = "";
                 if (idF.equals("1")) {
                     EncuestasDisp = "SELECT encuesta.id , encuesta.nombre"
