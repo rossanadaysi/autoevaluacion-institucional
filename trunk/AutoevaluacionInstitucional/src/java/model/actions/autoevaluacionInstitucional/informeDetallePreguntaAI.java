@@ -26,7 +26,7 @@ public class informeDetallePreguntaAI implements Action {
                 + " INNER JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id"
                 + " INNER JOIN encuesta ON encuesta.id = encabezado.encuesta_id"
                 + " INNER JOIN pregunta ON pregunta.id = resultadoevaluacion.pregunta_id"
-                + " WHERE pregunta.id ="+idP+" group by encuesta.id";
+                + " WHERE pregunta.id ="+idP+" AND resultadoevaluacion.respuesta !=0 group by encuesta.id";
         detallePregunta = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detallePregunta", detallePregunta);
 
