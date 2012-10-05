@@ -102,6 +102,21 @@ public class estadoProcesoAI implements Action {
                 + " where muestraagencia.muestra_id=" + idMuestra + " and encabezado.fuente_id=7 and encabezado.estado='terminado') as age)";
         tabla2 = conSql.CargarSql2(sql2, bd);
         session.setAttribute("tabla2", tabla2);
+
+        String sql3 = "SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =1 AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id "
+                + "FROM muestraestudiante "
+                + "INNER JOIN estudiante ON muestraestudiante.estudiante_id = estudiante.id "
+                + "INNER JOIN programa ON estudiante.programa_id = programa.id "
+                + "INNER JOIN facultad ON programa.facultad_id = facultad.id "
+                + "LEFT JOIN encabezado ON encabezado.persona_id = estudiante.persona_id "
+                + "WHERE muestraestudiante.muestra_id = " + idMuestra + " "
+                + "GROUP BY facultad.nombre, programa.nombre "
+                + "WITH ROLLUP";
+
+        Result estudiantesPorFac = null;
+        estudiantesPorFac = conSql.CargarSql2(sql3, bd);
+
+        session.setAttribute("estudiantesPorFac", estudiantesPorFac);
         return url;
 
     }

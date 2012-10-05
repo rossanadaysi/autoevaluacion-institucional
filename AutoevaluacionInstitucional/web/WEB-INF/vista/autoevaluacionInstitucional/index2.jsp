@@ -365,13 +365,9 @@
                      
                     var hash = location.hash;
                     
-                    if(hash.indexOf("PonderacionFactores")!=-1){
-                        
-                    }
-                   
-                                                
                     if(hash.indexOf("PonderacionCaracteristicas")!=-1 || hash.indexOf("PonderacionFactores")!=-1
-                        || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1){
+                        || hash=="" || hash.indexOf("error")!=-1 || hash.indexOf("collapse")!=-1 ||hash=="#estudiantes"
+                || hash=="#docentes" || hash=="#egresados" || hash=="#administrativos" || hash=="#directivos" || hash=="#empleadores" || hash=="#gubernamentales"){
                     
                     
                     }else{//else principal
