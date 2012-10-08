@@ -405,171 +405,533 @@
                     </tbody>
                 </table>
                 <ul class="nav nav-tabs" id="Fuentes">
-                    <li class="active"><a href="#estudiantes">Estudiantes</a></li>
-                    <li><a href="#docentes">Docentes</a></li>
-                    <li><a href="#egresados">Egresados</a></li>
-                    <li><a href="#administrativos">Administrativos</a></li>
-                    <li><a href="#directivos">Directivos</a></li>
-                    <li><a href="#empleadores">Empleadores</a></li>
-                    <li><a href="#gubernamentales">A. Gubernamentales</a></li>
+                    <li class="active"><a href="#estudiantes" data-toggle="tab">Estudiantes</a></li>
+                    <li><a href="#docentes" data-toggle="tab">Docentes</a></li>
+                    <li><a href="#egresados" data-toggle="tab">Egresados</a></li>
+                    <li><a href="#administrativos" data-toggle="tab">Administrativos</a></li>
+                    <li><a href="#directivos" data-toggle="tab">Directivos</a></li>
+                    <li><a href="#empleadores" data-toggle="tab">Empleadores</a></li>
+                    <li><a href="#gubernamentales" data-toggle="tab">A. Gubernamentales</a></li>
                 </ul> 
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="estudianes">
-                         <div class="accordion" id="accordion2">
-                    <c:set var="fac" value=""></c:set>
-                    <c:forEach items="${estudiantesPorFac.rowsByIndex}" var="itemEstudPorFac" varStatus="iterEstPorFac">
-                        <c:set var="porce" value="${itemEstudPorFac[4]*100/itemEstudPorFac[3]}"></c:set>
-                        <c:choose>
-                            <c:when test="${itemEstudPorFac[0]!=fac && itemEstudPorFac[0]!=null}">
-                                <c:set var="fac" value="${itemEstudPorFac[0]}"></c:set>
+                    <div class="tab-pane active" id="estudiantes">
+                        <div class="accordion" id="accordion2">
+                            <c:set var="fac" value=""></c:set>
+                            <c:forEach items="${estudiantesPorFac.rowsByIndex}" var="itemEstudPorFac" varStatus="iterEstPorFac">
+                                <c:set var="porce" value="${itemEstudPorFac[4]*100/itemEstudPorFac[3]}"></c:set>
+                                <c:choose>
+                                    <c:when test="${itemEstudPorFac[0]!=fac && itemEstudPorFac[0]!=null}">
+                                        <c:set var="fac" value="${itemEstudPorFac[0]}"></c:set>
 
 
-                                <div class="accordion-group">
-                                    <div class="accordion-heading" >
-                                        <table style="width:100%">
-                                            <tbody>
-                                                <tr >
-                                                    <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
-                                                            ${itemEstudPorFac[0]}
-                                                        </a></td>   
-                                                    <td id="heading${itemEstudPorFac[5]}" style="width:300px;text-align: right"></td>   
-                                                </tr>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
+                                                                    ${itemEstudPorFac[0]}
+                                                                </a></td>   
+                                                            <td id="heading${itemEstudPorFac[5]}" style="width:300px;text-align: right"></td>   
+                                                        </tr>
 
-                                            </tbody>
+                                                    </tbody>
 
-                                        </table>
-                                    </div>
-                                    <div id="collapse${itemEstudPorFac[5]}" class="accordion-body collapse">
-                                        <div class="accordion-inner">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Programa</th>
-                                                        <th>Total Seleccionados</th>
-                                                        <th>Total respondidos</th>
-                                                        <th>Porcentaje de cumplimiento</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>${itemEstudPorFac[2]}</td>
-                                                        <td>${itemEstudPorFac[3]}</td>
-                                                        <td>${itemEstudPorFac[4]}</td>
-                                                        <td><c:choose>
-                                                                <c:when test="${porce<=25.0}">
-                                                                    <div class="progress progress-danger progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:when test="${porce>25.0 && porce<=50.0}">
-                                                                    <div class="progress progress-warning progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:when test="${porce>50.0 && porce<=75.0}">
-                                                                    <div class="progress progress-info progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <div class="progress progress-success progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:otherwise>
-                                                            </c:choose></td>
-                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="collapse${itemEstudPorFac[5]}" class="accordion-body collapse">
+                                                <div class="accordion-inner">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Programa</th>
+                                                                <th>Total Seleccionados</th>
+                                                                <th>Total respondidos</th>
+                                                                <th>Porcentaje de cumplimiento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>${itemEstudPorFac[2]}</td>
+                                                                <td>${itemEstudPorFac[3]}</td>
+                                                                <td>${itemEstudPorFac[4]}</td>
+                                                                <td><c:choose>
+                                                                        <c:when test="${porce<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porce>25.0 && porce<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porce>50.0 && porce<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose></td>
+                                                            </tr>
 
 
-                                                </c:when>
-                                                <c:when test="${itemEstudPorFac[0]==fac && itemEstudPorFac[2]!=null}">
-                                                    <tr>
-                                                        <td>${itemEstudPorFac[2]}</td>
-                                                        <td>${itemEstudPorFac[3]}</td>
-                                                        <td>${itemEstudPorFac[4]}</td>
-
-                                                        <td>
-                                                            <c:choose>
-                                                                <c:when test="${porce<=25.0}">
-                                                                    <div class="progress progress-danger progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:when test="${porce>25.0 && porce<=50.0}">
-                                                                    <div class="progress progress-warning progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:when test="${porce>50.0 && porce<=75.0}">
-                                                                    <div class="progress progress-info progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <div class="progress progress-success progress-striped active">
-                                                                        <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
-                                                                    </div>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </td>
-                                                    </tr>
-
-                                                </c:when>
-                                                <c:when test="${itemEstudPorFac[0]==null}">
-                                                </c:when>
-                                                <c:otherwise>
-                                                <script type="text/javascript">
-                                                    $(function(){
-                                                        $("#heading${itemEstudPorFac[5]}").prev().children("a").append(" (${itemEstudPorFac[3]}/${itemEstudPorFac[4]})");
-                                                    <c:choose>
-                                                        <c:when test="${porce<=25.0}">
-                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
-                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                        +"</div>")   
-                                                                            
                                                         </c:when>
-                                                        <c:when test="${porce>25.0 && porce<=50.0}">
-                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
-                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                        +"</div>")   
-                                                                            
+                                                        <c:when test="${itemEstudPorFac[0]==fac && itemEstudPorFac[2]!=null}">
+                                                            <tr>
+                                                                <td>${itemEstudPorFac[2]}</td>
+                                                                <td>${itemEstudPorFac[3]}</td>
+                                                                <td>${itemEstudPorFac[4]}</td>
+
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${porce<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porce>25.0 && porce<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porce>50.0 && porce<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porce}%" style="width: ${porce}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                            </tr>
+
                                                         </c:when>
-                                                        <c:when test="${porce>50.0 && porce<=75.0}">
-                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
-                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                        +"</div>")
-                                                                    
+                                                        <c:when test="${itemEstudPorFac[0]==null}">
                                                         </c:when>
                                                         <c:otherwise>
-                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
-                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                        +"</div>")
+                                                        <script type="text/javascript">
+                                                            $(function(){
+                                                                $("#heading${itemEstudPorFac[5]}").prev().children("a").append(" (${itemEstudPorFac[3]}/${itemEstudPorFac[4]})");
+                                                            <c:choose>
+                                                                <c:when test="${porce<=25.0}">
+                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                            +"</div>")   
+                                                                            
+                                                                </c:when>
+                                                                <c:when test="${porce>25.0 && porce<=50.0}">
+                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                            +"</div>")   
+                                                                            
+                                                                </c:when>
+                                                                <c:when test="${porce>50.0 && porce<=75.0}">
+                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                            +"</div>")
+                                                                    
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                            +"</div>")
                                                                         
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                        });
-                                                </script>
-                                                </tbody></table>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                                });
+                                                        </script>
+                                                        </tbody></table>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </c:otherwise>    
-                        </c:choose>
-                    </c:forEach>
+                                    </c:otherwise>    
+                                </c:choose>
+                            </c:forEach>
 
 
 
-                </div>              
+                        </div>              
                     </div>
-                    <div class="tab-pane" id="docentes">...</div>
-                    <div class="tab-pane" id="egresados">...</div>
-                    <div class="tab-pane" id="administrativos">...</div>
+                    <div class="tab-pane" id="docentes">
+                        <div class="accordion" id="accordion2D">
+                            <c:set var="facD" value=""></c:set>
+                            <c:forEach items="${docentesPorFac.rowsByIndex}" var="itemDocePorFac" varStatus="iterDocePorFac">
+                                <c:set var="porceD" value="${itemDocePorFac[4]*100/itemDocePorFac[3]}"></c:set>
+                                <c:choose>
+                                    <c:when test="${itemDocePorFac[0]!=facD && itemDocePorFac[0]!=null}">
+                                        <c:set var="facD" value="${itemDocePorFac[0]}"></c:set>
+
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
+                                                                    ${itemDocePorFac[0]}
+                                                                </a></td>   
+                                                            <td id="headingD${itemDocePorFac[5]}" style="width:300px;text-align: right"></td>   
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <div id="collapseD${itemDocePorFac[5]}" class="accordion-body collapse">
+                                                <div class="accordion-inner">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Programa</th>
+                                                                <th>Total Seleccionados</th>
+                                                                <th>Total respondidos</th>
+                                                                <th>Porcentaje de cumplimiento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>${itemDocePorFac[2]}</td>
+                                                                <td>${itemDocePorFac[3]}</td>
+                                                                <td>${itemDocePorFac[4]}</td>
+                                                                <td><c:choose>
+                                                                        <c:when test="${porceD<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceD>25.0 && porceD<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceD>50.0 && porceD<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose></td>
+                                                            </tr>
+
+
+                                                        </c:when>
+                                                        <c:when test="${itemDocePorFac[0]==facD && itemDocePorFac[2]!=null}">
+                                                            <tr>
+                                                                <td>${itemDocePorFac[2]}</td>
+                                                                <td>${itemDocePorFac[3]}</td>
+                                                                <td>${itemDocePorFac[4]}</td>
+
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${porceD<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceD>25.0 && porceD<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceD>50.0 && porceD<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceD}%" style="width: ${porceD}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                            </tr>
+
+                                                        </c:when>
+                                                        <c:when test="${itemDocePorFac[0]==null}">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <script type="text/javascript">
+                                                            $(function(){
+                                                                $("#headingD${itemDocePorFac[5]}").prev().children("a").append(" (${itemDocePorFac[3]}/${itemDocePorFac[4]})");
+                                                            <c:choose>
+                                                                <c:when test="${porceD<=25.0}">
+                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                            +"</div>")   
+                                                                            
+                                                                </c:when>
+                                                                <c:when test="${porceD>25.0 && porceD<=50.0}">
+                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                            +"</div>")   
+                                                                            
+                                                                </c:when>
+                                                                <c:when test="${porceD>50.0 && porceD<=75.0}">
+                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                            +"</div>")
+                                                                    
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                            +"</div>")
+                                                                        
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                                });
+                                                        </script>
+                                                        </tbody></table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>    
+                                </c:choose>
+                            </c:forEach>
+
+
+
+                        </div>              
+                    </div>
+                    <div class="tab-pane" id="egresados">
+                        <div class="accordion" id="accordion2Eg">
+                            <c:set var="facEg" value=""></c:set>
+                            <c:forEach items="${egresadosPorFac.rowsByIndex}" var="itemEgrePorFac" varStatus="iterEgrePorFac">
+                                <c:set var="porceEg" value="${itemEgrePorFac[4]*100/itemEgrePorFac[3]}"></c:set>
+                                <c:choose>
+                                    <c:when test="${itemEgrePorFac[0]!=facEg && itemEgrePorFac[0]!=null}">
+                                        <c:set var="facEg" value="${itemEgrePorFac[0]}"></c:set>
+
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
+                                                                    ${itemEgrePorFac[0]}
+                                                                </a></td>   
+                                                            <td id="headingEg${itemEgrePorFac[5]}" style="width:300px;text-align: right"></td>   
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <div id="collapseEg${itemEgrePorFac[5]}" class="accordion-body collapse">
+                                                <div class="accordion-inner">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Programa</th>
+                                                                <th>Total Seleccionados</th>
+                                                                <th>Total respondidos</th>
+                                                                <th>Porcentaje de cumplimiento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>${itemEgrePorFac[2]}</td>
+                                                                <td>${itemEgrePorFac[3]}</td>
+                                                                <td>${itemEgrePorFac[4]}</td>
+                                                                <td><c:choose>
+                                                                        <c:when test="${porceEg<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceEg>25.0 && porceEg<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceEg>50.0 && porceEg<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose></td>
+                                                            </tr>
+
+
+                                                        </c:when>
+                                                        <c:when test="${itemEgrePorFac[0]==facEg && itemEgrePorFac[2]!=null}">
+                                                            <tr>
+                                                                <td>${itemEgrePorFac[2]}</td>
+                                                                <td>${itemEgrePorFac[3]}</td>
+                                                                <td>${itemEgrePorFac[4]}</td>
+
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${porceEg<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceEg>25.0 && porceEg<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceEg>50.0 && porceEg<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
+                                                            </tr>
+
+                                                        </c:when>
+                                                        <c:when test="${itemEgrePorFac[0]==null}">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <script type="text/javascript">
+                                                            $(function(){
+                                                                $("#headingEg${itemEgrePorFac[5]}").prev().children("a").append(" (${itemEgrePorFac[3]}/${itemEgrePorFac[4]})");
+                                                            <c:choose>
+                                                                <c:when test="${porceEg<=25.0}">
+                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                            +"</div>")   
+                                                                            
+                                                                </c:when>
+                                                                <c:when test="${porceEg>25.0 && porceEg<=50.0}">
+                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                            +"</div>")   
+                                                                            
+                                                                </c:when>
+                                                                <c:when test="${porceEg>50.0 && porceEg<=75.0}">
+                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                            +"</div>")
+                                                                    
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
+                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                            +"</div>")
+                                                                        
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                                });
+                                                        </script>
+                                                        </tbody></table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>    
+                                </c:choose>
+                            </c:forEach>
+
+
+
+                        </div>              
+                    </div>
+                    <div class="tab-pane" id="administrativos">
+                         <c:forEach items="${egresadosPorFac.rowsByIndex}" var="itemEgrePorFac" varStatus="iterEgrePorFac">
+                                <c:set var="porceEg" value="${itemEgrePorFac[4]*100/itemEgrePorFac[3]}"></c:set>
+                                <c:choose>
+                                    <c:when test="${itemEgrePorFac[0]!=facEg && itemEgrePorFac[0]!=null}">
+                                        <c:set var="facEg" value="${itemEgrePorFac[0]}"></c:set>
+
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
+                                                                    ${itemEgrePorFac[0]}
+                                                                </a></td>   
+                                                            <td id="headingEg${itemEgrePorFac[5]}" style="width:300px;text-align: right"></td>   
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <div id="collapseEg${itemEgrePorFac[5]}" class="accordion-body collapse">
+                                                <div class="accordion-inner">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Lugar</th>
+                                                                <th>Total Seleccionados</th>
+                                                                <th>Total respondidos</th>
+                                                                <th>Porcentaje de cumplimiento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>${itemEgrePorFac[2]}</td>
+                                                                <td>${itemEgrePorFac[3]}</td>
+                                                                <td>${itemEgrePorFac[4]}</td>
+                                                                <td><c:choose>
+                                                                        <c:when test="${porceEg<=25.0}">
+                                                                            <div class="progress progress-danger progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceEg>25.0 && porceEg<=50.0}">
+                                                                            <div class="progress progress-warning progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:when test="${porceEg>50.0 && porceEg<=75.0}">
+                                                                            <div class="progress progress-info progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <div class="progress progress-success progress-striped active">
+                                                                                <div class="bar" rel="tooltip" title="${porceEg}%" style="width: ${porceEg}%"></div>
+                                                                            </div>
+                                                                        </c:otherwise>
+                                                                    </c:choose></td>
+                                                            </tr>
+
+
+                                                        </c:when>
+                                                        <c:when test="${itemEgrePorFac[0]==null}">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        </tbody></table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>    
+                                </c:choose>
+                            </c:forEach>
+                    </div>
                     <div class="tab-pane" id="directivos">...</div>
                     <div class="tab-pane" id="empleadores">...</div>
                     <div class="tab-pane" id="gubernamentales">...</div>
                 </div>            
 
-               
+
 
             </fieldset>
         </div>
