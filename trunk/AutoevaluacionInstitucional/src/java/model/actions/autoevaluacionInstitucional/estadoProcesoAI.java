@@ -27,6 +27,13 @@ public class estadoProcesoAI implements Action {
         int idProceso = proceso2.getId();
         String bd = (String) session.getAttribute("bd");
         String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/informe/estadoProceso.jsp";
+        String idFuenteEst = "1";
+        String idFuenteDoc = "2";
+        String idFuenteAdm = "3";
+        String idFuenteDir = "4";
+        String idFuenteEgre = "5";
+        String idFuenteEmple = "6";
+        String idFuenteAgencia = "7";
 
         Result tabla1 = null;
 
@@ -103,7 +110,7 @@ public class estadoProcesoAI implements Action {
         tabla2 = conSql.CargarSql2(sql2, bd);
         session.setAttribute("tabla2", tabla2);
 
-        String sql3 = "SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =1 AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id "
+        String sql3 = "SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteEst + " AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id "
                 + "FROM muestraestudiante "
                 + "INNER JOIN estudiante ON muestraestudiante.estudiante_id = estudiante.id "
                 + "INNER JOIN programa ON estudiante.programa_id = programa.id "
@@ -117,6 +124,57 @@ public class estadoProcesoAI implements Action {
         estudiantesPorFac = conSql.CargarSql2(sql3, bd);
 
         session.setAttribute("estudiantesPorFac", estudiantesPorFac);
+
+        String sql4 = "SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteDoc + " AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id "
+                + "FROM muestradocente "
+                + "INNER JOIN docente ON muestradocente.docente_id = docente.id "
+                + "INNER JOIN programa ON docente.programa_id = programa.id "
+                + "INNER JOIN facultad ON programa.facultad_id = facultad.id "
+                + "LEFT JOIN encabezado ON encabezado.persona_id = docente.persona_id "
+                + "WHERE muestradocente.muestra_id = " + idMuestra + " "
+                + "GROUP BY facultad.nombre, programa.nombre "
+                + "WITH ROLLUP";
+
+        Result docentesPorFac = null;
+        docentesPorFac = conSql.CargarSql2(sql4, bd);
+
+        session.setAttribute("docentesPorFac", docentesPorFac);
+
+
+        String sql5 = "SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteEgre + " AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id "
+                + "FROM muestraegresado "
+                + "INNER JOIN egresado ON muestraegresado.egresado_id = egresado.id "
+                + "INNER JOIN programa ON egresado.programa_id = programa.id "
+                + "INNER JOIN facultad ON programa.facultad_id = facultad.id "
+                + "LEFT JOIN encabezado ON encabezado.persona_id = egresado.persona_id "
+                + "WHERE muestraegresado.muestra_id = " + idMuestra + " "
+                + "GROUP BY facultad.nombre, programa.nombre "
+                + "WITH ROLLUP";
+
+        Result egresadosPorFac = null;
+        egresadosPorFac = conSql.CargarSql2(sql5, bd);
+
+        session.setAttribute("egresadosPorFac", egresadosPorFac);
+
+        String sql6 = "select criterio.nombre, descripcioncriterio.nombre, Count( * ), COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteAdm + " AND encabezado.estado = 'terminado' THEN 1 END ) "
+                + "from muestraadministrativo "
+                + "inner join administrativo on muestraadministrativo.administrativo_id =administrativo.id "
+                + "inner join muestracriterio on administrativo.persona_id=muestracriterio.persona_id "
+                + "inner join descripcioncriterio on muestracriterio.descripcioncriterio_id=descripcioncriterio.id "
+                +"inner join criterio  on descripcioncriterio.criterio_id=criterio.id "
+                + "left join encabezado on encabezado.persona_id = administrativo.persona_id "
+                + "where muestraadministrativo.muestra_id=" + idMuestra + "  "
+                + "group by descripcioncriterio.nombre";
+
+        Result administrativosPorFac = null;
+        administrativosPorFac = conSql.CargarSql2(sql6, bd);
+
+        session.setAttribute("administrativosPorFac", administrativosPorFac);
+
+
+
+
+
         return url;
 
     }
