@@ -1145,7 +1145,7 @@
                              <li><a  id="infoDocumental"  href="<%=request.getContextPath()%>/#infoDocumental"><i class="icon-list-alt"></i> Información Documental</a></li>
                              <li><a  id="infoNumerica"  href="<%=request.getContextPath()%>/#infoNumerica"><i class="icon-list-alt"></i> Información Numérica</a></li>
                              <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
-                             <li class="divider"></li>
+                             <li class="divider"></li>--%>
                              <li class="nav-header">Estado del proceso</li>
                              <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-time"></i> Estado del proceso</a></li>                                     
                             <%--    <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
@@ -1190,7 +1190,7 @@
                 </div>
                 <div align="center" style="bottom: 0px; width: 230px; position: absolute;">
                     <a style="width: 230px;" title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 230px;"></img></a>
-                    <a style="width: 230px;" title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 230px;"></img></a>
+                    <%--<a style="width: 230px;" title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 230px;"></img></a>--%>
                     <a style="width: 230px;" title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 230px;"></img></a>
                 </div>
             </div>

@@ -23,7 +23,15 @@ public class informeRealAI implements Action{
         String bd = (String) session.getAttribute("bd");
         sqlController conSql = new sqlController();
         Result preguntas = null;
-        String sql2 = "SELECT pregunta.id, pregunta.pregunta, pregunta.tipo, count( CASE WHEN respuesta = 'Si' THEN 1 ELSE null end) AS 'Si' , count( CASE WHEN respuesta = 'No' THEN 1 ELSE null end) AS 'No' , count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) AS '0' , count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) AS '1',count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) AS '2', count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) AS '3', count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) AS '4', count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) AS '5'"
+        String sql2 = "SELECT pregunta.id, pregunta.pregunta, pregunta.tipo, "
+                + "count( CASE WHEN respuesta = 'Si' THEN 1 ELSE null end) AS 'Si' , "
+                + "count( CASE WHEN respuesta = 'No' THEN 1 ELSE null end) AS 'No' , "
+                + "count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) AS '0' , "
+                + "count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) AS '1', "
+                + "count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) AS '2', "
+                + "count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) AS '3', "
+                + "count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) AS '4', "
+                + "count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) AS '5'"
 +" FROM `encuesta`"
 +" INNER JOIN encabezado ON encuesta.id = encabezado.encuesta_id"
 +" INNER JOIN resultadoevaluacion ON encabezado.id = resultadoevaluacion.encabezado_id"
