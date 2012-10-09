@@ -19,7 +19,34 @@
         var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
         $("#hora").html(" " + Fecha);
                           
-                 
+         
+        $(".btn-group > .btn").click(function(ev){
+            var boton = $(ev.target);
+            if(boton.text()=="Todos"){
+                $("tr.terminadoC").show();
+                $("tr.pendienteC").show();
+                $("tr.guardadoC").show();
+            }else{
+                if(boton.text()=="Pendiente"){
+                    $("tr.terminadoC").hide();
+                    $("tr.pendienteC").show();
+                    $("tr.guardadoC").hide();
+                }else{
+                    if(boton.text()=="Terminado"){
+                        $("tr.terminadoC").show();
+                        $("tr.pendienteC").hide();
+                        $("tr.guardadoC").hide();
+                    }else{
+                        $("tr.terminadoC").hide();
+                        $("tr.pendienteC").hide();
+                        $("tr.guardadoC").show();
+                    }
+                }   
+            }
+            $(".totalC").text("Total: "+ ($("tr.terminadoC:visible").length + $("tr.pendienteC:visible").length + $("tr.guardadoC:visible").length));
+        })
+         
+         
         $("button[rel=popover2]")
         .popover({placement:'left'}).click(function(e){
             e.preventDefault();
@@ -66,95 +93,95 @@
                             })
                         } //fin success                    
                     }); //fin $.ajax
-                }
-            })
+            }
+        })
             
-        });
+    });
       
-        $("#filtro").show();
+    $("#filtro").show();
         
-        $("#title").append(" " + $("select[name='programas'] :selected").text());
+    $("#title").append(" " + $("select[name='programas'] :selected").text());
    
      
-    });
+});
        
-    $("#printEnlace").click( function() {
-        $('#printMuestra').jqprint();
-        return false;
-    });
+$("#printEnlace").click( function() {
+    $('#printMuestra').jqprint();
+    return false;
+});
     
-    $("#actEnlace").click( function() {
-        $.ajax({
-            type: 'POST',
-            url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
-            data: $("#formAsigMue").serialize(),
-            beforeSend: function(){
-                $("#spanActualizado").html('Cargando..');
-            },
-            success: function(){
-                $.ajax({
-                    type: 'POST',
-                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
-                    success: function(data){
-                        $("#resultados4").html(data);
-                        setTimeout(function(){
-                            $(".page_loading").hide();
-                            $("#resultados4").show(); 
+$("#actEnlace").click( function() {
+    $.ajax({
+        type: 'POST',
+        url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra2AI",
+        data: $("#formAsigMue").serialize(),
+        beforeSend: function(){
+            $("#spanActualizado").html('Cargando..');
+        },
+        success: function(){
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra2AI",
+                success: function(data){
+                    $("#resultados4").html(data);
+                    setTimeout(function(){
+                        $(".page_loading").hide();
+                        $("#resultados4").show(); 
                         
-                            marcacion = new Date() 
-                            Hora = marcacion.getHours() 
-                            Minutos = marcacion.getMinutes() 
-                            Segundos = marcacion.getSeconds() 
-                            if (Hora<=9)
-                                Hora = "0" + Hora
-                            if (Minutos<=9)
-                                Minutos = "0" + Minutos
-                            if (Segundos<=9)
-                                Segundos = "0" + Segundos
-                            var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
-                            var Mes = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-                            var Hoy = new Date();
-                            var Anio = Hoy.getFullYear();
-                            var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
+                        marcacion = new Date() 
+                        Hora = marcacion.getHours() 
+                        Minutos = marcacion.getMinutes() 
+                        Segundos = marcacion.getSeconds() 
+                        if (Hora<=9)
+                            Hora = "0" + Hora
+                        if (Minutos<=9)
+                            Minutos = "0" + Minutos
+                        if (Segundos<=9)
+                            Segundos = "0" + Segundos
+                        var Dia = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+                        var Mes = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                        var Hoy = new Date();
+                        var Anio = Hoy.getFullYear();
+                        var Fecha = Dia[Hoy.getDay()] + " "+ Hoy.getDate() + " de " + Mes[Hoy.getMonth()] + " de " + Anio + ", a las " + Hora + ":" + Minutos + ":" + Segundos;
                           
-                            $("#hora").html(" " + Fecha);
-                        },200);  
-                    }
-                })
-            } //fin success                    
-        }); //fin $.ajax
+                        $("#hora").html(" " + Fecha);
+                    },200);  
+                }
+            })
+        } //fin success                    
+    }); //fin $.ajax
 
-    });
+});
         
-    $("#botonEditarMuestra").click(function(){
-        var a = $("#select3 option:selected").index();
-        var b = $("#select4 option:selected").index();
-        $("#select5 option:eq("+a+")").attr("selected", "selected");
-        $("#select6 option:eq("+b+")").attr("selected", "selected");
-        $("#filtro01").hide();
-        $("#filtro02").show();
+$("#botonEditarMuestra").click(function(){
+    var a = $("#select3 option:selected").index();
+    var b = $("#select4 option:selected").index();
+    $("#select5 option:eq("+a+")").attr("selected", "selected");
+    $("#select6 option:eq("+b+")").attr("selected", "selected");
+    $("#filtro01").hide();
+    $("#filtro02").show();
                
-        $.ajax({
-            type: 'POST',
-            url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
-            data: $("#formAsigMue").serialize(),
-            success: function(){
-                $.ajax({
-                    type: 'POST',
-                    url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra3AI",
+    $.ajax({
+        type: 'POST',
+        url: "<%=request.getContextPath()%>/formController?action=selectorAsignarMuestra3AI",
+        data: $("#formAsigMue").serialize(),
+        success: function(){
+            $.ajax({
+                type: 'POST',
+                url: "<%=request.getContextPath()%>/ControllerAI?action=selectorAsignarMuestra3AI",
                     
-                    success: function(data){
-                        $("#resultados4").hide();
-                        $("#resultados4").html(data);
-                        setTimeout(function(){
-                            $(".page_loading").hide();
-                            $("#resultados4").show(); 
-                        },200);  
-                    }
-                })
-            } //fin success                    
-        }); //fin $.ajax
-    }) 
+                success: function(data){
+                    $("#resultados4").hide();
+                    $("#resultados4").html(data);
+                    setTimeout(function(){
+                        $(".page_loading").hide();
+                        $("#resultados4").show(); 
+                    },200);  
+                }
+            })
+        } //fin success                    
+    }); //fin $.ajax
+}) 
 </script>
 <c:choose>
     <c:when test="${selectorAsignarM2 == null}">
@@ -201,40 +228,36 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br>
-                                <div>
-                                    <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
-                                    <div class="span9"><p class="help-block" id="hora"></p></div>
-                                </div>
-                                <br>
-                                <div>
-                                    <span class="label label-success" style="background-color: #F2DEDE;
-                                          border-color: #EED3D7;
-                                          color: #B94A48;">Pendiente</span>
-                                    <span class="label label-success" style="background-color: #DFF0D8;
-                                          border-color: #D6E9C6;
-                                          color: #468847;">Terminado</span>
-                                    <span class="label label-success" style="background-color: #D9EDF7;
-                                          border-color: #BCE8F1;
-                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                                </div>
-                                <br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    <th>Semestre</th>
-                                    </thead>
-                                    <tbody>
+                            <br>
+                            <div>
+                                <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
+                                <div class="span9"><p class="help-block" id="hora"></p></div>
+                            </div>
+                            <br>
+                            <div class="btn-group" data-toggle="buttons-radio">
+                                <button type="button" class="btn btn-primary active">Todos</button>
+                                <button type="button" class="btn btn-danger">Pendiente</button>
+                                <button type="button" class="btn btn-success">Terminado</button>
+                                <button type="button" class="btn btn-info">Guardado</button>
+                            </div>
+
+                            <br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                <th>Semestre</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter2">
                                         <c:set var="varaux" value="0"/>
                                         <c:forEach items="${selectorAsignarM22.rowsByIndex}" var="item2" varStatus="iter">
                                             <c:if test="${item[0] == item2[0]}">
                                                 <c:set var="varaux" value="1"/>
                                                 <c:if test="${item2[1] == 'terminado'}">
-                                                    <tr>
+                                                    <tr class="terminadoC">
                                                         <td style="background-color: #DFF0D8; color: #468847;">${item[0]}</td>
                                                         <td style="background-color: #DFF0D8; color: #468847;">${item[1]}</td>
                                                         <td style="background-color: #DFF0D8; color: #468847;">${item[2]}</td>
@@ -243,7 +266,7 @@
                                                     </tr>
                                                 </c:if>
                                                 <c:if test="${item2[1] == 'guardada'}">
-                                                    <tr>
+                                                    <tr class="guardadoC">
                                                         <td style="background-color: #D9EDF7; color: #3A87AD;">${item[0]}</td>
                                                         <td style="background-color: #D9EDF7; color: #3A87AD;">${item[1]}</td>
                                                         <td style="background-color: #D9EDF7; color: #3A87AD;">${item[2]}</td>
@@ -254,7 +277,7 @@
                                             </c:if>
                                         </c:forEach>
                                         <c:if test="${varaux == 0}">
-                                            <tr>
+                                            <tr class="pendienteC">
                                                 <td style="background-color: #F2DEDE; color: #B94A48;">${item[0]}</td>
                                                 <td style="background-color: #F2DEDE; color: #B94A48;">${item[1]}</td>
                                                 <td style="background-color: #F2DEDE; color: #B94A48;">${item[2]}</td>
@@ -266,7 +289,7 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <p><strong>Total Estudiantes: ${iterador}</strong></p>
+                            <p><strong class="totalC">Total Estudiantes: ${iterador}</strong></p>
                         </div>
                     </div>
                 </c:if>
@@ -285,32 +308,27 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br>
-                                <div>
-                                    <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
-                                    <div class="span9"><p class="help-block" id="hora"></p></div>
-                                </div>
-                                <br>
-                                <div>
-                                    <span class="label label-success" style="background-color: #F2DEDE;
-                                          border-color: #EED3D7;
-                                          color: #B94A48;">Pendiente</span>
-                                    <span class="label label-success" style="background-color: #DFF0D8;
-                                          border-color: #D6E9C6;
-                                          color: #468847;">Terminado</span>
-                                    <span class="label label-success" style="background-color: #D9EDF7;
-                                          border-color: #BCE8F1;
-                                          color: #3A87AD; margin-bottom: 5px">Guardado</span>
-                                </div>
-                                <br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    </thead>
-                                    <tbody>
+                            <br>
+                            <div>
+                                <div class="span1" style="margin-left: 0px;"><span class="label label-info span1" id="spanActualizado" style="margin-left: 0px;">Actualizado</span></div>
+                                <div class="span9"><p class="help-block" id="hora"></p></div>
+                            </div>
+                            <br>
+                            <div class="btn-group" data-toggle="buttons-radio">
+                                <button type="button" class="btn btn-primary active">Todos</button>
+                                <button type="button" class="btn btn-danger">Pendiente</button>
+                                <button type="button" class="btn btn-success">Terminado</button>
+                                <button type="button" class="btn btn-info">Guardado</button>
+                            </div>
+                            <br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <c:set var="varaux" value="0"/>
 
@@ -318,7 +336,7 @@
                                             <c:if test="${item[0] == item2[0]}">
                                                 <c:set var="varaux" value="1"/>
                                                 <c:if test="${item2[1] == 'terminado'}">
-                                                    <tr>
+                                                    <tr class="terminadoC">
                                                         <td style="background-color: #DFF0D8; color: #468847;">${item[0]}</td>
                                                         <td style="background-color: #DFF0D8; color: #468847;">${item[1]}</td>
                                                         <td style="background-color: #DFF0D8; color: #468847;">${item[2]}</td>
@@ -326,7 +344,7 @@
                                                     </tr>
                                                 </c:if>
                                                 <c:if test="${item2[1] == 'guardada'}">
-                                                    <tr>
+                                                    <tr class="guardadoC">
                                                         <td style="background-color: #D9EDF7; color: #3A87AD;">${item[0]}</td>
                                                         <td style="background-color: #D9EDF7; color: #3A87AD;">${item[1]}</td>
                                                         <td style="background-color: #D9EDF7; color: #3A87AD;">${item[2]}</td>
@@ -336,7 +354,7 @@
                                             </c:if>
                                         </c:forEach>
                                         <c:if test="${varaux == 0}">
-                                            <tr>
+                                            <tr class="pendienteC">
                                                 <td style="background-color: #F2DEDE; color: #B94A48;">${item[0]}</td>
                                                 <td style="background-color: #F2DEDE; color: #B94A48;">${item[1]}</td>
                                                 <td style="background-color: #F2DEDE; color: #B94A48;">${item[2]}</td>
@@ -347,7 +365,7 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <p><strong>Total: ${iterador}</strong></p>
+                            <p><strong class="totalC">Total: ${iterador}</strong></p>
                         </div>
                     </div>
                 </c:if>
@@ -368,16 +386,16 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br><br><br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    <th>Semestre</th>
-                                    </thead>
-                                    <tbody>
+                            <br><br><br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                <th>Semestre</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
                                             <td>${item[0]}</td>
@@ -406,15 +424,15 @@
                         <div id="printMuestra">
                             <br>
                             <h4 id="title">Muestra generada para la fuente <c:out value="${nombreFuenteMuestra}"></c:out>.</h4>
-                                <br><br><br>
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Código</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Password</th>
-                                    </thead>
-                                    <tbody>
+                            <br><br><br>
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                <th>Código</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Password</th>
+                                </thead>
+                                <tbody>
                                     <c:forEach items="${selectorAsignarM2.rowsByIndex}" var="item" varStatus="iter">
                                         <tr>
                                             <td>${item[0]}</td>
