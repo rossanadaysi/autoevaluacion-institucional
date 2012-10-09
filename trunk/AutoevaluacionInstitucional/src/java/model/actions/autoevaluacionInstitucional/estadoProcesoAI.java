@@ -171,6 +171,52 @@ public class estadoProcesoAI implements Action {
 
         session.setAttribute("administrativosPorFac", administrativosPorFac);
 
+        
+        String sql7 = "select criterio.nombre, descripcioncriterio.nombre, Count( * ), COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteDir + " AND encabezado.estado = 'terminado' THEN 1 END ) "
+                + "from muestradirector "
+                + "inner join directorprograma on muestradirector.directorprograma_id =directorprograma.id "
+                + "inner join muestracriterio on directorprograma.persona_id=muestracriterio.persona_id "
+                + "inner join descripcioncriterio on muestracriterio.descripcioncriterio_id=descripcioncriterio.id "
+                +"inner join criterio  on descripcioncriterio.criterio_id=criterio.id "
+                + "left join encabezado on encabezado.persona_id = directorprograma.persona_id "
+                + "where muestradirector.muestra_id=" + idMuestra + "  "
+                + "group by descripcioncriterio.nombre";
+
+        Result directivosPorFac = null;
+        directivosPorFac = conSql.CargarSql2(sql7, bd);
+
+        session.setAttribute("directivosPorFac", directivosPorFac);
+        
+        
+        String sql8 = "select criterio.nombre, descripcioncriterio.nombre, Count( * ), COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteEmple + " AND encabezado.estado = 'terminado' THEN 1 END ) "
+                + "from muestraempleador "
+                + "inner join empleador on muestraempleador.empleador_id =empleador.id "
+                + "inner join muestracriterio on empleador.persona_id=muestracriterio.persona_id "
+                + "inner join descripcioncriterio on muestracriterio.descripcioncriterio_id=descripcioncriterio.id "
+                +"inner join criterio  on descripcioncriterio.criterio_id=criterio.id "
+                + "left join encabezado on encabezado.persona_id = empleador.persona_id "
+                + "where muestraempleador.muestra_id=" + idMuestra + "  "
+                + "group by descripcioncriterio.nombre";
+
+        Result empleadoresPorFac = null;
+        empleadoresPorFac = conSql.CargarSql2(sql8, bd);
+
+        session.setAttribute("empleadoresPorFac", empleadoresPorFac);
+
+        String sql9 = "select criterio.nombre, descripcioncriterio.nombre, Count( * ), COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteAgencia + " AND encabezado.estado = 'terminado' THEN 1 END ) "
+                + "from muestraagencia "
+                + "inner join agenciagubernamental on muestraagencia.agenciagubernamental_id =agenciagubernamental.id "
+                + "inner join muestracriterio on agenciagubernamental.persona_id=muestracriterio.persona_id "
+                + "inner join descripcioncriterio on muestracriterio.descripcioncriterio_id=descripcioncriterio.id "
+                +"inner join criterio  on descripcioncriterio.criterio_id=criterio.id "
+                + "left join encabezado on encabezado.persona_id = agenciagubernamental.persona_id "
+                + "where muestraempleador.muestra_id=" + idMuestra + "  "
+                + "group by descripcioncriterio.nombre";
+
+        Result agenciasPorFac = null;
+        agenciasPorFac = conSql.CargarSql2(sql9, bd);
+
+        session.setAttribute("agenciasPorFac", agenciasPorFac);
 
 
 
