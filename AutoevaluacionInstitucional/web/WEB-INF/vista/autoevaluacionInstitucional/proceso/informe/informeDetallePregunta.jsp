@@ -25,6 +25,7 @@
         }
                             
         $(document).ready(function() {
+            $('.tool').tooltip();
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'grafica',
@@ -207,10 +208,10 @@
             <ul class="breadcrumb">
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
                 <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
-                <li><a href="#detalleFactor&${detalleCaracteristica.rowsByIndex[0][5]}">Factor ${detalleCaracteristica.rowsByIndex[0][5]}</a> <span class="divider">/</span></li>
-                <li><a href="#detalleCaracteristica&${detalleCaracteristica.rowsByIndex[0][0]}" data="${detalleCaracteristica.rowsByIndex[0][1]}">Característica ${detalleCaracteristica.rowsByIndex[0][0]}</a><span class="divider">/</span></li>
-                <li><a href="#detalleIndicador&${detalleIndicador.rowsByIndex[0][0]}" data="${detalleIndicador.rowsByIndex[0][1]}">Indicador ${detalleIndicador.rowsByIndex[0][7]}</a><span class="divider">/</span></li>
-                <li class="active">Pregunta ${detallePregunta.rowsByIndex[0][3]}</li>
+                <li><a class="tool" data-placement="bottom" rel="tooltip" data-original-title="${detalleCaracteristica.rowsByIndex[0][7]}" href="#detalleFactor&${detalleCaracteristica.rowsByIndex[0][5]}">Factor ${detalleCaracteristica.rowsByIndex[0][5]}</a> <span class="divider">/</span></li>
+                <li><a class="tool" data-placement="bottom" rel="tooltip" data-original-title="${detalleCaracteristica.rowsByIndex[0][1]}" href="#detalleCaracteristica&${detalleCaracteristica.rowsByIndex[0][0]}" data="${detalleCaracteristica.rowsByIndex[0][1]}">Característica ${detalleCaracteristica.rowsByIndex[0][0]}</a><span class="divider">/</span></li>
+                <li><a class="tool" data-placement="bottom" rel="tooltip" data-original-title="${detalleIndicador.rowsByIndex[0][1]}" href="#detalleIndicador&${detalleIndicador.rowsByIndex[0][0]}" data="${detalleIndicador.rowsByIndex[0][1]}">Indicador ${detalleIndicador.rowsByIndex[0][7]}</a><span class="divider">/</span></li>
+                <li class="active tool" data-placement="bottom" rel="tooltip" data-original-title="${detallePregunta.rowsByIndex[0][0]}">Pregunta ${detallePregunta.rowsByIndex[0][3]}</li>
             </ul>
             <br>
             <c:choose>
