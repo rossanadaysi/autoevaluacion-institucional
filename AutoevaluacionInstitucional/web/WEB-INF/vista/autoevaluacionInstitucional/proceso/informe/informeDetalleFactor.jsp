@@ -11,7 +11,10 @@
     $(function () {
         var chart;
         $(document).ready(function() {
-            $('.tool').tooltip();
+            
+            $('.tool').tooltip().click(function(e){
+                $(this).tooltip('hide');
+            })
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'grafica',
@@ -213,7 +216,7 @@
             <ul class="breadcrumb">
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
                 <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
-                <li class="active tool" data-placement="bottom" rel="tooltip" data-original-title="${detalleFactor.rowsByIndex[0][1]}">Factor ${detalleFactor.rowsByIndex[0][0]}</li>
+                <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${detalleFactor.rowsByIndex[0][1]}">Factor ${detalleFactor.rowsByIndex[0][0]}</li>
             </ul>
             <br>
             <c:choose>
