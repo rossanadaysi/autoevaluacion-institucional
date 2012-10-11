@@ -1,3 +1,71 @@
+
+SELECT pregunta.id, count( CASE WHEN respuesta = '0' THEN 1 ELSE null end),
+count( CASE WHEN respuesta = '1' THEN 1 ELSE null end),
+count( CASE WHEN respuesta = '2' THEN 1 ELSE null end),
+count( CASE WHEN respuesta = '3' THEN 1 ELSE null end),
+count( CASE WHEN respuesta = '4' THEN 1 ELSE null end)
+ FROM resultadoevaluacion
+inner join pregunta on pregunta.id=resultadoevaluacion.pregunta_id
+where pregunta.tipo="elegir 1-5"
+group by pregunta.id 
+
+
+
+SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, 
+(((sum( CASE WHEN respuesta = '1' THEN 1 ELSE null end) )+ 
+(sum( CASE WHEN respuesta = '2' THEN 2 ELSE null end))+ 
+(sum( CASE WHEN respuesta = '3' THEN 3 ELSE null end))+
+(sum( CASE WHEN respuesta = '4' THEN 4 ELSE null end))+
+(sum( CASE WHEN respuesta = '5' THEN 5 ELSE null end)))/
+((count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) )+ 
+(count( CASE WHEN respuesta = '2' THEN 1 ELSE null end))+ 
+(count( CASE WHEN respuesta = '3' THEN 1 ELSE null end))+
+(count( CASE WHEN respuesta = '4' THEN 1 ELSE null end))+
+(count( CASE WHEN respuesta = '5' THEN 1 ELSE null end)))), caracteristica.id, pregunta.codigo, indicador.codigo,
+count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) AS '0', 
+count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) AS '1', 
+count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) AS '2', 
+count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) AS '3', 
+count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) AS '4', 
+count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) AS '5'
+                 FROM Indicador
+                 INNER JOIN caracteristica ON indicador.caracteristica_id = caracteristica.id
+                 INNER JOIN pregunta ON pregunta.indicador_id = indicador.id
+                 INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
+                 WHERE pregunta.tipo = 'elegir 1-5' 
+                 AND indicador.id =268
+                 group by pregunta.id
+                 
+
+
+
+
+
+
+SELECT pregunta.id, pregunta.pregunta, pregunta.tipo, 
+count( CASE WHEN respuesta = 'Si' THEN 1 ELSE null end) AS 'Si', 
+count( CASE WHEN respuesta = 'No' THEN 1 ELSE null end) AS 'No', 
+count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) AS '0', 
+count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) AS '1', 
+count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) AS '2', 
+count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) AS '3', 
+count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) AS '4', 
+count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) AS '5'
+FROM `encuesta`
+INNER JOIN encabezado ON encuesta.id = encabezado.encuesta_id
+INNER JOIN resultadoevaluacion ON encabezado.id = resultadoevaluacion.encabezado_id
+INNER JOIN pregunta ON resultadoevaluacion.pregunta_id = pregunta.id
+WHERE encuesta.id =1
+GROUP BY pregunta.id
+
+
+
+
+
+
+
+
+
 select * from (
                 (SELECT COUNT(CASE WHEN encabezado.fuente_id ="1" THEN 1 END ) as totalEstu
                 FROM muestraestudiante 
