@@ -1,3 +1,23 @@
+select * from (
+                (SELECT COUNT(CASE WHEN encabezado.fuente_id ="1" THEN 1 END ) as totalEstu
+                FROM muestraestudiante 
+                INNER JOIN estudiante ON muestraestudiante.estudiante_id = estudiante.id 
+                INNER JOIN programa ON estudiante.programa_id = programa.id 
+                INNER JOIN facultad ON programa.facultad_id = facultad.id 
+                LEFT JOIN encabezado ON encabezado.persona_id = estudiante.persona_id 
+                WHERE muestraestudiante.muestra_id = 2 
+                GROUP BY facultad.nombre, programa.nombre 
+                WITH ROLLUP) as ja,
+                (SELECT COUNT(CASE WHEN encabezado.fuente_id =1  THEN 1 END ) as totalEstu2
+                FROM estudiante 
+                INNER JOIN programa ON estudiante.programa_id = programa.id 
+                INNER JOIN facultad ON programa.facultad_id = facultad.id 
+                LEFT JOIN encabezado ON encabezado.persona_id = estudiante.persona_id 
+                GROUP BY facultad.nombre, programa.nombre 
+                WITH ROLLUP) as ju
+                )
+
+
 SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =1 AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id 
 FROM muestraadministrativo
                 INNER JOIN administrativo ON muestraadministrativo.administrativo_id = administrativo.id 
