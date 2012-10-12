@@ -21,14 +21,27 @@ public class informeDetalleIndicadorAI implements Action {
         String idI = (String) request.getParameter("idI");
         sqlController conSql = new sqlController();
         Result detalleIndicador = null;
-        String sql2 = "SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, format(avg(respuesta),2), caracteristica.id, pregunta.codigo, indicador.codigo"
-                + " FROM Indicador"
-                + " INNER JOIN caracteristica ON indicador.caracteristica_id = caracteristica.id"
-                + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
-                + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
-                + " WHERE pregunta.tipo = 'elegir 1-5' and resultadoevaluacion.respuesta != 0"
-                + " AND indicador.id =" + idI
-                + " GROUP BY pregunta.id";
+        String sql2 = "SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, "
+                + "format((sum( case when respuesta='1'  THEN 1 ELSE null end)+ "
+                + "sum( case when respuesta='2'  THEN 2 ELSE null end)+ "
+                + "sum( case when respuesta='3'  THEN 3 ELSE null end)+ "
+                + "sum( case when respuesta='4'  THEN 4 ELSE null end)+ "
+                + "sum( case when respuesta='5'  THEN 5 ELSE null end))/ "
+                + "(count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)),2), "
+                + "caracteristica.id, pregunta.codigo, indicador.codigo, "
+                + "count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) as '0', "
+                + "count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) as '1', "
+                + "count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) as '2', "
+                + "count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) as '3', "
+                + "count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) as '4', "
+                + "count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) as '5' "
+                + "FROM resultadoevaluacion "
+                + "INNER JOIN pregunta ON pregunta.id=resultadoevaluacion.pregunta_id "
+                + "INNER JOIN indicador ON indicador.id=pregunta.indicador_id "
+                + "INNER JOIN caracteristica ON caracteristica.id = indicador.caracteristica_id "
+                + "WHERE pregunta.tipo = 'elegir 1-5' "
+                + "AND indicador.id ="+idI+" "
+                + "GROUP BY pregunta.id";
         detalleIndicador = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detalleIndicador", detalleIndicador);
 
