@@ -9,37 +9,55 @@ inner join pregunta on pregunta.id=resultadoevaluacion.pregunta_id
 where pregunta.tipo="elegir 1-5"
 group by pregunta.id 
 
-
-
-SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, 
-(((sum( CASE WHEN respuesta = '1' THEN 1 ELSE null end) )+ 
-(sum( CASE WHEN respuesta = '2' THEN 2 ELSE null end))+ 
-(sum( CASE WHEN respuesta = '3' THEN 3 ELSE null end))+
-(sum( CASE WHEN respuesta = '4' THEN 4 ELSE null end))+
-(sum( CASE WHEN respuesta = '5' THEN 5 ELSE null end)))/
-((count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) )+ 
-(count( CASE WHEN respuesta = '2' THEN 1 ELSE null end))+ 
-(count( CASE WHEN respuesta = '3' THEN 1 ELSE null end))+
-(count( CASE WHEN respuesta = '4' THEN 1 ELSE null end))+
-(count( CASE WHEN respuesta = '5' THEN 1 ELSE null end)))), caracteristica.id, pregunta.codigo, indicador.codigo,
-count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) AS '0', 
-count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) AS '1', 
-count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) AS '2', 
-count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) AS '3', 
-count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) AS '4', 
-count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) AS '5'
-                 FROM Indicador
-                 INNER JOIN caracteristica ON indicador.caracteristica_id = caracteristica.id
-                 INNER JOIN pregunta ON pregunta.indicador_id = indicador.id
-                 INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
-                 WHERE pregunta.tipo = 'elegir 1-5' 
-                 AND indicador.id =268
-                 group by pregunta.id
-                 
+/*ultimo*/
+SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta,
+format((sum( case when respuesta='1'  THEN 1 ELSE null end)+
+sum( case when respuesta='2'  THEN 2 ELSE null end)+
+sum( case when respuesta='3'  THEN 3 ELSE null end)+
+sum( case when respuesta='4'  THEN 4 ELSE null end)+
+sum( case when respuesta='5'  THEN 5 ELSE null end))/
+(count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)),2), 
+caracteristica.id, pregunta.codigo, indicador.codigo,
+count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) as "0",
+count( CASE WHEN respuesta = '1' THEN 1 ELSE null end) as "1",
+count( CASE WHEN respuesta = '2' THEN 1 ELSE null end) as "2",
+count( CASE WHEN respuesta = '3' THEN 1 ELSE null end) as "3",
+count( CASE WHEN respuesta = '4' THEN 1 ELSE null end) as "4",
+count( CASE WHEN respuesta = '5' THEN 1 ELSE null end) as "5"
+FROM resultadoevaluacion
+INNER JOIN pregunta ON pregunta.id=resultadoevaluacion.pregunta_id
+INNER JOIN indicador ON indicador.id=pregunta.indicador_id
+INNER JOIN caracteristica ON caracteristica.id = indicador.caracteristica_id
+WHERE pregunta.tipo = 'elegir 1-5' 
+AND indicador.id =268
+GROUP BY pregunta.id
 
 
 
+SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, format(avg(respuesta),2), caracteristica.id, pregunta.codigo, indicador.codigo"
+                + " FROM Indicador"
+                + " INNER JOIN caracteristica ON indicador.caracteristica_id = caracteristica.id"
+                + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
+                + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
+                + " WHERE pregunta.tipo = 'elegir 1-5' and resultadoevaluacion.respuesta != 0"
+                + " AND indicador.id =" + idI
+                + " GROUP BY pregunta.id
 
+
+
+
+
+SELECT encabezado.id
+ FROM resultadoevaluacion
+                 INNER JOIN pregunta ON pregunta.id = resultadoevaluacion.pregunta_id
+                 INNER JOIN indicador on indicador.id = pregunta.indicador_id
+                 INNER JOIN encabezado on encabezado.id=resultadoevaluacion.encabezado_id
+                 where pregunta.tipo="elegir 1-5" AND respuesta != '0' and 
+                         respuesta != '1' and 
+                         respuesta != '2' and 
+                         respuesta != '3' and 
+                         respuesta != '4' and 
+                         respuesta != '5' and encabezado.estado="terminado"
 
 
 SELECT pregunta.id, pregunta.pregunta, pregunta.tipo, 
@@ -56,7 +74,7 @@ INNER JOIN encabezado ON encuesta.id = encabezado.encuesta_id
 INNER JOIN resultadoevaluacion ON encabezado.id = resultadoevaluacion.encabezado_id
 INNER JOIN pregunta ON resultadoevaluacion.pregunta_id = pregunta.id
 WHERE encuesta.id =1
-GROUP BY pregunta.id
+GROUP BY encabezado.id
 
 
 

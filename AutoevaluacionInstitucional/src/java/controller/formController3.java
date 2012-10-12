@@ -58,10 +58,6 @@ public class formController3 extends HttpServlet {
             if (request.getParameter("action").equals("responderE")) {
                 estado = "terminado";
             }
-
-
-
-
             String sqlPreguntando = "SELECT `id`"
                     + " FROM `encabezado`"
                     + " WHERE `proceso_id` =" + p.getId() + ""
@@ -90,7 +86,6 @@ public class formController3 extends HttpServlet {
                         + "VALUES ("
                         + "NULL , '" + new Date(new java.util.Date().getTime()) + "', '" + per.getId() + "', '" + p.getId() + "', '" + encuesta.getRowsByIndex()[0][3] + "', '" + idF + "', '" + estado + "'"
                         + ");";
-                System.out.println("sql: " + sql);
                 conSql.UpdateSql(sql, nombreBd);
 
 
@@ -100,7 +95,6 @@ public class formController3 extends HttpServlet {
                         + " AND `encuesta_id` = " + encuesta.getRowsByIndex()[0][3] + ""
                         + " AND `fuente_id` = " + idF + ""
                         + " AND `persona_id` = '" + per.getId() + "'";
-                System.out.println("sql: " + sql2);
                 ResultSet rs4 = conSql.CargarSql(sql2, nombreBd);
                 int idEncabezado = 0;
                 try {

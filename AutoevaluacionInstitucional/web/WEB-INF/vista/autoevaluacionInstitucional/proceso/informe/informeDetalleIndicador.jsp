@@ -10,6 +10,7 @@
 <script type="text/javascript">
     $(function () {
         var chart;
+        var chart2 = new Array(${detalleIndicador.getRowCount()});
         var indicad ="${detalleIndicador.getRowsByIndex()[0][1]}".split(" ");
         var max2 = 70;
         var acom2=0;
@@ -27,6 +28,71 @@
             $('.tool').tooltip().click(function(e){
                 $(this).tooltip('hide');
             })
+            
+            <c:forEach items="${detalleIndicador.rowsByIndex}" var="pregunta" varStatus="status" >
+                 $("#container").append("<div id='${pregunta[2]}' class='span10'></div>")
+                        chart2[${status.index}] = new Highcharts.Chart({
+                            chart: {
+                                renderTo: '${pregunta[2]}',
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false
+                                
+                            },
+                            title: {
+                                text: null
+                            },
+                            subtitle: {
+                                text: '${pregunta[3]}'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        color: '#000000',
+                                        connectorColor: '#000000',
+                                        formatter: function() {
+                                            return '<b>'+ this.point.name +'</b>: '+ this.y +' Personas';
+                                        }
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                formatter: function() {
+                                    return ''+
+                                        this.point.name +': '+ this.percentage +' %';
+                                }
+                            },
+                            series: [{
+                                    type: 'pie',
+                                    name: 'Personas',
+                                    data: [
+                                        ['0',  ${pregunta[8]}],
+                                        ['1',  ${pregunta[9]}],
+                                        ['2',  ${pregunta[10]}],
+                                        ['3',  ${pregunta[11]}],
+                                        ['4',  ${pregunta[12]}],
+                                        {
+                                            name: '5',
+                                            y: ${pregunta[13]},
+                                            sliced: true,
+                                            selected: true
+                                        },
+    
+                                    ]
+                                }]
+                    
+                    
+                        });        
+       
+       
+                    
+    </c:forEach>
+            
+            
+            
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'grafica',
@@ -274,7 +340,8 @@
                         </tbody>
                     </table>
                     <br/>
-                    <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
+                    <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>
+                    <div id="container"></div>
                 </c:when>
                 <c:otherwise>
                     No Existen Hay datos Registrados en el Sistema.
@@ -283,3 +350,4 @@
         </div>
     </div>
 </div>    
+            
