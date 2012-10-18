@@ -10,6 +10,7 @@
 <script type="text/javascript">
     $(function () {
         var chart;
+        var chart2 = new Array(${detallePregunta.getRowCount()});
         var pregunta ="${detallePregunta.getRowsByIndex()[0][0]}".split(" ");
         var max = 70;
         var acom=0;
@@ -28,6 +29,80 @@
             $('.tool').tooltip().click(function(e){
                 $(this).tooltip('hide');
             })
+            
+            
+            <c:forEach items="${detallePregunta.rowsByIndex}" var="encuesta" varStatus="status" >
+                chart2[${status.index}] = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'container${encuesta[4]}',
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                                
+                    },
+                    title: {
+                        text: null
+                    },
+                    subtitle: {
+                        text: '${encuesta[1]}'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
+                                formatter: function() {
+                                    var igv = this.percentage;
+                                    igv = igv.toFixed(2);
+                                    return '<b>'+ this.point.name +'</b>: '+ igv +' %';
+                                }
+                            }
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return ''+
+                                this.point.name +': '+ this.y +' personas';
+                        }
+                    },
+                    series: [{
+                            type: 'pie',
+                            name: 'Personas',
+                            data: [
+                                ['0',  ${encuesta[5]}],
+                                ['1',  ${encuesta[6]}],
+                                ['2',  ${encuesta[7]}],
+                                ['3',  ${encuesta[8]}],
+                                ['4',  ${encuesta[9]}],
+                                {
+                                    name: '5',
+                                    y: ${encuesta[10]},
+                                    sliced: true,
+                                    selected: true
+                                },
+    
+                            ]
+                        }]
+                    
+                    
+                });        
+       
+       
+                    
+    </c:forEach>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'grafica',
@@ -233,7 +308,14 @@
                                                 <c:out value="${row[1]}"/>
                                             </td>
                                             <td>   
-                                                <c:out value="${row[2]}"/>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                                        ${row[2]}
+                                                    </a>
+                                                    <ul class="dropdown-menu" style="padding-top: 0px;">
+                                                        <div id="container${row[4]}" style="min-width: 850px; height: 400px; margin: 0 auto"></div>
+                                                    </ul>
+                                                </div>
                                             </td>
 
                                         </c:when>
@@ -242,7 +324,14 @@
                                                 <c:out value="${row[1]}"/>
                                             </td>
                                             <td>   
-                                                <c:out value="${row[2]}"/>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                                        ${row[2]}
+                                                    </a>
+                                                    <ul class="dropdown-menu" style="padding-top: 0px;">
+                                                        <div id="container${row[4]}" style="min-width: 850px; height: 400px; margin: 0 auto"></div>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </c:otherwise>    
                                     </c:choose>
