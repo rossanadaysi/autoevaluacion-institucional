@@ -6,7 +6,7 @@
     .table td {
         text-align: right;
     }
-</style>
+    </style>
 <script type="text/javascript">
     $(function () {
         var chart;
@@ -29,82 +29,81 @@
                 $(this).tooltip('hide');
             })
             
-            <c:forEach items="${detalleIndicador.rowsByIndex}" var="pregunta" varStatus="status" >
-                 $("#container").append("<div id='${pregunta[2]}' class='span10'></div>")
-                        chart2[${status.index}] = new Highcharts.Chart({
-                            chart: {
-                                renderTo: '${pregunta[2]}',
-                                plotBackgroundColor: null,
-                                plotBorderWidth: null,
-                                plotShadow: false
+    <c:forEach items="${detalleIndicador.rowsByIndex}" var="pregunta" varStatus="status" >
+                chart2[${status.index}] = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'container${pregunta[2]}',
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
                                 
-                            },
-                            title: {
-                                text: null
-                            },
-                            subtitle: {
-                                text: '${pregunta[3]}'
-                            },
-                            plotOptions: {
-                                pie: {
-                                    allowPointSelect: true,
-                                    cursor: 'pointer',
-                                    dataLabels: {
-                                        enabled: true,
-                                        color: '#000000',
-                                        connectorColor: '#000000',
-                                        formatter: function() {
-                                            return '<b>'+ this.point.name +'</b>: '+ this.y +' Personas';
-                                        }
-                                    }
-                                }
-                            },
-                            tooltip: {
+                    },
+                    title: {
+                        text: null
+                    },
+                    subtitle: {
+                        text: '${pregunta[3]}'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
                                 formatter: function() {
-                                    return ''+
-                                        this.point.name +': '+ this.percentage +' %';
+                                    var igv = this.percentage;
+                                    igv = igv.toFixed(2);
+                                    return '<b>'+ this.point.name +'</b>: '+ igv +' %';
                                 }
-                            },
-                            series: [{
-                                    type: 'pie',
-                                    name: 'Personas',
-                                    data: [
-                                        ['0',  ${pregunta[8]}],
-                                        ['1',  ${pregunta[9]}],
-                                        ['2',  ${pregunta[10]}],
-                                        ['3',  ${pregunta[11]}],
-                                        ['4',  ${pregunta[12]}],
-                                        {
-                                            name: '5',
-                                            y: ${pregunta[13]},
-                                            sliced: true,
-                                            selected: true
-                                        },
+                            }
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return ''+
+                                this.point.name +': '+ this.y +' personas';
+                        }
+                    },
+                    series: [{
+                            type: 'pie',
+                            name: 'Personas',
+                            data: [
+                                ['0',  ${pregunta[8]}],
+                                ['1',  ${pregunta[9]}],
+                                ['2',  ${pregunta[10]}],
+                                ['3',  ${pregunta[11]}],
+                                ['4',  ${pregunta[12]}],
+                                {
+                                    name: '5',
+                                    y: ${pregunta[13]},
+                                    sliced: true,
+                                    selected: true
+                                },
     
-                                    ]
-                                }]
+                            ]
+                        }]
                     
                     
-                        });        
+                });        
        
        
                     
     </c:forEach>
             
-            
-            
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'grafica',
-                    type: 'column',
-                    margin: [ 50, 30, 100, 50]
-                },
-                title: {
-                    text: ""+ finali2  +""
-                },
+                chart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'grafica',
+                        type: 'column',
+                        margin: [ 50, 30, 100, 50]
+                    },
+                    title: {
+                        text: ""+ finali2  +""
+                    },
 
-                xAxis: {
-                    categories: [
+                    xAxis: {
+                        categories: [
     <c:forEach items="${detalleIndicador.rowsByIndex}" var="detalleI" varStatus="status">
         <c:choose>
             <c:when test="${detalleIndicador.getRowCount()!=status.index+1}">
@@ -332,8 +331,15 @@
                                     <td style="text-align: left">   
                                         <a href="#detallePregunta&${row[2]}" data="${row[3]}">${row[3]}</a> 
                                     </td>
-                                    <td>   
-                                        <c:out value="${row[4]}"/>
+                                    <td>
+                                        <div class="btn-group pull-right">
+                                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                                ${row[4]}
+                                            </a>
+                                            <ul class="dropdown-menu" style="padding-top: 0px;">
+                                                <div id="container${row[2]}" style="min-width: 850px; height: 400px; margin: 0 auto"></div>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -350,4 +356,3 @@
         </div>
     </div>
 </div>    
-            
