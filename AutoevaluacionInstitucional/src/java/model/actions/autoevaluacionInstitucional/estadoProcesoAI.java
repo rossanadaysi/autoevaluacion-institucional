@@ -68,7 +68,7 @@ public class estadoProcesoAI implements Action {
                 + " ) AS c1";
         tabla1 = conSql.CargarSql2(sql1, bd);
         session.setAttribute("tabla1", tabla1);
-
+        
 
         Result tabla2 = null;
         String sql2 = "select * from("
@@ -109,7 +109,6 @@ public class estadoProcesoAI implements Action {
                 + " where muestraagencia.muestra_id=" + idMuestra + " and encabezado.fuente_id=7 and encabezado.estado='terminado') as age)";
         tabla2 = conSql.CargarSql2(sql2, bd);
         session.setAttribute("tabla2", tabla2);
-
         String sql3 = "SELECT facultad.nombre, programa.id, programa.nombre, Count( * ) , COUNT(CASE WHEN encabezado.fuente_id =" + idFuenteEst + " AND encabezado.estado = 'terminado' THEN 1 END ), facultad.id "
                 + "FROM muestraestudiante "
                 + "INNER JOIN estudiante ON muestraestudiante.estudiante_id = estudiante.id "
@@ -210,7 +209,7 @@ public class estadoProcesoAI implements Action {
                 + "inner join descripcioncriterio on muestracriterio.descripcioncriterio_id=descripcioncriterio.id "
                 +"inner join criterio  on descripcioncriterio.criterio_id=criterio.id "
                 + "left join encabezado on encabezado.persona_id = agenciagubernamental.persona_id "
-                + "where muestraempleador.muestra_id=" + idMuestra + "  "
+                + "where muestraagencia.muestra_id=" + idMuestra + "  "
                 + "group by descripcioncriterio.nombre";
 
         Result agenciasPorFac = null;

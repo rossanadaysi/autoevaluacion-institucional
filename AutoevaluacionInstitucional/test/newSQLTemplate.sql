@@ -17,7 +17,7 @@ FROM `resultadoevaluacion`
                  INNER JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id
                  INNER JOIN encuesta ON encuesta.id = encabezado.encuesta_id
                  INNER JOIN pregunta ON pregunta.id = resultadoevaluacion.pregunta_id
-                 WHERE pregunta.id ="90"
+                 WHERE pregunta.id ="129"
 group by encuesta.id
 
 
@@ -65,7 +65,7 @@ INNER JOIN pregunta ON pregunta.id=resultadoevaluacion.pregunta_id
 INNER JOIN indicador ON indicador.id=pregunta.indicador_id
 INNER JOIN caracteristica ON caracteristica.id = indicador.caracteristica_id
 WHERE pregunta.tipo = 'elegir 1-5' 
-AND indicador.id =266
+AND indicador.id =129
 GROUP BY pregunta.id
 
 

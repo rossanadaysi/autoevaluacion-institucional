@@ -22,11 +22,11 @@ public class informeDetalleIndicadorAI implements Action {
         sqlController conSql = new sqlController();
         Result detalleIndicador = null;
         String sql2 = "SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, "
-                + "format((sum( case when respuesta='1'  THEN 1 ELSE null end)+ "
-                + "sum( case when respuesta='2'  THEN 2 ELSE null end)+ "
-                + "sum( case when respuesta='3'  THEN 3 ELSE null end)+ "
-                + "sum( case when respuesta='4'  THEN 4 ELSE null end)+ "
-                + "sum( case when respuesta='5'  THEN 5 ELSE null end))/ "
+                + "format((sum( case when respuesta='1'  THEN 1 ELSE 0 end)+ "
+                + "sum( case when respuesta='2'  THEN 2 ELSE 0 end)+ "
+                + "sum( case when respuesta='3'  THEN 3 ELSE 0 end)+ "
+                + "sum( case when respuesta='4'  THEN 4 ELSE 0 end)+ "
+                + "sum( case when respuesta='5'  THEN 5 ELSE 0 end))/ "
                 + "(count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)),2), "
                 + "caracteristica.id, pregunta.codigo, indicador.codigo, "
                 + "count( CASE WHEN respuesta = '0' THEN 1 ELSE null end) as '0', "
