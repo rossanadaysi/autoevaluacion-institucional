@@ -1948,7 +1948,7 @@ public class formController extends HttpServlet {
                         System.out.println("error: " + ee);
                     }
                 }
-            }  else if (request.getParameter("action").equals("evaluarInfoNumericaAI") 
+            } else if (request.getParameter("action").equals("evaluarInfoNumericaAI")
                     || request.getParameter("action").equals("evaluarInfoDocumentalAI")) {
 
                 HttpSession session = request.getSession();
@@ -1958,16 +1958,16 @@ public class formController extends HttpServlet {
                 Proceso p = (Proceso) session.getAttribute("proceso");
                 int idProceso = p.getId();
                 String instrumentoId = "";
-                if(request.getParameter("action").equals("evaluarInfoNumericaAI") ){
-                instrumentoId = "3";
-                }else{
-                instrumentoId = "2";
+                if (request.getParameter("action").equals("evaluarInfoNumericaAI")) {
+                    instrumentoId = "3";
+                } else {
+                    instrumentoId = "2";
                 }
-                
-                if ((session.getAttribute("auxInfoNumerica").equals(0) && instrumentoId.equals("3"))||(session.getAttribute("auxInfoDocumental").equals(0) && instrumentoId.equals("2"))) {
+
+                if ((session.getAttribute("auxInfoNumerica") != null && session.getAttribute("auxInfoNumerica").equals(0) && instrumentoId.equals("3")) || (session.getAttribute("auxInfoDocumental") != null && session.getAttribute("auxInfoDocumental").equals(0) && instrumentoId.equals("2"))) {
 
                     System.out.println("papito!!!!!!!!!!!!!!!!!!!!!!!!");
-                    rs = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = '"+instrumentoId+"' order by indicador.id", bd);
+                    rs = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = '" + instrumentoId + "' order by indicador.id", bd);
                     try {
                         while (rs.next()) {
                             int i = Integer.parseInt(rs.getString(1));
@@ -1992,15 +1992,15 @@ public class formController extends HttpServlet {
                     } catch (SQLException ex) {
                         Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    if(instrumentoId.equals("3")){
-                    session.setAttribute("auxInfoNumerica", 1);
-                    }else{
+                    if (instrumentoId.equals("3")) {
+                        session.setAttribute("auxInfoNumerica", 1);
+                    } else {
                         session.setAttribute("auxInfoDocumental", 1);
                     }
-                    
+
 
                 } else {
-                    System.out.println("papito2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+                    System.out.println("papito2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     rs = conSql.CargarSql("Select * from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.instrumento_id = '" + instrumentoId + "'", bd);
                     System.out.println("Select * from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.instrumento_id = '" + instrumentoId + "'");
                     List<String[]> viejasDocumental = new ArrayList<String[]>();
@@ -2017,7 +2017,6 @@ public class formController extends HttpServlet {
                             documental[6] = "" + rs.getString(7);//accion
                             documental[7] = "" + rs.getInt(10);//indicador_Id
                             viejasDocumental.add(documental);
-                            System.out.println("los viejos Id Numerica Documental"+documental[0]+" IdIndicador"+documental[7]);
                         }
                     } catch (Exception e) {
                         System.out.println("errr22");
@@ -2052,8 +2051,6 @@ public class formController extends HttpServlet {
                                 documentalN[6] = "" + accion;//accion
                                 documentalN[7] = "" + id;//indicador_Id
                                 nuevasDocumental.add(documentalN);
-                                System.out.println("nuevos XXX idNumericaDoc"+documentalN[0]+" INdicadorId"+documentalN[7]);
-
                             }
 
 

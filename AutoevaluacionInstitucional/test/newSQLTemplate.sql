@@ -1,3 +1,24 @@
+/*
+PASAR ESTA CONSULTA!!!!!
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 28
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 28
+*/
+
+
+
+
+
+
+SELECT count(
+CASE WHEN instrumentohasindicador.`instrumento_id` <>1
+THEN 1
+ELSE NULL
+END ) AS cantidad, indicador.nombre
+FROM `instrumentohasindicador`
+INNER JOIN indicador ON instrumentohasindicador.`indicador_id` = indicador.id
+GROUP BY indicador.id
+ORDER BY cantidad DESC
+
 SELECT pregunta.pregunta, encuesta.nombre, 
 format(
 (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
