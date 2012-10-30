@@ -24,9 +24,9 @@
 
                 xAxis: {
                     categories: [
-    <c:forEach items="${matrizFactores.rowsByIndex}" var="factor" varStatus="status">
+    <c:forEach items="${matrizFactores1.rowsByIndex}" var="factor" varStatus="status">
         <c:choose>
-            <c:when test="${matrizFactores.getRowCount()!=status.index+1}">
+            <c:when test="${matrizFactores1.getRowCount()!=status.index+1}">
                                     '${factor[0]}-${factor[1]}',
             </c:when>
             <c:otherwise>
@@ -89,9 +89,9 @@
                     series: [{
                             name: 'Factores',
                             data: [     
-    <c:forEach items="${matrizFactores.rowsByIndex}" var="factor2" varStatus="status33">
+    <c:forEach items="${matrizFactores1.rowsByIndex}" var="factor2" varStatus="status33">
         <c:choose>
-            <c:when test="${matrizFactores.getRowCount()!=status33.index+1}">
+            <c:when test="${matrizFactores1.getRowCount()!=status33.index+1}">
                 <c:choose>
                     <c:when test="${factor2[3]>=4.5}">
                                                 {
