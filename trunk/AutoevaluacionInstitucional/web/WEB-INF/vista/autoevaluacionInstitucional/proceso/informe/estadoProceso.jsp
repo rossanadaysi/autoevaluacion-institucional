@@ -58,7 +58,64 @@
             $('#conte').jqprint();
             return false;
         }); 
-    });                     
+    });         
+    
+    
+    
+    $(function () {
+        var chart;
+        $(document).ready(function() {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Muestra seleccionada'
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>'+ this.point.name +'</b>: '+ this.y +' personas';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function() {
+                                var aux = this.percentage;
+                                aux = aux.toFixed(2);
+                                return '<b>'+ this.point.name +'</b>: '+ aux +' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        type: 'pie',
+                        name: 'Porcentaje muestra escogida',
+                        data: [                            
+                            {
+                                name: 'Estudiantes',
+                                y: ${tabla2.rowsByIndex[0][0]},
+                                sliced: true,
+                                selected: true
+                            },
+                            [ 'Docentes',     ${tabla2.rowsByIndex[0][2]}],   
+                            [ 'Administrativos',     ${tabla2.rowsByIndex[0][4]}],   
+                            [ 'Directivos',     ${tabla2.rowsByIndex[0][6]}],   
+                            [ 'Egresados',     ${tabla2.rowsByIndex[0][8]}],
+                            [ 'Empleadores',     ${tabla2.rowsByIndex[0][10]}]
+                        ]
+                    }]
+            });
+        });
+    });
 </script>
 <div class="hero-unit">
     <a  class="span10 printEnlace" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer"><i class="icon-print"></i> Imprimir</a>  
@@ -367,41 +424,10 @@
 
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                GUBERNAMENTALES
-                            </td>
-                            <td>
-                                ${tabla2.rowsByIndex[0][12]}
-                            </td>
-                            <td>
-                                ${tabla2.rowsByIndex[0][13]}
-                            </td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${tabla2.rowsByIndex[0][12]!=0}">
-                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${tabla2.rowsByIndex[0][13] * 100 /tabla2.rowsByIndex[0][12]}"/>%
-                                    </c:when>
-                                    <c:otherwise>
-                                        0%
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>
-                                ${tabla2.rowsByIndex[0][12]-tabla2.rowsByIndex[0][13]}
-                            </td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${tabla2.rowsByIndex[0][12]!=0}">
-                                        <fmt:formatNumber type="number" maxFractionDigits="2" value="${100 - (tabla2.rowsByIndex[0][13] * 100 /tabla2.rowsByIndex[0][12])}"/>%
-                                    </c:when>
-                                    <c:otherwise>
-                                        0%
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
 
+
+                    <div id="container" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
+                    <br>
                     </tbody>
                 </table>
                 <ul class="nav nav-tabs" id="Fuentes">
@@ -425,12 +451,12 @@
                                         <c:set var="fac" value="${itemEstudPorFac[0]}"></c:set>
 
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading" >
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr >
-                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
                                                                     ${itemEstudPorFac[0]}
                                                                 </a></td>   
                                                             <td id="heading${itemEstudPorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -570,12 +596,12 @@
                                     <c:when test="${itemDocePorFac[0]!=facD && itemDocePorFac[0]!=null}">
                                         <c:set var="facD" value="${itemDocePorFac[0]}"></c:set>
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading" >
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr >
-                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
                                                                     ${itemDocePorFac[0]}
                                                                 </a></td>   
                                                             <td id="headingD${itemDocePorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -715,12 +741,12 @@
                                     <c:when test="${itemEgrePorFac[0]!=facEg && itemEgrePorFac[0]!=null}">
                                         <c:set var="facEg" value="${itemEgrePorFac[0]}"></c:set>
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading" >
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr >
-                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
                                                                     ${itemEgrePorFac[0]}
                                                                 </a></td>   
                                                             <td id="headingEg${itemEgrePorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -864,8 +890,8 @@
                             <tbody>
                                 <c:forEach items="${administrativosPorFac.rowsByIndex}" var="itemAdmPorFac">
                                     <c:set var="porceAd" value="${itemAdmPorFac[3]*100/itemAdmPorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemAdmPorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemAdmPorFac[1]}</td>
                                         <td>${itemAdmPorFac[2]}</td>
                                         <td>${itemAdmPorFac[3]}</td>
                                         <td>
@@ -909,8 +935,8 @@
                             <tbody>
                                 <c:forEach items="${directivosPorFac.rowsByIndex}" var="itemDirPorFac">
                                     <c:set var="porceDir" value="${itemDirPorFac[3]*100/itemDirPorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemDirPorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemDirPorFac[1]}</td>
                                         <td>${itemDirPorFac[2]}</td>
                                         <td>${itemDirPorFac[3]}</td>
                                         <td>
@@ -954,8 +980,8 @@
                             <tbody>
                                 <c:forEach items="${empleadoresPorFac.rowsByIndex}" var="itemEmpPorFac">
                                     <c:set var="porceEm" value="${itemEmpPorFac[3]*100/itemEmpPorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemEmpPorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemEmpPorFac[1]}</td>
                                         <td>${itemEmpPorFac[2]}</td>
                                         <td>${itemEmpPorFac[3]}</td>
                                         <td>
@@ -999,8 +1025,8 @@
                             <tbody>
                                 <c:forEach items="${agenciasPorFac.rowsByIndex}" var="itemAgePorFac">
                                     <c:set var="porceAg" value="${itemAgePorFac[3]*100/itemAgePorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemAgePorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemAgePorFac[1]}</td>
                                         <td>${itemAgePorFac[2]}</td>
                                         <td>${itemAgePorFac[3]}</td>
                                         <td>

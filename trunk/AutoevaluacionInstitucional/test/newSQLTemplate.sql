@@ -5,6 +5,65 @@ DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindi
 */
 
 
+SELECT c1.fid, c1.fno, c1.fpo,
+format( SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end)) / SUM( c1.ponderacionCara ) , 2 ) AS cumplimientoFact, 
+format( (SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end) ) / SUM( c1.ponderacionCara )) * c1.fpo, 2 ) AS evaluacion,
+c1.fpo *5 AS ideal, 
+format( (SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end)) / SUM( c1.ponderacionCara ))*20 , 2 ) AS relacion
+FROM (
+    SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara,
+    ponderacioncaracteristica.ponderacion as ponderacionCara, format(
+    (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
+    sum( case when respuesta='2'  THEN 2 ELSE 0 end)+
+    sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
+    sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
+    sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+    (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)),2) AS cumplimientoCara, 
+    avg (   numericadocumental.evaluacion ) AS cump2
+    FROM factor
+    INNER JOIN caracteristica ON caracteristica.factor_id = factor.id
+    INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id
+    INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id
+    INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id
+    LEFT JOIN numericadocumental ON numericadocumental.indicador_id = indicador.id
+    LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id
+    LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
+    LEFT JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id
+    GROUP BY caracteristica.id
+    ) AS c1
+    group by c1.fid
+
+
+
+                    
+
+                 
+
+
+
+
+
+/*
+
+ SELECT factor.id AS fid, factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, ponderacioncaracteristica.ponderacion
+ FROM factor
+ INNER JOIN caracteristica ON caracteristica.factor_id = factor.id
+ INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id
+ INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id
+ INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id
+ LEFT JOIN pregunta ON indicador.id = PREGUNTA.indicador_id
+ LEFT JOIN numericadocumental ON indicador.id = numericadocumental.indicador_id
+ LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
+ LEFT JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id
+ group by caracteristica.id
+ 
+
+
+
+
+
+
+
 
 
 
@@ -65,7 +124,7 @@ SELECT pregunta.pregunta, encuesta.nombre,
 
 
 
-/*ultimo*/
+
 SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta,
 format(
 (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
@@ -184,3 +243,4 @@ inner join criterio  on descripcioncriterio.criterio_id=criterio.id
 left join encabezado on encabezado.persona_id = administrativo.persona_id
 where muestraadministrativo.muestra_id="2" 
 group by descripcioncriterio.nombre
+*/
