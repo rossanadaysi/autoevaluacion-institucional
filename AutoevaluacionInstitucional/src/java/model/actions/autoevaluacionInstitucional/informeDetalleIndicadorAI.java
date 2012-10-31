@@ -20,6 +20,9 @@ public class informeDetalleIndicadorAI implements Action {
         String bd = (String) session.getAttribute("bd");
         String idI = (String) request.getParameter("idI");
         sqlController conSql = new sqlController();
+        String idDocumental="2";
+        String idNumerico="3";
+        
         Result detalleIndicador = null;
         String sql2 = "SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, "
                 + "format((sum( case when respuesta='1'  THEN 1 ELSE 0 end)+ "
@@ -40,10 +43,29 @@ public class informeDetalleIndicadorAI implements Action {
                 + "INNER JOIN indicador ON indicador.id=pregunta.indicador_id "
                 + "INNER JOIN caracteristica ON caracteristica.id = indicador.caracteristica_id "
                 + "WHERE pregunta.tipo = 'elegir 1-5' "
-                + "AND indicador.id ="+idI+" "
+                + "AND indicador.id =" + idI + " "
                 + "GROUP BY pregunta.id";
         detalleIndicador = conSql.CargarSql2(sql2, bd);
         session.setAttribute("detalleIndicador", detalleIndicador);
+
+        Result detalleIndicadorDocumental = null;
+        String sqlDocumental = "SELECT numericadocumental.documento, numericadocumental.responsable,\n"
+                + "numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion,numericadocumental.accion,indicador.nombre,indicador.codigo\n"
+                + "from numericadocumental\n"
+                + "inner join indicador on numericadocumental.indicador_id=indicador.id \n"
+                + "where numericadocumental.indicador_id=" + idI + " and numericadocumental.instrumento_id="+idDocumental;
+        detalleIndicadorDocumental = conSql.CargarSql2(sqlDocumental, bd);
+        session.setAttribute("detalleIndicadorDocumental", detalleIndicadorDocumental);
+        
+        
+        Result detalleIndicadorNumerico = null;
+        String sqlNumerico = "SELECT numericadocumental.documento, numericadocumental.responsable,\n"
+                + "numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion,numericadocumental.accion,indicador.nombre,indicador.codigo\n"
+                + "from numericadocumental\n"
+                + "inner join indicador on numericadocumental.indicador_id=indicador.id \n"
+                + "where numericadocumental.indicador_id=" + idI + " and numericadocumental.instrumento_id="+idNumerico;
+        detalleIndicadorNumerico = conSql.CargarSql2(sqlNumerico, bd);
+        session.setAttribute("detalleIndicadorNumerico", detalleIndicadorNumerico);
 
         String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/informe/informeDetalleIndicador.jsp";
         return url;
