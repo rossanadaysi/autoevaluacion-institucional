@@ -1,11 +1,7 @@
-SELECT numericadocumental.documento, numericadocumental.responsable,
-numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion,numericadocumental.accion
-from numericadocumental
-inner join indicador on numericadocumental.indicador_id=indicador.id 
-where numericadocumental.indicador_id=26 and numericadocumental.instrumento_id=2
-
-
-
+/*
+Eliminar Indicador 4.15.36
+Eliminar Indicador 6.20.9
+*/
 /*
 PASAR ESTA CONSULTA!!!!!
 DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 28
@@ -13,6 +9,11 @@ DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindi
 */
 
 
+SELECT numericadocumental.documento, numericadocumental.responsable,
+numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion,numericadocumental.accion, indicador.nombre,indicador.codigo
+from numericadocumental
+inner join indicador on numericadocumental.indicador_id=indicador.id 
+where numericadocumental.indicador_id=146 and numericadocumental.instrumento_id=2
 
 /*detalle Caracteristica OK
 SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, 
@@ -98,7 +99,6 @@ SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS
                    LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id
                    LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
                    LEFT JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id
-                   WHERE factor.id="1"
                    GROUP BY caracteristica.id;
 */
 

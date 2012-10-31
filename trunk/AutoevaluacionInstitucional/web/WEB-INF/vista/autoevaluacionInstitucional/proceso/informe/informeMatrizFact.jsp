@@ -209,267 +209,88 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
+            <br/>
+            <legend>Matriz de Calidad de Factores</legend>
+            <ul class="breadcrumb">
+                <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
+            </ul>
+            <br>
+            <c:choose>
+                <c:when test="${matrizFactores1.getRowCount()!= 0}">
 
-            <div class="bs-docs-example">
-                <ul class="nav nav-tabs" id="myTab">
-                    <li class="active"><a data-toggle="tab" href="#home">General</a></li>
-                    <li class=""><a data-toggle="tab" href="#home2">Encuestas</a></li>
-                    <li class=""><a data-toggle="tab" href="#profile">Información Documental y Numérica</a></li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div id="home" class="tab-pane fade active in">
-                        <br/>
-                        <legend>Matriz de Calidad de Factores</legend>
-                        <ul class="breadcrumb">
-                            <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
-                        </ul>
-                        <br>
-                        <c:choose>
-                            <c:when test="${matrizFactores1.getRowCount()!= 0}">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                        <th>Id Factor</th>
+                        <th>Factor</th>
+                        <th>Ponderacion Factor</th>
+                        <th>Grado de Cumplimiento</th>
+                        <th>Evaluacion teniendo en cuenta ponderacion</th>
+                        <th>Logro ideal</th>
+                        <th>Relacion con el logro ideal</th>
+                        </thead>
+                        <tbody>
+                            <c:set var="ponderacion" value="0" />
+                            <c:set var="cumplimiento" value="0" />
+                            <c:forEach items="${matrizFactores1.rowsByIndex}" var="row" varStatus="iter">
+                                <tr>
+                                    <td style="text-align: left">   
+                                        <c:out value="${row[0]}"/>
+                                    </td>
+                                    <td style="text-align: left">   
+                                        <a href="#detalleFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[2]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[3]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[4]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[5]}"/>
+                                    </td>
+                                    <td>   
+                                        <c:out value="${row[6]}%"/>
+                                    </td>
+                                </tr>
+                                <c:set var="ponderacion" value="${ponderacion + row[2]}" />
+                                <c:set var="cumplimiento" value="${(row[2] * row[3])+cumplimiento}" />
+                            </c:forEach>
+                            <tr>
+                                <td>   
+                                    Totales:
+                                </td>
+                                <td>   
 
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Id Factor</th>
-                                    <th>Factor</th>
-                                    <th>Ponderacion Factor</th>
-                                    <th>Grado de Cumplimiento</th>
-                                    <th>Evaluacion teniendo en cuenta ponderacion</th>
-                                    <th>Logro ideal</th>
-                                    <th>Relacion con el logro ideal</th>
-                                    </thead>
-                                    <tbody>
-                                        <c:set var="ponderacion" value="0" />
-                                        <c:set var="cumplimiento" value="0" />
-                                        <c:forEach items="${matrizFactores1.rowsByIndex}" var="row" varStatus="iter">
-                                            <tr>
-                                                <td style="text-align: left">   
-                                                    <c:out value="${row[0]}"/>
-                                                </td>
-                                                <td style="text-align: left">   
-                                                    <a href="#detalleFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[2]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[3]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[4]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[5]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[6]}%"/>
-                                                </td>
-                                            </tr>
-                                            <c:set var="ponderacion" value="${ponderacion + row[2]}" />
-                                            <c:set var="cumplimiento" value="${(row[2] * row[3])+cumplimiento}" />
-                                        </c:forEach>
-                                        <tr>
-                                            <td>   
-                                                Totales:
-                                            </td>
-                                            <td>   
+                                </td>
+                                <td>   
 
-                                            </td>
-                                            <td>   
+                                </td>
+                                <td>   
+                                    <fmt:formatNumber type="number"   maxFractionDigits="2" value="${cumplimiento/ponderacion}" />
+                                </td>
+                                <td>   
 
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number"   maxFractionDigits="2" value="${cumplimiento/ponderacion}" />
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-                                                5.0
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number"   maxFractionDigits="2" value="${(cumplimiento/ponderacion)*20}" />%
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br/>          
-                                <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
-                            </c:when>
-                            <c:otherwise>
-                                No Existen Hay datos Registrados en el Sistema.
-                            </c:otherwise>
-                        </c:choose> 
-                    </div>
-                    <div id="home2" class="tab-pane fade">
-                        <br/>
-                        <legend>Matriz de Calidad de Factores</legend>
-                        <ul class="breadcrumb">
-                            <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
-                        </ul>
-                        <br>
-                        <c:choose>
-                            <c:when test="${matrizFactores2.getRowCount()!= 0}">
-
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Id Factor</th>
-                                    <th>Factor</th>
-                                    <th>Ponderacion Factor</th>
-                                    <th>Grado de Cumplimiento</th>
-                                    <th>Evaluacion teniendo en cuenta ponderacion</th>
-                                    <th>Logro ideal</th>
-                                    <th>Relacion con el logro ideal</th>
-                                    </thead>
-                                    <tbody>
-                                        <c:set var="ponderacion" value="0" />
-                                        <c:set var="cumplimiento" value="0" />
-                                        <c:forEach items="${matrizFactores2.rowsByIndex}" var="row" varStatus="iter">
-                                            <tr>
-                                                <td style="text-align: left">   
-                                                    <c:out value="${row[0]}"/>
-                                                </td>
-                                                <td style="text-align: left">   
-                                                    <a href="#detalleFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[2]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[3]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[4]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[5]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row[6]}%"/>
-                                                </td>
-                                            </tr>
-                                            <c:set var="ponderacion" value="${ponderacion + row[2]}" />
-                                            <c:set var="cumplimiento" value="${(row[2] * row[3])+cumplimiento}" />
-                                        </c:forEach>
-                                        <tr>
-                                            <td>   
-                                                Totales:
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number"   maxFractionDigits="2" value="${cumplimiento/ponderacion}" />
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-                                                5.0
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number"   maxFractionDigits="2" value="${(cumplimiento/ponderacion)*20}" />%
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br/>          
-                                <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
-                            </c:when>
-                            <c:otherwise>
-                                No Existen Hay datos Registrados en el Sistema.
-                            </c:otherwise>
-                        </c:choose>  
-                    </div>
-                    <div id="profile" class="tab-pane fade">
-                        <br/>
-                        <legend>Matriz de Calidad de Factores</legend>
-                        <ul class="breadcrumb">
-                            <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
-                            <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
-                        </ul>
-                        <br>
-                        <c:choose>
-                            <c:when test="${matrizFactores3.getRowCount()!= 0}">
-                                <table class="table table-striped table-bordered table-condensed">
-                                    <thead>
-                                    <th>Id Factor</th>
-                                    <th>Factor</th>
-                                    <th>Ponderacion Factor</th>
-                                    <th>Grado de Cumplimiento</th>
-                                    <th>Evaluacion teniendo en cuenta ponderacion</th>
-                                    <th>Logro ideal</th>
-                                    <th>Relacion con el logro ideal</th>
-                                    </thead>
-                                    <tbody>
-                                        <c:set var="ponderacion3" value="0" />
-                                        <c:set var="cumplimiento3" value="0" />
-                                        <c:forEach items="${matrizFactores3.rowsByIndex}" var="row3" varStatus="iter">
-                                            <tr>
-                                                <td style="text-align: left">   
-                                                    <c:out value="${row3[0]}"/>
-                                                </td>
-                                                <td style="text-align: left">   
-                                                    <a href="#detalleFactor&${row3[0]}" data="${row3[1]}">${row3[1]}</a>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row3[2]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row3[3]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row3[4]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row3[5]}"/>
-                                                </td>
-                                                <td>   
-                                                    <c:out value="${row3[6]}%"/>
-                                                </td>
-                                            </tr>
-                                            <c:set var="ponderacion3" value="${ponderacion3 + row3[2]}" />
-                                            <c:set var="cumplimiento3" value="${(row3[2] * row3[3])+cumplimiento3}" />
-                                        </c:forEach>
-                                        <tr>
-                                            <td>   
-                                                Totales:
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number"   maxFractionDigits="2" value="${cumplimiento3/ponderacion3}" />
-                                            </td>
-                                            <td>   
-
-                                            </td>
-                                            <td>   
-                                                5.0
-                                            </td>
-                                            <td>   
-                                                <fmt:formatNumber type="number"   maxFractionDigits="2" value="${(cumplimiento3/ponderacion3)*20}" />%
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br/>          
-                                <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
-                            </c:when>
-                            <c:otherwise>
-                                No Existen Hay datos Registrados en el Sistema.
-                            </c:otherwise>
-                        </c:choose>  
-                    </div>
-                </div>
-            </div>
+                                </td>
+                                <td>   
+                                    5.0
+                                </td>
+                                <td>   
+                                    <fmt:formatNumber type="number"   maxFractionDigits="2" value="${(cumplimiento/ponderacion)*20}" />%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>          
+                    <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
+                </c:when>
+                <c:otherwise>
+                    No Existen Hay datos Registrados en el Sistema.
+                </c:otherwise>
+            </c:choose> 
         </div>
     </div>
 </div>
