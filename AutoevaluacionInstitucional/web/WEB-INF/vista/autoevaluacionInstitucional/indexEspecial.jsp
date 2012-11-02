@@ -1147,8 +1147,8 @@
                              <li><a  id="infoNumerica"  href="<%=request.getContextPath()%>/#infoNumerica"><i class="icon-list-alt"></i> Información Numérica</a></li>
                              <li><a href="#CerrarProceso"><i class="icon-trash"></i> Finalizar Proceso</a></li>
                              <li class="divider"></li>--%>
-                             <li class="nav-header">Estado del proceso</li>
-                             <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-time"></i> Estado del proceso</a></li>                                     
+                            <li class="nav-header">Estado del proceso</li>
+                            <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-time"></i> Estado del proceso</a></li>                                     
                             <%--    <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
                                 <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
                                 <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
@@ -1430,8 +1430,8 @@
                         el propósito de aportar en forma representativa al aumento en la calidad de la
 
                         Educación Superior, contribuyendo así al desarrollo del país.</p>
-                    <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
-                    <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
+                    <p style="color: #FFFFFF;  text-align: right">Desarrollado por Esoluciones </p>
+                    <p style="color: #FFFFFF; text-align: right">Edgar Parra Chacón - Edna Gómez Bustamante - Miguel García Bolaños <br> Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
                     <%--  </div>--%>
             </div>
         </div>
