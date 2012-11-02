@@ -1966,7 +1966,7 @@ public class formController extends HttpServlet {
 
                 if ((session.getAttribute("auxInfoNumerica") != null && session.getAttribute("auxInfoNumerica").equals(0) && instrumentoId.equals("3")) || (session.getAttribute("auxInfoDocumental") != null && session.getAttribute("auxInfoDocumental").equals(0) && instrumentoId.equals("2"))) {
 
-                    System.out.println("papito!!!!!!!!!!!!!!!!!!!!!!!!");
+
                     rs = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = '" + instrumentoId + "' order by indicador.id", bd);
                     try {
                         while (rs.next()) {
@@ -2000,95 +2000,65 @@ public class formController extends HttpServlet {
 
 
                 } else {
-                    System.out.println("papito2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    rs = conSql.CargarSql("Select * from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.instrumento_id = '" + instrumentoId + "'", bd);
-                    System.out.println("Select * from numericadocumental where numericadocumental.proceso_id = '" + idProceso + "' and numericadocumental.instrumento_id = '" + instrumentoId + "'");
-                    List<String[]> viejasDocumental = new ArrayList<String[]>();
-                    try {
 
-                        while (rs.next()) {
-                            String[] documental = new String[8];
-                            documental[0] = "" + rs.getInt(1);//idNumericaDocumental
-                            documental[1] = "" + rs.getString(2);//documento
-                            documental[2] = "" + rs.getString(3);//responsable
-                            documental[3] = "" + rs.getString(4);//medio
-                            documental[4] = "" + rs.getString(5);//lugar
-                            documental[5] = "" + rs.getInt(6);//evaluacion
-                            documental[6] = "" + rs.getString(7);//accion
-                            documental[7] = "" + rs.getInt(10);//indicador_Id
-                            viejasDocumental.add(documental);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("errr22");
-                    }
+                    ResultSet rs2 = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = '" + instrumentoId + "' order by indicador.id", bd);
+                    while (rs2.next()) {
+                        int i = Integer.parseInt(rs2.getString(1));
+                        String id = request.getParameter("idIndicadorDoc" + i);
+                        String nombreDoc = request.getParameter("nombreDocumento" + i);
+                        String responsable = request.getParameter("responsableDocumento" + i);
+                        String medio = request.getParameter("medioDocumento" + i);
+                        String lugar = request.getParameter("lugarDocumento" + i);
+                        String evaluacion = request.getParameter("evaluacionDoc" + i);
+                        String accion = request.getParameter("accionDocumento" + i);
+                        String idNumericaDoc = request.getParameter("idnumericaDoc" + i);
+                        String cambio = request.getParameter("InfoCambio" + i);
 
-                    ResultSet rs2 = conSql.CargarSql("Select* from indicador inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = '"+instrumentoId+"' order by indicador.id", bd);
 
-                    List<String[]> nuevasDocumental = new ArrayList<String[]>();
+                        if (cambio.equals("0")) {//si ningun campo fue modificado
+                        } else {
+                            if (idNumericaDoc != null && !idNumericaDoc.equals("")) {//si existia
+                                if (!nombreDoc.equals("") && !responsable.equals("") && !medio.equals("")
+                                        && !lugar.equals("") && !evaluacion.equals("") && !accion.equals("") && cambio.equals("1")) {//si tiene todos los campos
 
-                    try {
-                        while (rs2.next()) {
-                            int i = Integer.parseInt(rs2.getString(1));
-                            String id = request.getParameter("idIndicadorDoc" + i);
-                            String nombreDoc = request.getParameter("nombreDocumento" + i);
-                            String responsable = request.getParameter("responsableDocumento" + i);
-                            String medio = request.getParameter("medioDocumento" + i);
-                            String lugar = request.getParameter("lugarDocumento" + i);
-                            String evaluacion = request.getParameter("evaluacionDoc" + i);
-                            String accion = request.getParameter("accionDocumento" + i);
-                            String idNumericaDoc = request.getParameter("idnumericaDoc" + i);
+                                    String sql = "UPDATE numericadocumental "
+                                            + "SET `documento` = '" + nombreDoc + "' ,"
+                                            + "`responsable` = '" + responsable + "' ,"
+                                            + "`medio` = '" + medio + "' ,"
+                                            + "`lugar` = '" + lugar + "' ,"
+                                            + "`lugar` = '" + lugar + "' ,"
+                                            + "`evaluacion` = '" + evaluacion + "' ,"
+                                            + "`accion` = '" + accion + "' "
+                                            + "where numericadocumental.id = '" + idNumericaDoc + "'";
+                                    conSql.UpdateSql(sql, bd);
+                                    
 
-                            if (!id.equals("") && !nombreDoc.equals("") && !responsable.equals("") && !medio.equals("")
-                                    && !lugar.equals("") && !evaluacion.equals("") && !accion.equals("")) {
+                                } else {
+                                    String sql = "DELETE  from numericadocumental where numericadocumental.id = '" + idNumericaDoc + "'";
+                                    conSql.UpdateSql(sql, bd);
+                                    
+                                }
+                            } else {
+                                if (!nombreDoc.equals("") && !responsable.equals("") && !medio.equals("")
+                                        && !lugar.equals("") && !evaluacion.equals("") && !accion.equals("") && cambio.equals("1")) {//si tiene todos los campos
 
-                                String[] documentalN = new String[8];
-                                documentalN[0] = "" + idNumericaDoc;//idNumericaDocumental
-                                documentalN[1] = "" + nombreDoc;//documento
-                                documentalN[2] = "" + responsable;//responsable
-                                documentalN[3] = "" + medio;//medio
-                                documentalN[4] = "" + lugar;//lugar
-                                documentalN[5] = "" + evaluacion;//evaluacion
-                                documentalN[6] = "" + accion;//accion
-                                documentalN[7] = "" + id;//indicador_Id
-                                nuevasDocumental.add(documentalN);
+                                    conSql.UpdateSql("INSERT INTO `numericadocumental` (`id` ,`documento` ,`responsable` ,`medio` ,`lugar` ,`evaluacion` ,`accion` ,`proceso_id` ,`instrumento_id` ,`indicador_id`) "
+                                            + "VALUES (NULL , '" + nombreDoc + "', '" + responsable + "', '" + medio + "', '" + lugar + "', '" + evaluacion + "', '" + accion + "', '" + idProceso + "', '" + instrumentoId + "', '" + id + "')", bd);
+                                    
+                                }
+
                             }
-
-
                         }
 
-                    } catch (SQLException ex) {
-                        System.out.println("errror!" + ex.getMessage());
-
                     }
-
-
-                    //Borramos registros viejos que ya no esten!
-                    for (String[] itemVieja : viejasDocumental) {
-                        if (!nuevasDocumental.contains(itemVieja)) {
-                            String sql = "DELETE  from numericadocumental where numericadocumental.id = '" + itemVieja[0] + "'";
-                            conSql.UpdateSql(sql, bd);
-                        }
-                    }
-
-
-                    for (String[] itemNueva : nuevasDocumental) {
-                        if (!viejasDocumental.contains(itemNueva)) {
-                            conSql.UpdateSql("INSERT INTO `numericadocumental` (`id` ,`documento` ,`responsable` ,`medio` ,`lugar` ,`evaluacion` ,`accion` ,`proceso_id` ,`instrumento_id` ,`indicador_id`) "
-                                    + "VALUES (NULL , '" + itemNueva[1] + "', '" + itemNueva[2] + "', '" + itemNueva[3] + "', '" + itemNueva[4] + "', '" + itemNueva[5] + "', '" + itemNueva[6] + "', '" + idProceso + "', '" + instrumentoId + "', '" + itemNueva[7] + "')", bd);
-                        }
-                    }
-
-
                 }
             }
-        } catch (Error ex) {
-            Logger.getLogger(formController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            out.close();
+        } catch (Exception e) {
+            System.out.println("hubo un error");
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.
