@@ -4,11 +4,27 @@ and numericadocumental.instrumento_id = '3'
 
 
 /*
-Eliminar Indicador 4.15.36
-Eliminar Indicador 6.20.9
+Eliminar Indicador 4.15.36 = 192
+Eliminar Indicador 6.20.9 = 245
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 157
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 117;
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 342;
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 192
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 192
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 192
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 192
+
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 245
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 245
+
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 245
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 245
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 192
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 192
+
 */
 /*
-PASAR ESTA CONSULTA!!!!!
+PASAR ESTA CONSULTA!!!!! para quitar el indicador de el instrumento informacion numerica 2.4.10
 DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 28
 DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 28
 */

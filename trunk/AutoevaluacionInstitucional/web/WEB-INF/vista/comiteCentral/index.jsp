@@ -481,8 +481,8 @@
                         el propósito de aportar en forma representativa al aumento en la calidad de la
 
                         Educación Superior, contribuyendo así al desarrollo del país.</p>
-                    <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
-                    <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
+                    <p style="color: #FFFFFF;  text-align: right">Desarrollado por Esoluciones </p>
+                    <p style="color: #FFFFFF; text-align: right">Edgar Parra Chacón - Edna Gómez Bustamante - Miguel García Bolaños <br> Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
                     <%--  </div>--%>
             </div>
         </div>

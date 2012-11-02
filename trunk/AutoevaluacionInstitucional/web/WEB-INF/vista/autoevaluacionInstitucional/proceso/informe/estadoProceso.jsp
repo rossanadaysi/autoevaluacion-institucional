@@ -182,13 +182,13 @@
                                     <c:out value="${row[1]}"/>
                                 </td>
                                 <td>   
-                                    <c:out value="${row[2]}%"/>
+                                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${row[2]}"/>%
                                 </td>
                                 <td>   
                                     <c:out value="${row[3]}"/>
                                 </td>
                                 <td>   
-                                    <c:out value="${row[4]}%"/>
+                                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${row[4]}"/>%
                                 </td>
                             </tr>
                         </c:forEach>
@@ -437,7 +437,6 @@
                     <li><a href="#administrativos" data-toggle="tab">Administrativos</a></li>
                     <li><a href="#directivos" data-toggle="tab">Directivos</a></li>
                     <li><a href="#empleadores" data-toggle="tab">Empleadores</a></li>
-                    <li><a href="#gubernamentales" data-toggle="tab">A. Gubernamentales</a></li>
                 </ul> 
 
                 <div class="tab-content">
@@ -451,12 +450,12 @@
                                         <c:set var="fac" value="${itemEstudPorFac[0]}"></c:set>
 
 
-                                            <div class="accordion-group">
-                                                <div class="accordion-heading" >
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr >
-                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
+                                        <div class="accordion-group">
+                                            <div class="accordion-heading" >
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr >
+                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
                                                                     ${itemEstudPorFac[0]}
                                                                 </a></td>   
                                                             <td id="heading${itemEstudPorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -596,12 +595,12 @@
                                     <c:when test="${itemDocePorFac[0]!=facD && itemDocePorFac[0]!=null}">
                                         <c:set var="facD" value="${itemDocePorFac[0]}"></c:set>
 
-                                            <div class="accordion-group">
-                                                <div class="accordion-heading" >
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr >
-                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
+                                        <div class="accordion-group">
+                                            <div class="accordion-heading" >
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr >
+                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
                                                                     ${itemDocePorFac[0]}
                                                                 </a></td>   
                                                             <td id="headingD${itemDocePorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -741,12 +740,12 @@
                                     <c:when test="${itemEgrePorFac[0]!=facEg && itemEgrePorFac[0]!=null}">
                                         <c:set var="facEg" value="${itemEgrePorFac[0]}"></c:set>
 
-                                            <div class="accordion-group">
-                                                <div class="accordion-heading" >
-                                                    <table style="width:100%">
-                                                        <tbody>
-                                                            <tr >
-                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
+                                        <div class="accordion-group">
+                                            <div class="accordion-heading" >
+                                                <table style="width:100%">
+                                                    <tbody>
+                                                        <tr >
+                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
                                                                     ${itemEgrePorFac[0]}
                                                                 </a></td>   
                                                             <td id="headingEg${itemEgrePorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -890,8 +889,8 @@
                             <tbody>
                                 <c:forEach items="${administrativosPorFac.rowsByIndex}" var="itemAdmPorFac">
                                     <c:set var="porceAd" value="${itemAdmPorFac[3]*100/itemAdmPorFac[2]}"></c:set>
-                                        <tr>
-                                            <td>${itemAdmPorFac[1]}</td>
+                                    <tr>
+                                        <td>${itemAdmPorFac[1]}</td>
                                         <td>${itemAdmPorFac[2]}</td>
                                         <td>${itemAdmPorFac[3]}</td>
                                         <td>
@@ -935,8 +934,8 @@
                             <tbody>
                                 <c:forEach items="${directivosPorFac.rowsByIndex}" var="itemDirPorFac">
                                     <c:set var="porceDir" value="${itemDirPorFac[3]*100/itemDirPorFac[2]}"></c:set>
-                                        <tr>
-                                            <td>${itemDirPorFac[1]}</td>
+                                    <tr>
+                                        <td>${itemDirPorFac[1]}</td>
                                         <td>${itemDirPorFac[2]}</td>
                                         <td>${itemDirPorFac[3]}</td>
                                         <td>
@@ -980,8 +979,8 @@
                             <tbody>
                                 <c:forEach items="${empleadoresPorFac.rowsByIndex}" var="itemEmpPorFac">
                                     <c:set var="porceEm" value="${itemEmpPorFac[3]*100/itemEmpPorFac[2]}"></c:set>
-                                        <tr>
-                                            <td>${itemEmpPorFac[1]}</td>
+                                    <tr>
+                                        <td>${itemEmpPorFac[1]}</td>
                                         <td>${itemEmpPorFac[2]}</td>
                                         <td>${itemEmpPorFac[3]}</td>
                                         <td>
@@ -1012,51 +1011,7 @@
                                 </c:forEach>
                             </tbody></table>
                     </div>
-                    <div class="tab-pane" id="gubernamentales">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>${agenciasPorFac.rowsByIndex[0][0]}</th>
-                                    <th>Total Seleccionados</th>
-                                    <th>Total respondidos</th>
-                                    <th>Porcentaje de cumplimiento</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${agenciasPorFac.rowsByIndex}" var="itemAgePorFac">
-                                    <c:set var="porceAg" value="${itemAgePorFac[3]*100/itemAgePorFac[2]}"></c:set>
-                                        <tr>
-                                            <td>${itemAgePorFac[1]}</td>
-                                        <td>${itemAgePorFac[2]}</td>
-                                        <td>${itemAgePorFac[3]}</td>
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${porceAg<=25.0}">
-                                                    <div class="progress progress-danger progress-striped active">
-                                                        <div class="bar" rel="tooltip" title="${porceAg}%" style="width: ${porceAg}%"></div>
-                                                    </div>
-                                                </c:when>
-                                                <c:when test="${porceAg>25.0 && porceAg<=50.0}">
-                                                    <div class="progress progress-warning progress-striped active">
-                                                        <div class="bar" rel="tooltip" title="${porceAg}%" style="width: ${porceAg}%"></div>
-                                                    </div>
-                                                </c:when>
-                                                <c:when test="${porceAg>50.0 && porceAg<=75.0}">
-                                                    <div class="progress progress-info progress-striped active">
-                                                        <div class="bar" rel="tooltip" title="${porceAg}%" style="width: ${porceAg}%"></div>
-                                                    </div>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <div class="progress progress-success progress-striped active">
-                                                        <div class="bar" rel="tooltip" title="${porceAg}%" style="width: ${porceAg}%"></div>
-                                                    </div>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody></table>
-                    </div>
+
                 </div>            
 
 

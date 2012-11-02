@@ -309,7 +309,7 @@
                                     { 
                                         $(".alert-error").html("<a data-dismiss='alert' class='close'>×</a>"  
                                             +"<strong>Error!</strong>"
-                                            +"<label for='pass' generated='true' class='error'> Usuario No Posee Permisos Para Ingresas bajo ese perfil.</label>");  
+                                            +"<label for='pass' generated='true' class='error'> Usuario no posee permisos para ingresar bajo ese perfil.</label>");  
                                         $(".alert-error").show();
                                       
                                     }
@@ -317,7 +317,7 @@
                                     { 
                                         $(".alert-error").html("<a data-dismiss='alert' class='close'>×</a>"  
                                             +"<strong>Error!</strong>"
-                                            +"<label for='pass' generated='true' class='error'> C&oacutedigo y/o Contraseña Incorrecto(s).</label>");  
+                                            +"<label for='pass' generated='true' class='error'> C&oacutedigo y/o contraseña incorrecto(s).</label>");  
                                         $(".alert-error").show();
                                       
                                       
@@ -328,7 +328,7 @@
                                     { 
                                         $(".alert-error").html("<a data-dismiss='alert' class='close'>×</a>"  
                                             +"<strong>Error!</strong>"
-                                            +"<label for='pass' generated='true' class='error'> Formato de Código Incorrecto.</label>");  
+                                            +"<label for='pass' generated='true' class='error'> Formato de código incorrecto.</label>");  
                                         $(".alert-error").show();
                                       
                                         
