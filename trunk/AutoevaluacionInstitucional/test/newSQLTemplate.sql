@@ -1,3 +1,8 @@
+Select * from numericadocumental
+where numericadocumental.proceso_id = '1' 
+and numericadocumental.instrumento_id = '3'
+
+
 /*
 Eliminar Indicador 4.15.36
 Eliminar Indicador 6.20.9
