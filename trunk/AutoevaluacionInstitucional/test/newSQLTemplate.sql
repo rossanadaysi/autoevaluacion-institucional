@@ -3,6 +3,119 @@ where numericadocumental.proceso_id = '1'
 and numericadocumental.instrumento_id = '3'
 
 
+
+select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion 
+from numericadocumental 
+inner join indicador on numericadocumental.indicador_id = indicador.id 
+inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id 
+where numericadocumental.instrumento_id = '2' and instrumentohasindicador.instrumento_id = '2' and numericadocumental.proceso_id = 1
+group by indicador.id
+order by count(instrumentohasindicador.instrumento_id) desc
+/*
+componiendo error
+DELETE FROM `autoevaluacion`.`empleador` WHERE `empleador`.`id` = 296;
+DELETE FROM `autoevaluacion`.`empleador` WHERE `empleador`.`id` = 297;
+DELETE FROM `autoevaluacion`.`empleador` WHERE `empleador`.`id` = 298;
+DELETE FROM `autoevaluacion`.`empleador` WHERE `empleador`.`id` = 299;
+DELETE FROM `autoevaluacion`.`empleador` WHERE `empleador`.`id` = 300;
+
+DELETE FROM `autoevaluacion`.`persona` WHERE `persona`.`id` = '1615-10';
+DELETE FROM `autoevaluacion`.`persona` WHERE `persona`.`id` = '1615-11';
+DELETE FROM `autoevaluacion`.`persona` WHERE `persona`.`id` = '1615-12';
+DELETE FROM `autoevaluacion`.`persona` WHERE `persona`.`id` = '1615-13';
+DELETE FROM `autoevaluacion`.`persona` WHERE `persona`.`id` = '1615-14';
+
+
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 216;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 217;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 218;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 219;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 220;
+
+DELETE FROM `institucional1`.`empleador` WHERE `empleador`.`id` = 296;
+DELETE FROM `institucional1`.`empleador` WHERE `empleador`.`id` = 297;
+DELETE FROM `institucional1`.`empleador` WHERE `empleador`.`id` = 298;
+DELETE FROM `institucional1`.`empleador` WHERE `empleador`.`id` = 299;
+DELETE FROM `institucional1`.`empleador` WHERE `empleador`.`id` = 300;
+
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-0' WHERE `empleador`.`id` =301;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-1' WHERE `empleador`.`id` =302;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-2' WHERE `empleador`.`id` =303;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-3' WHERE `empleador`.`id` =304;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-4' WHERE `empleador`.`id` =305;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-5' WHERE `empleador`.`id` =306;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-6' WHERE `empleador`.`id` =307;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-7' WHERE `empleador`.`id` =308;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-8' WHERE `empleador`.`id` =309;
+UPDATE `institucional1`.`empleador` SET `persona_id` = '1615-9' WHERE `empleador`.`id` =310;
+
+DELETE FROM `institucional1`.`muestracriterio` WHERE `muestracriterio`.`id` = 753;
+DELETE FROM `institucional1`.`muestracriterio` WHERE `muestracriterio`.`id` = 754;
+DELETE FROM `institucional1`.`muestracriterio` WHERE `muestracriterio`.`id` = 755;
+DELETE FROM `institucional1`.`muestracriterio` WHERE `muestracriterio`.`id` = 756;
+DELETE FROM `institucional1`.`muestracriterio` WHERE `muestracriterio`.`id` = 757;
+
+DELETE FROM `institucional1`.`persona` WHERE `persona`.`id` = '1615-10';
+DELETE FROM `institucional1`.`persona` WHERE `persona`.`id` = '1615-11';
+DELETE FROM `institucional1`.`persona` WHERE `persona`.`id` = '1615-12';
+DELETE FROM `institucional1`.`persona` WHERE `persona`.`id` = '1615-13';
+DELETE FROM `institucional1`.`persona` WHERE `persona`.`id` = '1615-14';
+
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 211;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 212;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 213;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 214;
+DELETE FROM `institucional1`.`muestraempleador` WHERE `muestraempleador`.`id` = 215;
+
+*/
+
+
+
+
+/*
+Eliminar indicador 1.1.2 = 2
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 2
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 2
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 280
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 3 AND `instrumentohasindicador`.`indicador_id` = 2
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 2
+
+
+Eliminar indicador 10.32.7 = 410
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 410
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 410
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 269
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 410
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 410
+
+
+Eliminar indicador 10.32.8 = 411
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 411
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 411
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 270
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 411
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 411
+
+
+Eliminar indicador 10.33.2 = 415
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 415
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 415
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 273
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 415
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 415
+
+Eliminar indicador 9.30.8 = 384
+DELETE FROM `autoevaluacion`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 384
+DELETE FROM `autoevaluacion`.`indicador` WHERE `indicador`.`id` = 384
+DELETE FROM `institucional1`.`numericadocumental` WHERE `numericadocumental`.`id` = 245
+DELETE FROM `institucional1`.`instrumentohasindicador` WHERE `instrumentohasindicador`.`instrumento_id` = 2 AND `instrumentohasindicador`.`indicador_id` = 384
+DELETE FROM `institucional1`.`indicador` WHERE `indicador`.`id` = 384
+
+*/
+
+
+
+
 /*
 Eliminar Indicador 4.15.36 = 192
 Eliminar Indicador 6.20.9 = 245

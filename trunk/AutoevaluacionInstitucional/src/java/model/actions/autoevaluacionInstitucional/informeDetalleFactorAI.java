@@ -30,7 +30,7 @@ public class informeDetalleFactorAI implements Action {
 "                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/\n" +
-"                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 end ,2) as cumplimiento,\n" +
+"                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 end ,1) as cumplimiento,\n" +
 "                    format( ponderacioncaracteristica.ponderacion * case when ( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+\n" +
@@ -42,8 +42,8 @@ public class informeDetalleFactorAI implements Action {
 "                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/\n" +
-"                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 end , 2)as evaluacion,\n" +
-"                   format(5 * ponderacioncaracteristica.ponderacion ,2) as ideal,\n" +
+"                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 end , 1)as evaluacion,\n" +
+"                   format(5 * ponderacioncaracteristica.ponderacion ,1) as ideal,\n" +
 "                   format((ponderacioncaracteristica.ponderacion * case when ( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+\n" +
@@ -55,7 +55,7 @@ public class informeDetalleFactorAI implements Action {
 "                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+\n" +
 "                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/\n" +
-"                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 end / ( ponderacioncaracteristica.ponderacion))*20 ,2)as relacion\n" +
+"                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 end / ( ponderacioncaracteristica.ponderacion))*20 ,1)as relacion\n" +
 "                   FROM factor\n" +
 "                   INNER JOIN caracteristica ON caracteristica.factor_id = factor.id\n" +
 "                   INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id\n" +

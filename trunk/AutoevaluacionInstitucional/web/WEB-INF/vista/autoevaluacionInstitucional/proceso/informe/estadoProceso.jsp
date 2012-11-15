@@ -68,51 +68,52 @@
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'container',
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false
+                    type:'column'        
                 },
                 title: {
-                    text: 'Muestra seleccionada'
+                    text: 'Muestra seleccionada y evaluada' 
                 },
-                tooltip: {
-                    formatter: function() {
-                        return '<b>'+ this.point.name +'</b>: '+ this.y +' personas';
+                
+                xAxis: {
+                    categories: [
+                        'Estudiantes',
+                        'Docentes',
+                        'Administrativos',
+                        'Directivos',
+                        'Egresados',
+                        'Empleadores',
+                    ]
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Número de personas'
                     }
                 },
                 plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            color: '#000000',
-                            connectorColor: '#000000',
-                            formatter: function() {
-                                var aux = this.percentage;
-                                aux = aux.toFixed(2);
-                                return '<b>'+ this.point.name +'</b>: '+ aux +' %';
-                            }
-                        }
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
                     }
                 },
+                
                 series: [{
-                        type: 'pie',
-                        name: 'Porcentaje muestra escogida',
-                        data: [                            
-                            {
-                                name: 'Estudiantes',
-                                y: ${tabla2.rowsByIndex[0][0]},
-                                sliced: true,
-                                selected: true
-                            },
-                            [ 'Docentes',     ${tabla2.rowsByIndex[0][2]}],   
-                            [ 'Administrativos',     ${tabla2.rowsByIndex[0][4]}],   
-                            [ 'Directivos',     ${tabla2.rowsByIndex[0][6]}],   
-                            [ 'Egresados',     ${tabla2.rowsByIndex[0][8]}],
-                            [ 'Empleadores',     ${tabla2.rowsByIndex[0][10]}]
-                        ]
-                    }]
+                        name: 'Seleccionados',
+                        data: [${tabla2.rowsByIndex[0][0]}, ${tabla2.rowsByIndex[0][2]}, ${tabla2.rowsByIndex[0][4]}, ${tabla2.rowsByIndex[0][6]}, ${tabla2.rowsByIndex[0][8]}, ${tabla2.rowsByIndex[0][10]}]
+    
+                    }, {
+                        name: 'Evaluados',
+                        data: [${tabla2.rowsByIndex[0][1]}, ${tabla2.rowsByIndex[0][3]}, ${tabla2.rowsByIndex[0][5]}, ${tabla2.rowsByIndex[0][7]}, ${tabla2.rowsByIndex[0][9]}, ${tabla2.rowsByIndex[0][11]}],
+                        color: '#89A54E'
+    
+                    }],
+                
+                tooltip: {
+                    formatter: function() {
+                        return '<b>'+ this.x +'</b>: '+ this.y +' personas';
+                    }
+                }
+                
             });
         });
     });
@@ -426,7 +427,7 @@
                         </tr>
 
 
-                    <div id="container" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
+                    <div id="container" style="min-width: 400px; height: 500px; margin: 0 auto"></div>             
                     <br>
                     </tbody>
                 </table>

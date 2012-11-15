@@ -24,10 +24,10 @@ public class informeMatrizFactAI implements Action {
         Result matrizFactores3 = null;
 
         String sql2 = "SELECT c1.fid, c1.fno, c1.fpo,"
-                + " format( SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end)) / SUM( c1.ponderacionCara ) , 2 ) AS cumplimientoFact,"
-                + " format( (SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end) ) / SUM( c1.ponderacionCara )) * c1.fpo, 2 ) AS evaluacion,"
+                + " format( SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end)) / SUM( c1.ponderacionCara ) , 1 ) AS cumplimientoFact,"
+                + " format( (SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end) ) / SUM( c1.ponderacionCara )) * c1.fpo, 1 ) AS evaluacion,"
                 + " c1.fpo *5 AS ideal,"
-                + " format( (SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end)) / SUM( c1.ponderacionCara ))*20 , 2 ) AS relacion"
+                + " format( (SUM( c1.ponderacionCara * (case when c1.cumplimientoCara IS null THEN c1.cump2 else ((c1.cumplimientoCara+c1.cump2)/2) end)) / SUM( c1.ponderacionCara ))*20 , 1 ) AS relacion"
                 + " FROM ("
                 + " SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara,"
                 + " ponderacioncaracteristica.ponderacion as ponderacionCara, format("
@@ -36,7 +36,7 @@ public class informeMatrizFactAI implements Action {
                 + " sum( case when respuesta='3'  THEN 3 ELSE 0 end)+"
                 + " sum( case when respuesta='4'  THEN 4 ELSE 0 end)+"
                 + " sum( case when respuesta='5'  THEN 5 ELSE 0 end))/"
-                + " (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)),2) AS cumplimientoCara,"
+                + " (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)),1) AS cumplimientoCara,"
                 + " avg (   numericadocumental.evaluacion ) AS cump2"
                 + " FROM factor"
                 + " INNER JOIN caracteristica ON caracteristica.factor_id = factor.id"

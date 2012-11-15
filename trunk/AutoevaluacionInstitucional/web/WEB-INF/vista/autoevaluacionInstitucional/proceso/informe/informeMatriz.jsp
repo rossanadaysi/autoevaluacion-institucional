@@ -3,7 +3,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style type="text/css">
 
-    .table td {
+    .inicial td {
         text-align: right;
     }
 </style>
@@ -40,7 +40,7 @@
                             formatter: function() {
                                 var partes = this.value.split("-");
                                 
-                                return "Característica "+partes[0];
+                                return ""+partes[0];
                             },
                             rotation:-45,
                             align: 'right',
@@ -101,18 +101,18 @@
                     <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
                                                 {
                                                     y: ${caracteristica2[4]},
-                                                    color: '#B5CA92'
+                                                    color: '#80699B'
                                                 },
                                                 
                     </c:when>
-                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.5}">
+                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
                                                 {
                                                     y: ${caracteristica2[4]},
                                                     color: '#3D96AE'
                                                 },
                                                 
                     </c:when>
-                    <c:when test="${caracteristica2[4]<3.5 && caracteristica2[4]>=3.0}">
+                    <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
                                                 {
                                                     y: ${caracteristica2[4]},
                                                     color: '#DB843D'
@@ -145,18 +145,18 @@
                     <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
                                                 {
                                                     y: ${caracteristica2[4]},
-                                                    color: '#B5CA92'
+                                                    color: '#80699B'
                                                 }
                                                 
                     </c:when>
-                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.5}">
+                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
                                                 {
                                                     y: ${caracteristica2[4]},
                                                     color: '#3D96AE'
                                                 }
                                                 
                     </c:when>
-                    <c:when test="${caracteristica2[4]<3.5 && caracteristica2[4]>=3.0}">
+                    <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
                                                 {
                                                     y: ${caracteristica2[4]},
                                                     color: '#DB843D'
@@ -217,7 +217,7 @@
             <c:choose>
                 <c:when test="${matriz.getRowCount()!= 0}">
 
-                    <table class="table table-striped table-bordered table-condensed">
+                    <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
                         <th>Id Factor</th>
                         <th>Id</th>
@@ -264,7 +264,74 @@
                         </tbody>
                     </table>
                     <br/>
-                    <div id="grafica" style="min-width: 400px; height: 600px; margin: 0 auto"></div>             
+                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto"></div>             
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Escala</th>
+                                <th>Descripci&oacute;n</th>
+                                <th>Grado de cumplimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #89A54E;">
+                                <td>
+                                    4.5 a 5.0
+                                </td>
+                                <td>
+                                    Se cumple plenamente
+                                </td>
+                                <td>
+                                    90% a 100%
+                                </td>
+                            </tr>
+                            <tr style="background-color: #80699B;">
+                                <td>
+                                    4.0 a 4.4
+                                </td>
+                                <td>
+                                    Se cumple en alto grado
+                                </td>
+                                <td>
+                                     80% a 89%
+                                </td>
+                            </tr>
+                            <tr style="background-color: #3D96AE;">
+                                <td>
+                                    3.0 a 3.9
+                                </td>
+                                <td>
+                                    Se cumple en mediano grado
+                                </td>
+                                <td>
+                                     60% a 79%
+                                </td>
+                            </tr>
+                            <tr style="background-color: #DB843D;">
+                                <td>
+                                    2.0 a 2.9
+                                </td>
+                                <td>
+                                    Se cumple en bajo grado
+                                </td>
+                                <td>
+                                     40% - 59%
+                                </td>
+                            </tr>
+                            <tr style="background-color: #AA4643;">
+                                <td>
+                                    1.0 a 1.9
+                                </td>
+                                <td>
+                                    No se cumple
+                                </td>
+                                <td>
+                                     0% - 39%
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
                 </c:when>
                 <c:otherwise>
                     No Existen Hay datos Registrados en el Sistema.
