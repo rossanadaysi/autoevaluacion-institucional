@@ -50,7 +50,7 @@ public class PonderacionFactorAI implements Action {
         }
 
 
-        String sql1 = "select c1.total, c1.terminados, format((c1.terminados*100/c1.total),2) as porcentaje,(c1.total-c1.terminados) as faltantes, 100-format((c1.terminados*100/c1.total),2) as porFal "
+        String sql1 = "select c1.total, c1.terminados, format((c1.terminados*100/c1.total),1) as porcentaje,(c1.total-c1.terminados) as faltantes, 100-format((c1.terminados*100/c1.total),1) as porFal "
                 + " from("
                 + " select ("
                 + " (select count(*) from muestraestudiante where muestraestudiante.muestra_id=" + idMuestra + ")+"

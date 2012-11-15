@@ -1696,7 +1696,7 @@ public class formController extends HttpServlet {
                 int indis = rs1.getRowCount();
                 int doc = 0;
                 Result rs4 = null;
-                String sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 2 and numericadocumental.proceso_id = '" + idProceso + "'";
+                String sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where numericadocumental.instrumento_id = '2' and instrumentohasindicador.instrumento_id = '2' and numericadocumental.proceso_id = '" + idProceso + "'";
                 rs4 = conSql.CargarSql2(sql, bd);
                 if (((indis == 0) || (rs4.getRowCount() == indis))) {
                     doc = 1;
@@ -1710,7 +1710,7 @@ public class formController extends HttpServlet {
                 indis = rs1.getRowCount();
                 int num = 0;
                 rs4 = null;
-                sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where instrumentohasindicador.instrumento_id = 1 and numericadocumental.proceso_id = '" + idProceso + "'";
+                sql = "select indicador.id, indicador.nombre, numericadocumental.documento, numericadocumental.responsable, numericadocumental.medio, numericadocumental.lugar, numericadocumental.evaluacion, numericadocumental.accion from numericadocumental inner join indicador on numericadocumental.indicador_id = indicador.id inner join instrumentohasindicador on indicador.id = instrumentohasindicador.indicador_id where numericadocumental.instrumento_id = '3' and instrumentohasindicador.instrumento_id = '3' and numericadocumental.proceso_id = '" + idProceso + "'";
                 rs4 = conSql.CargarSql2(sql, bd);
                 if ((indis == 0) || (rs4.getRowCount() == indis)) {
                     num = 1;
