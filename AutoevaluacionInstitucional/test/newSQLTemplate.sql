@@ -1,3 +1,48 @@
+select c1.fid, c1.fno, c1.fpo, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara, avg(c1.cumplimiento), avg(cumplimiento)*c1.ponderacionCara, 5*c1.ponderacionCara, avg(cumplimiento)*20    from(
+
+SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara, 
+                   caracteristica.nombre as nombre, ponderacioncaracteristica.nivelimportancia as nivel, ponderacioncaracteristica.ponderacion as ponderacionCara, 
+                   format(case 
+           when ( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
+                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)+
+                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
+                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
+                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))) is null 
+           then  avg (numericadocumental.evaluacion ) 
+           when avg (numericadocumental.evaluacion )is null 
+           then (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
+                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)+
+                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
+                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
+                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))
+           else (( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
+                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)+
+                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
+                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
+                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 
+       end ,2) as cumplimiento
+                   FROM factor
+                   INNER JOIN caracteristica ON caracteristica.factor_id = factor.id
+                   INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id
+                   INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id
+                   INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id
+                   LEFT JOIN numericadocumental ON numericadocumental.indicador_id = indicador.id
+                   LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id
+                   LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
+                   group by indicador.id
+
+) as c1
+
+group by c1.cara
+
+
+
+
+
+
 Select * from numericadocumental
 where numericadocumental.proceso_id = '1' 
 and numericadocumental.instrumento_id = '3'
@@ -149,7 +194,7 @@ from numericadocumental
 inner join indicador on numericadocumental.indicador_id=indicador.id 
 where numericadocumental.indicador_id=146 and numericadocumental.instrumento_id=2
 
-/*detalle Caracteristica OK
+
 SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, 
 format(case 
            when ( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
@@ -157,8 +202,10 @@ format(case
                    sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
                    sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
                    sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
-                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))) is null then  avg (numericadocumental.evaluacion ) 
-           when avg (numericadocumental.evaluacion )is null then (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
+                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))) is null 
+           then  avg (numericadocumental.evaluacion ) 
+           when avg (numericadocumental.evaluacion )is null 
+           then (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
                    sum( case when respuesta='2'  THEN 2 ELSE 0 end)+
                    sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
                    sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
@@ -179,9 +226,8 @@ INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id
 LEFT JOIN numericadocumental ON numericadocumental.indicador_id = indicador.id
 LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id
 LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
-where caracteristica.id ="4"
+where caracteristica.id ="15"
 GROUP BY indicador.id
-*/
 
 
 /* DETALLE FACTOR OK
@@ -233,8 +279,9 @@ SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS
                    LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id
                    LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
                    LEFT JOIN encabezado ON encabezado.id = resultadoevaluacion.encabezado_id
+                   WHERE factor.id=4 
                    GROUP BY caracteristica.id;
-*/
+
 
 
 SELECT c1.fid, c1.fno, c1.ponderacionCara,
