@@ -276,7 +276,7 @@
 
                                 </td>
                                 <td>   
-                                    5.0
+                                    
                                 </td>
                                 <td>   
                                     <fmt:formatNumber type="number"   maxFractionDigits="1" value="${(cumplimiento/ponderacion)*20}" />%
