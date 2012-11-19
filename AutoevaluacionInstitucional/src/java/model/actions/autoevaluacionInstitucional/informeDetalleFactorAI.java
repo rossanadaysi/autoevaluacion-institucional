@@ -17,7 +17,7 @@ public class informeDetalleFactorAI implements Action {
         String idF = (String) request.getParameter("idF");
         sqlController conSql = new sqlController();
         Result detalleFactor = null;
-        String sql2 = "select c1.fid, c1.fno, c1.fpo, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara, avg(c1.cumplimiento), avg(cumplimiento)*c1.ponderacionCara, 5*c1.ponderacionCara, avg(cumplimiento)*20    from(\n"
+        String sql2 = "select c1.fid, c1.fno, c1.fpo, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara, format(avg(c1.cumplimiento),1), format(avg(cumplimiento)*c1.ponderacionCara,1), format(5*c1.ponderacionCara,2), format(avg(cumplimiento)*20,1)    from(\n"
                 + "\n"
                 + "SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara, \n"
                 + "                   caracteristica.nombre as nombre, ponderacioncaracteristica.nivelimportancia as nivel, ponderacioncaracteristica.ponderacion as ponderacionCara, \n"

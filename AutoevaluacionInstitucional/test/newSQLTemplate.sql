@@ -1,8 +1,8 @@
-select c1.fid, c1.fno, c1.fpo, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara, avg(c1.cumplimiento), avg(cumplimiento)*c1.ponderacionCara, 5*c1.ponderacionCara, avg(cumplimiento)*20    from(
+select c2.fid2, c2.fno2, c2.fpo2, format(sum(c2.cumpC*c2.pondC)/sum(c2.pondC),1), format((sum(c2.cumpC*c2.pondC)/sum(c2.pondC))*c2.fpo2,1), format((sum(c2.cumpC*c2.pondC)/sum(c2.pondC))*5,1), format((sum(c2.cumpC*c2.pondC)/sum(c2.pondC))*20,1) from (select c1.fid as fid2, c1.fno as fno2, c1.fpo as fpo2, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara as pondC, avg(c1.cumplimiento) as cumpC, avg(cumplimiento)*c1.ponderacionCara, 5*c1.ponderacionCara, avg(cumplimiento)*20    from(
 
 SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara, 
                    caracteristica.nombre as nombre, ponderacioncaracteristica.nivelimportancia as nivel, ponderacioncaracteristica.ponderacion as ponderacionCara, 
-                   format(case 
+                   case 
            when ( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+
                    sum( case when respuesta='2'  THEN 2 ELSE 0 end)+
                    sum( case when respuesta='3'  THEN 3 ELSE 0 end)+
@@ -23,7 +23,7 @@ SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS
                    sum( case when respuesta='4'  THEN 4 ELSE 0 end)+
                    sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
                    (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 
-       end ,2) as cumplimiento
+       end  as cumplimiento
                    FROM factor
                    INNER JOIN caracteristica ON caracteristica.factor_id = factor.id
                    INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id
@@ -36,7 +36,10 @@ SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS
 
 ) as c1
 
-group by c1.cara
+group by c1.cara) as c2
+group by c2.fid2
+
+
 
 
 
