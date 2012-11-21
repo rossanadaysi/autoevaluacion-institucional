@@ -225,7 +225,7 @@
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
                         <th>C&oacute;digo</th>
-                        <th>Caracter&oacute;stica</th>
+                        <th>Caracter&iacute;stica</th>
                         <th>Nivel de importacia</th>
                         <th>Ponderaci&oacute;n caracter&iacute;stica</th>
                         <th>Grado de Cumplimiento</th>

@@ -45,7 +45,7 @@ public class informeMatrizAI implements Action {
                 + "                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+\n"
                 + "                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/\n"
                 + "                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 \n"
-                + "       end ,2) as cumplimiento\n"
+                + "       end ,1) as cumplimiento\n"
                 + "                   FROM factor\n"
                 + "                   INNER JOIN caracteristica ON caracteristica.factor_id = factor.id\n"
                 + "                   INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id\n"
