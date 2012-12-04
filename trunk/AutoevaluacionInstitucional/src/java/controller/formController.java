@@ -1725,7 +1725,7 @@ public class formController extends HttpServlet {
                     Date d = new Date();
                     String fecha = String.valueOf(d);
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    String date = sdf.format(fecha);
+                    String date = sdf.format(d);
 
                     ProcesoJpaController pj = new ProcesoJpaController();
                     proceso.setFechacierre(date);
@@ -1790,7 +1790,7 @@ public class formController extends HttpServlet {
                 Date d = new Date();
                 String fecha = String.valueOf(d);
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                String date = sdf.format(fecha);
+                String date = sdf.format(d);
                 p.setFechainicio(date);
 
                 // valida ponderacion factores
