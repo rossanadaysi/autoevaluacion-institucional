@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" language="JavaScript">
-    
+
 
     $(document).ready(function() {
-        $("ul.nav-list li a").click(function(event){
+        $("ul.nav-list li a").click(function(event) {
             console.log("clickl");
             $(".nav li").removeClass("active");
             $(this).parent().siblings().removeClass("active");
@@ -13,8 +13,8 @@
             location = $(this).attr("href");
         })
     });
- 
-           
+
+
 </script>
 <div id="menu" style="padding: 8px 0pt;" class="well">
     <ul class="nav nav-list">  
@@ -30,8 +30,8 @@
             <li><a href="#IniciarProceso"><i class="icon-play"></i> Iniciar Proceso</a></li> 
             <li class="nav-header">Procesos Anteriores</li>
             <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
-        </c:if>
-        <c:if test="${aux_index2 == 2}">
+            </c:if>
+            <c:if test="${aux_index2 == 2}">
             <li class="nav-header">Proceso en ejecución</li>
             <li class="divider"></li>
             <li class="nav-header">Información del Proceso</li>
@@ -48,14 +48,14 @@
             <li class="divider"></li>
             <li class="nav-header">Estado del proceso</li>
             <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-time"></i> Estado del proceso</a></li>                                     
-            <%--    <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
-                <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
-                <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
-            --%>  <li class="divider"></li>
+                <%--    <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
+                    <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
+                    <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
+                --%>  <li class="divider"></li>
             <li class="nav-header">Procesos Anteriores</li>
             <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>        
-        </c:if>
-        <c:if test="${aux_index2 == 3}">
+            </c:if>
+            <c:if test="${aux_index2 == 3}">
             <li class="nav-header">Proceso finalizado</li>
             <li class="divider"></li>
             <li class="nav-header">Información del proceso</li>
@@ -69,35 +69,41 @@
             <li class="divider"></li>
             <li class="nav-header">Resultados del proceso</li>
             <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#estadoProceso"><i class="icon-info-sign"></i> Estadísticas generales</a></li>                                     
-            <%-- <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
-            <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
-            <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
-            --%>   <li class="divider"></li>
+                <%-- <li><a  id="informeEncuesta"  href="<%=request.getContextPath()%>/#informe1"><i class="icon-signal"></i> Informe resultado por encuestas</a></li>
+                <li><a  id="informeEncuesta2"  href="<%=request.getContextPath()%>/#informeMatriz"><i class="icon-signal"></i> Matriz de calidad por caracteristicas</a></li>
+                <li><a  id="informeMatrizFact"  href="<%=request.getContextPath()%>/#informeMatrizFactores"><i class="icon-signal"></i> Matriz de calidad por factores</a></li>
+                --%>   <li class="divider"></li>
             <li class="nav-header">Procesos</li>
-            <c:if test="${proActivo == 0}">
+                <c:if test="${proActivo == 0}">
                 <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
-            </c:if>
+                </c:if>
             <li><a id="listarProcesos" href="<%=request.getContextPath()%>/#listarProcesos"><i class="icon-th-list"></i> Listar Procesos</a></li>
-        </c:if>
-        <c:if test="${aux_index2 == 0}">
+            </c:if>
+            <c:if test="${aux_index2 == 0}">
             <li class="nav-header">Proceso</li>
             <li><a href="#CrearProceso1"><i class="icon-plus"></i>Proceso Nuevo</a></li>
-        </c:if>
+            </c:if>
     </ul>
 </div>
-<div align="center" style="bottom: 0px;  position: absolute;">
-    <c:choose>
-        <c:when test="${aux_index2 == 0 || aux_index2 == 1}">
-            <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 230px;"></img></a>
-            <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 230px;"></img></a>
-            <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 230px;"></img></a>
-            </c:when>
-            <c:otherwise>
-            <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 200px;"></img></a>
-            </c:otherwise>
-        </c:choose>
-        <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>
-               <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 118px;"></img></a>
-             <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 236px;"></img></a>
-        --%>
+<div>
+    <c:if  test="${aux_index2 == 0 || aux_index2 == 1}">
+        <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 220px;"></img></a>
+        <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 220px;"></img></a>
+        <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 220px;"></img></a>
+        </c:if>
+        <c:if  test="${aux_index2 == 3}">
+        <a title="Autoevaluación Institucional" href="http://autoevaluacioninstitucional.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/selloAcreditacion.png" style="width: 230px;"></img></a>
+        </c:if>
+        <c:if  test="${aux_index2 == 2}">
+        <div id="estado" class="alert alert-success" style="bottom: 0px; position: absolute; right: 0px; margin-right: 10px; margin-left: 10px; left: 0px; margin-bottom: 0px;">
+            <p>Estado del proceso: <c:out value="${porceEstadoProceso}"></c:out></p>
+                <div class="progress progress-success progress-striped active">
+                    <div class="bar" style="width: ${porceEstadoProceso}"></div>
+            </div>
+        </div>  
+    </c:if>
+    <%--    <img src="<%=request.getContextPath()%>/css/Captura.png" style="width: 224px; height: 80px"></img>
+       <a title="Esoluciones" href="http://www.iesoluciones.com/esoluciones/index.php" target="_blank"><img src="<%=request.getContextPath()%>/css/images/esoluciones.PNG" style="width: 118px;"></img></a>
+     <a title="Universidad de Cartagena" href="http://www.unicartagena.edu.co/" target="_blank"><img src="<%=request.getContextPath()%>/css/LogoUdeC.png" style="width: 236px;"></img></a>
+    --%>
 </div>
