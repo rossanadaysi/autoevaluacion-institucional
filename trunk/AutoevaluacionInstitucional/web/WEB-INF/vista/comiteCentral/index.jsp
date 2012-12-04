@@ -127,185 +127,190 @@
         </style>
 
         <script type="text/javascript">
-           
+
             var myLayout, innerLayout, middleLayout;
-            $(document).ready( function() {
-                location ="/AutoevaluacionInstitucional/#inicio";
-                
-                $('.about').click(function(){
-                    
+            $(document).ready(function() {
+                location = "/AutoevaluacionInstitucional/#inicio";
+
+                $('.about').click(function() {
+
                     $('#myModalAbout').modal();
                 });
 
 
-                $("div.ui-layout-center").ajaxStart(function(){
+                $("div.ui-layout-center").ajaxStart(function() {
                     $("div.ui-layout-center").append("<div id='contenido'></div>");
                     $("#contenido").hide();
                     $("div.ui-layout-center").append("<div class='page_loading'>"
-                        +"<span>Cargando</span>"
-                        +"<img src='css/images/loading.gif' style='margin-left:6px;'>"
-                        +"</div>");
-           
+                            + "<span>Cargando</span>"
+                            + "<img src='css/images/loading.gif' style='margin-left:6px;'>"
+                            + "</div>");
+
                 });
-                
+
                 myLayout = $('body').layout({
                     //	enable showOverflow on west-pane so CSS popups will overlap north pane
-                    west__size:			270
-                    ,   center__paneSelector:  ".ui-layout-center"
-                    ,   north__paneClass:    "ui-layout-pane2"
-                    //	reference only - these options are NOT required because 'true' is the default
-                    ,	closable:				true	// pane can open & close
-                    ,	resizable:				false	// when open, pane can be resized 
-                    ,	slidable:				false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
-                    ,   north__size:            41
-                    ,   north__closable:        false
-                    ,   north__maxSize:         41    
-                    ,   north__slidable:		false	// OVERRIDE the pane-default of 'slidable=true'
-                    ,	north__spacing_open:	0		// no resizer-bar when open (zero height)
-                    ,	south__resizable:		false	// OVERRIDE the pane-default of 'resizable=true'
-                    ,	south__closable:		false	
-                    ,	south__spacing_open:	0		// no resizer-bar when open (zero height)
-                    ,	west__spacing_open:	0
-                    ,	west__spacing_closed:			20
-                    ,	west__togglerLength_closed:	35
-                    ,	west__togglerAlign_closed:	"top"
-                    ,	west__togglerContent_closed:	"<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
-                    ,	west__togglerTip_closed:	"Mostrar menú"
-                    ,	west__togglerTip_open:	        "Ocultar menú"
-                    ,   west__onclose_end: function(){ $("#conte").removeClass("span10").addClass("span12")}
-                    ,   west__onopen_end: function(){$("#conte").removeClass("span12").addClass("span10")}
-                    ,   south__paneClass:               "ui-layout-pane"
-                    ,	west__togglerContent_open:      ""	
-                    ,	west__minSize:			200
-                    ,	west__maxSize:			350
-                                                
-                     
+                    west__size: 270
+                            , center__paneSelector: ".ui-layout-center"
+                            , north__paneClass: "ui-layout-pane2"
+                            //	reference only - these options are NOT required because 'true' is the default
+                            , closable: true	// pane can open & close
+                            , resizable: false	// when open, pane can be resized 
+                            , slidable: false	// when closed, pane can 'slide' open over other panes - closes on mouse-out
+                            , north__size: 41
+                            , north__closable: false
+                            , north__maxSize: 41
+                            , north__slidable: false	// OVERRIDE the pane-default of 'slidable=true'
+                            , north__spacing_open: 0		// no resizer-bar when open (zero height)
+                            , south__resizable: false	// OVERRIDE the pane-default of 'resizable=true'
+                            , south__closable: false
+                            , south__spacing_open: 0		// no resizer-bar when open (zero height)
+                            , west__spacing_open: 0
+                            , west__spacing_closed: 20
+                            , west__togglerLength_closed: 35
+                            , west__togglerAlign_closed: "top"
+                            , west__togglerContent_closed: "<button id='west-open' class='close' style='float:left;margin-left:4px;opacity:1;margin-top:-10px;'>&raquo;</button>"
+                            , west__togglerTip_closed: "Mostrar menú"
+                            , west__togglerTip_open: "Ocultar menú"
+                            , west__onclose_end: function() {
+                        $("#conte").removeClass("span10").addClass("span12")
+                    }
+                    , west__onopen_end: function() {
+                        $("#conte").removeClass("span12").addClass("span10")
+                    }
+                    , south__paneClass: "ui-layout-pane"
+                            , west__togglerContent_open: ""
+                            , west__minSize: 200
+                            , west__maxSize: 350
+
+
                 });
-                myLayout.allowOverflow('north'); 
+                myLayout.allowOverflow('north');
                 // setTimeout( myLayout.resizeAll, 1000 ); /* allow time for browser to re-render with new theme */
                 // save selector strings to vars so we don't have to repeat it
                 // must prefix paneClass with "body > " to target ONLY the outerLayout panes
                 myLayout.addCloseBtn("#west-closer", "west");
-		
-               
-               
-               
-                
+
+
+
+
+
             }); //fin de document.ready
-                
-           
+
+
         </script>
         <script type="text/javascript">
-            $(function(){
-                
-                $("ul.nav-list li a").click(function(event){
+            $(function() {
+
+                $("ul.nav-list li a").click(function(event) {
                     $(".nav li").removeClass("active");
                     $("ul.nav-list li a").children("i").removeClass("icon-white");
                     $(this).parent().addClass("active");
                     $(this).children("i").addClass("icon-white");
                     location = $(this).attr("href");
                 })
-            
-                $(window).hashchange(function(){
+
+                $(window).hashchange(function() {
                     var hash = location.hash;
-                
-                    if(hash.indexOf("#editar")!=-1){
+
+                    if (hash.indexOf("#editar") != -1) {
                         $(".nav li").removeClass("active");
                         $("ul.nav-list li a").children("i").removeClass("icon-white");
                     }
-                    if(hash=="#CerrarSesion"){//CerrarSesion
-                        $.ajax({ 
-                            type: "POST", 
-                            url: "<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion", 
-                            beforeSend:function(){
-                                $("div.ui-layout-center").hide();  
+                    if (hash == "#CerrarSesion") {//CerrarSesion
+                        $.ajax({
+                            type: "POST",
+                            url: "<%=request.getContextPath()%>/ControllerAI?action=CerrarSesion",
+                            beforeSend: function() {
+                                $("div.ui-layout-center").hide();
                             },
-                            success: function() 
-                            { location = "<%=request.getContextPath()%>/";
+                            success: function()
+                            {
+                                location = "<%=request.getContextPath()%>/";
                             }
                         });
-                                  
+
                     }//fin CerrarSesion
-                    
-                    if(hash=="#inicio"){//inicio
+
+                    if (hash == "#inicio") {//inicio
                         $("div.ui-layout-center").empty();
                         $("div.ui-layout-center").append(
-                        "<div id='conte' class='span10' style='text-align: justify'>"
-                            +"<div class='hero-unit'>"
-                            +"<h1>Autoevaluaci&oacute;n Institucional!</h1>"
-                            +"<p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>"
-                            +"<p><a class='btn btn-primary btn-large' target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional'>Leer M&aacute;s »</a></p>"
-                            +"</div>"
-                            +"<div class='row-fluid'>"
-                            +"<div class='span4'>"
-                            +"<h2>Definici&oacute;n</h2>"
-                            +"<p>Para la Institución, la autoevaluación es un instrumento de gestión, que le permite una revisión sistemática de los procesos académicos y administrativos. De esta manera, se propone optimizar y abrir espacios para la elaboración y puesta en marcha de planes de mejoramiento y de mantenimiento que, por supuesto, den respuesta a su política de calidad.</p>"
-                            +"<p><a target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/definicion' class='btn'>Ver detalles »</a></p>"
-                            +"</div><!--/span-->"
-                            +"<div class='span4'>"
-                            +"<h2>Modelo</h2>"
-                            +"<p>El Modelo de Autoevaluación de la Universidad de Cartagena se diseñó siguiendo los lineamientos establecidos por el CNA y  fue articulado a la política de mejoramiento de la calidad de la Institución. De acuerdo a ello, lo constituyen un conjunto de factores, características e indicadores que sirven como instrumento analítico en la valoración de los diversos elementos que intervienen en la operación comprensiva de la calidad de la Institución.</p>"
-                            +"<p><a href='http://autoevaluacioninstitucional.unicartagena.edu.co/images/pdf/modelo_de_autoevaluacin_institucional.pdf'>Descargar Modelo de Autoevaluación Institucional</a></p></p>"
-                            +"<p><a target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/modelo-de-autoevaluacion' class='btn'>Ver detalles »</a></p>"
-                            +"</div>"
-                            +"<div class='span4'>"
-                            +"<h2>Marco Normativo</h2>"
-                            +"<p>Los Lineamientos de Autoevaluación para la Acreditación Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y El Modelo de Autoevaluación Institucional con fines de acreditación de la Universidad de Cartagena, se fundamentan en normas externas y normas internas. </p>"
-                            +"<p><a target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/marco-normativo' class='btn'>Ver detalles »</a></p>"
-                            +"</div><!--/span-->"
-                            +"</div><!--/row-->"
-                            +"</div>");
+                                "<div id='conte' class='span10' style='text-align: justify'>"
+                                + "<div class='hero-unit'>"
+                                + "<h1>Autoevaluaci&oacute;n Institucional!</h1>"
+                                + "<p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El Consejo Acad&eacute;mico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; instrumento de gesti&oacute;n que permite la revisi&oacute;n sistem&aacute;tica de los procesos acad&eacute;micos y administrativos para  la elaboraci&oacute;n y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su pol&iacute;tica de calidad.</p>"
+                                + "<p><a class='btn btn-primary btn-large' target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional'>Leer M&aacute;s »</a></p>"
+                                + "</div>"
+                                + "<div class='row-fluid'>"
+                                + "<div class='span4'>"
+                                + "<h2>Definici&oacute;n</h2>"
+                                + "<p>Para la Institución, la autoevaluación es un instrumento de gestión, que le permite una revisión sistemática de los procesos académicos y administrativos. De esta manera, se propone optimizar y abrir espacios para la elaboración y puesta en marcha de planes de mejoramiento y de mantenimiento que, por supuesto, den respuesta a su política de calidad.</p>"
+                                + "<p><a target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/definicion' class='btn'>Ver detalles »</a></p>"
+                                + "</div><!--/span-->"
+                                + "<div class='span4'>"
+                                + "<h2>Modelo</h2>"
+                                + "<p>El Modelo de Autoevaluación de la Universidad de Cartagena se diseñó siguiendo los lineamientos establecidos por el CNA y  fue articulado a la política de mejoramiento de la calidad de la Institución. De acuerdo a ello, lo constituyen un conjunto de factores, características e indicadores que sirven como instrumento analítico en la valoración de los diversos elementos que intervienen en la operación comprensiva de la calidad de la Institución.</p>"
+                                + "<p><a href='http://autoevaluacioninstitucional.unicartagena.edu.co/images/pdf/modelo_de_autoevaluacin_institucional.pdf'>Descargar Modelo de Autoevaluación Institucional</a></p></p>"
+                                + "<p><a target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/modelo-de-autoevaluacion' class='btn'>Ver detalles »</a></p>"
+                                + "</div>"
+                                + "<div class='span4'>"
+                                + "<h2>Marco Normativo</h2>"
+                                + "<p>Los Lineamientos de Autoevaluación para la Acreditación Institucional, el Sistema de Aseguramiento de la Calidad en Colombia, y El Modelo de Autoevaluación Institucional con fines de acreditación de la Universidad de Cartagena, se fundamentan en normas externas y normas internas. </p>"
+                                + "<p><a target='_blank' href='http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional/marco-normativo' class='btn'>Ver detalles »</a></p>"
+                                + "</div><!--/span-->"
+                                + "</div><!--/row-->"
+                                + "</div>");
                         $("ul.nav-list li").removeClass("active");
                         $(".nav-collapse .nav >li:eq(0)").addClass("active");
                         $("ul.nav-list li").siblings().children("a").children("i").removeClass("icon-white");
                         return false;
                     } //fin inicio
-                    
-                    
-                    if(hash.indexOf("#editarFactor")!=-1 || hash.indexOf("#editarEncuesta")!=-1 || hash.indexOf("#editarPregunta")!=-1
-                        || hash.indexOf("#editarCaracteristica")!=-1 || hash.indexOf("#editarIndicador")!=-1 || hash.indexOf("#verEncuesta")!=-1){
+
+
+                    if (hash.indexOf("#editarFactor") != -1 || hash.indexOf("#editarEncuesta") != -1 || hash.indexOf("#editarPregunta") != -1
+                            || hash.indexOf("#editarCaracteristica") != -1 || hash.indexOf("#editarIndicador") != -1 || hash.indexOf("#verEncuesta") != -1) {
                         var cual = hash.split("&");
                         var url3 = "<%=request.getContextPath()%>/ControllerCC?action=";
-                        url3 = url3.concat(cual[0].substring(1),"CC&id=",cual[1]);
+                        url3 = url3.concat(cual[0].substring(1), "CC&id=", cual[1]);
                         $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
+                        $.ajax({
+                            type: "POST",
+                            url: url3,
+                            success: function(data)
                             {
                                 $("#contenido").append(data);
-                                $("#contenido").show(200, function(){
+                                $("#contenido").show(200, function() {
                                     $(".page_loading").hide();
-                                })     
-                                
+                                })
+
                             } //fin success
                         }); //fin del $.ajax
-                            
-                            
+
+
                     }
-                   
-                    if(hash == "#crearFactor" || hash == "#crearCaracteristica" || hash == "#crearIndicador"
-                        || hash == "#crearEncuesta" || hash == "#listarFactores" || hash == "#listarPreguntas"
-                        || hash == "#listarEncuestas" || hash == "#listarIndicadores" || hash == "#listarCaracteristicas"
-                        || hash == "#crearPregunta" ){
-                            
-                        var url3 = "<%=request.getContextPath()%>/"+hash;
-                        url3 = url3.replace('#', "ControllerCC?action=")+"CC";
-                          
+
+                    if (hash == "#crearFactor" || hash == "#crearCaracteristica" || hash == "#crearIndicador"
+                            || hash == "#crearEncuesta" || hash == "#listarFactores" || hash == "#listarPreguntas"
+                            || hash == "#listarEncuestas" || hash == "#listarIndicadores" || hash == "#listarCaracteristicas"
+                            || hash == "#crearPregunta") {
+
+                        var url3 = "<%=request.getContextPath()%>/" + hash;
+                        url3 = url3.replace('#', "ControllerCC?action=") + "CC";
+
                         $("div.ui-layout-center").empty();
-                        $.ajax({ 
-                            type: "POST", 
-                            url: url3, 
-                            success: function(data) 
+                        $.ajax({
+                            type: "POST",
+                            url: url3,
+                            success: function(data)
                             {
                                 $("#contenido").append(data);
-                                $("#contenido").show(200, function(){
+                                $("#contenido").show(200, function() {
                                     $(".page_loading").hide();
-                                })     
-                                
+                                })
+
                             } //fin success
                         }); //fin del $.ajax
-                         
+
                     }
                 });//fin hashchange
             });//fin function
@@ -366,7 +371,7 @@
             <div id="conte" class="span10" style="text-align: justify">
                 <div class="hero-unit">
                     <h1>Autoevaluaci&oacute;n Institucional!</h1>
-                    <p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El consejo Academico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; Instrumento de gesti&oacute;n que permite la revision sistematica de los procesos acad&eacute;micos y administrativos para  la elaboracion y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su politica de calidad.</p>
+                    <p style='font-size: 18px; font-weight: 200; line-height: 27px;'>El Consejo Acad&eacute;mico aprob&oacute; el Modelo de Autoevaluaci&oacute;n con fines de Acreditaci&oacute;n Institucional de la Universidad de Cartagena; instrumento de gesti&oacute;n que permite la revisi&oacute;n sistem&aacute;tica de los procesos acad&eacute;micos y administrativos para  la elaboraci&oacute;n y puesta en marcha de planes de mejoramiento y de mantenimiento que den respuesta a su pol&iacute;tica de calidad.</p>
                     <p><a class="btn btn-primary btn-large" target="_blank" href="http://autoevaluacioninstitucional.unicartagena.edu.co/index.php/autoevaluacion-institucional">Leer M&aacute;s »</a></p>
                 </div>
                 <div class="row-fluid">

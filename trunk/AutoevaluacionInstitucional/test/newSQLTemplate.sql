@@ -1,3 +1,110 @@
+DELETE 
+p1
+FROM resultadoevaluacion AS p1 
+CROSS JOIN
+(SELECT idResultadoEvaluacion
+FROM resultadoevaluacion
+INNER JOIN encabezado ON resultadoevaluacion.encabezado_id = encabezado.id
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN estudiante ON persona.id = estudiante.persona_id
+WHERE estudiante.id = '11603-1')
+AS p2
+USING (idResultadoEvaluacion);
+
+DELETE 
+p1
+FROM encabezado AS p1 
+CROSS JOIN
+(SELECT encabezado.id
+FROM encabezado 
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN estudiante ON persona.id = estudiante.persona_id
+WHERE estudiante.id = '11603-1')
+AS p2
+USING (id);
+
+
+
+
+DELETE 
+p1
+FROM resultadoevaluacion AS p1 
+CROSS JOIN
+(SELECT idResultadoEvaluacion
+FROM resultadoevaluacion
+INNER JOIN encabezado ON resultadoevaluacion.encabezado_id = encabezado.id
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN docente ON persona.id = docente.persona_id
+INNER JOIN programa ON docente.programa_id = programa.id
+WHERE programa.id = 592)
+AS p2
+USING (idResultadoEvaluacion);
+
+DELETE 
+p1
+FROM encabezado AS p1 
+CROSS JOIN
+(SELECT encabezado.id
+FROM encabezado 
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN docente ON persona.id = docente.persona_id
+INNER JOIN programa ON docente.programa_id = programa.id
+WHERE programa.id = 592)
+AS p2
+USING (id);
+
+
+/*SELECT *
+FROM resultadoevaluacion
+INNER JOIN encabezado ON resultadoevaluacion.encabezado_id = encabezado.id
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN estudiante ON persona.id = estudiante.persona_id
+INNER JOIN programa ON estudiante.programa_id = programa.id
+INNER JOIN facultad ON programa.facultad_id = facultad.id
+WHERE facultad.nombre LIKE '%CREAD%'
+group by encabezado.id
+
+SELECT *
+FROM encabezado
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN estudiante ON persona.id = estudiante.persona_id
+INNER JOIN programa ON estudiante.programa_id = programa.id
+INNER JOIN facultad ON programa.facultad_id = facultad.id
+WHERE facultad.nombre LIKE '%CREAD%'
+
+SELECT idResultadoEvaluacion
+FROM resultadoevaluacion
+INNER JOIN encabezado ON resultadoevaluacion.encabezado_id = encabezado.id
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN muestracriterio ON persona.id = muestracriterio.persona_id
+WHERE muestracriterio.descripcioncriterio_id = 11
+
+
+SELECT idResultadoEvaluacion
+FROM resultadoevaluacion
+INNER JOIN encabezado ON resultadoevaluacion.encabezado_id = encabezado.id
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN muestracriterio ON persona.id = muestracriterio.persona_id
+WHERE muestracriterio.descripcioncriterio_id != 11
+
+
+SELECT idResultadoEvaluacion
+FROM resultadoevaluacion
+INNER JOIN encabezado ON resultadoevaluacion.encabezado_id = encabezado.id
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN estudiante ON persona.id = estudiante.persona_id
+INNER JOIN programa ON estudiante.programa_id = programa.id
+WHERE programa.nombre NOT LIKE '%CREAD%'
+
+SELECT encabezado.id
+FROM encabezado 
+INNER JOIN persona ON encabezado.persona_id = persona.id
+INNER JOIN estudiante ON persona.id = estudiante.persona_id
+INNER JOIN programa ON estudiante.programa_id = programa.id
+WHERE programa.id = 14
+
+/*
+
 select c2.fid2, c2.fno2, c2.fpo2, format(sum(c2.cumpC*c2.pondC)/sum(c2.pondC),1), format((sum(c2.cumpC*c2.pondC)/sum(c2.pondC))*c2.fpo2,1), format((sum(c2.cumpC*c2.pondC)/sum(c2.pondC))*5,1), format((sum(c2.cumpC*c2.pondC)/sum(c2.pondC))*20,1) from (select c1.fid as fid2, c1.fno as fno2, c1.fpo as fpo2, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara as pondC, avg(c1.cumplimiento) as cumpC, avg(cumplimiento)*c1.ponderacionCara, 5*c1.ponderacionCara, avg(cumplimiento)*20    from(
 
 SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara, 

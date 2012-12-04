@@ -230,13 +230,13 @@ public class loginController extends HttpServlet {
                                         }
 
                                     } else {
-                                        out.println(1);
+                                        //out.println(1);
                                         System.out.println("No hay procesos");
                                         aux = 0;
                                         session.setAttribute("aux_index2", 0);
                                     }
                                     if (aux == 3) {
-                                        out.println(1);
+                                        //out.println(1);
                                         System.out.println("No hay procesos acitvos");
                                         session.setAttribute("aux_IniciarP", 2);
                                         session.setAttribute("aux_index2", 3);
