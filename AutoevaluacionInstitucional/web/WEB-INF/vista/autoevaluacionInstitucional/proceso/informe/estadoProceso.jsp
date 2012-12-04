@@ -125,7 +125,7 @@
             <br>
             <fieldset>
                 <legend>
-                    Estado del proceso en ejecución
+                    Estado del proceso
                 </legend>
                 <c:if test="${aux_index2 != 3}">
                     <div class="span10" style="margin-left: 0px;">
