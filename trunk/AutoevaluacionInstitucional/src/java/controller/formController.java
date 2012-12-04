@@ -1721,8 +1721,12 @@ public class formController extends HttpServlet {
 
 
                 if (doc != 0 && num != 0) {
+
                     Date d = new Date();
-                    String date = String.valueOf(d);
+                    String fecha = String.valueOf(d);
+                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                    String date = sdf.format(fecha);
+
                     ProcesoJpaController pj = new ProcesoJpaController();
                     proceso.setFechacierre(date);
                     try {
@@ -1784,7 +1788,9 @@ public class formController extends HttpServlet {
                 Proceso p = (Proceso) session.getAttribute("proceso");
                 int idProceso = p.getId();
                 Date d = new Date();
-                String date = String.valueOf(d);
+                String fecha = String.valueOf(d);
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                String date = sdf.format(fecha);
                 p.setFechainicio(date);
 
                 // valida ponderacion factores
@@ -2031,12 +2037,12 @@ public class formController extends HttpServlet {
                                             + "`accion` = '" + accion + "' "
                                             + "where numericadocumental.id = '" + idNumericaDoc + "'";
                                     conSql.UpdateSql(sql, bd);
-                                    
+
 
                                 } else {
                                     String sql = "DELETE  from numericadocumental where numericadocumental.id = '" + idNumericaDoc + "'";
                                     conSql.UpdateSql(sql, bd);
-                                    
+
                                 }
                             } else {
                                 if (!nombreDoc.equals("") && !responsable.equals("") && !medio.equals("")
@@ -2044,7 +2050,7 @@ public class formController extends HttpServlet {
 
                                     conSql.UpdateSql("INSERT INTO `numericadocumental` (`id` ,`documento` ,`responsable` ,`medio` ,`lugar` ,`evaluacion` ,`accion` ,`proceso_id` ,`instrumento_id` ,`indicador_id`) "
                                             + "VALUES (NULL , '" + nombreDoc + "', '" + responsable + "', '" + medio + "', '" + lugar + "', '" + evaluacion + "', '" + accion + "', '" + idProceso + "', '" + instrumentoId + "', '" + id + "')", bd);
-                                    
+
                                 }
 
                             }
