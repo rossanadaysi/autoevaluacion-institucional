@@ -68,10 +68,10 @@
     <class>entity.Criterio</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.8.2:3306/autoevaluacion"/>
-      <property name="javax.persistence.jdbc.password" value="autoeval2012"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/autoevaluacion"/>
+      <property name="javax.persistence.jdbc.password" value="123456"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="autoeval"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
     </properties>
   </persistence-unit>
 </persistence>
