@@ -55,10 +55,10 @@ public class sqlConnection {
     // * @param clave  Clave de la BD MySQL.
     //+
     public void conectarMySQL(String bd) {
-        String maquina = "192.168.8.2";
+        String maquina = "127.0.0.1";
         String nombreBD = bd;
-        String usuario = "autoeval";
-        String clave = "autoeval2012";
+        String usuario = "root";
+        String clave = "123456";
         /*192.168.8.2
          * autoeval
          * autoeval2012*/
