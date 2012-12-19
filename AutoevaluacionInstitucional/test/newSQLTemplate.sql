@@ -1,3 +1,122 @@
+select  programa.nombre, count(estudiante.id) from muestraestudiante 
+inner join estudiante on muestraestudiante.estudiante_id = estudiante.id 
+inner join programa on estudiante.programa_id = programa.id
+group by programa.id
+
+select  programa.nombre, count(estudiante.id) from encabezado
+inner join persona on encabezado.persona_id = persona.id 
+inner join estudiante on estudiante.persona_id = persona.id 
+inner  join programa on estudiante.programa_id = programa.id
+group by programa.id
+
+
+select  programa.nombre, count(docente.id) from muestradocente 
+inner join docente on muestradocente.docente_id = docente.id 
+inner join programa on docente.programa_id = programa.id
+group by programa.id
+
+select  programa.nombre, count(docente.id) from encabezado
+inner join persona on encabezado.persona_id = persona.id 
+inner join docente on docente.persona_id = persona.id 
+inner  join programa on docente.programa_id = programa.id
+group by programa.id
+
+
+select  programa.nombre, count(egresado.id) from muestraegresado 
+inner join egresado on muestraegresado.egresado_id = egresado.id 
+inner join programa on egresado.programa_id = programa.id
+group by programa.id
+
+select  programa.nombre, count(egresado.id) from encabezado
+inner join persona on encabezado.persona_id = persona.id 
+inner join egresado on egresado.persona_id = persona.id 
+inner  join programa on egresado.programa_id = programa.id
+group by programa.id
+
+
+
+select  descripcioncriterio.nombre, count(administrativo.id) from muestracriterio 
+inner join persona on muestracriterio.persona_id = persona.id 
+inner join administrativo on administrativo.persona_id = persona.id 
+inner join descripcioncriterio on muestracriterio.descripcioncriterio_id = descripcioncriterio.id
+group by descripcioncriterio.id
+
+select  descripcioncriterio.nombre, count(administrativo.id) from encabezado 
+inner join persona on encabezado.persona_id = persona.id 
+inner join administrativo on administrativo.persona_id = persona.id 
+inner join muestracriterio on persona.id = muestracriterio.persona_id
+inner join descripcioncriterio on muestracriterio.descripcioncriterio_id = descripcioncriterio.id
+group by descripcioncriterio.id
+
+
+select  descripcioncriterio.nombre, count(empleador.id) from muestracriterio 
+inner join persona on muestracriterio.persona_id = persona.id 
+inner join empleador on empleador.persona_id = persona.id 
+inner join descripcioncriterio on muestracriterio.descripcioncriterio_id = descripcioncriterio.id
+group by descripcioncriterio.id
+
+select  descripcioncriterio.nombre, count(empleador.id) from encabezado 
+inner join persona on encabezado.persona_id = persona.id 
+inner join empleador on empleador.persona_id = persona.id 
+inner join muestracriterio on persona.id = muestracriterio.persona_id
+inner join descripcioncriterio on muestracriterio.descripcioncriterio_id = descripcioncriterio.id
+group by descripcioncriterio.id
+
+
+select  descripcioncriterio.nombre, count(directorprograma.id) from muestracriterio 
+inner join persona on muestracriterio.persona_id = persona.id 
+inner join directorprograma on directorprograma.persona_id = persona.id 
+inner join descripcioncriterio on muestracriterio.descripcioncriterio_id = descripcioncriterio.id
+group by descripcioncriterio.id
+
+select  descripcioncriterio.nombre, count(directorprograma.id) from encabezado 
+inner join persona on encabezado.persona_id = persona.id 
+inner join directorprograma on directorprograma.persona_id = persona.id 
+inner join muestracriterio on persona.id = muestracriterio.persona_id
+inner join descripcioncriterio on muestracriterio.descripcioncriterio_id = descripcioncriterio.id
+group by descripcioncriterio.id
+
+
+
+
+
+
+
+
+SELECT caracteristica.id AS cid, caracteristica.nombre AS cno, indicador.id, indicador.nombre, 
+                format(case 
+                           when ( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)
+                                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)
+                                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)
+                                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)
+                                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+                                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))) is null then  avg (numericadocumental.evaluacion ) 
+                           when avg (numericadocumental.evaluacion )is null then (sum( case when respuesta='1'  THEN 1 ELSE 0 end)
+                                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)
+                                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)
+                                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)
+                                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+                                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))
+                           else (( (sum( case when respuesta='1'  THEN 1 ELSE 0 end)
+                                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)
+                                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)
+                                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)
+                                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/
+                                   (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end)))+avg (numericadocumental.evaluacion))/2 
+                       end ,1) as cumplimiento, 
+                factor.id, indicador.codigo, factor.nombre
+                FROM Caracteristica
+                INNER JOIN factor ON caracteristica.factor_id = factor.id
+                INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id
+                INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id
+                LEFT JOIN numericadocumental ON numericadocumental.indicador_id = indicador.id
+                LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id
+                LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id
+                where caracteristica.id ="+idC+" "
+                GROUP BY indicador.id";
+
+
+
 DELETE 
 p1
 FROM resultadoevaluacion AS p1 
@@ -594,7 +713,7 @@ GROUP BY pregunta.id
 
 
 SELECT indicador.id, indicador.nombre AS ino, pregunta.id AS pi, pregunta.pregunta, format(avg(respuesta),2), caracteristica.id, pregunta.codigo, indicador.codigo"
-                + " FROM Indicador"
+                 FROM Indicador"
                 + " INNER JOIN caracteristica ON indicador.caracteristica_id = caracteristica.id"
                 + " INNER JOIN pregunta ON pregunta.indicador_id = indicador.id"
                 + " INNER JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id"
