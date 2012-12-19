@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style type="text/css">
 
     .inicial td {
@@ -80,7 +79,7 @@
                     tooltip: {
                         formatter: function() {
                             return '<b>'+ this.x +'</b><br/>'+
-                                'Cumplimiento: '+ Highcharts.numberFormat(this.y, 2) +
+                                'Cumplimiento: '+ Highcharts.numberFormat(this.y, 1) +
                                 '';
                         }
                     },
@@ -264,7 +263,9 @@
                         </tbody>
                     </table>
                     <br/>
-                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto"></div>             
+                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto">
+
+                    </div>
                       <table class="table">
                         <thead>
                             <tr>

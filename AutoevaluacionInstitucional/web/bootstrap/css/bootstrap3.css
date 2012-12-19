@@ -1511,6 +1511,31 @@ table {
     border-top: 1px solid #dddddd;
 }
 
+.table tbody tr.success td {
+    background-color: #DFF0D8;
+}
+.table tbody tr.error td {
+    background-color: #F2DEDE;
+}
+.table tbody tr.warning td {
+    background-color: #FCF8E3;
+}
+.table tbody tr.info td {
+    background-color: #D9EDF7;
+}
+.table tbody tr.success:hover td {
+    background-color: #D0E9C6;
+}
+.table tbody tr.error:hover td {
+    background-color: #EBCCCC;
+}
+.table tbody tr.warning:hover td {
+    background-color: #FAF2CC;
+}
+.table tbody tr.info:hover td {
+    background-color: #C4E3F3;
+}
+
 .table th {
     font-weight: bold;
 }

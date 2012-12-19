@@ -6,11 +6,12 @@
             <br/>
             <fieldset>
                 <legend>Listado de evaluación información documental</legend>
-                <table class="table table-striped table-bordered table-condensed">
+                <table class="table table-bordered table-condensed">
                     <thead>  
                         <tr>
-                            <th>C&oacute;digo del indicador</th>
-                            <th>Documento asociado</th>
+                            <th>C&oacute;digo</th>
+                            <th>Indicador</th>
+                            <th>Documento</th>
                             <th>Responsable</th>
                             <th>Medio</th>
                             <th>Lugar</th>
@@ -21,15 +22,33 @@
                     <tbody>
                     <tbody>
                         <c:forEach items="${listEvaluacionDocs.rowsByIndex}" var="item" varStatus="iter">
-                            <tr>
-                                <td>${item[8]}</td>
-                                <td>${item[2]}</td>
-                                <td>${item[3]}</td>
-                                <td>${item[4]}</td>
-                                <td>${item[5]}</td>
-                                <td>${item[6]}</td>
-                                <td>${item[7]}</td>
-                            </tr>
+                            <c:choose>
+                                <c:when test="${item[6]<4}">
+                                    <tr class="error">
+                                        <td>${item[8]}</td>
+                                        <td>${item[1]}</td>
+                                        <td>${item[2]}</td>
+                                        <td>${item[3]}</td>
+                                        <td>${item[4]}</td>
+                                        <td>${item[5]}</td>
+                                        <td>${item[6]}</td>
+                                        <td>${item[7]}</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${item[8]}</td>
+                                        <td>${item[1]}</td>
+                                        <td>${item[2]}</td>
+                                        <td>${item[3]}</td>
+                                        <td>${item[4]}</td>
+                                        <td>${item[5]}</td>
+                                        <td>${item[6]}</td>
+                                        <td>${item[7]}</td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
+
                         </c:forEach>
                     </tbody>
                 </table>  

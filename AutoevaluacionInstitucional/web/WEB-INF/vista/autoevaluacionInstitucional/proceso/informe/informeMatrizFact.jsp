@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style type="text/css">
 
@@ -54,8 +53,7 @@
                     
                     plotOptions: {
                         series: {
-                            colorByPoint: true,
-                            cursor: 'pointer',
+                          cursor: 'pointer',
                             point: {
                                 events: {
                                     click: function() {
