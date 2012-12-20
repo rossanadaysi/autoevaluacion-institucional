@@ -53,7 +53,6 @@
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.columnpicker.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.remotemodel.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jjmenu.js"></script>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/script/pubsub.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.ba-hashchange.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-ui.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>
@@ -433,8 +432,6 @@
                                 && hash.indexOf("#detalleCaracteristica") == -1 && hash.indexOf("#detalleIndicador") == -1 && hash != "#CerrarSesion" && hash.indexOf("#detallePregunta") == -1 && hash.indexOf("#verEncuesta") == -1)
                         { //si no es ---
 
-                            $.unsubscribe("set_grid_width");
-                            $.unsubscribe("set_grid_height");
                             if (middleLayout) {
 
                                 middleLayout.destroy();
