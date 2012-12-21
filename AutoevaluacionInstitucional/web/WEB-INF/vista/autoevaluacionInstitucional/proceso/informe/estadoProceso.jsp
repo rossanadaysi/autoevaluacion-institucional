@@ -30,93 +30,103 @@
                 }
             });
         }
-        $("#actEnlaceEstado").click( function() {
-            $("div.ui-layout-center").empty();
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/ControllerAI?action=estadoProcesoAI",
-                success: function(data){             
-                    $(".contenido").html(data);
-                    setTimeout(function(){
-                        $(".page_loading").hide();
-                    },200)
-                } //fin success
-            }); //fin $.ajaxF          
+    $("#actEnlaceEstado").click( function() {
+        $("div.ui-layout-center").empty();
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/ControllerAI?action=estadoProcesoAI",
+            success: function(data){             
+                $(".contenido").html(data);
+                setTimeout(function(){
+                    $(".page_loading").hide();
+                },200)
+            } //fin success
+        }); //fin $.ajaxF          
             
-            $.ajax({
-                type: 'POST',
-                url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
-                success: function(data){
-                    $("#estado").empty();
-                    $("#estado").html(data);
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: "<%=request.getContextPath()%>/ControllerAI?action=recargarEstado",
+            success: function(data){
+                $("#estado").empty();
+                $("#estado").html(data);
+            }
+        });
             
-        }); //fin eventoClick #actEnlaceEstado
+    }); //fin eventoClick #actEnlaceEstado
         
-        $(".printEnlace").click( function() {
-            $('#conte').jqprint();
-            return false;
-        }); 
-    });         
+    $(".printEnlace").click( function() {
+        $('#conte').jqprint();
+        return false;
+    }); 
+});         
     
     
     
-    $(function () {
-        var chart;
-        $(document).ready(function() {
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'container',
-                    type:'column'        
-                },
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type:'column'        
+            },
+            title: {
+                text: 'Muestra seleccionada y evaluada' 
+            },
+                
+            xAxis: {
+                categories: [
+                    'Estudiantes',
+                    'Docentes',
+                    'Administrativos',
+                    'Directivos',
+                    'Egresados',
+                    'Empleadores',
+                ]
+            },
+            yAxis: {
+                min: 0,
                 title: {
-                    text: 'Muestra seleccionada y evaluada' 
-                },
-                
-                xAxis: {
-                    categories: [
-                        'Estudiantes',
-                        'Docentes',
-                        'Administrativos',
-                        'Directivos',
-                        'Egresados',
-                        'Empleadores',
-                    ]
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Número de personas'
-                    }
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                
-                series: [{
-                        name: 'Seleccionados',
-                        data: [${tabla2.rowsByIndex[0][0]}, ${tabla2.rowsByIndex[0][2]}, ${tabla2.rowsByIndex[0][4]}, ${tabla2.rowsByIndex[0][6]}, ${tabla2.rowsByIndex[0][8]}, ${tabla2.rowsByIndex[0][10]}]
-    
-                    }, {
-                        name: 'Evaluados',
-                        data: [${tabla2.rowsByIndex[0][1]}, ${tabla2.rowsByIndex[0][3]}, ${tabla2.rowsByIndex[0][5]}, ${tabla2.rowsByIndex[0][7]}, ${tabla2.rowsByIndex[0][9]}, ${tabla2.rowsByIndex[0][11]}],
-                        color: '#89A54E'
-    
-                    }],
-                
-                tooltip: {
-                    formatter: function() {
-                        return '<b>'+ this.x +'</b>: '+ this.y +' personas';
+                    text: 'Número de personas'
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        color: "#4572A7",
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y +'';
+                        }
                     }
                 }
+            },
                 
-            });
+            series: [{
+                    name: 'Seleccionados',
+                    data: [${tabla2.rowsByIndex[0][0]}, ${tabla2.rowsByIndex[0][2]}, ${tabla2.rowsByIndex[0][4]}, ${tabla2.rowsByIndex[0][6]}, ${tabla2.rowsByIndex[0][8]}, ${tabla2.rowsByIndex[0][10]}]
+    
+                }, {
+                    name: 'Evaluados',
+                    data: [${tabla2.rowsByIndex[0][1]}, ${tabla2.rowsByIndex[0][3]}, ${tabla2.rowsByIndex[0][5]}, ${tabla2.rowsByIndex[0][7]}, ${tabla2.rowsByIndex[0][9]}, ${tabla2.rowsByIndex[0][11]}],
+                    color: '#89A54E'
+    
+                }],
+                
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.x +'</b>: '+ this.y +' personas';
+                        }
+                    }
+                        
         });
     });
+});
 </script>
 <div class="hero-unit">
     <a  class="span10 printEnlace" style="text-align: right; margin-left: 0px; text-align: right; cursor: pointer"><i class="icon-print"></i> Imprimir</a>  
@@ -451,12 +461,12 @@
                                         <c:set var="fac" value="${itemEstudPorFac[0]}"></c:set>
 
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading" >
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr >
-                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${itemEstudPorFac[5]}">
                                                                     ${itemEstudPorFac[0]}
                                                                 </a></td>   
                                                             <td id="heading${itemEstudPorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -545,35 +555,35 @@
                                                         </c:when>
                                                         <c:otherwise>
                                                         <script type="text/javascript">
-                                                            $(function(){
-                                                                $("#heading${itemEstudPorFac[5]}").prev().children("a").append(" (${itemEstudPorFac[3]}/${itemEstudPorFac[4]})");
+                                                        $(function(){
+                                                            $("#heading${itemEstudPorFac[5]}").prev().children("a").append(" (${itemEstudPorFac[3]}/${itemEstudPorFac[4]})");
                                                             <c:choose>
                                                                 <c:when test="${porce<=25.0}">
-                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                            +"</div>")   
+                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                        +"</div>")   
                                                                             
                                                                 </c:when>
                                                                 <c:when test="${porce>25.0 && porce<=50.0}">
-                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                            +"</div>")   
+                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                        +"</div>")   
                                                                             
                                                                 </c:when>
                                                                 <c:when test="${porce>50.0 && porce<=75.0}">
-                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                            +"</div>")
+                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                        +"</div>")
                                                                     
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                        $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
-                                                                            +"</div>")
+                                                                    $("#heading${itemEstudPorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porce}%' style='width: ${porce}%'></div>"
+                                                                        +"</div>")
                                                                         
                                                                 </c:otherwise>
                                                             </c:choose>
-                                                                });
+                                                            });
                                                         </script>
                                                         </tbody></table>
                                                 </div>
@@ -596,12 +606,12 @@
                                     <c:when test="${itemDocePorFac[0]!=facD && itemDocePorFac[0]!=null}">
                                         <c:set var="facD" value="${itemDocePorFac[0]}"></c:set>
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading" >
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr >
-                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2D" href="#collapseD${itemDocePorFac[5]}">
                                                                     ${itemDocePorFac[0]}
                                                                 </a></td>   
                                                             <td id="headingD${itemDocePorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -690,35 +700,35 @@
                                                         </c:when>
                                                         <c:otherwise>
                                                         <script type="text/javascript">
-                                                            $(function(){
-                                                                $("#headingD${itemDocePorFac[5]}").prev().children("a").append(" (${itemDocePorFac[3]}/${itemDocePorFac[4]})");
+                                                        $(function(){
+                                                            $("#headingD${itemDocePorFac[5]}").prev().children("a").append(" (${itemDocePorFac[3]}/${itemDocePorFac[4]})");
                                                             <c:choose>
                                                                 <c:when test="${porceD<=25.0}">
-                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
-                                                                            +"</div>")   
+                                                                    $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                        +"</div>")   
                                                                             
                                                                 </c:when>
                                                                 <c:when test="${porceD>25.0 && porceD<=50.0}">
-                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
-                                                                            +"</div>")   
+                                                                    $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                        +"</div>")   
                                                                             
                                                                 </c:when>
                                                                 <c:when test="${porceD>50.0 && porceD<=75.0}">
-                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
-                                                                            +"</div>")
+                                                                    $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                        +"</div>")
                                                                     
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                        $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
-                                                                            +"</div>")
+                                                                    $("#headingD${itemDocePorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceD}%' style='width: ${porceD}%'></div>"
+                                                                        +"</div>")
                                                                         
                                                                 </c:otherwise>
                                                             </c:choose>
-                                                                });
+                                                            });
                                                         </script>
                                                         </tbody></table>
                                                 </div>
@@ -741,12 +751,12 @@
                                     <c:when test="${itemEgrePorFac[0]!=facEg && itemEgrePorFac[0]!=null}">
                                         <c:set var="facEg" value="${itemEgrePorFac[0]}"></c:set>
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading" >
-                                                <table style="width:100%">
-                                                    <tbody>
-                                                        <tr >
-                                                            <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading" >
+                                                    <table style="width:100%">
+                                                        <tbody>
+                                                            <tr >
+                                                                <td><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2Eg" href="#collapseEg${itemEgrePorFac[5]}">
                                                                     ${itemEgrePorFac[0]}
                                                                 </a></td>   
                                                             <td id="headingEg${itemEgrePorFac[5]}" style="width:300px;text-align: right"></td>   
@@ -835,35 +845,35 @@
                                                         </c:when>
                                                         <c:otherwise>
                                                         <script type="text/javascript">
-                                                            $(function(){
-                                                                $("#headingEg${itemEgrePorFac[5]}").prev().children("a").append(" (${itemEgrePorFac[3]}/${itemEgrePorFac[4]})");
+                                                        $(function(){
+                                                            $("#headingEg${itemEgrePorFac[5]}").prev().children("a").append(" (${itemEgrePorFac[3]}/${itemEgrePorFac[4]})");
                                                             <c:choose>
                                                                 <c:when test="${porceEg<=25.0}">
-                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
-                                                                            +"</div>")   
+                                                                    $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-danger progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                        +"</div>")   
                                                                             
                                                                 </c:when>
                                                                 <c:when test="${porceEg>25.0 && porceEg<=50.0}">
-                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
-                                                                            +"</div>")   
+                                                                    $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-warning progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                        +"</div>")   
                                                                             
                                                                 </c:when>
                                                                 <c:when test="${porceEg>50.0 && porceEg<=75.0}">
-                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
-                                                                            +"</div>")
+                                                                    $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-info progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                        +"</div>")
                                                                     
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                        $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
-                                                                            +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
-                                                                            +"</div>")
+                                                                    $("#headingEg${itemEgrePorFac[5]}").append("<div class='progress progress-success progress-striped active' style='margin-bottom: 0px;'>"
+                                                                        +"<div class='bar' rel='tooltip' title='${porceEg}%' style='width: ${porceEg}%'></div>"
+                                                                        +"</div>")
                                                                         
                                                                 </c:otherwise>
                                                             </c:choose>
-                                                                });
+                                                            });
                                                         </script>
                                                         </tbody></table>
                                                 </div>
@@ -890,8 +900,8 @@
                             <tbody>
                                 <c:forEach items="${administrativosPorFac.rowsByIndex}" var="itemAdmPorFac">
                                     <c:set var="porceAd" value="${itemAdmPorFac[3]*100/itemAdmPorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemAdmPorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemAdmPorFac[1]}</td>
                                         <td>${itemAdmPorFac[2]}</td>
                                         <td>${itemAdmPorFac[3]}</td>
                                         <td>
@@ -935,8 +945,8 @@
                             <tbody>
                                 <c:forEach items="${directivosPorFac.rowsByIndex}" var="itemDirPorFac">
                                     <c:set var="porceDir" value="${itemDirPorFac[3]*100/itemDirPorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemDirPorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemDirPorFac[1]}</td>
                                         <td>${itemDirPorFac[2]}</td>
                                         <td>${itemDirPorFac[3]}</td>
                                         <td>
@@ -980,8 +990,8 @@
                             <tbody>
                                 <c:forEach items="${empleadoresPorFac.rowsByIndex}" var="itemEmpPorFac">
                                     <c:set var="porceEm" value="${itemEmpPorFac[3]*100/itemEmpPorFac[2]}"></c:set>
-                                    <tr>
-                                        <td>${itemEmpPorFac[1]}</td>
+                                        <tr>
+                                            <td>${itemEmpPorFac[1]}</td>
                                         <td>${itemEmpPorFac[2]}</td>
                                         <td>${itemEmpPorFac[3]}</td>
                                         <td>
@@ -1022,7 +1032,7 @@
     </div>
 </div>                        
 <script type="text/javascript">
-    $(function(){
-        $(".bar").tooltip();
-    })
+$(function(){
+    $(".bar").tooltip();
+})
 </script>
