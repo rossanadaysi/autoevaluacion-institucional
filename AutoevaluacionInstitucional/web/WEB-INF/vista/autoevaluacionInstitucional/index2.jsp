@@ -26,6 +26,7 @@
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/highlightFade.js"></script>
         <script src="<%=request.getContextPath()%>/script/highcharts.js"></script>
+        <script src="<%=request.getContextPath()%>/script/highcharts-more.js"></script>
         <script src="<%=request.getContextPath()%>/script/exporting.js"></script>
 
 
@@ -43,16 +44,16 @@
         <link href="<%=request.getContextPath()%>/bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet"/>
 
 
-        <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.model.js"></script>
+        <!--<script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.model.js"></script>-->
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.event.drag-2.0.min.js"></script>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.editors.js"></script>
+        <!--<script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.editors.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.grid.js"></script>
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.pager.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.columnpicker.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/slick.remotemodel.js"></script>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/script/jjmenu.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/script/jjmenu.js"></script>-->
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery.ba-hashchange.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-ui.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/jquery-layout.js"></script>

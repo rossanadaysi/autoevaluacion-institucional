@@ -8,9 +8,92 @@
     }
 </style>
 <script type="text/javascript">
-    $(function () {
-        var chart;
-        $(document).ready(function() {
+    var chart;
+    $(document).ready(function() {
+        window.chart = new Highcharts.Chart({
+                
+            chart: {
+                renderTo: 'container2',
+                polar: true,
+                type: 'line'
+            },
+        
+            title: {
+                text: 'Cumplimiento de los Factores de Calidad con relación al logro ideal',
+                x: -80
+            },
+        
+            pane: {
+                size: '80%'
+            },
+            xAxis: {
+                categories: [
+    <c:forEach items="${matrizFactores1.rowsByIndex}" var="aux" varStatus="statusAux">
+        <c:choose>
+            <c:when test="${matrizFactores1.getRowCount()!=statusAux.index+1}">
+                                '${aux[1]}',
+            </c:when>
+            <c:otherwise>
+                                '${aux[1]}'
+            </c:otherwise>
+        </c:choose>  
+    </c:forEach>
+                    ],
+                    tickmarkPlacement: 'on',
+                    lineWidth: 0
+                },
+                
+            
+                yAxis: {
+                    gridLineInterpolation: 'polygon',
+                    lineWidth: 0,
+                    min: 0,
+                    labels: {
+                        enabled: false
+                    }
+                },
+        
+                tooltip: {
+                    valueSuffix:'%'
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true,
+                            style:{
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                                fontFamily: 'Verdana, sans-serif' 
+                            }
+                        },
+                        lineWidth:1
+                    }
+                },
+                legend: {
+                    align: 'right',
+                    verticalAlign: 'top',
+                    y: 100,
+                    layout: 'vertical'
+                },
+        
+                series: [{
+                        name: 'Relación con el logro ideal',
+                        data: [
+    <c:forEach items="${matrizFactores1.rowsByIndex}" var="aux2" varStatus="statusAux2">
+        <c:choose>
+            <c:when test="${matrizFactores1.getRowCount()!=statusAux2.index+1}">
+                ${aux2[6]},
+            </c:when>
+            <c:otherwise>
+                ${aux2[6]}
+            </c:otherwise>
+        </c:choose>  
+    </c:forEach>
+                        ],
+                        pointPlacement: 'on'
+                    }]
+    
+            });        
             chart = new Highcharts.Chart({
                 chart: {
                     renderTo: 'grafica',
@@ -26,104 +109,104 @@
     <c:forEach items="${matrizFactores1.rowsByIndex}" var="factor" varStatus="status">
         <c:choose>
             <c:when test="${matrizFactores1.getRowCount()!=status.index+1}">
-                                    '${factor[0]}-${factor[1]}',
+                                '${factor[0]}-${factor[1]}',
             </c:when>
             <c:otherwise>
-                                    '${factor[0]}-${factor[1]}'
+                                '${factor[0]}-${factor[1]}'
             </c:otherwise>
         </c:choose>             
             
     </c:forEach>
-                        ],
+                    ],
                         
-                        labels: {
-                            formatter: function() {
-                                var partes = this.value.split("-");
+                    labels: {
+                        formatter: function() {
+                            var partes = this.value.split("-");
                                 
-                                return "Factor "+partes[0];
-                            },
-                            rotation:-45,
-                            align: 'right',
-                            style: {
-                                fontSize: '12px',
-                                fontFamily: 'Verdana, sans-serif'
-                            }
+                            return "Factor "+partes[0];
+                        },
+                        rotation:-45,
+                        align: 'right',
+                        style: {
+                            fontSize: '12px',
+                            fontFamily: 'Verdana, sans-serif'
                         }
-                    },
+                    }
+                },
                     
-                    plotOptions: {
-                        series: {
-                          cursor: 'pointer',
-                            point: {
-                                events: {
-                                    click: function() {
-                                        var partes2 = this.category.split("-");
-                                        var a = $("a[data='"+partes2[1]+"']");
-                                        location = a.attr("href");
-                                    }
+                plotOptions: {
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function() {
+                                    var partes2 = this.category.split("-");
+                                    var a = $("a[data='"+partes2[1]+"']");
+                                    location = a.attr("href");
                                 }
                             }
                         }
-                    },
+                    }
+                },
                     
                     
-                    yAxis: {
-                        min: 0,
-                        max: 5,
-                        title: {
-                            text: 'Grado de cumplimiento'
-                        }
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    tooltip: {
-                        formatter: function() {
-                            return '<b>'+ this.x +'</b><br/>'+
-                                'Cumplimiento: '+ Highcharts.numberFormat(this.y, 1) +
-                                '';
-                        }
-                    },
-                    series: [{
-                            name: 'Factores',
-                            data: [     
+                yAxis: {
+                    min: 0,
+                    max: 5,
+                    title: {
+                        text: 'Grado de cumplimiento'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>'+ this.x +'</b><br/>'+
+                            'Cumplimiento: '+ Highcharts.numberFormat(this.y, 1) +
+                            '';
+                    }
+                },
+                series: [{
+                        name: 'Factores',
+                        data: [     
     <c:forEach items="${matrizFactores1.rowsByIndex}" var="factor2" varStatus="status33">
         <c:choose>
             <c:when test="${matrizFactores1.getRowCount()!=status33.index+1}">
                 <c:choose>
                     <c:when test="${factor2[3]>=4.5}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#89A54E'
-                                                },
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#89A54E'
+                                            },
                                                 
                     </c:when>
                     <c:when test="${factor2[3]<4.5 && factor2[3]>=4.0}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#80699B'
-                                                },
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#80699B'
+                                            },
                                                 
                     </c:when>
                     <c:when test="${factor2[3]<4.0 && factor2[3]>=3.0}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#3D96AE'
-                                                },
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#3D96AE'
+                                            },
                                                 
                     </c:when>
                     <c:when test="${factor2[3]<3.0 && factor2[3]>=2.0}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#DB843D'
-                                                },
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#DB843D'
+                                            },
                                                 
                     </c:when>
                     <c:otherwise>
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#AA4643'
-                                                },
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#AA4643'
+                                            },
                     </c:otherwise>
                 </c:choose>
                                             
@@ -136,38 +219,38 @@
             <c:otherwise>
                 <c:choose>
                     <c:when test="${factor2[3]>=4.5}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#89A54E'
-                                                }
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#89A54E'
+                                            }
                                                 
                     </c:when>
                     <c:when test="${factor2[3]<4.5 && factor2[3]>=4.0}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#80699B'
-                                                }
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#80699B'
+                                            }
                                                 
                     </c:when>
                     <c:when test="${factor2[3]<4.0 && factor2[3]>=3.0}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#3D96AE'
-                                                }
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#3D96AE'
+                                            }
                                                 
                     </c:when>
                     <c:when test="${factor2[3]<3.0 && factor2[3]>=2.0}">
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#DB843D'
-                                                }
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#DB843D'
+                                            }
                                                 
                     </c:when>
                     <c:otherwise>
-                                                {
-                                                    y: ${factor2[3]},
-                                                    color: '#AA4643'
-                                                }
+                                            {
+                                                y: ${factor2[3]},
+                                                color: '#AA4643'
+                                            }
                     </c:otherwise>
                 </c:choose>
                 
@@ -181,28 +264,28 @@
     </c:forEach>
                                 
                                 
-                            ], 
+                        ], 
                             
-                            dataLabels: {
-                                enabled: true,
-                                rotation: -90,
-                                color: '#FFFFFF',
-                                align: 'right',
-                                x: -3,
-                                y: 10,
-                                formatter: function() {
-                                    return this.y;
-                                },
-                                style: {
-                                    fontSize: '13px',
-                                    fontFamily: 'Verdana, sans-serif'
-                                }
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            x: -3,
+                            y: 10,
+                            formatter: function() {
+                                return this.y;
+                            },
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
                             }
-                        }]
-                });
+                        }
+                    }]
             });
-    
         });
+    
+       
 </script>
 <div class="hero-unit">
     <div class="row">
@@ -274,7 +357,7 @@
 
                                 </td>
                                 <td>   
-                                    
+
                                 </td>
                                 <td>   
                                     <fmt:formatNumber type="number"   maxFractionDigits="1" value="${(cumplimiento/ponderacion)*20}" />%
@@ -283,7 +366,8 @@
                         </tbody>
                     </table>
                     <br/>          
-                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto">
+                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto"></div>
+                    <div id="container2" style="width: 700px; height: 400px; margin: 0 auto">
 
                     </div>             
                     <table class="table">
@@ -314,7 +398,7 @@
                                     Se cumple en alto grado
                                 </td>
                                 <td>
-                                     80% a 89%
+                                    80% a 89%
                                 </td>
                             </tr>
                             <tr style="background-color: #3D96AE;">
@@ -325,7 +409,7 @@
                                     Se cumple en mediano grado
                                 </td>
                                 <td>
-                                     60% a 79%
+                                    60% a 79%
                                 </td>
                             </tr>
                             <tr style="background-color: #DB843D;">
@@ -336,7 +420,7 @@
                                     Se cumple en bajo grado
                                 </td>
                                 <td>
-                                     40% - 59%
+                                    40% - 59%
                                 </td>
                             </tr>
                             <tr style="background-color: #AA4643;">
@@ -347,10 +431,10 @@
                                     No se cumple
                                 </td>
                                 <td>
-                                     0% - 39%
+                                    0% - 39%
                                 </td>
                             </tr>
-                            
+
                         </tbody>
                     </table>
                 </c:when>
