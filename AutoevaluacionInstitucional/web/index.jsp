@@ -550,7 +550,7 @@
 
                         Educación Superior, contribuyendo así al desarrollo del país.</p>
                     <p style="color: #FFFFFF;  text-align: right">Desarrollado por esoluciones </p>
-                    <p style="color: #FFFFFF; text-align: right">Martín Monroy Ríos - Oscar Ballesteros Pacheco - Arturo González Villamizar</p>
+                    <p style="color: #FFFFFF; text-align: right">Edgar Parra Chacón, Edna Margarita Gómez Bustamante, Miguel Ángel García Bolaños, Martín Monroy Ríos, Oscar Javier Ballesteros Pacheco, Arturo Jesús González Villamizar.</p>
                     <%--  </div>--%>
             </div>
         </div>
