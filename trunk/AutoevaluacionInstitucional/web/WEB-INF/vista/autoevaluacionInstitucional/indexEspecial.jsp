@@ -25,6 +25,7 @@
 
         <script type="text/javascript" src="<%=request.getContextPath()%>/script/highlightFade.js"></script>
         <script src="<%=request.getContextPath()%>/script/highcharts.js"></script>
+        <script src="<%=request.getContextPath()%>/script/highcharts-more.js"></script>
         <script src="<%=request.getContextPath()%>/script/exporting.js"></script>
 
 

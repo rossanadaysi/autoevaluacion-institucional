@@ -4,7 +4,6 @@
 
     $(document).ready(function() {
         $("ul.nav-list li a").click(function(event) {
-            console.log("clickl");
             $(".nav li").removeClass("active");
             $(this).parent().siblings().removeClass("active");
             $(this).parent().siblings().children("a").children("i").removeClass("icon-white");
