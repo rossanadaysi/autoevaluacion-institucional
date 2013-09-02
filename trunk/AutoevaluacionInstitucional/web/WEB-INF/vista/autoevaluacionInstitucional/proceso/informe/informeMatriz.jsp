@@ -8,124 +8,117 @@
 </style>
 <script type="text/javascript">
     $(function () {
-        var chart;
-        $(document).ready(function() {
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'grafica',
-                    type: 'column',
-                    margin: [ 50, 30, 100, 50]
-                },
-                title: {
-                    text: 'Matriz de calidad de características'
-                },
-
-                xAxis: {
-                    categories: [
+    var chart;
+            $(document).ready(function() {
+    chart = new Highcharts.Chart({
+    chart: {
+    renderTo: 'grafica',
+            type: 'column',
+            margin: [ 50, 30, 100, 50]
+    },
+            title: {
+    text: 'Matriz de calidad de características'
+    },
+            xAxis: {
+    categories: [
     <c:forEach items="${matriz.rowsByIndex}" var="caracteristica" varStatus="status">
         <c:choose>
             <c:when test="${matriz.getRowCount()!=status.index+1}">
-                                    '${caracteristica[0]}-${caracteristica[1]}',
-            </c:when>
+            '${caracteristica[0]}-${caracteristica[1]}',            </c:when>
             <c:otherwise>
-                                    '${caracteristica[0]}-${caracteristica[1]}'
+                        '${caracteristica[0]}-${caracteristica[1]}'
             </c:otherwise>
         </c:choose>             
-            
+
     </c:forEach>
-                        ],
-                        
-                        labels: {
-                            formatter: function() {
-                                var partes = this.value.split("-");
-                                
-                                return ""+partes[0];
-                            },
-                            rotation:-45,
-                            align: 'right',
-                            style: {
-                                fontSize: '12px',
-                                fontFamily: 'Verdana, sans-serif'
-                            }
-                        }
-                    },
-                    
-                    plotOptions: {
-                        series: {
-                            cursor: 'pointer',
-                            point: {
-                                events: {
-                                    click: function() {
-                                        var partes2 = this.category.split("-");
-                                        var a = $("a[data='"+partes2[1]+"']");
-                                        location = a.attr("href");
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    
-                    
-                    yAxis: {
-                        min: 0,
-                        max: 5,
-                        title: {
-                            text: 'Grado de cumplimiento'
-                        }
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    tooltip: {
-                        formatter: function() {
-                            return '<b>'+ this.x +'</b><br/>'+
-                                'Cumplimiento: '+ Highcharts.numberFormat(this.y, 1) +
-                                '';
-                        }
-                    },
-                    series: [{
-                            name: 'Caracteristicas',
-                            data: [
+        ],
+                labels: {
+        formatter: function() {
+        var partes = this.value.split("-");
+                return "" + partes[0];
+        },
+                rotation: - 45,
+                align: 'right',
+                style: {
+        fontSize: '12px',
+                fontFamily: 'Verdana, sans-serif'
+        }
+        }
+        },
+                plotOptions: {
+        series: {
+        cursor: 'pointer',
+                point: {
+        events: {
+        click: function() {
+        var partes2 = this.category.split("-");
+                var a = $("a[data='" + partes2[1] + "']");
+                location = a.attr("href");
+        }
+        }
+        }
+        }
+        },
+                yAxis: {
+        min: 0,
+                max: 5,
+                title: {
+        text: 'Grado de cumplimiento'
+        }
+        },
+                legend: {
+        enabled: false
+        },
+                tooltip: {
+        formatter: function() {
+        return '<b>' + this.x + '</b><br/>' +
+                'Cumplimiento: ' + Highcharts.numberFormat(this.y, 1) +
+                '';
+        }
+        },
+                series: [{
+        name: 'Caracteristicas',
+                data: [
     <c:forEach items="${matriz.rowsByIndex}" var="caracteristica2" varStatus="status33">
         <c:choose>
             <c:when test="${matriz.getRowCount()!=status33.index+1}">
                 <c:choose>
-                    <c:when test="${caracteristica2[4]>=4.5}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#89A54E'
-                                                },
-                                                
-                    </c:when>
-                    <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#80699B'
-                                                },
-                                                
-                    </c:when>
-                    <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#3D96AE'
-                                                },
-                                                
-                    </c:when>
-                    <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#DB843D'
-                                                },
-                                                
-                    </c:when>
+                    <c:when test="${caracteristica2[4]==null}">
+                    {
+                    y: 0,
+                            color: '#89A54E'
+                    },                    </c:when>
                     <c:otherwise>
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#AA4643'
-                                                },
+                        <c:choose>
+                            <c:when test="${caracteristica2[4]>=4.5}">
+                             {
+                             y: ${caracteristica2[4]},
+                                     color: '#89A54E'
+                             },                    </c:when>
+                            <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
+                                 {
+                                 y: ${caracteristica2[4]},
+                                         color: '#80699B'
+                                 },                    </c:when>
+                            <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
+                                     {
+                                     y: ${caracteristica2[4]},
+                                             color: '#3D96AE'
+                                     },                    </c:when>
+                            <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
+                                         {
+                                         y: ${caracteristica2[4]},
+                                                 color: '#DB843D'
+                                         },                    </c:when>
+                            <c:otherwise>
+                        {
+                        y: ${caracteristica2[4]},
+                                color: '#AA4643'
+                        },                    </c:otherwise>
+                        </c:choose>
                     </c:otherwise>
                 </c:choose>
-                                            
+
                                             
                                             
                 
@@ -133,74 +126,83 @@
                 
             </c:when>
             <c:otherwise>
-                <c:choose>
+                 <c:choose>
+                     <c:when test="${caracteristica2[4]==null}">
+                        {
+                        y: 0,
+                                color: '#DB843D'
+                        } 
+                     </c:when>
+                     <c:otherwise>
+                           <c:choose>
                     <c:when test="${caracteristica2[4]>=4.5}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#89A54E'
-                                                }
-                                                
+                    {
+                    y: ${caracteristica2[4]},
+                            color: '#89A54E'
+                    }
+
                     </c:when>
                     <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#80699B'
-                                                }
-                                                
+                        {
+                        y: ${caracteristica2[4]},
+                                color: '#80699B'
+                        }
+
                     </c:when>
                     <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#3D96AE'
-                                                }
-                                                
+                        {
+                        y: ${caracteristica2[4]},
+                                color: '#3D96AE'
+                        }
+
                     </c:when>
                     <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#DB843D'
-                                                }
-                                                
+                        {
+                        y: ${caracteristica2[4]},
+                                color: '#DB843D'
+                        }
+
                     </c:when>
                     <c:otherwise>
-                                                {
-                                                    y: ${caracteristica2[4]},
-                                                    color: '#AA4643'
-                                                }
+                        {
+                        y: ${caracteristica2[4]},
+                                color: '#AA4643'
+                        }
                     </c:otherwise>
                 </c:choose>
-                
-                
-                                        
-                
-        
+                     </c:otherwise>
+                 </c:choose>
+              
+
+
+
+
+
             </c:otherwise>
         </c:choose>             
-            
+
     </c:forEach>
-                                
-                                
-                            ],
-                            
-                            dataLabels: {
-                                enabled: true,
-                                rotation: -90,
-                                color: '#FFFFFF',
-                                align: 'right',
-                                x: 4,
-                                y: 10,
-                                formatter: function() {
-                                    return this.y;
-                                },
-                                style: {
-                                    fontSize: '13px',
-                                    fontFamily: 'Verdana, sans-serif'
-                                }
-                            }
-                        }]
-                });
-            });
-    
+
+
+        ],
+                dataLabels: {
+        enabled: true,
+                rotation: - 90,
+                color: '#FFFFFF',
+                align: 'right',
+                x: 4,
+                y: 10,
+                formatter: function() {
+        return this.y;
+        },
+                style: {
+        fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+        }
+        }
+        }]
+        });
+        });
         });
 </script>
 <div class="hero-unit">
@@ -266,7 +268,7 @@
                     <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto">
 
                     </div>
-                      <table class="table">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Escala</th>
@@ -294,7 +296,7 @@
                                     Se cumple en alto grado
                                 </td>
                                 <td>
-                                     80% a 89%
+                                    80% a 89%
                                 </td>
                             </tr>
                             <tr style="background-color: #3D96AE;">
@@ -305,7 +307,7 @@
                                     Se cumple en mediano grado
                                 </td>
                                 <td>
-                                     60% a 79%
+                                    60% a 79%
                                 </td>
                             </tr>
                             <tr style="background-color: #DB843D;">
@@ -316,7 +318,7 @@
                                     Se cumple en bajo grado
                                 </td>
                                 <td>
-                                     40% - 59%
+                                    40% - 59%
                                 </td>
                             </tr>
                             <tr style="background-color: #AA4643;">
@@ -327,10 +329,10 @@
                                     No se cumple
                                 </td>
                                 <td>
-                                     0% - 39%
+                                    0% - 39%
                                 </td>
                             </tr>
-                            
+
                         </tbody>
                     </table>
                 </c:when>
