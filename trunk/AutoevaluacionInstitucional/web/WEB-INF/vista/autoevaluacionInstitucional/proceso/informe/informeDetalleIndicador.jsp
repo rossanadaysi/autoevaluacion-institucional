@@ -308,7 +308,10 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
+            <div class="btn-group offset7">
+                <a class="btn active" style="cursor:default;">Todo</a>
+                <a class="btn" href="#detallePIndicador&${detalleIndicador.rowsByIndex[0][0]}">S&oacute;lo percepci&oacute;n</a>
+            </div>
             <c:choose>
                     <c:when test="${detalleIndicadorDocumental.getRowCount()!= 0}">
                         <legend>Indicador: ${detalleIndicadorDocumental.rowsByIndex[0][6]}</legend>

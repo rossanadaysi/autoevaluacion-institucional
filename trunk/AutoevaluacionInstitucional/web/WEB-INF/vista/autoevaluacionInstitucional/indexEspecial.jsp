@@ -421,8 +421,8 @@
 
 
                         if (hash != "#detalleProceso" && hash != "#listarPonderacionFactor" && hash != "#listarPonderacionCaracteristica"
-                                && hash != "#listarProcesos" && hash != "#listarEvaluarDoc" && hash != "#listarEvaluarNum" && hash.indexOf("#detalleFactor") == -1
-                                && hash.indexOf("#detalleCaracteristica") == -1 && hash.indexOf("#detalleIndicador") == -1 && hash != "#CerrarSesion" && hash.indexOf("#detallePregunta") == -1 && hash.indexOf("#verEncuesta") == -1)
+                                && hash != "#listarProcesos" && hash != "#listarEvaluarDoc" && hash != "#listarEvaluarNum" && hash.indexOf("#detalleFactor") == -1 && hash.indexOf("#detallePFactor") == -1 && hash.indexOf("#detallePCaracteristica") == -1
+                                && hash.indexOf("#detalleCaracteristica") == -1 && hash.indexOf("#detalleIndicador") == -1 && hash.indexOf("#detallePIndicador") == -1 && hash != "#CerrarSesion" && hash.indexOf("#detallePregunta") == -1 && hash.indexOf("#verEncuesta") == -1)
                         { //si no es ---
 
                             $.unsubscribe("set_grid_width");
@@ -961,11 +961,50 @@
                                     } //fin success
                                 }); //fin $.ajax
 
+                            }else if (hash.indexOf("#detallePFactor") != -1) {
+                                var url4 = "<%=request.getContextPath()%>/" + hash;
+
+                                url4 = url4.replace('#detallePFactor', "ControllerAI?action=detallePFactorAI");
+                                url4 = url4.replace('&', "&idF=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url4,
+                                    success: function(data)
+                                    {
+                                        $(".contenido").append(data);
+                                        setTimeout(function() {
+                                            $(".page_loading").hide();
+                                        }, 200);
+
+                                    } //fin success
+                                }); //fin $.ajax
+
                             } else if (hash.indexOf("#detalleCaracteristica") != -1) {
 
                                 var url4 = "<%=request.getContextPath()%>/" + hash;
 
                                 url4 = url4.replace('#detalleCaracteristica', "ControllerAI?action=detalleCaracteristicaAI");
+                                url4 = url4.replace('&', "&idC=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url4,
+                                    success: function(data)
+                                    {
+                                        $(".contenido").append(data);
+                                        setTimeout(function() {
+                                            $(".page_loading").hide();
+                                        }, 200);
+                                    } //fin success
+                                }); //fin $.ajax
+
+                            }
+                            else if (hash.indexOf("#detallePCaracteristica") != -1) {
+
+                                var url4 = "<%=request.getContextPath()%>/" + hash;
+
+                                url4 = url4.replace('#detallePCaracteristica', "ControllerAI?action=detallePCaracteristicaAI");
                                 url4 = url4.replace('&', "&idC=");
                                 $("div.ui-layout-center").empty();
                                 $.ajax({
@@ -987,6 +1026,26 @@
                                 var url4 = "<%=request.getContextPath()%>/" + hash;
 
                                 url4 = url4.replace('#detalleIndicador', "ControllerAI?action=detalleIndicadorAI");
+                                url4 = url4.replace('&', "&idI=");
+                                $("div.ui-layout-center").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url4,
+                                    success: function(data)
+                                    {
+                                        $(".contenido").append(data);
+                                        setTimeout(function() {
+                                            $(".page_loading").hide();
+                                        }, 200);
+                                    } //fin success
+                                }); //fin $.ajax
+
+                            }
+                            else if (hash.indexOf("#detallePIndicador") != -1) {
+
+                                var url4 = "<%=request.getContextPath()%>/" + hash;
+
+                                url4 = url4.replace('#detallePIndicador', "ControllerAI?action=detallePIndicadorAI");
                                 url4 = url4.replace('&', "&idI=");
                                 $("div.ui-layout-center").empty();
                                 $.ajax({
