@@ -82,10 +82,10 @@
     <c:forEach items="${matrizFactores1.rowsByIndex}" var="aux2" varStatus="statusAux2">
         <c:choose>
             <c:when test="${matrizFactores1.getRowCount()!=statusAux2.index+1}">
-                ${aux2[6]},
+                <fmt:formatNumber type="number" maxFractionDigits="1" value="${aux2[3] * 20}"/>,            
             </c:when>
             <c:otherwise>
-                ${aux2[6]}
+                <fmt:formatNumber type="number" maxFractionDigits="1" value="${aux2[3] * 20}"/>,            
             </c:otherwise>
         </c:choose>  
     </c:forEach>
@@ -291,13 +291,13 @@
     <div class="row">
         <div id="conte" class="span10">
             <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#informeMatrizFactoresP">S&oacute;lo percepci&oacute;n</a>
+                <a class="btn" href="#informeMatrizFactores">Todo</a>
+                <a class="btn active" style="cursor:default;">S&oacute;lo percepci&oacute;n</a>
             </div>
             <legend>Matriz de Calidad de Factores</legend>
             <ul class="breadcrumb">
                 <li class="active">Matriz de Calidad de Factores  <span class="divider">/</span></li>
-                <li><a href="<%=request.getContextPath()%>/#informeMatriz">Matriz de Calidad de Características</a></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizP">Matriz de Calidad de Características</a></li>
             </ul>
             <br>
             <c:choose>
@@ -322,7 +322,7 @@
                                         <c:out value="${row[0]}"/>
                                     </td>
                                     <td style="text-align: left">   
-                                        <a href="#detalleFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
+                                        <a href="#detallePFactor&${row[0]}" data="${row[1]}">${row[1]}</a>
                                     </td>
                                     <td>   
                                         <c:out value="${row[2]}"/>
@@ -331,13 +331,13 @@
                                         <c:out value="${row[3]}"/>
                                     </td>
                                     <td>   
-                                        <c:out value="${row[4]}"/>
+                                        <fmt:formatNumber type="number" maxFractionDigits="1" value="${row[3] * row[2]}"/>
                                     </td>
                                     <td>   
                                         <c:out value="${row[5]}"/>
                                     </td>
-                                    <td>   
-                                        <c:out value="${row[6]}%"/>
+                                    <td>
+                                        <fmt:formatNumber type="number" maxFractionDigits="1" value="${row[3] * 20}"/>%
                                     </td>
                                 </tr>
                                 <c:set var="ponderacion" value="${ponderacion + row[2]}" />

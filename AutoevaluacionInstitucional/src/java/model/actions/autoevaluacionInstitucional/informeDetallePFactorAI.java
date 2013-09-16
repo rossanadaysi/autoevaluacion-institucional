@@ -1,0 +1,55 @@
+package model.actions.autoevaluacionInstitucional;
+
+import controller.sqlController;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.jstl.sql.Result;
+import model.Action;
+
+public class informeDetallePFactorAI implements Action {
+    
+    @Override
+    public String procesar(HttpServletRequest request) throws IOException, ServletException {
+        HttpSession session = request.getSession();
+        String bd = (String) session.getAttribute("bd");
+        String idF = (String) request.getParameter("idF");
+        sqlController conSql = new sqlController();
+        Result detalleFactor = null;
+        String sql2 = "select c1.fid, c1.fno, c1.fpo, c1.cara, c1.nombre, c1.nivel, c1.ponderacionCara, format(avg(c1.cumplimiento),1), format(avg(cumplimiento)*c1.ponderacionCara,1), format(5*c1.ponderacionCara,1), format(avg(cumplimiento)*20,1)    from(\n" +
+"                \n" +
+"                SELECT factor.id AS fid,  factor.nombre AS fno, ponderacionfactor.ponderacion AS fpo, caracteristica.id as cara, \n" +
+"                                   caracteristica.nombre as nombre, ponderacioncaracteristica.nivelimportancia as nivel, ponderacioncaracteristica.ponderacion as ponderacionCara, \n" +
+"                           (sum( case when respuesta='1'  THEN 1 ELSE 0 end)+\n" +
+"                                   sum( case when respuesta='2'  THEN 2 ELSE 0 end)+\n" +
+"                                   sum( case when respuesta='3'  THEN 3 ELSE 0 end)+\n" +
+"                                   sum( case when respuesta='4'  THEN 4 ELSE 0 end)+\n" +
+"                                   sum( case when respuesta='5'  THEN 5 ELSE 0 end))/\n" +
+"                                  (count(case when (respuesta ='1' or respuesta='2' or respuesta='3' or respuesta='4' or respuesta='5') THEN 1 else null end))\n" +
+"                          \n" +
+"                        as cumplimiento\n" +
+"                                   FROM factor\n" +
+"                                   INNER JOIN caracteristica ON caracteristica.factor_id = factor.id\n" +
+"                                   INNER JOIN ponderacionfactor ON ponderacionfactor.factor_id = factor.id\n" +
+"                                   INNER JOIN ponderacioncaracteristica ON ponderacioncaracteristica.caracteristica_id = caracteristica.id\n" +
+"                                   INNER JOIN indicador ON indicador.caracteristica_id = caracteristica.id\n" +
+"                                   LEFT JOIN numericadocumental ON numericadocumental.indicador_id = indicador.id\n" +
+"                                   LEFT JOIN pregunta ON pregunta.indicador_id = indicador.id\n" +
+"                                   LEFT JOIN resultadoevaluacion ON resultadoevaluacion.pregunta_id = pregunta.id\n" +
+"                                   WHERE factor.id="+idF+" \n" +
+"                                   group by indicador.id\n" +
+"                \n" +
+"                ) as c1\n" +
+"                group by c1.cara";
+        detalleFactor = conSql.CargarSql2(sql2, bd);
+
+        
+        
+        session.setAttribute("detalleFactor", detalleFactor);
+
+
+        String url = "/WEB-INF/vista/autoevaluacionInstitucional/proceso/informe/informeDetalleFactorP.jsp";
+        return url;
+    }
+}

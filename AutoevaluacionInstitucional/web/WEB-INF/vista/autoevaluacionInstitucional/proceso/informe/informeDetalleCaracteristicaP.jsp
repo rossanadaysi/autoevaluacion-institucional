@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style type="text/css">
 
     .inicial td {
@@ -10,32 +11,42 @@
     $(function () {
     var chart;
             $(document).ready(function() {
-    chart = new Highcharts.Chart({
+
+    $('.tool').tooltip().click(function(e){
+    $(this).tooltip('hide');
+    })
+
+            chart = new Highcharts.Chart({
     chart: {
     renderTo: 'grafica',
             type: 'column',
             margin: [ 50, 30, 100, 50]
     },
             title: {
-    text: 'Matriz de calidad de características'
+    text: '${detalleCaracteristica.getRowsByIndex()[0][1]}'
     },
             xAxis: {
     categories: [
-    <c:forEach items="${matriz.rowsByIndex}" var="caracteristica" varStatus="status">
+    <c:forEach items="${detalleCaracteristica.rowsByIndex}" var="detalleC" varStatus="status">
         <c:choose>
-            <c:when test="${matriz.getRowCount()!=status.index+1}">
-            '${caracteristica[0]}-${caracteristica[1]}',</c:when>
-            <c:otherwise>
-                        '${caracteristica[0]}-${caracteristica[1]}'
-            </c:otherwise>
-        </c:choose>             
+            <c:when test="${detalleC[4]!=null}">
+                <c:choose>
+                    <c:when test="${detalleCaracteristica.getRowCount()!=status.index+1}">
+                    '${detalleC[2]}-${detalleC[3]}',</c:when>
+                    <c:otherwise>
+                                '${detalleC[2]}-${detalleC[3]}'
+                    </c:otherwise>
+                </c:choose>  
+            </c:when>
+        </c:choose>  
+
 
     </c:forEach>
         ],
                 labels: {
         formatter: function() {
         var partes = this.value.split("-");
-                return "" + partes[0];
+                return "Indicador " + partes[0];
         },
                 rotation: - 45,
                 align: 'right',
@@ -71,115 +82,111 @@
         },
                 tooltip: {
         formatter: function() {
-        return '<b>' + this.x + '</b><br/>' +
-                'Cumplimiento: ' + Highcharts.numberFormat(this.y, 1) +
+        var indicador = this.x.split(" ");
+                var max = 50;
+                var acom = 0;
+                var finali = "";
+                for (var i = 0; i < indicador.length; i++){
+        acom += indicador[i].length;
+                if (acom < max){
+        finali += indicador[i] + " ";
+        } else{
+        acom = 0;
+                finali += "</b><br/><b>" + indicador[i] + " ";
+        }
+
+        }
+
+        return '<b>' + finali + '</b><br/>' +
+                'Cumplimiento: ' + Highcharts.numberFormat(this.y, 2) +
                 '';
         }
         },
                 series: [{
-        name: 'Caracteristicas',
+        name: 'Indicadores',
                 data: [
-    <c:forEach items="${matriz.rowsByIndex}" var="caracteristica2" varStatus="status33">
+    <c:forEach items="${detalleCaracteristica.rowsByIndex}" var="detalleC2" varStatus="status33">
         <c:choose>
-            <c:when test="${matriz.getRowCount()!=status33.index+1}">
+            <c:when test="${detalleC2[4]!=null}">
                 <c:choose>
-                    <c:when test="${caracteristica2[4]==null}">
-                    {
-                    y: 0,
-                            color: '#89A54E'
-                    },</c:when>
-                    <c:otherwise>
+                    <c:when test="${detalleCaracteristica.getRowCount()!=status33.index+1}">
                         <c:choose>
-                            <c:when test="${caracteristica2[4]>=4.5}">
+                            <c:when test="${detalleC2[4]>=4.5}">
                             {
-                            y: ${caracteristica2[4]},
+                            y: ${detalleC2[4]},
                                     color: '#89A54E'
                             },</c:when>
-                            <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
+                            <c:when test="${detalleC2[4]<4.5 && detalleC2[4]>=4.0}">
                             {
-                            y: ${caracteristica2[4]},
+                            y: ${detalleC2[4]},
                                     color: '#80699B'
                             },</c:when>
-                            <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
+                            <c:when test="${detalleC2[4]<4.0 && detalleC2[4]>=3.0}">
                             {
-                            y: ${caracteristica2[4]},
+                            y: ${detalleC2[4]},
                                     color: '#3D96AE'
                             },</c:when>
-                            <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
+                            <c:when test="${detalleC2[4]<3.0 && detalleC2[4]>=2.0}">
                             {
-                            y: ${caracteristica2[4]},
+                            y: ${detalleC2[4]},
                                     color: '#DB843D'
                             },</c:when>
                             <c:otherwise>
                                 {
-                                y: ${caracteristica2[4]},
+                                y: ${detalleC2[4]},
                                         color: '#AA4643'
                                 },</c:otherwise>
                         </c:choose>
-                    </c:otherwise>
-                </c:choose>
 
 
 
 
 
 
-            </c:when>
-            <c:otherwise>
-                <c:choose>
-                    <c:when test="${caracteristica2[4]==null}">
-                    {
-                    y: 0,
-                            color: '#DB843D'
-                    }
                     </c:when>
                     <c:otherwise>
                         <c:choose>
-                            <c:when test="${caracteristica2[4]>=4.5}">
+                            <c:when test="${detalleC2[4]>=4.5}">
                             {
-                            y: ${caracteristica2[4]},
+                            y: ${detalleC2[4]},
                                     color: '#89A54E'
                             }
 
                             </c:when>
-                            <c:when test="${caracteristica2[4]<4.5 && caracteristica2[4]>=4.0}">
+                            <c:when test="${detalleC2[4]<4.5 && detalleC2[4]>=4.0}">
                                 {
-                                y: ${caracteristica2[4]},
+                                y: ${detalleC2[4]},
                                         color: '#80699B'
                                 }
 
                             </c:when>
-                            <c:when test="${caracteristica2[4]<4.0 && caracteristica2[4]>=3.0}">
+                            <c:when test="${detalleC2[4]<4.0 && detalleC2[4]>=3.0}">
                                 {
-                                y: ${caracteristica2[4]},
+                                y: ${detalleC2[4]},
                                         color: '#3D96AE'
                                 }
 
                             </c:when>
-                            <c:when test="${caracteristica2[4]<3.0 && caracteristica2[4]>=2.0}">
+                            <c:when test="${detalleC2[4]<3.0 && detalleC2[4]>=2.0}">
                                 {
-                                y: ${caracteristica2[4]},
+                                y: ${detalleC2[4]},
                                         color: '#DB843D'
                                 }
 
                             </c:when>
                             <c:otherwise>
                                 {
-                                y: ${caracteristica2[4]},
+                                y: ${detalleC2[4]},
                                         color: '#AA4643'
                                 }
                             </c:otherwise>
                         </c:choose>
                     </c:otherwise>
-                </c:choose>
+                </c:choose>      
+            </c:when>
+        </c:choose> 
 
 
-
-
-
-
-            </c:otherwise>
-        </c:choose>             
 
     </c:forEach>
 
@@ -190,7 +197,7 @@
                 rotation: - 90,
                 color: '#FFFFFF',
                 align: 'right',
-                x: 4,
+                x: - 3,
                 y: 10,
                 formatter: function() {
         return this.y;
@@ -209,68 +216,48 @@
     <div class="row">
         <div id="conte" class="span10">
             <div class="btn-group offset7">
-                <a class="btn active" style="cursor:default;">Todo</a>
-                <a class="btn" href="#informeMatrizP">S&oacute;lo percepci&oacute;n</a>
+                <a class="btn" href="#detalleCaracteristica&${detalleCaracteristica.rowsByIndex[0][0]}">Todo</a>
+                <a class="btn active" style="cursor:default;">S&oacute;lo percepci&oacute;n</a>
             </div>
-            <legend>Matriz de Calidad de Caracteristicas</legend>
+            <legend>Característica: ${detalleCaracteristica.rowsByIndex[0][1]}</legend>
             <ul class="breadcrumb">
-                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
-                <li class="active">Matriz de Calidad de Características</li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizFactoresP">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
+                <li><a href="<%=request.getContextPath()%>/#informeMatrizP">Matriz de Calidad de Características</a> <span class="divider">/</span></li>
+                <li><a class="tool" data-placement="top" rel="tooltip" data-original-title="${detalleCaracteristica.rowsByIndex[0][7]}" href="#detallePFactor&${detalleCaracteristica.rowsByIndex[0][5]}">Factor ${detalleCaracteristica.rowsByIndex[0][5]}</a> <span class="divider">/</span></li>
+                <li class="active tool" data-placement="top" rel="tooltip" data-original-title="${detalleCaracteristica.rowsByIndex[0][1]}">Característica ${detalleCaracteristica.rowsByIndex[0][0]}</li>
             </ul>
             <br>
             <c:choose>
-                <c:when test="${matriz.getRowCount()!= 0}">
-
+                <c:when test="${detalleCaracteristica.getRowCount()!= 0}">
                     <table class="table table-striped table-bordered table-condensed inicial">
                         <thead>
-                        <th>Id Factor</th>
-                        <th>Id</th>
-                        <th>Caracteristica</th>
-                        <th>Nivel de importacia</th>
-                        <th>Ponderacion caracteristica</th>
-                        <th>Grado de Cumplimiento</th>
-                        <th>Evaluacion teniendo en cuenta ponderacion</th>
-                        <th>Logro ideal</th>
-                        <th>Relacion con el logro ideal</th>
+                        <th>C&oacute;digo</th>
+                        <th>Indicador</th>
+                        <th>Cumplimiento</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${matriz.rowsByIndex}" var="row" varStatus="iter">
-                                <tr>
-                                    <td style="text-align: left">   
-                                        <c:out value="${row[8]}"/>
-                                    </td>
-                                    <td style="text-align: left">   
-                                        <c:out value="${row[0]}"/>
-                                    </td>
-                                    <td style="text-align: left">   
-                                        <a href="#detalleCaracteristica&${row[0]}" data="${row[1]}">${row[1]}</a> 
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[2]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[3]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[4]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[5]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[6]}"/>
-                                    </td>
-                                    <td>   
-                                        <c:out value="${row[7]}%"/>
-                                    </td>
-                                </tr>
+                            <c:forEach items="${detalleCaracteristica.rowsByIndex}" var="row" varStatus="iter">
+                                <c:choose>
+                                    <c:when test="${row[4]!=null}">
+                                        <tr>
+                                            <td style="text-align: left">   
+                                                <c:out value="${row[6]}"/>
+                                            </td>
+                                            <td style="text-align: left">   
+                                                <a style="text-align: left" href="#detallePIndicador&${row[2]}"data="${row[3]}">${row[3]}</a> 
+                                            </td>
+                                            <td>   
+                                                <c:out value="${row[4]}"/>
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                </c:choose>   
+
                             </c:forEach>
                         </tbody>
                     </table>
                     <br/>
-                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto">
-
-                    </div>
+                    <div id="grafica" style="min-width: 400px; height: 500px; margin: 0 auto"></div>             
                     <table class="table">
                         <thead>
                             <tr>
@@ -346,3 +333,5 @@
         </div>
     </div>
 </div>    
+
+

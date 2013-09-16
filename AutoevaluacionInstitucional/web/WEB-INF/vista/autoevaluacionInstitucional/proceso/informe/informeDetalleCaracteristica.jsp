@@ -227,7 +227,10 @@
 <div class="hero-unit">
     <div class="row">
         <div id="conte" class="span10">
-            <br/>
+            <div class="btn-group offset7">
+                <a class="btn active" style="cursor:default;">Todo</a>
+                <a class="btn" href="#detallePCaracteristica&${detalleCaracteristica.rowsByIndex[0][0]}">S&oacute;lo percepci&oacute;n</a>
+            </div>
             <legend>Característica: ${detalleCaracteristica.rowsByIndex[0][1]}</legend>
             <ul class="breadcrumb">
                 <li><a href="<%=request.getContextPath()%>/#informeMatrizFactores">Matriz de Calidad de Factores</a> <span class="divider">/</span></li>
